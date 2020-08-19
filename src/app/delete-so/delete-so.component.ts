@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServicesService } from '../services.service';
 
 @Component({
   selector: 'app-delete-so',
@@ -7,17 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeleteSOComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: ServicesService) { }
 
   ngOnInit(): void {
   }
 
-  Delete()
+  formData = this.service.OptionData;
+
+  Delete(OptionID: any)
   {
 
     if(confirm("Are you sure you want to delete this?"))
     {
-      alert("Successfully deleted")
+      this.service.DeleteServiceOption(OptionID).subscribe(res =>
+        {
+          
+
+        })
     }
     
   }

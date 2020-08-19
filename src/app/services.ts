@@ -32,6 +32,7 @@ export class ServiceData
 
 export class ServiceOptionData
 {
+    OptionID: any;
     Name: string;
     Duration:any;
 }

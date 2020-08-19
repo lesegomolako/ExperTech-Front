@@ -41,7 +41,7 @@ export class ServicesService {
   //************************Service Option *******************/
   OptionData: ServiceOptionData = null;
 
-  getServiceOptionss(): Observable<ServiceOptionData[]>
+  getServiceOptions(): Observable<ServiceOptionData[]>
   {
     return this.http.get<ServiceOptionData[]>(this.url+"Services/GetServiceOption")
   }

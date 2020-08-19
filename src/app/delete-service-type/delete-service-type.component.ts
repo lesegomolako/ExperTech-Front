@@ -23,10 +23,12 @@ export class DeleteServiceTypeComponent implements OnInit {
     {
       this.service.DeleteServiceType(TypeID).subscribe(res =>
         {
-          if(res == "su
+          
 
         })
     }
     
   }
+
+  
 }

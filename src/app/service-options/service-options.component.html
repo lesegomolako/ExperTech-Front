@@ -1,34 +1,21 @@
 <div class="heading">
     <h1>Service Options</h1>
-    <button class="btn btn-success" title="Add Service Option" style="width: 35px; height: 35px; margin-left: 10px;">+</button>
+    <button class="btn btn-success" title="Add Service Option" style="width: 35px; height: 35px; margin-left: 10px;" (Click)="AddServiceOption()">+</button>
 </div>
     
     <div class="contents">
         <ul>
-            <li>
+            <li *ngFor ="let x of myServiceOptionsList | async">
                 <div class="icon"><mat-icon>face</mat-icon></div>
                 <div class="typeinfo">
-                    <div class="name">Long Hair</div>
+                    <div class="name">{{x.Name}}</div>
                     <div class="sub-text">
-                        <div>Price: +R15</div>
+                        <div>Duration: {{x.Durartion}}</div>
                     </div>
                 </div>
                 <div class="buttons">
-                <a [routerLink]="['/services/EditServiceOption']" class="btn btn-success"><mat-icon inline=true>edit</mat-icon></a>
-                <a [routerLink]="['/services/DeleteServiceOption']" class="btn btn-danger" ><mat-icon inline=true>delete</mat-icon></a>
-                </div>
-            </li>
-            <li>
-                <div class="icon"><mat-icon>face</mat-icon></div>
-                <div class="typeinfo">
-                    <div class="name">Short Hair</div>
-                    <div class="sub-text">
-                        <div>Price: +R10</div>
-                    </div>
-                </div>
-                <div class="buttons">
-                <a [routerLink]="['/services/EditServiceOption']" class="btn btn-success"><mat-icon inline=true>edit</mat-icon></a>
-                <a [routerLink]="['/services/DeleteServiceOption']" class="btn btn-danger" ><mat-icon inline=true>delete</mat-icon></a>
+                <a class="btn btn-success" (click)="EditServiceOption(x)"><mat-icon inline=true>edit</mat-icon></a>
+                <a class="btn btn-danger" (Click)="DeleteServicOption(x)" ><mat-icon inline=true>delete</mat-icon></a>
                 </div>
             </li>
         </ul>

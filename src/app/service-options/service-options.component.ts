@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ServicesService } from '../services.service';
+import {ServiceOptionData} from '../services';
+import { Router } from '@angular/router';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-service-options',
@@ -7,13 +11,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServiceOptionsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public service: ServicesService, private router: Router) { }
 
   ngOnInit(): void {
+    this.loadList();
   }
 
-  Delete()
+  myServiceOptionsList : Observable<ServiceOptionData[]>;
+
+  loadList()
   {
-    confirm("Are you sure you want to delete this?")
+    this.myServiceOptionsList = this.service.getServiceOptions();
+  }
+
+  AddServiceOption()
+  {
+    this.service.OptionData = null;
+    this.router.navigateByUrl("services/EditServiceOption");
+  }
+
+  EditServiceOption(data: ServiceOptionData)
+  {
+    this.service.OptionData = data;
+    this.router.navigateByUrl("services/EditServiceOption");
+  }
+
+  DeleteServiceOption(data: ServiceOptionData)
+  {
+    this.service.OptionData = data;
+    this.router.navigateByUrl("services/DeleteServiceOption");
   }
 }
