@@ -1,0 +1,32 @@
+
+#sidebar
+{
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    background: black;
+    left:-200px;
+    transition: all 500ms linear;
+    z-index: 1;
+    background: #35b729;
+}
+
+#sidebar ul li
+{
+     
+    color: white;
+    list-style: none;
+    padding: 15px 10px;
+    border-bottom: 1px solid white ;
+}
+
+#sidebar.active
+{
+   left:0px;
+   
+   
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+  }

@@ -1,0 +1,57 @@
+<div class="heading">
+    <h1>Product</h1>
+    <button class="btn btn-success" title="Add Service" style="width: 35px; height: 35px; margin-left: 10px;">+</button>
+</div>
+    
+    <div class="contents">
+        <ul>
+            <li>
+                <div class="icon"><mat-icon>face</mat-icon></div>
+                <div class="typeinfo">
+                    <div class="name">Shampoo</div>
+                    <div class="sub-text">
+                        <div>Category: Hair</div>
+                        <div>Price: R100</div>
+                        <div>Quantity: 50</div>
+                    </div>
+                </div>
+                <div class="buttons">
+                <a [routerLink]="['/EditProduct']" class="btn btn-success" ><mat-icon inline=true>edit</mat-icon></a>
+                <a [routerLink]="['/DeleteProduct']" class="btn btn-danger" ><mat-icon inline=true>delete</mat-icon></a>
+                </div>
+            </li>
+            <li>
+                <div class="icon"><mat-icon>face</mat-icon></div>
+                <div class="typeinfo" click="Delete()">
+                    <div class="name">Shampoo & Conditioner</div>
+                    <div class="sub-text">
+                        <div>Category: Hair</div>
+                        <div>Price: R160</div>
+                        <div>Quantity: 25</div>
+                    </div>
+                </div>
+                <div class="buttons">
+                <a [routerLink]="['/EditProduct']" class="btn btn-success" ><mat-icon inline=true>edit</mat-icon></a>
+                <a [routerLink]="['/DeleteProduct']" class="btn btn-danger" ><mat-icon inline=true>delete</mat-icon></a>
+                </div>
+            </li>
+            <li>
+                <div class="icon"><mat-icon>face</mat-icon></div>
+                <div class="typeinfo">
+                    <div class="name">Nail Polish Remover</div>
+                    <div class="sub-text">
+                        <div>Category: Nails</div>
+                        <div>Price: R75</div>
+                        <div>Quantity: 25</div>
+                    </div>
+                </div>
+                <div class="buttons">
+                <a [routerLink]="['/EditProduct']" class="btn btn-success" ><mat-icon inline=true>edit</mat-icon></a>
+                <a [routerLink]="['/DeleteProduct']" class="btn btn-danger" ><mat-icon inline=true>delete</mat-icon></a>
+                </div>
+            </li>
+           
+        </ul>
+    </div>
+    
+    

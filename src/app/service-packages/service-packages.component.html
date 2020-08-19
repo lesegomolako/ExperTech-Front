@@ -1,0 +1,40 @@
+<div class="heading">
+    <h1>Service Packages</h1>
+    <a [routerLink]="['/services/EditServicePackage']" class="btn btn-success" title="Add Service Package" style="width: 35px; height: 35px; margin-left: 10px;">+</a>
+    </div>
+
+    <div class="contents">
+        <ul>
+            <li>
+                <div class="icon"><mat-icon>face</mat-icon></div>
+                <div class="typeinfo">
+                    <div class="name">Wash + Blow</div>
+                    <div class="sub-text">
+                        <div>Service Type: Hair</div>
+                        <div>Price: R800</div>
+                        <div>Quantity: 5 uses</div>
+                    </div>
+                </div>
+                <div class="buttons">
+                <button class="btn btn-danger" (click)="Delete()"><mat-icon inline=true>delete</mat-icon></button>
+                </div>
+            </li>
+            <li>
+                <div class="icon"><mat-icon>face</mat-icon></div>
+                <div class="typeinfo">
+                    <div class="name">Cut + Color</div>
+                    <div class="sub-text">
+                        <div>Service Type: Hair</div>
+                        <div>Price: R1000</div>
+                        <div>Quantity: 3 uses</div>
+                    </div>
+                </div>
+                <div class="buttons">
+
+                <button class="btn btn-danger" (click)="Delete()"><mat-icon inline=true>delete</mat-icon></button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    

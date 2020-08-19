@@ -1,0 +1,25 @@
+.footer
+{
+
+    background-color: #333131;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+}
+
+.menu-items
+{
+    height: 200px;
+    background-color: grey;
+}
+
+.homepage
+{
+    overflow: hidden;
+}
+
+ul
+{
+    list-style: none;
+}

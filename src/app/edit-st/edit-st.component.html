@@ -1,0 +1,25 @@
+<div class="heading">
+    <h1>{{title}}</h1>
+</div>
+  
+<form #form="ngForm" method="POST" (submit)="onSubmit(form)">
+<div class="contents">
+    <h2>Enter Service Type details</h2>
+    <input type="hidden"  name="TypeID" [(ngModel)]="service.TypeData.TypeID">
+    <div class="details">
+        <div class="inputs">
+            <label for="TypeName">Name</label>    
+            <input type="text" name="Name" [(ngModel)]="service.TypeData.Name" placeholder="Example: Hair">
+        </div>
+        <div class="inputs">
+            <label for="STName">Description</label>  
+            <textarea type="text" name="Description" [(ngModel)]="service.TypeData.Description" placeholder="Enter text..."></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="buttons">
+    <button class="btn btn-light" type="button" (click)="Cancel()">Cancel</button>
+    <button class="btn btn-success" type="submit">Save</button>
+</div>
+</form>

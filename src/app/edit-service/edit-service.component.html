@@ -1,0 +1,61 @@
+<div class="heading">
+    <h1>Edit Service</h1>
+</div>
+
+<div class ="contents">
+    <h2>Select Service Type</h2>
+    
+
+      <select name="cars" id="cars" class="inputs" required>
+        <option label="- Select Service Type -"></option>
+        <option value="">Hair</option>
+        <option value="">Nail</option>
+        <option value="">Massage</option>
+      </select>
+</div>
+    
+<div class="contents">
+    <h2>Enter Service details</h2>
+
+    <div class="details">
+        <div class="inputs">
+            <label for="ServiceName">Name</label>    
+            <input type="text" id="ServiceName" placeholder="Enter Service Name">
+        </div>
+        <div class="inputs">
+            <label for="Description">Description</label>  
+            <textarea type="text" name="Description" placeholder="Enter text..."></textarea>
+        </div>
+    </div>
+    <div class="details">
+        <div class="inputs">
+            <label for="TypeName">Duration</label>    
+            <input type="text" id="TypeName" placeholder="Example: 15min">
+        </div>
+        <div class="inputs">
+            <label for="STName">Price</label>  
+            <textarea type="text" name="STName" placeholder="Enter Price"></textarea>
+        </div>
+        <div class="inputs">
+            <label for="STName">location</label>  
+            <input id="pac-input" class="controls" type ="text" placeholder="start typing here">
+        </div>
+    </div>
+    <div class="details">
+        <div class="inputs">
+            <label for="TypeName">Service Option</label>    
+            <select name="cars" id="cars" class="inputs" required>
+                <option label="- Select Service Option -"></option>
+                <option value="">Long</option>
+                <option value="">Short</option>
+              </select>
+        </div>
+    </div>
+</div>
+
+<div class="buttons">
+    <button class="btn btn-light">Cancel</button>
+    <button class="btn btn-success" (click)="Save()">Save</button>
+</div>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>

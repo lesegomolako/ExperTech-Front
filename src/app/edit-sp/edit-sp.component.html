@@ -1,0 +1,42 @@
+<div class="heading">
+    <h1>Create Service Package</h1>
+</div>
+
+<div class ="contents">
+    <h2>Select Service</h2>
+    
+
+      <select name="cars" id="cars" class="inputs" required>
+        <option label="- Select Service -"></option>
+        <option value="">Hair</option>
+        <option value="">Nail</option>
+        <option value="">Massage</option>
+      </select>
+</div>
+    
+<div class="contents">
+    <h2>Enter Service Package details</h2>
+
+    <div class="details">
+        <div class="inputs">
+            <label for="TypeName">Descripton</label>    
+            <input type="text" id="TypeName" placeholder="Example: Hair">
+        </div>
+        <div class="inputs">
+            <label for="TypeName">Price</label>    
+            <input type="text" id="TypeName" placeholder="Enter price">
+        </div>
+    </div>
+    <div class="details">
+        <div class="inputs">
+            <label for="TypeName">Quantity</label>    
+            <input type="number" id="TypeName" placeholder="Example: 5 uses">
+        </div>
+    </div>
+</div>
+
+<div class="buttons">
+    <button class="btn btn-light">Cancel</button>
+    <button class="btn btn-success" (click)="Save()">Save</button>
+</div>
+

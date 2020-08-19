@@ -1,0 +1,91 @@
+.heading
+{
+    display: flex;
+    border-bottom: 1px solid black;
+
+}
+
+.contents
+{
+    padding: 10px;
+}
+
+li
+{
+    list-style: none;
+    display: flex;
+    border-bottom: 1px solid grey;
+    padding-top: 10px;
+    width: 80%;
+
+}
+
+.icon
+{
+    display: table-cell;
+    vertical-align: top;
+    padding-right: 15px;
+    width: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.typeinfo
+{
+    display: table-cell;
+    vertical-align: top;
+    padding-right: 15px;
+    width: 400px;
+    padding-top: 0;
+    padding-bottom: 0;
+    
+}
+
+.name
+{
+    font-size: 20pt;
+    letter-spacing: 0.5pt;
+}
+
+.sub-text
+{
+    display: inline-flex;
+    vertical-align: top;
+    font-size: 12pt;
+    color: grey;
+  
+
+}
+
+.sub-text div
+{
+    border-right: 15px solid white;
+}
+
+.buttons
+{
+
+    display: table-cell;
+    width: 190px;
+    text-align: right;
+    vertical-align: bottom;
+    padding-bottom: 2px;
+}
+
+.buttons button
+{
+    cursor: pointer;
+    size: 30px 30px;
+    
+    
+    
+}
+
+.buttons a
+{
+    cursor: pointer;
+    size: 30px 30px;
+    margin: 2px;
+    
+}
+
