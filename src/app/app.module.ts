@@ -35,6 +35,7 @@ import { DeleteSOComponent } from './delete-so/delete-so.component';
 
 import {HttpClientModule} from '@angular/common/http';
 import { ServicesService }  from './services.service';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -57,6 +58,7 @@ import { ServicesService }  from './services.service';
     DeleteServiceComponent,
     DeleteServiceTypeComponent,
     DeleteSOComponent,
+    LoginComponent,
     
   ],
   imports: [

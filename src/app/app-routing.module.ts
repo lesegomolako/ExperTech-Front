@@ -16,6 +16,7 @@ import { DeleteProductComponent } from './delete-product/delete-product.componen
 import { DeleteServiceTypeComponent } from './delete-service-type/delete-service-type.component';
 import { DeleteSOComponent } from './delete-so/delete-so.component';
 import { DeleteServiceComponent } from './delete-service/delete-service.component';
+import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
@@ -36,6 +37,7 @@ const routes: Routes = [
       {path:'DeleteServiceType', component: DeleteServiceTypeComponent},
       {path:'DeleteServiceOption', component: DeleteSOComponent},
       {path:'DeleteService', component: DeleteServiceComponent},
+      {path:'Login', component: LoginComponent}
       
    ]
   },
