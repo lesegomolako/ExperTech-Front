@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import{ServiceTypeData, ServiceData, ServiceOptionData} from './services'
-import { HttpClient , HttpHeaders} from '@angular/common/http';
+import{ServiceTypeData, ServiceData, ServiceOptionData, PackageData} from './services'
+import { HttpClient , HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -24,18 +24,18 @@ export class ServicesService {
   UpdateServiceType(form: ServiceData)
   {
     
-    return this.http.post(this.url + "Services/AddItems" , form)
+    return this.http.post(this.url + "Services/UpdateServiceType" , form)
   }
 
   AddServiceType(form: ServiceTypeData)
   {
- 
-    return this.http.post(this.url + 'Services/UpdateServiceType' , form)
+    return this.http.post(this.url + 'Services/AddServiceType' , form)
   }
 
   DeleteServiceType(TypeID: any)
   {    
-    return this.http.delete(this.url + 'Services/DeleteServiceType' , TypeID)
+    const params = new HttpParams().set('TypeID', TypeID );
+    return this.http.delete(this.url + 'Services/DeleteServiceType', {params})
   }
 
   //************************Service Option *******************/
@@ -46,20 +46,42 @@ export class ServicesService {
     return this.http.get<ServiceOptionData[]>(this.url+"Services/GetServiceOption")
   }
 
-  UpdateServiceOption(form: ServiceData)
+  UpdateServiceOption(form: ServiceOptionData)
   {
     
     return this.http.post(this.url + "Services/UpdateServiceOption" , form)
   }
 
-  AddServiceOption(form: ServiceTypeData)
+  AddServiceOption(form: ServiceOptionData)
   {
  
     return this.http.post(this.url + 'Services/AddServiceOption' , form)
   }
 
-  DeleteServiceOption(TypeID: any)
+  DeleteServiceOption(OptionID: any)
   {    
-    return this.http.delete(this.url + 'Services/DeleteServiceOption' , TypeID)
+    const params = new HttpParams().set('OptionID', OptionID );
+    return this.http.delete(this.url + 'Services/DeleteServiceType', {params})
   }
+
+
+  //*******************Service Package ******************/
+  PackageData: PackageData = null;
+
+  getServicePackages(): Observable<PackageData[]>
+  {
+    return this.http.get<PackageData[]>(this.url+"Services/RetrieveServicePackage")
+  }
+
+  AddServicePackage(form: PackageData)
+  {
+ 
+    return this.http.post(this.url + 'Services/CreateServicePackage' , form)
+  }
+
+  DeleteServicePackage(TypeID: any)
+  {    
+    return this.http.delete(this.url + 'Services/RemoveServicePackage' , TypeID)
+  }
+
 }

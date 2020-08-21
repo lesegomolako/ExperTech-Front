@@ -16,6 +16,7 @@ export class EditSOComponent implements OnInit {
   
 
   ngOnInit(): void {
+    this.resetForm();
 
     if (this.service.OptionData == null)
     {

@@ -9,11 +9,11 @@
     <div class="details">
         <div class="inputs">
             <label for="TypeName">Name</label>    
-            <input type="text" name="Name" [(ngModel)]="service.TypeData.Name" placeholder="Example: Hair">
+            <input type="text" name="Name" [(ngModel)]="service.TypeData.Name" placeholder="Example: Hair" required>
         </div>
         <div class="inputs">
             <label for="STName">Description</label>  
-            <textarea type="text" name="Description" [(ngModel)]="service.TypeData.Description" placeholder="Enter text..."></textarea>
+            <textarea type="text" name="Description" [(ngModel)]="service.TypeData.Description" required placeholder="Enter text..."></textarea>
         </div>
     </div>
 </div>

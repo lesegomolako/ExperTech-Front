@@ -15,15 +15,23 @@ export class DeleteServiceTypeComponent implements OnInit {
   }
 
   formData = this.service.TypeData;
+  
 
-  Delete(TypeID: any)
+  Delete()
   {
-
+    var ID = this.formData.TypeID
     if(confirm("Are you sure you want to delete this?"))
     {
-      this.service.DeleteServiceType(TypeID).subscribe(res =>
+      this.service.DeleteServiceType(ID).subscribe(res =>
         {
-          
+          if (res == "success")
+          {
+            alert("Successfully deleted")
+          }
+          else
+          {
+            alert("Error deleting Service Type. Redirecting to Service Type screen")
+          }
 
         })
     }

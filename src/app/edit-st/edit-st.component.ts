@@ -18,15 +18,19 @@ export class EditSTComponent implements OnInit {
   
 
   ngOnInit(): void {
+    
 
     if (this.service.TypeData == null)
     {
         this.title = "Add Service Type"
+        this.resetForm();
     }
     else
     {
         this.title = "Edit Service Type"
     }
+
+    
   }
 
  Save()
@@ -39,6 +43,7 @@ export class EditSTComponent implements OnInit {
 
  onSubmit(form: NgForm)
 {
+    
     if (form.value.TypeID == null)
     {
       this.AddType(form)
@@ -106,7 +111,7 @@ Cancel()
     this.service.TypeData = 
     {
       TypeID : null,
-      Name : "",
-      Description : "",}
+      Name : null,
+      Description : null,}
     }
 }

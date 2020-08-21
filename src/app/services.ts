@@ -36,3 +36,12 @@ export class ServiceOptionData
     Name: string;
     Duration:any;
 }
+
+export class PackageData
+{
+    PackageID: any;
+    Descrtiption: string;
+    Price: any;
+    Quantity: any;
+
+}
