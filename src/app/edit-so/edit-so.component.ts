@@ -16,11 +16,12 @@ export class EditSOComponent implements OnInit {
   
 
   ngOnInit(): void {
-    this.resetForm();
+    
 
     if (this.service.OptionData == null)
     {
         this.title = "Add Service Option"
+        this.resetForm();
     }
     else
     {
@@ -105,7 +106,7 @@ Cancel()
     this.service.OptionData = 
     {
       OptionID : null,
-      Name : "",
+      Name : null,
       Duration : null,}
     }
 }

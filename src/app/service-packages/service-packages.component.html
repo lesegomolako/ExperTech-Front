@@ -5,33 +5,17 @@
 
     <div class="contents">
         <ul>
-            <li>
+            <li *ngFor="let x of myServicePackageList | async">
                 <div class="icon"><mat-icon>face</mat-icon></div>
                 <div class="typeinfo">
-                    <div class="name">Wash + Blow</div>
+                    <div class="name">{{x.Service}}</div>
                     <div class="sub-text">
-                        <div>Service Type: Hair</div>
-                        <div>Price: R800</div>
-                        <div>Quantity: 5 uses</div>
+                        <div>Price: {{x.Price | number:'1.2-2'}}</div>
+                        <div>Quantity: {{x.Quantity}} uses</div>
                     </div>
                 </div>
                 <div class="buttons">
-                <button class="btn btn-danger" (click)="Delete()"><mat-icon inline=true>delete</mat-icon></button>
-                </div>
-            </li>
-            <li>
-                <div class="icon"><mat-icon>face</mat-icon></div>
-                <div class="typeinfo">
-                    <div class="name">Cut + Color</div>
-                    <div class="sub-text">
-                        <div>Service Type: Hair</div>
-                        <div>Price: R1000</div>
-                        <div>Quantity: 3 uses</div>
-                    </div>
-                </div>
-                <div class="buttons">
-
-                <button class="btn btn-danger" (click)="Delete()"><mat-icon inline=true>delete</mat-icon></button>
+                <button class="btn btn-danger" (click)="Delete(x)"><mat-icon inline=true>delete</mat-icon></button>
                 </div>
             </li>
         </ul>

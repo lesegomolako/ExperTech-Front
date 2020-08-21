@@ -1,29 +1,25 @@
 <div class="heading">
-    <h1>Edit Service Option</h1>
+    <h1>{{title}}</h1>
 </div>
-    
+   
+<form #form="ngForm" method="POST" (submit)="onSubmit(form)">
 <div class="contents">
     <h2>Enter Service Option details</h2>
-
+    <input hidden name = "OptionID" [(ngModel)] = "service.OptionData.OptionID"> 
     <div class="details">
         <div class="inputs">
             <label for="TypeName">Name</label>    
-            <input type="text" id="TypeName" placeholder="Example: Long or Short">
+            <input type="text" name="Name" [(ngModel)] ="service.OptionData.Name" placeholder="Example: Long or Short">
         </div>
         <div class="inputs">
             <label for="TypeName">Duration</label>    
-            <input type="text" id="TypeName" placeholder="Example: +5min">
-        </div>
-    </div>
-    <div class="details">
-        <div class="inputs">
-            <label for="TypeName">Price</label>    
-            <input type="text" id="TypeName" placeholder="Enter Price">
+            <input type="text" name="Duration" [(ngModel)] ="service.OptionData.Duration" placeholder="Example: +5min">
         </div>
     </div>
 </div>
 
 <div class="buttons">
-    <button class="btn btn-light">Cancel</button>
-    <button class="btn btn-success" (click)="Save()">Save</button>
+    <button class="btn btn-light" type="button" (click)="Cancel()">Cancel</button>
+    <button class="btn btn-success" type="submit">Save</button>
 </div>
+</form>

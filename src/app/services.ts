@@ -8,25 +8,35 @@ export class ServiceData
 {
     ServiceID: any;
     Name: string;
-    Description: string;
+    ServiceType: string;
     TypeID: any;
+    Description: string;
     Duration: any;
 
     ServiceImage:
-    [
-        {
-            Photo: ImageBitmap;
-        }
-    ]
+    {
+        Photo: ImageBitmap;
+    }
 
-    ServicePrice:
-    [
+    ServicePrices:  
+    [   
         {
-            PriceID: any;
-            ServiceID: any;
-            OptionID: any;
             Price: number;
         }
+    ]
+    
+    ServiceTypeOptions:
+    [   
+      {
+        Option: string;
+        OptionID: any;
+        ServicePrices:  
+        [   
+            {
+             Price: number;
+            }
+        ]
+      }
     ]
 }
 
@@ -40,7 +50,8 @@ export class ServiceOptionData
 export class PackageData
 {
     PackageID: any;
-    Descrtiption: string;
+    Service: string;
+    Name: string;
     Price: any;
     Quantity: any;
 

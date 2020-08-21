@@ -1,1 +1,69 @@
-<p>login works!</p>
+<div class="jumbotron" style="background-color: white;">
+    <div class="container">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <h3 style="text-align: center;">Login</h3>
+            <form [formGroup]="loginForm">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input (keypress)="omit_special_char($event)"
+                    type="text"
+                    formControlName="username"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+                    <div
+                    *ngIf="submitted && f.username.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.username.errors.required">Username is required</div>
+                  </div>
+                    
+                </div>
+                <div class="form-group">
+                    <label>Passwords</label>
+                    <input
+                    type="password"
+                    formControlName="password"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+                    />
+                    <div
+                     *ngIf="submitted && f.password.errors"
+                   class="invalid-feedback"
+            >
+              <div *ngIf="f.password.errors.required">Password is required</div>
+            </div>
+                    
+                </div>
+                <div style="text-align: center;">
+                    <div class="form-group">
+                      <button
+                        class="btn btn-primary"
+                        style="color: white; background-color: green;"
+                      >
+                        Submit
+                      </button>
+                      <a routerLink="/forgot">
+                        <button
+                          class="btn btn-primary"
+                          style="color: white; background-color: green;"
+                        >
+                          Forgot Password
+                        </button>
+                      </a>
+                      <a routerLink="/register">
+                      <button
+                        class="btn btn-primary"
+                        style="color: white; background-color: green;"
+                      >
+                        Register
+                      </button>
+                    </a>
+                    </div>
+                  </div>
+
+            </form>
+          </div>
+        </div>
+    </div>
+</div>

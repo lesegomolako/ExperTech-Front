@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ServicesService } from '../services.service';
+import { Router } from '@angular/router';
+import {Observable} from 'rxjs';
+import {ServiceData} from '../services';
 
 @Component({
   selector: 'app-tservices',
@@ -7,10 +11,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TServicesComponent implements OnInit {
 
-  constructor() { }
+  constructor(public service: ServicesService, private rouuter: Router) { }
+ 
+  ServicesList : Observable<ServiceData[]>;
 
-  ngOnInit(): void {
+  ngOnInit() 
+  {
+    this.loadList();
   }
 
- 
+  loadList()
+  {
+    this.ServicesList = this.service.getServices();
+  }
 }

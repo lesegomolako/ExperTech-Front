@@ -5,59 +5,20 @@
     
     <div class="contents">
         <ul>
-            <li>
+            <li *ngFor = "let x of ServicesList | async">
                 <div class="icon"><mat-icon>face</mat-icon></div>
                 <div class="typeinfo">
-                    <div class="name">Hair Cut</div>
+                    <div class="name">{{x.Name}}</div>
                     <div class="sub-text">
-                        <div>Service Type: Hair</div>
-                        <div>Price: R100</div>
+                        <div>Service Type: {{x.ServiceType}}</div>
+                        <div *ngFor = "let y of x.ServicePrices">Price: R{{y.Price}}</div>
+                    </div>
+                    <div class="sub-text">
+                        <div *ngFor = "let y of x.ServiceTypeOptions">{{y.Option}}: R<span *ngFor ="let z of y.ServicePrices">{{z.Price}}</span></div>
                     </div>
                 </div>
                 <div class="buttons">
                 <a [routerLink]="['/services/EditService']" class="btn btn-success" ><mat-icon inline=true>edit</mat-icon></a>
-                <a [routerLink]="['/services/DeleteService']" class="btn btn-danger" ><mat-icon inline=true>delete</mat-icon></a>
-                </div>
-            </li>
-            <li>
-                <div class="icon"><mat-icon>face</mat-icon></div>
-                <div class="typeinfo">
-                    <div class="name">Wash and Blow</div>
-                    <div class="sub-text">
-                        <div>Service Type: Hair</div>
-                        <div>Price: R100</div>
-                    </div>
-                </div>
-                <div class="buttons">
-                <a [routerLink]="['/services/EditService']" class="btn btn-success"><mat-icon inline=true>edit</mat-icon></a>
-                <a [routerLink]="['/services/DeleteService']" class="btn btn-danger" ><mat-icon inline=true>delete</mat-icon></a>
-                </div>
-            </li>
-            <li>
-                <div class="icon"><mat-icon>face</mat-icon></div>
-                <div class="typeinfo">
-                    <div class="name">Color</div>
-                    <div class="sub-text">
-                        <div>Service Type: Hair</div>
-                        <div>Price: R100</div>
-                    </div>
-                </div>
-                <div class="buttons">
-                <a [routerLink]="['/services/EditService']" class="btn btn-success"><mat-icon inline=true>edit</mat-icon></a>
-                <a [routerLink]="['/services/DeleteService']" class="btn btn-danger" ><mat-icon inline=true>delete</mat-icon></a>
-                </div>
-            </li>
-            <li>
-                <div class="icon"><mat-icon>face</mat-icon></div>
-                <div class="typeinfo">
-                    <div class="name">Brazillian</div>
-                    <div class="sub-text">
-                        <div>Service Type: Hair</div>
-                        <div>Price: R100</div>
-                    </div>
-                </div>
-                <div class="buttons">
-                <a [routerLink]="['/services/EditService']" class="btn btn-success"><mat-icon inline=true>edit</mat-icon></a>
                 <a [routerLink]="['/services/DeleteService']" class="btn btn-danger" ><mat-icon inline=true>delete</mat-icon></a>
                 </div>
             </li>

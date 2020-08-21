@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ServicesService } from '../services.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-sp',
@@ -7,10 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditSPComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: ServicesService, private router: Router) { }
 
   ngOnInit(): void {
   }
+
+  serviceList = this.service;
 
   Save()
   {
@@ -20,4 +24,6 @@ export class EditSPComponent implements OnInit {
     //confirm("Information has not been changed. Would you like to re-enter details?");
     //alert("Successfully updated");
   }
+
+
 }

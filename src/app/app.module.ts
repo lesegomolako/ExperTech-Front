@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceTypeComponent } from './service-type/service-type.component';
 import { EditSTComponent } from './edit-st/edit-st.component';
 import { ServicesComponent } from './services/services.component';
+//import { MatDialogModule } from '@angular/material/dialog';
 
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -59,6 +60,7 @@ import { LoginComponent } from './login/login.component';
     DeleteServiceTypeComponent,
     DeleteSOComponent,
     LoginComponent,
+    
     
   ],
   imports: [

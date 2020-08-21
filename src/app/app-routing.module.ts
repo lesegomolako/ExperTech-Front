@@ -37,7 +37,7 @@ const routes: Routes = [
       {path:'DeleteServiceType', component: DeleteServiceTypeComponent},
       {path:'DeleteServiceOption', component: DeleteSOComponent},
       {path:'DeleteService', component: DeleteServiceComponent},
-      {path:'Login', component: LoginComponent}
+      
       
    ]
   },
@@ -46,6 +46,7 @@ const routes: Routes = [
   {path:'EditProduct', component: EditProductComponent},
   {path:'AdminProduct', component: ProductComponent},
   {path:'DeleteProduct', component: DeleteProductComponent},
+  {path:'Login', component: LoginComponent}
   
 
 

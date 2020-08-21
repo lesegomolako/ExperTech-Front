@@ -38,6 +38,31 @@ export class ServicesService {
     return this.http.delete(this.url + 'Services/DeleteServiceType', {params})
   }
 
+  //*********************Service **************/
+  ServicesData: ServiceData = null;
+
+  getServices(): Observable<ServiceData[]>
+  {
+    return this.http.get<ServiceData[]>(this.url+"Services/GetService")
+  }
+
+  UpdateService(form: ServiceData)
+  {
+    
+    return this.http.post(this.url + "Services/UpdateService" , form)
+  }
+
+  AddService(form: ServiceTypeData)
+  {
+    return this.http.post(this.url + 'Services/AddService' , form)
+  }
+
+  DeleteService(ServiceID: any)
+  {    
+    const params = new HttpParams().set('ServiceID', ServiceID );
+    return this.http.delete(this.url + 'Services/DeleteService', {params})
+  }
+
   //************************Service Option *******************/
   OptionData: ServiceOptionData = null;
 
@@ -79,9 +104,9 @@ export class ServicesService {
     return this.http.post(this.url + 'Services/CreateServicePackage' , form)
   }
 
-  DeleteServicePackage(TypeID: any)
+  DeleteServicePackage(PackageID: any)
   {    
-    return this.http.delete(this.url + 'Services/RemoveServicePackage' , TypeID)
+    const params = new HttpParams().set('PackageID', PackageID );
+    return this.http.delete(this.url + 'Services/DeleteServiceType', {params})
   }
-
 }
