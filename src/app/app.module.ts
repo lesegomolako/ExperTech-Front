@@ -32,6 +32,17 @@ import { DeleteProductComponent } from './delete-product/delete-product.componen
 import { DeleteServiceComponent } from './delete-service/delete-service.component';
 import { DeleteServiceTypeComponent } from './delete-service-type/delete-service-type.component';
 import { DeleteSOComponent } from './delete-so/delete-so.component';
+import { ValidateComponent } from './Client/components/TextBoxValidator/validate/validate.component';
+import { EditComponent } from './Client/edit/edit.component';
+import { BrowseComponent } from './Client/browse/browse.component';
+import { RequestbComponent } from './Client/requestb/requestb.component';
+import { ScheduleComponent } from './booking/schedule/schedule.component';
+import { BasketComponent } from './Client/basket/basket.component';
+import { MakebookingComponent } from './booking/makebooking/makebooking.component';
+import { ViewbookingComponent } from './booking/viewbooking/viewbooking.component';
+import { ServicepComponent } from './Client/servicep/servicep.component';
+import { ConfirmComponent } from './booking/confirm/confirm.component';
+import { AdviseComponent } from './booking/advise/advise.component';
 
 
 import {HttpClientModule} from '@angular/common/http';
@@ -60,8 +71,17 @@ import { LoginComponent } from './login/login.component';
     DeleteServiceTypeComponent,
     DeleteSOComponent,
     LoginComponent,
-    
-    
+    ValidateComponent,
+    EditComponent,
+    BrowseComponent,
+    RequestbComponent,
+    ScheduleComponent,
+    BasketComponent,
+    MakebookingComponent,
+    ViewbookingComponent,
+    ServicepComponent,
+    ConfirmComponent,
+    AdviseComponent,
   ],
   imports: [
     BrowserModule, MatTableModule, MatSelectModule,

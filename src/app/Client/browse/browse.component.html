@@ -1,0 +1,81 @@
+<form  class="browse-component">
+
+  <div style="float: right;">
+    <div class="example-button-container">
+
+      
+      </div>
+      <div  class="example-button-container ">
+        <a routerLink='/register'><button mat-raised-button style="background-color: green;" >
+          <mat-icon> keyboard_return</mat-icon>
+          Back
+      </button></a>
+        
+      </div>
+  </div>
+
+
+    <div  class="grid-container ">
+ 
+      <div>
+
+          
+        <div *ngFor= "let basketproduct of product" class="c-card-flip">
+          <div class="c-card-flip__flipper">
+            
+            <div class="c-card-flip__front" >
+              <img style="width: 300px; height: 300px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTIPO1hJWjgrgHy5fRDv4FwWg75CjO4_mk_2g&usqp=CAU"  class="c-card-flip__image" alt="Card Image" />
+            </div>
+            
+            <div class="c-card-flip__back">
+              <h3 class="c-card-flip__title">
+                <h4>Category:  {{basketproduct.Category}}  <br>   Name:{{basketproduct.Name}}</h4>
+                
+                <h4>Quantity on Hand:{{basketproduct.QuantityOnHand}} </h4>
+                <h4>Price:{{basketproduct.Price}}  </h4>
+                <h5>Description: {{basketproduct.Description}}  </h5>
+              </h3>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <div  >
+                <div class="btn-group" role="group" aria-label="Third group">
+                  <button mat-raised-button style="background-color: green;" (click)="addproduct()">
+                    <mat-icon> add</mat-icon>
+                   Add
+                </button>
+                </div>
+                <div class="btn-group mr-2" role="group" aria-label="Second group">
+                  <mat-form-field style="background-color: gray;" >
+                      <mat-label style="color: black;"  >Quantity</mat-label>
+                      <input style="color: black;" type="number"  matInput>
+                    </mat-form-field>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <br>
+        <br>
+
+          
+       </div>
+        </div>
+        
+
+        
+</form>
+
+
+  
+  
+  
+
+
+  
+  
+  

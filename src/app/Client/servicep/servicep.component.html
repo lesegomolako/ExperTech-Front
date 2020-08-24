@@ -1,0 +1,51 @@
+<div>
+  <div  class="example-button-container" style="float: right;">
+    <a routerLink='/register'><button mat-raised-button style="background-color: green; width: 166px; " >
+      <mat-icon> keyboard_return</mat-icon>
+      Back
+  </button></a>
+  <br>
+  <br>
+  <a routerLink='/request'><button mat-raised-button style="background-color: green;" >
+    <mat-icon> question_answer</mat-icon>
+    Request Booking
+</button></a>
+
+  </div>
+
+    <div style="align-items: center;">
+      <h1>Angular HTML Table Example</h1>
+      <table style="width: 800px;" >
+         <thead>
+            <tr *ngFor= "let y of allservicepackage | async">
+               <td>Service: {{y.ServicePackage.Description}}</td>
+               <td>Expiry Date: {{y.ExpiryDate}}</td>
+            </tr>
+         </thead>
+        <br>
+         <thead>
+          <tr *ngFor= "let y of allservicepackage | async">
+            <td>Date: {{y.Date}}</td>
+             <td>Service Package used: {{y.InstanceStatu.Status}} </td>
+          </tr>
+       </thead>
+         <tbody>
+            <tr >
+               <th>d</th>
+               <td>dd</td>
+            </tr>
+         </tbody>
+         <thead>
+          <tr>
+             <th>Number of Service Package left:</th>
+  
+             <th>number</th>
+          </tr>
+       </thead>
+      </table>
+   </div>
+
+
+    
+      
+</div>

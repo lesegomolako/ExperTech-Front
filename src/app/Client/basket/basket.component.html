@@ -1,0 +1,114 @@
+<form  class="browse-component">
+  <div style="align-items: center;">
+
+      <div style="float: right;" class="example-button-container">
+        <a routerLink='/register'>          <button mat-raised-button style="background-color: green;" >
+          <mat-icon> keyboard_return</mat-icon>
+          Back
+      </button></a>
+<br>
+<br>
+<a routerLink='/browse'><button mat-raised-button style="background-color: green;" >
+  <mat-icon> add</mat-icon>
+  Add
+</button></a>
+      </div>
+      
+  </div>
+  
+ <br>
+ 
+  <div  style="background-color: green; float: right; " class="cartchec c-card--center" >
+
+  
+    <div class="c-card__body">
+      <h2 class="c-card__title">
+        Cart Summary
+      </h2>
+      <p class="c-card__subtitle">
+        center modifier
+      </p>
+      
+      <p class="c-card__intro">
+        Total:({{pro}} item) 
+      </p>
+      <p class="c-card__intro">
+        {{total}}
+      </p>
+    </div>
+  
+    <footer class="c-card__footer">
+      <button mat-raised-button style="background-color: grey; width: 80%;"  (click)="openDialog()">
+
+        Submit
+    </button>
+    </footer>
+  </div>
+  <div>
+
+      <form> 
+    <div *ngFor= "let line of basket" class="c-card c-card--wide">
+      <div class="c-card-flip__flipper">
+ 
+        <header class="c-card__header">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTIPO1hJWjgrgHy5fRDv4FwWg75CjO4_mk_2g&usqp=CAU"  class="c-card__image" alt="Card Image" />
+        </header>
+    
+        <div class="c-card__body">
+          <h2 class="c-card__title">
+            Category {{line.Product.Category}}
+          </h2>
+          <h2 class="c-card__title">
+            Name:  {{line.Product.Name}}
+          </h2>
+          <label>
+            Price:  {{line.Product.Price}}
+           </label>
+<p></p>
+           <label class="c-card__subtitle">{{line.Product.Description}}</label>
+        </div>
+    
+        <footer class="c-card__footer">
+          <mat-form-field appearance="fill">
+            <mat-label></mat-label>
+            <mat-select disableRipple [(value)]= "quantity" >
+              <mat-option (click) = "updateBasket()" [value]="1"> 1</mat-option>
+              <mat-option (click) = "updateBasket()" [value]="2"> 2</mat-option>
+              <mat-option (click) = "updateBasket()" [value]="3"> 3</mat-option>
+              <mat-option (click) = "updateBasket()" [value]="4"> 4</mat-option>
+              <mat-option (click) = "updateBasket()" [value]="5"> 5</mat-option>
+              <mat-option (click) = "updateBasket()" [value]="6"> 6</mat-option>
+              <mat-option (click) = "updateBasket()" [value]="7"> 7</mat-option>
+
+
+            </mat-select>
+          </mat-form-field>
+
+          <button mat-raised-button style="background-color: green;" (click)="remove()" >
+            <mat-icon> remove_circle</mat-icon>
+            Remove
+        </button>
+        </footer>
+
+      </div>
+
+    </div>
+  </form>   
+   </div>
+
+
+  <div>
+
+  </div>
+
+</form>
+
+
+  
+  
+  
+
+
+  
+  
+  

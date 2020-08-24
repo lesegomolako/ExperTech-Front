@@ -1,0 +1,79 @@
+      
+      <div class="row">
+        
+          <div class="col-md-6 offset-md-3">
+              <h1>All fields need to be filled in</h1>
+              <form [formGroup]="validateForm" (ngSubmit)="onSubmit()">
+                  <div class="form-group">
+                      <label> Name</label>
+                    
+                      <input type="text"  (keypress)="omit_special_char($event)" mdInput name="username" name='name' formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                      <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                          <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label>Surname</label>
+                      <input type="text" (keypress)="omit_special_char($event)" mdInput name="name" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                      <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                          <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Contact number</label>
+                    <input type="number" maxlength="10" (keypress)="omit_special_char($event)" mdInput name="name" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"  />
+                    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                        <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                    </div>
+                </div>
+                  <div class="form-group">
+                      <label>Email</label>
+                      <input type="email"  formControlName="email" class="form-control"  />
+                      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                          <div *ngIf="f.email.errors.required">Email is required</div>
+                          <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" (keypress)="omit_special_char($event)" mdInput name="name" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                        <div *ngIf="f.username.errors.required">Username</div>
+                        <div *ngIf="f.username.errors.username">Enter username</div>
+                    </div>
+                </div>
+                  <div class="form-group">
+                      <label>Password</label>
+                      <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                      <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                          <div *ngIf="f.password.errors.required">Password is required</div>
+                          <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                          			<div class="error-messages">
+				<ng-container *ngFor="let error of error_messages.password">
+					<div class="error-message" *ngIf="loginForm.get('password').hasError(error.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+						{{ error.message }}
+					</div>
+				</ng-container>
+			</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.confirm.errors.required">Password is required</div>
+                        <div *ngIf="f.confirm.errors.minlength">Password must be at least 6 characters</div>
+                        <ng-container *ngFor="let error of error_messages.confirmpassword">
+                            <div class="error-message" *ngIf="loginForm.get('confirmpassword').hasError(error.type) && (loginForm.get('confirmpassword').dirty || loginForm.get('confirmpassword').touched)">
+                                {{ error.message }}
+                            </div>
+                        </ng-container>
+                    </div>
+
+                </div>
+                  <div class="form-group">
+                      <button class="btn btn-primary">Register</button>
+                  </div>
+              </form>
+          </div>
+      </div>
