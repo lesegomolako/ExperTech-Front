@@ -57,25 +57,38 @@ this.total +=(res.Quantity * res.Product.Price)
 }
 
 item(){
+  this.pro=0
   this.basket.forEach(res => {
+    
     this.pro +=(res.Quantity)
       })
 }
 
 
 
-remove(){
+remove(item_in_basket:BasketLine){
 
-  this.id = this.route.snapshot.params['id'];
-  
-  this.api.RemoveProduct(this.id).subscribe(data => {
-    console.log(data)
+  console.log("REMOVE LINE :"+item_in_basket.Product.Name)
+  this.api.RemoveProduct(item_in_basket.BasketID,item_in_basket.ProductID).subscribe(data => {
+    console.log("REMOVED PRODUCT RESULT",data)
+    for(var i =0;i<this.basket.length;i++)
+    {
+      var single:BasketLine = this.basket[i];
+      if(single.ProductID == item_in_basket.ProductID)
+      this.basket.splice(i,1)
+    }
+    //alert("Successfully removed Product "+item_in_basket.Product.Name)
   }, error => console.log("Error",error));
 }
 
-updateBasket()
+updateBasket(event,line:BasketLine)
 {
-  alert(this.quantity)
+  var num = Number(event.target.value)
+  line.Quantity=num;
+  this.item();
+  console.log("New Value",line)
+  this.api.Addproduct(line.BasketID,line).subscribe(data => {
+  }, error => console.log("error edit component",error));
 }
 
 

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import {MatTableDataSource} from '@angular/material/table';
 
 
+
 @Component({
   selector: 'app-servicep',
   templateUrl: './servicep.component.html',
@@ -18,7 +19,11 @@ export class ServicepComponent implements OnInit {
   
   dataSaved = false;  
   packageForm: any;  
-  allservicepackage: Observable<ClientPackage[]>;  
+  allservicepackage: Observable<ClientPackage[]>;
+  total: 0;
+  
+
+    
  
   massage = null; 
 
@@ -32,5 +37,6 @@ export class ServicepComponent implements OnInit {
 
 loadservicepackage() {  
   this.allservicepackage = this.service.ViewServicePackage();
-} 
+}
+
 }

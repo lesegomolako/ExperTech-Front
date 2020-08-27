@@ -1,199 +1,148 @@
 
-
-    <div style="float: right;">
-
-        <div class="example-button-container">
-
-      
-          
-          </div>
-          <div  class="example-button-container">
-            <a routerLink='/register'><button mat-raised-button style="background-color: green; " >
-              <mat-icon> keyboard_return</mat-icon>
-              Back
-          </button></a>
-          <br>
-          <br>
-          <button mat-raised-button style="background-color: green; align-items: center; width:99% " >
-            Submit
-        </button>
-          </div>
-
-      </div>
-      <div  class="example-button-container">
-
-        
-      </div>
-      <div >
-        <div style="background-color: #35b729;" class="card_hover" >
-
-          <h1 style="text-align: center;">Please fill in all the booking details</h1>
-<div style="text-align: center; color: black;" class="card-hover">
-  
- 
- 
-  <h4>Use Service Package</h4>
-  <mat-radio-group  aria-label="Select an option">
-     <mat-radio-button  value="1">Yes</mat-radio-button>
-     <mat-radio-button value="2">No</mat-radio-button>
-   </mat-radio-group>
- <p></p>
-  
-     <h4>Select Service type</h4>
- <mat-form-field  appearance="fill">
-   <mat-label style="color: black;">Hair, Nails,Massage</mat-label>
-   <mat-select [formControl]="bookingControl" required>
-     <mat-option>--</mat-option>
-     <mat-option *ngFor="let type of types" [value]="type">
-       {{type.name}}
-     </mat-option>
-   </mat-select>
-   <mat-error *ngIf="bookingControl.hasError('required')">Please choose service</mat-error>
-   <mat-hint>{{bookingControl.value?.sound}}</mat-hint>
- </mat-form-field>
- 
-
- <h4>Select Service </h4>
- 
- <mat-form-field style="margin-left: 5%;" appearance="fill">
-   <mat-label style="color: black;">service for booking</mat-label>
-   <mat-select [formControl]="bookingControl" required>
-     <mat-option>--</mat-option>
-     <mat-option *ngFor="let service of services" [value]="service">
-       {{service.name}}
-     </mat-option>
-   </mat-select>
-   
-   <mat-error *ngIf="bookingControl.hasError('required')">Please choose service</mat-error>
-   <mat-hint>{{bookingControl.value?.sound}}</mat-hint>
-
- </mat-form-field>
- <input type="image"  src="data:image/jpeg;base64,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" class="thumbnail" 
- style="float: right;" alt="service image" height="50" width="50" />
-
-
- 
- <p></p>
- 
- <h4>Select Service option</h4>
- <mat-form-field appearance="fill">
-   <mat-label style="color: black;">Long, short, Medium</mat-label>
-   <mat-select [formControl]="bookingControl" required>
-     <mat-option>--</mat-option>
-     <mat-option *ngFor="let option of options" [value]="option">
-       {{option.name}}
-     </mat-option>
-   </mat-select>
-   <mat-error *ngIf="bookingControl.hasError('required')">Please choose the length of your hair</mat-error>
-   <mat-hint>{{bookingControl.value?.sound}}</mat-hint>
- </mat-form-field>
- 
- <h4>Select Employee for service type</h4>
- <mat-form-field appearance="fill">
-   <mat-label style="color: black;">Employee Name</mat-label>
-   <mat-select [formControl]="bookingControl" required>
-     <mat-option>--</mat-option>
-     <mat-option *ngFor="let employee of employees" [value]="employee">
-       {{employee.name}}
-     </mat-option>
-   </mat-select>
-   <mat-error *ngIf="bookingControl.hasError('required')">Please choose an employee</mat-error>
-   <mat-hint>{{bookingControl.value?.sound}}</mat-hint>
- </mat-form-field>
- <br>
- <h4>Pick date and time for Appointment</h4>
- <mat-form-field color="accent" appearance="fill">
-     <mat-label style="color: black;">Appointment date</mat-label>
-     <input matInput [matDatepicker]="picker1">
-     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-     <mat-datepicker #picker1></mat-datepicker>
-   </mat-form-field>
-   
-   <mat-form-field appearance="fill">
-     <mat-label style="color: black;" >Appointment time  </mat-label>
-     <mat-select [formControl]="bookingControl" required>
-       <mat-option>--</mat-option>
-       <mat-option *ngFor="let time of times" [value]="time">
-         {{time.name}}
-       </mat-option>
-     </mat-select>
-     <mat-error *ngIf="bookingControl.hasError('required')">Please choose Appointment time</mat-error>
-     <mat-hint>{{bookingControl.value?.sound}}</mat-hint>
-   </mat-form-field>
-   <mat-accordion  class="example-headers-align">
-    <mat-expansion-panel style="background-color: grey;" [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title style="color: black;">
-          Other person details
-        </mat-panel-title>
-        <mat-panel-description style="color: black;">
-          Type the other person deatils 
-          <mat-icon>account_circle</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-  
-      <mat-form-field>
-        <mat-label style="color: black;">First name</mat-label>
-        <input matInput>
-      </mat-form-field>
-  <p></p>
-      <mat-form-field>
-        <mat-label style="color: black;">Last name</mat-label>
-        <input matInput>
-      </mat-form-field>
-      <p></p>
-      <mat-form-field>
-        <mat-label style="color: black;">Contact number</mat-label>
-        <input matInput  type="text" ng-model="sample" maxlength="10"  >
-      </mat-form-field>
-      <p></p>
-      <mat-form-field>
-        <mat-label style="color: black;">Email</mat-label>
-        <input matInput  type="text"  >
-      </mat-form-field>
-      <mat-action-row>
- 
-        <button mat-button color="primary" (click)="nextStep()">Next</button>
-      </mat-action-row>
-
-    </mat-expansion-panel>
-
-    <mat-expansion-panel style="background-color: grey;" [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
-        <mat-expansion-panel-header>
-          <mat-panel-title style="color: black;">
-            Notes
-          </mat-panel-title>
-          <mat-panel-description style="color: black;">
-            Type notes that the empoyee needs to know
-            <mat-icon>map</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-    
-        <mat-form-field class="example-full-width">
-            <mat-label style="color: black;">Importent things the employee should to know</mat-label>
-            <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
-          </mat-form-field>
-    
-        <mat-action-row>
-          <button mat-button color="warn" (click)="prevStep()">Previous</button>
-
-        </mat-action-row>
-      </mat-expansion-panel>
-
-  </mat-accordion>
-
+<form [formGroup]="BookingForm" (submit)="onSubmit()" style="background-color: green;">
+  <div style="float: right;">
 
    
+    <div  class="example-button-container">
+      <a routerLink='/register'><button mat-raised-button style="background-color: gray; " >
+        <mat-icon> keyboard_return</mat-icon>
+          Back
+      </button></a>
+      <br>
+      <br>
+      <button mat-raised-button type="submit" style="background-color: gray; align-items: center; width:99% " >
+        Submit 
+      </button>
+    </div>
+
   </div>
- 
-        </div>
-      
-      
-      </div>
-      <div style="align-content: center;">
 
-        
-      </div>
+<div>
+  <div  class="card_hover"  >
+
+  <h1 style="text-align: center;">Please fill in all the booking details</h1>
+  <div style="text-align: center; color: black; " class="card-hover">
+  <h4>Select Service type</h4>
+
+  <mat-form-field  appearance="fill" >
+    <mat-label style="color: black;">Hair, Nails,Massage</mat-label>
+  <mat-select #typeid required>
+    <mat-option>--</mat-option>
+    <mat-option *ngFor="let x of ServiceType " value ={{x.TypeID}}>
+    {{x.Name}}
+    </mat-option>
+  </mat-select>
+  <mat-error >Please choose service</mat-error>
+  <mat-hint></mat-hint>
+  </mat-form-field>
+
+
+<h4>Select Service </h4>
+
+<mat-form-field style="margin-left: 5%;" appearance="fill">
+<mat-label style="color: black;">service for booking</mat-label>
+<mat-select  name="ServiceID" formControlName="ServiceControl" required>
+ <mat-option>--</mat-option>
+ <mat-option *ngFor="let x of Service " value ={{x.ServiceID}}>
+  {{x.Name}}
+ </mat-option>
+</mat-select>
+
+<!-- <mat-error *ngIf="ServiceControl.hasError('required')">Please choose service</mat-error>
+<mat-hint>{{ServiceControl.value?.sound}}</mat-hint> -->
+
+</mat-form-field>
+<input type="image"  src="" class="thumbnail" 
+style="float: right;" alt="service image" height="50" width="50" />
+
+
+
+<p></p>
+
+<h4>Select Service option</h4>
+<mat-form-field appearance="fill">
+<mat-label style="color: black;">Long, short, Medium</mat-label>
+<mat-select formControlName="OptionControl" name="OptionID"  required>
+ <mat-option>--</mat-option>
+ <mat-option *ngFor="let x of ServiceOptions" value ={{x.OptionID}} >
+  {{x.Name}}
+ </mat-option>
+</mat-select>
+<!-- <mat-error *ngIf="OptionControl.hasError('required')">Please choose the length of your hair</mat-error>
+<mat-hint>{{OptionControl.value?.sound}}</mat-hint> -->
+</mat-form-field>
+
+<!-- <h4>Select Employee for service type</h4>
+<mat-form-field appearance="fill">
+<mat-label style="color: black;">Employee Name</mat-label>
+<mat-select [formControl]="bookingControl" [(ngModel)]="BookingData." required>
+ <mat-option>--</mat-option>
+ <mat-option *ngFor="let x of Employee " value ={{x.EmployeeID}}>
+  {{x.Name}}
+ </mat-option>
+</mat-select>
+<mat-error *ngIf="bookingControl.hasError('required')">Please choose an employee</mat-error>
+<mat-hint>{{bookingControl.value?.sound}}</mat-hint>
+</mat-form-field>
+<br> -->
+
+<h4>Pick date and time for Appointment</h4>
+<mat-form-field color="accent" appearance="fill">
+ <mat-label style="color: black;">Appointment date</mat-label>
+ <input matInput [matDatepicker]="picker1" name="Date" formControlName="DateControl">
+ <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
+ <mat-datepicker #picker1 ></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+ <mat-label style="color: black;" >Appointment time  </mat-label>
+ <mat-select required name="StartTime" formControlName="TimeControl">
+   <mat-option>--</mat-option>
+   <mat-option *ngFor="let x of Times " value ={{x.StartTime}} >
+    {{x.StartTime}}
+   </mat-option>
+ </mat-select>
+ <!-- <mat-error *ngIf="TimeControl.hasError('required')">Please choose Appointment time</mat-error>
+ <mat-hint>{{TimeControl.value?.sound}}</mat-hint> -->
+</mat-form-field>
+
+
+<mat-accordion  class="example-headers-align" style="background-color: white;">
+
+<mat-expansion-panel style="background-color: grey;" [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title style="color: black;">
+        Notes
+      </mat-panel-title>
+      <mat-panel-description style="color: black;">
+        Type notes that the empoyee needs to know
+        <mat-icon>map</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field class="example-full-width">
+        <mat-label style="color: black;">Importent things the employee should to know</mat-label>
+        <textarea formControlName="NotesControl" matInput placeholder="Ex. It makes me feel..." name="Notes" [(ngModel)]="BookingData.BookingNotes[0].Notes"></textarea>
+      </mat-form-field>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+
+    </mat-action-row>
+  </mat-expansion-panel>
+
+</mat-accordion>
+
+
+
+</div>
+
+    </div>
+  
+  
+  </div>
+</form>
+
 
 
 

@@ -18,7 +18,7 @@
       <table style="width: 800px;" >
          <thead>
             <tr *ngFor= "let y of allservicepackage | async">
-               <td>Service: {{y.ServicePackage.Description}}</td>
+               <td>Service: {{y.ServicePackage.Name}}</td>
                <td>Expiry Date: {{y.ExpiryDate}}</td>
             </tr>
          </thead>
@@ -29,17 +29,11 @@
              <td>Service Package used: {{y.InstanceStatu.Status}} </td>
           </tr>
        </thead>
-         <tbody>
-            <tr >
-               <th>d</th>
-               <td>dd</td>
-            </tr>
-         </tbody>
          <thead>
-          <tr>
+          <tr *ngFor= "let y of allservicepackage | async">
              <th>Number of Service Package left:</th>
   
-             <th>number</th>
+             <td>{{y.TotalAvailable}}</td>
           </tr>
        </thead>
       </table>

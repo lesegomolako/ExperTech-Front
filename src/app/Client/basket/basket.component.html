@@ -33,7 +33,7 @@
         Total:({{pro}} item) 
       </p>
       <p class="c-card__intro">
-        {{total}}
+        R: {{total}}
       </p>
     </div>
   
@@ -69,22 +69,9 @@
         </div>
     
         <footer class="c-card__footer">
-          <mat-form-field appearance="fill">
-            <mat-label></mat-label>
-            <mat-select disableRipple [(value)]= "quantity" >
-              <mat-option (click) = "updateBasket()" [value]="1"> 1</mat-option>
-              <mat-option (click) = "updateBasket()" [value]="2"> 2</mat-option>
-              <mat-option (click) = "updateBasket()" [value]="3"> 3</mat-option>
-              <mat-option (click) = "updateBasket()" [value]="4"> 4</mat-option>
-              <mat-option (click) = "updateBasket()" [value]="5"> 5</mat-option>
-              <mat-option (click) = "updateBasket()" [value]="6"> 6</mat-option>
-              <mat-option (click) = "updateBasket()" [value]="7"> 7</mat-option>
+          <input value="{{line.Quantity}}" (change)='updateBasket($event,line)'>
 
-
-            </mat-select>
-          </mat-form-field>
-
-          <button mat-raised-button style="background-color: green;" (click)="remove()" >
+          <button mat-raised-button style="background-color: green;" (click)="remove(line)" >
             <mat-icon> remove_circle</mat-icon>
             Remove
         </button>
