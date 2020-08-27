@@ -37,9 +37,6 @@ import { DeleteSOComponent } from './delete-so/delete-so.component';
 import {HttpClientModule} from '@angular/common/http';
 import { ServicesService }  from './services.service';
 import { LoginComponent } from './login/login.component';
-import { StockComponent } from './stock/stock.component';
-import { AddstockComponent } from './Stock/addstock/addstock.component';
-import { EditstockComponent } from './Stock/editstock/editstock.component';
 
 
 
@@ -63,9 +60,6 @@ import { EditstockComponent } from './Stock/editstock/editstock.component';
     DeleteServiceTypeComponent,
     DeleteSOComponent,
     LoginComponent,
-    StockComponent,
-    AddstockComponent,
-    EditstockComponent,
     
     
   ],
