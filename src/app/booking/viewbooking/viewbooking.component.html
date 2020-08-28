@@ -7,25 +7,13 @@
         </button></a>
         <br>
         <br>
-        <button mat-raised-button style="background-color: green; align-content: center;width:99% " >
-            <mat-icon>clear</mat-icon>
-            Delete
-        </button>
+
         <br>
         <br>
-        <!-- <a routerLink='/register'><button mat-raised-button style="background-color: green; width:99%"  >
-            <mat-icon>event_available</mat-icon>
-            Accpet
-        </button></a>
-        <br>
-        <br>
-        <a routerLink='/register'><button mat-raised-button style="background-color: green; width:99%" >
-            <mat-icon>auto_delete</mat-icon>
-            Reject
-        </button></a> -->
+
     </div>
 
-    <div style="text-align: center; color: black;" class="card-hover">
+    <div *ngFor="let client of booking" style="text-align: center; color: black;" class="card-hover">
         <article  class="c-card c-card--center">
     
 
@@ -38,27 +26,31 @@
                 <label for=""><h2 class="c-card__title">
                Service type: 
               </h2></label>
-<br>
-<label for=""><h2 class="c-card__title">
-                Service: Wash and Blow
+              <br>
+            
+            <div *ngFor="let x of client.BookingLines">
+              <label  ><h2 class="c-card__title">
+                Service: {{x.Service}}
+              </h2></label>
+              <br>
+              <label><h2 class="c-card__title">
+                Service option: {{x.Option}}
+              </h2></label>
+            </div>
+
+            <div *ngFor="let x of client.EmployeeSchedule">
+              <br>
+              <label for=""><h2 class="c-card__title">
+                Employee for Service: {{x.Employee}}
               </h2></label>
               <br>
               <label for=""><h2 class="c-card__title">
-                Service option: Long
+                Appointment Date: {{x.Date}}
               </h2></label>
               <br>
               <label for=""><h2 class="c-card__title">
-                Employee for Service: Ally
-              </h2></label>
-              <br>
-              <label for=""><h2 class="c-card__title">
-                Appointment Date: 7/22/2020
-              </h2></label>
-              <br>
-              <label for=""><h2 class="c-card__title">
-                Appointment Time: 12:30-13:30
-              </h2> </label>
-              
+                Start Time: {{x.StartTime}}
+              </h2> </label>             
             </div>
         
             <footer style="align-content: center;" class="c-card__footer">
@@ -66,10 +58,21 @@
                     <button mat-raised-button style="background-color: gray; align-items: center; color: black; " >
                       Okay
                   </button>
-
-           
+                  <button mat-raised-button style="background-color: gray; align-items: center; color: black; float: right;" >
+                    Delete
+                </button>
+                <br>
+                <button mat-raised-button style="background-color: gray;"  (click)="Accept()" >
+                  
+                  Accpet
+              </button>
+              <br>
+              <br>
+              <button mat-raised-button style="background-color: gray; float: right;"  (click)="reject()" > 
+                  Reject
+              </button>
+              
             </footer>
-        
-          </article>
+
     </div>
 

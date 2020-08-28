@@ -27,9 +27,10 @@ export class ViewbookingComponent implements OnInit {
   ngOnInit(): void {
     this.booking = new Booking();
 
-    this.id = this.route.snapshot.params['id'];
+    this.id = 2
+    // this.id = this.route.snapshot.params['id'];
     
-    this.api.getClientBookings(this.id).subscribe(data => {
+    this.api.ViewClientBooking(this.id).subscribe(data => {
       console.log("Client Booking Details",data)
       this.booking = data;
     }, error => console.log("Error",error));
@@ -38,5 +39,16 @@ export class ViewbookingComponent implements OnInit {
 
   list(){
     this.router.navigate(['Booking']);
+  }
+
+  reject(){
+    this.api.RejectBooking(this.id).subscribe(data=>{
+      alert("Booking successfully rejected,Booking will be deleted. Please make another booking with a different time")
+     });
+  }
+  Accept(){
+    this.api.AcceptBooking(this.id).subscribe(data=>{
+      alert("Booking successfully accepted")
+     });
   }
 }

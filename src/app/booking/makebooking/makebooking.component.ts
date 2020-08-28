@@ -44,10 +44,28 @@ export class MakebookingComponent implements OnInit {
   Schedge: Observable<Schedule[]>;
   Times =[];
   
+  servControl = true;
+  optControl = true;
+  TimeDateControl = true;
   
   BookingData: Booking;
 
-  
+  EnableForm()
+  {
+    this.servControl = false;
+  }
+
+  EnableOptForm()
+  {
+    this.optControl = false;
+
+  }
+
+  EnableTimeForm()
+  {
+    this.TimeDateControl = false;
+
+  }
 
   ngOnInit(): void {
     
@@ -73,12 +91,21 @@ resetForm(form?: NgForm)
   {
      BookingID: null,
     ClientID : 2,
+    Status: null,
     BookingLines:
       [{
         ServiceID: null,
         OptionID: null,
+        Service:null,
       }],
-  
+      EmployeeSchedule: [
+        {
+            Date: null,
+            StartTime: null,
+            EndTime: null,
+            Employee: null,
+        }
+    ],
     DateRequesteds:
       [{
         Date: null,
@@ -143,6 +170,6 @@ LoadList()
 }
 
 list(){
-  this.router.navigate(['ClientProfile']);
+  this.router.navigate(['Home']);
 }
 }

@@ -7,16 +7,16 @@
         </button></a>
         <br>
         <br>
-        <button mat-raised-button style="background-color: green; align-content: center;width:99% " (click)="openDialog()"  >
+        <button mat-raised-button style="background-color: green; align-content: center;width:99% " (click)="deletes()"  >
             <mat-icon>clear</mat-icon>
             Delete
         </button>
         <br>
         <br>
-        <a routerLink='/register'><button mat-raised-button style="background-color: green; width:99%" (click)="openDialog()"  >
+        <button mat-raised-button style="background-color: green; width:99%" (click)="confirm()"  >
             <mat-icon>event_available</mat-icon>
             Confirm
-        </button></a>
+        </button>
     </div>
 
     <div style="text-align: center; color: black;" class="card-hover">
@@ -53,16 +53,10 @@
           </h2>
 <br>
 <br>
-
-   <h1>Other person details</h1>
-            <h3 class="c-card__subtitle">Name: Susan</h3>
-            <h3 class="c-card__subtitle">Surname: Parker</h3>
-            <h3 class="c-card__subtitle">Contact details:0615923450</h3>
-            <h3 class="c-card__subtitle">Email: Noreal@gmail.com</h3>
               
             </div>
         
-            <footer style="align: center;" class="c-card__footer">
+            <footer style="align-items: center;" class="c-card__footer">
               
                     <button mat-raised-button style="background-color: gray; align-items: center; color: black;" >
                       Okay
