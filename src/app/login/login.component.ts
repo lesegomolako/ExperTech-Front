@@ -11,7 +11,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { from } from 'rxjs';
 import { Router } from '@angular/router';
-import { ServicesService } from '../services.service';
+//import { ServicesService } from '../services.service';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-    public service: ServicesService
+   // public service: ServicesService
 
   ) { }
 

@@ -1,0 +1,24 @@
+<div class="heading">
+    <h1>Delete Product</h1>
+</div>
+    
+<div class="contents">
+    <h2>Product details</h2>
+
+    <div class="details">
+        <div class="inputs">
+            <label ><b>Name:</b> {{formData.Name}}</label>    
+            <label ><b>Description:</b> {{formData.Description}}</label>  
+            <label ><b>Quantity:</b> {{formData.QuantityOnHand}}</label>    
+            <label ><b>Price:</b> R{{formData.Price}}</label>  
+            <label ><b>Supplier:</b> {{formData.Supplier}}</label>    
+            <label ><b>Category:</b> {{formData.Category}}</label>    
+        
+        </div>
+    </div>
+</div>
+
+<div class="buttons">
+    <button class="btn btn-light">Cancel</button>
+    <button class="btn btn-danger" (click)="Delete()">Delete</button>
+</div>

@@ -1,27 +1,27 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ServicesComponent } from './services/services.component';
-import { ServiceTypeComponent } from './service-type/service-type.component';
-import { TServicesComponent } from './tservices/tservices.component';
-import { ServiceOptionsComponent } from './service-options/service-options.component';
-import { ServicePackagesComponent } from './service-packages/service-packages.component';
-import { EditSTComponent } from './edit-st/edit-st.component';
+import { ServicesComponent } from './Service/services/services.component';
+import { ServiceTypeComponent } from './Service/service-type/service-type.component';
+import { TServicesComponent } from './Service/tservices/tservices.component';
+import { ServiceOptionsComponent } from './Service/service-options/service-options.component';
+import { ServicePackagesComponent } from './Service/service-packages/service-packages.component';
+import { EditSTComponent } from './Service/edit-st/edit-st.component';
 import { ClientMenuComponent } from './client-menu/client-menu.component';
-import { EditServiceComponent } from './edit-service/edit-service.component';
-import { EditSOComponent } from './edit-so/edit-so.component';
-import { EditSPComponent } from './edit-sp/edit-sp.component';
-import { EditProductComponent } from './edit-product/edit-product.component';
-import { ProductComponent } from './product/product.component';
-import { DeleteProductComponent } from './delete-product/delete-product.component';
-import { DeleteServiceTypeComponent } from './delete-service-type/delete-service-type.component';
-import { DeleteSOComponent } from './delete-so/delete-so.component';
-import { DeleteServiceComponent } from './delete-service/delete-service.component';
+import { EditServiceComponent } from './Service/edit-service/edit-service.component';
+import { EditSOComponent } from './Service/edit-so/edit-so.component';
+import { EditSPComponent } from './Service/edit-sp/edit-sp.component';
+import { EditProductComponent } from './Product/edit-product/edit-product.component';
+import { ProductComponent } from './Product/product/product.component';
+import { DeleteProductComponent } from './Product/delete-product/delete-product.component';
+import { DeleteServiceTypeComponent } from './Service/delete-service-type/delete-service-type.component';
+import { DeleteSOComponent } from './Service/delete-so/delete-so.component';
+import { DeleteServiceComponent } from './Service/delete-service/delete-service.component';
 import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
 
-  {path: '', redirectTo: '/services',pathMatch: 'full'},
+  {path: '', redirectTo: '/home',pathMatch: 'full'},
 
   {path:'services', component: ServicesComponent,
    children: [
@@ -42,7 +42,7 @@ const routes: Routes = [
    ]
   },
 
-  {path:'c-menu', component: ClientMenuComponent},
+  {path:'home', component: ClientMenuComponent},
   {path:'EditProduct', component: EditProductComponent},
   {path:'AdminProduct', component: ProductComponent},
   {path:'DeleteProduct', component: DeleteProductComponent},
