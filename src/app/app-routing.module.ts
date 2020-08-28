@@ -17,6 +17,18 @@ import { DeleteServiceTypeComponent } from './delete-service-type/delete-service
 import { DeleteSOComponent } from './delete-so/delete-so.component';
 import { DeleteServiceComponent } from './delete-service/delete-service.component';
 import { LoginComponent } from './login/login.component';
+import { AdminComponent } from './admin/admin.component';
+import { AvailableComponent } from './available/available.component';
+import { CbookingComponent } from './cbooking/cbooking.component';
+import { ClientComponent } from './client/client.component';
+import { ConfirmComponent } from './confirm/confirm.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { ForgotComponent } from './forgot/forgot.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { PickupComponent } from './pickup/pickup.component';
+import { RegisterComponent } from './register/register.component';
+import { SetupComponent } from './setup/setup.component';
+import { SpackageComponent } from './spackage/spackage.component';
 
 
 const routes: Routes = [
@@ -37,7 +49,19 @@ const routes: Routes = [
       {path:'DeleteServiceType', component: DeleteServiceTypeComponent},
       {path:'DeleteServiceOption', component: DeleteSOComponent},
       {path:'DeleteService', component: DeleteServiceComponent},
-      {path:'Login', component: LoginComponent}
+      {path:'Login', component: LoginComponent}, 
+      {path:'admin', component: AdminComponent}, 
+      {path:'available', component: AvailableComponent}, 
+      {path:'cbooking', component: CbookingComponent},
+      {path:'client', component: ClientComponent},
+      {path:'confirm', component: ConfirmComponent},
+      {path:'employee', component: EmployeeComponent},
+      {path:'forgot', component: ForgotComponent},
+      {path:'payment', component: PaymentsComponent},
+      {path:'pickup', component: PickupComponent},
+      {path:'register', component: RegisterComponent},
+      {path:'setup', component: SetupComponent},
+      {path:'spackage', component: SpackageComponent}
       
    ]
   },

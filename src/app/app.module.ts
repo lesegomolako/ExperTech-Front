@@ -1,13 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceTypeComponent } from './service-type/service-type.component';
 import { EditSTComponent } from './edit-st/edit-st.component';
 import { ServicesComponent } from './services/services.component';
-
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
@@ -31,10 +29,21 @@ import { DeleteProductComponent } from './delete-product/delete-product.componen
 import { DeleteServiceComponent } from './delete-service/delete-service.component';
 import { DeleteServiceTypeComponent } from './delete-service-type/delete-service-type.component';
 import { DeleteSOComponent } from './delete-so/delete-so.component';
-
 import { HttpClientModule } from '@angular/common/http';
 import { ServicesService } from './services.service';
 import { LoginComponent } from './login/login.component';
+import { AdminComponent } from './admin/admin.component';
+import { AvailableComponent } from './available/available.component';
+import { CbookingComponent } from './cbooking/cbooking.component';
+import { ClientComponent } from './client/client.component';
+import { ConfirmComponent } from './confirm/confirm.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { ForgotComponent } from './forgot/forgot.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { PickupComponent } from './pickup/pickup.component';
+import { RegisterComponent } from './register/register.component';
+import { SetupComponent } from './setup/setup.component';
+import { SpackageComponent } from './spackage/spackage.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +65,18 @@ import { LoginComponent } from './login/login.component';
     DeleteServiceTypeComponent,
     DeleteSOComponent,
     LoginComponent,
+    AdminComponent,
+    AvailableComponent,
+    CbookingComponent,
+    ClientComponent,
+    ConfirmComponent,
+    EmployeeComponent,
+    ForgotComponent,
+    PaymentsComponent,
+    PickupComponent,
+    RegisterComponent,
+    SetupComponent,
+    SpackageComponent,
   ],
   imports: [
     BrowserModule,

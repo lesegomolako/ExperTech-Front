@@ -1,0 +1,55 @@
+<div style="width: 100%; height: 100%;">
+    <div style="background-color: white;" class="card_hover">
+      <h1 style="text-align: center;">
+        Clients<a routerLink="/register"
+          ><button mat-raised-button color="green">
+            <mat-icon>add</mat-icon>
+          </button></a
+        >
+      </h1>
+  
+      <div style="text-align: center;">
+        <body>
+          <div class="topnav" style="float: right;">
+            <input
+              type="text"
+              id="myInput"
+              (keyup)="myFunction($event)"
+              placeholder="Search..."
+            />
+          </div>
+          <table id="myTable" class="table table_hover">
+            <tr class="header">
+              <th style="width: 60; display: none;" name="ClientID">ClientID</th>
+              <th style="width: 60;" name="Name">Name</th>
+              <th style="width: 60;" name="Surname">Surname</th>
+              <th style="width: 60;" name="ContactNo">Contact Number</th>
+              <th style="width: 60;" name="Email">Email Address</th>
+              <th style="width: 60;"></th>
+            </tr>
+
+            
+            <tr *ngFor="let item of List | async" (click)="fillUP(item)">
+              <td name="ClientID" style="display: none;">{{item.ClientID}}</td>
+              <td name="Name">{{ item.Name }}</td>
+              <td name="Surname">{{ item.Surname }}</td>
+              <td name="ContactNo">{{ item.ContactNo }}</td>
+              <td name="Email">{{ item.Email }}</td>
+              <td>
+                <button class="btn btn-danger">
+                  <mat-icon>delete</mat-icon>
+                </button> 
+              </td>
+            </tr>
+          
+          
+          </table>
+          <br />
+        </body>
+        <button mat-raised-button color="green" >
+          <mat-icon>keyboard_return</mat-icon>Back
+        </button>
+      </div>
+    </div>
+  </div>
+  
