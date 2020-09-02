@@ -2,54 +2,65 @@
     <h1>{{title}}</h1>
 </div>
     
-<form #form=ngForm method="POST" (submit)="onSubmit(form)">
+<form [formGroup]="ProductForm" (ngSubmit)="onSubmit()">
 <div class="contents">
     <h2>Enter Product details</h2>
-
-    <div class="details">
-        <input [(ngModel)]="service.ProductForm.ProductID" name="ProductID" hidden>
-
-        <div class="inputs">
-            <label for="Name">Name</label>    
-            <input type="text" name="Name" placeholder="Enter Product Name" [(ngModel)]="service.ProductForm.Name">
+    <div class="row">
+        <div class="col-6">
+            <div class="details">
+                <input formControlName="productid" name="ProductID" hidden>        
+                <div class="form-group" [ngClass]="{'has-error': ProductForm.get('name').errors && (ProductForm.get('name').touched || ProductForm.get('name').dirty)}">
+                    <label for="Name">Name</label>    
+                    <input type="text" name="Name" class="form-control" placeholder="Enter Product Name" formControlName="name">
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': ProductForm.get('description').errors && (ProductForm.get('description').touched || ProductForm.get('description').dirty)}">
+                    <label for="Description">Description</label>  
+                <textarea type="text" name="Description" class="form-control" rows="1" cols="20" placeholder="Enter product description" 
+                    formControlName="description"></textarea>
+                </div>        
+        <br>
+                <div class="form-group" [ngClass]="{'has-error': ProductForm.get('quantity').errors && (ProductForm.get('quantity').touched || ProductForm.get('quantity').dirty)}">
+                    <label for="QuantityOnHand">Quantity</label>    
+                    <input type="number"  name="QuantityOnHand" class="form-control" placeholder="Enter quantity" 
+                        formControlName="quantity">
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': ProductForm.get('price').errors && (ProductForm.get('price').touched || ProductForm.get('price').dirty)}">
+                    <label for="Price">Price (R)</label>  
+                <input type="number" name="Price" class="form-control" placeholder="Enter Price" 
+                    formControlName="price">
+                </div>
+        <br>
+                <div class="form-group" [ngClass]="{'has-error': ProductForm.get('supplierid').errors && (ProductForm.get('supplierid').touched || ProductForm.get('supplierid').dirty)}">
+                    <label for="Supplier">Supplier</label>    
+                    <select name="SupplierID" required class="form-control" formControlName="supplierid">
+                        <option disabled>- Select Supplier -</option>
+                        <option *ngFor="let supp of SupplierList" value="{{supp.SupplierID}}">{{supp.Name}}</option>
+                    </select>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': ProductForm.get('categoryid').errors && (ProductForm.get('categoryid').touched || ProductForm.get('categoryid').dirty)}">
+                    <label for="Category">Category</label>    
+                    <select name="CategoryID" class="form-control" required formControlName="categoryid">
+                        <option disabled>- Select Product Category -</option>
+                        <option *ngFor="let cat of categoryList" value="{{cat.CategoryID}}">{{cat.Category}}</option>
+                    </select>
+           
+            </div>  
         </div>
-        <div class="inputs">
-            <label for="Description">Description</label>  
-            <textarea type="text" name="Description" placeholder="Enter product description" 
-            [(ngModel)]="service.ProductForm.Description"></textarea>
+    </div> 
+        <div class="col-4">
+            <div formArrayName="photos">
+                <div  class="form-group"  *ngFor="let x of ProductForm.get('photos')['controls']; let j = index">
+                    <div [formGroupName]="j">
+                        <div style="float: right;">
+                            <img [src]="imageURL" alt="choose an image" style="height: 200px; width: 200px;">
+                            <input type="file" (change)="onFileChanged($event)" accept="Image/*" hidden  #fileInput formControlName="photo">
+        <br>    
+                            <button class="btn btn-success" type="button" (click)="fileInput.click()"><mat-icon>add_a_photo</mat-icon>Add Photo</button>
+                        </div> 
+                    </div>
+            </div>
         </div>
-        <div style="float: right;">
-            <img [src]="imageURL" style="height: 200px; width: 200px;">
-            <input type="file" (change)="onFileChanged($event)" accept="Image/*" hidden  #fileInput [(ngModel)]="service.ProductForm.Photos[0].Photo">
-            <br>
-            <button class="btn btn-success" type="button" (click)="fileInput.click()"><mat-icon>add_a_photo</mat-icon>Add Photo</button>
         </div>
-    </div>
-    <div class="details">
-        <div class="inputs">
-            <label for="QuantityOnHand">Quantity</label>    
-            <input type="number" name="QuantityOnHand" placeholder="Enter quantity" [(ngModel)]="service.ProductForm.QuantityOnHand">
-        </div>
-        <div class="inputs">
-            <label for="Price">Price (R)</label>  
-            <input type="number" name="Price" placeholder="Enter Price" [(ngModel)]="service.ProductForm.Price">
-        </div>
-    </div>
-    <div class="details">
-        <div class="inputs">
-            <label for="Supplier">Supplier</label>    
-            <select name="SupplierID" required [(ngModel)]="service.ProductForm.SupplierID">
-                <option label="- Select Supplier -"></option>
-                <option *ngFor="let supp of SupplierList" value="{{supp.SupplierID}}">{{supp.Name}}</option>
-              </select>
-        </div>
-        <div class="inputs">
-            <label for="Category">Category</label>    
-            <select name="CategoryID" required [(ngModel)]="service.ProductForm.CategoryID">
-                <option label="- Select Product Category -"></option>
-                <option *ngFor="let cat of categoryList" value="{{cat.CategoryID}}">{{cat.Category}}</option>
-              </select>
-        </div>       
     </div>
 </div>
 
@@ -57,4 +68,6 @@
     <button class="btn btn-light" type="button" (click)="Cancel()">Cancel</button>
     <button class="btn btn-success" type="submit">Save</button>
 </div>
+
 </form>
+

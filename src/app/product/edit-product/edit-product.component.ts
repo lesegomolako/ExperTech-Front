@@ -1,26 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/API Services/for Product/product.service';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup,FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ProductData } from 'src/app/API Services/for Product/product';
 
 @Component({
   selector: 'app-edit-product',
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.css']
 })
+
 export class EditProductComponent implements OnInit {
 
-  categoryList: [];
-  SupplierList: [];
-  title: string;
-
-  UploadFile: File = null;
-  imageURL: string = null;
   
-  constructor(private http: HttpClient, private router: Router
-    , public service: ProductService
+  constructor(private http: HttpClient, private router: Router,
+     public service: ProductService,
+     private fb: FormBuilder
     ) { }
+
+    ProductForm: FormGroup;
+    ProdFormData = this.service.ProductForm;
+    categoryList: [];
+    SupplierList: [];
+    title: string;
+  
+    UploadFile: File = null;
+    imageURL: string = null;
 
     onFileChanged(event)
     {
@@ -44,6 +50,14 @@ export class EditProductComponent implements OnInit {
       this.categoryList = res;
     })
 
+    this.CreateForm();
+    this.CheckForm();
+
+   
+  }
+
+  CheckForm()
+  {
     if(this.service.ProductForm == null)
     {
       this.title = "Add Product";
@@ -52,36 +66,91 @@ export class EditProductComponent implements OnInit {
     else
     {
       this.title = "Edit Product";
+      this.setProduct();
+      this.imageURL = this.ProdFormData.Photos[0].Photo;
     }
   }
 
-  onSubmit(form: NgForm)
+  CreateForm()
   {
-    if(form.value.ProductID == null)
+    this.ProductForm = this.fb.group({
+      name: ['',[ Validators.required, Validators.maxLength(50)]],
+      description:  ['', [Validators.required, Validators.maxLength(150)]],
+      quantity:  ['', [Validators.required, Validators.min(1)]],
+      price:  ['', [Validators.required, Validators.min(1)]],
+      supplierid: ['', Validators.required],
+      categoryid:  ['', Validators.required],
+      productid: new FormControl(),
+      photos:  this.fb.array([this.fb.group({photo :['', Validators.required]})])
+    })
+  }
+
+  onSubmit(): void
+  {
+    
+    if(this.ProductForm.value.productid == null)
     {
-      this.AddProduct(form);
-     
+      this.mapValues();
+      this.AddProduct();   
     }
     else
     {
-      this.EditProduct(form);
+      if(this.ProductForm.value == this.ProdFormData)
+        confirm("Information has not been changed. Would you like to re-enter details?");
+      else
+      {
+        this.mapValues();
+        this.EditProduct();
+      }
     }
   }
 
-  AddProduct(form: NgForm)
+  setProduct()
   {
-    this.service.AddProduct(form.value)
+    this.ProductForm.setValue({
+      name: this.ProdFormData.Name,
+      description: this.ProdFormData.Description,
+      quantity: this.ProdFormData.QuantityOnHand,
+      price: this.ProdFormData.Price,
+      supplierid: this.ProdFormData.SupplierID,
+      categoryid: this.ProdFormData.CategoryID
+    })
+  }
+
+  mapValues()
+  {
+    this.ProdFormData = 
+    {
+      Name: this.ProductForm.value.name,
+      Description: this.ProductForm.value.description,
+      Price : this.ProductForm.value.price,
+      QuantityOnHand :this.ProductForm.value.quantity,
+      SupplierID : this.ProductForm.value.supplierid,
+      CategoryID : this.ProductForm.value.categoryid,
+      Category: null,
+      Supplier: null,
+      ProductID: this.ProductForm.value.productid,
+      Photos: [{PhotoID: null, Photo: this.imageURL}]
+    }
+  }
+ 
+  AddProduct()
+  {
+    //this.ProdFormData.Photos[0].Photo = this.imageURL;
+    
+    this.service.AddProduct(this.ProdFormData,this.UploadFile)
     .subscribe(res => 
       {
         if(res == "success")
         {
           alert("Successfully saved")
+          this.router.navigateByUrl("AdminProduct")
         }
         else if(res == "duplicate")
       {
         if (confirm("Product already exists. Would you like to update instead?"))
         {
-          this.service.ProductForm = form.value;
+          this.service.ProductForm = this.ProdFormData;
           window.location.reload();
         }
         else
@@ -96,13 +165,10 @@ export class EditProductComponent implements OnInit {
       })
   }
 
-  EditProduct(form: NgForm)
+  EditProduct()
   {
-    if(form.value == this.service.ProductForm)
-    confirm("Information has not been changed. Would you like to re-enter details?");
-    else
-    {
-    this.service.UpdateProduct(form.value).subscribe(res =>
+    
+    this.service.UpdateProduct(this.ProdFormData).subscribe(res =>
       {
         if(res == "success")
         {
@@ -112,7 +178,7 @@ export class EditProductComponent implements OnInit {
     })
   }
 
-}
+
 
   Cancel()
 {

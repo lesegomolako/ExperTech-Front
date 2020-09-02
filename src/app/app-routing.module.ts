@@ -16,7 +16,14 @@ import { DeleteProductComponent } from './Product/delete-product/delete-product.
 import { DeleteServiceTypeComponent } from './Service/delete-service-type/delete-service-type.component';
 import { DeleteSOComponent } from './Service/delete-so/delete-so.component';
 import { DeleteServiceComponent } from './Service/delete-service/delete-service.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './User/login/login.component';
+import { ForgotComponent } from './User/forgot/forgot.component';
+import { RegisterComponent } from './User/register/register.component';
+import { SetupComponent } from './User/setup/setup.component';
+import { FpasswordComponent } from './User/fpassword/fpassword.component';
+
+//import {MatDialogModule} from '@angular/material/dialog';
+
 
 
 const routes: Routes = [
@@ -37,7 +44,7 @@ const routes: Routes = [
       {path:'DeleteServiceType', component: DeleteServiceTypeComponent},
       {path:'DeleteServiceOption', component: DeleteSOComponent},
       {path:'DeleteService', component: DeleteServiceComponent},
-      
+         
       
    ]
   },
@@ -46,7 +53,12 @@ const routes: Routes = [
   {path:'EditProduct', component: EditProductComponent},
   {path:'AdminProduct', component: ProductComponent},
   {path:'DeleteProduct', component: DeleteProductComponent},
-  {path:'Login', component: LoginComponent}
+  {path:'login', component: LoginComponent},
+  {path:'forgot', component: ForgotComponent},
+  {path:'fpassword', component: FpasswordComponent},
+  {path:'register', component: RegisterComponent},
+  {path:'setup', component: SetupComponent}
+   
   
 
 

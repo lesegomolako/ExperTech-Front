@@ -22,7 +22,7 @@ export class IPrice
   styleUrls: ['./edit-service.component.css']
 })
 export class EditServiceComponent implements OnInit {
-
+  
   constructor(public service: ServicesService, private router: Router, private fb: FormBuilder ) { }
   serviceForm: FormGroup;
   serviceObject = this.service.ServicesData;
@@ -35,6 +35,10 @@ export class EditServiceComponent implements OnInit {
 
   //home = new ServiceData().ServiceTypeOptions[0]
   //dataarray = new ServiceData().ServiceTypeOptions;
+  Cancel()
+  {
+    window.history.back();
+  }
 
   ngOnInit(): void {
 
@@ -194,13 +198,7 @@ export class EditServiceComponent implements OnInit {
 
   
   }
-  Save()
-  {
-    //alert("Successfully saved")
-    //confirm("Service already exists. Would you like to update instead?")
-    //confirm("Information has not been changed. Would you like to re-enter details?");
-    //alert("Successfully updated");
-  }
+  
 
   resetForm(form?: NgForm)
   {

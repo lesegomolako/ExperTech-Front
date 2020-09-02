@@ -33,14 +33,6 @@ export class EditSTComponent implements OnInit {
     
   }
 
- Save()
- {
-   //alert("Successfully saved")
-   //confirm("Service Type already exists. Would you like to update instead?")
-   //confirm("Information has not been changed. Would you like to re-enter details?");
-   
- }
-
  onSubmit(form: NgForm)
 {
     

@@ -17,6 +17,10 @@ export class DeleteServiceTypeComponent implements OnInit {
 
   formData = this.service.TypeData;
   
+  Cancel()
+  {
+    window.history.back();
+  }
 
   Delete()
   {

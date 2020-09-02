@@ -16,7 +16,7 @@ export class ProductService {
 
   getProducts(): Observable<ProductData[]>
   {
-    return this.http.get<ProductData[]>(this.url + "Products/GetProducts")
+    return this.http.get<ProductData[]>(this.url + "Products/GetProduct")
   }
 
   UpdateProduct(form: ProductData)
@@ -25,9 +25,20 @@ export class ProductService {
     return this.http.post(this.url + "Products/UpdateProduct" , form)
   }
 
-  AddProduct(form: ProductData)
+  AddProduct(form: ProductData,UploadFile: File)
   {
-    return this.http.post(this.url + 'Products/AddProduct' , form)
+   // alert(form.Name)
+    const formData: FormData = new FormData();
+    formData.append('Name', form.Name)
+    formData.append('CategoryID', form.CategoryID)
+    formData.append('Description', form.Description)
+    formData.append('Price', form.Price)
+    formData.append('QuantityOnHand', form.QuantityOnHand)
+    formData.append('Photos', JSON.stringify(form.Photos))
+    formData.append('SupplierID', form.SupplierID)
+    formData.append('Image', UploadFile, UploadFile.name)
+    console.log(formData)
+    return this.http.post(this.url + 'Products/AddProduct' , formData)
   }
 
   DeleteProduct(TypeID: any)

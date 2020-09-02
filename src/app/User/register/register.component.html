@@ -1,0 +1,143 @@
+<div class="jumbotron" style="background-color: whitesmoke;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h3 style="text-align: center;">Register Employee/Admin</h3>
+
+        <form [formGroup]="registerForm" (ngSubmit)="RegisterEA()"> 
+        <div class="form-group">
+          <label>Name</label>
+          <input
+            id="name"
+            minlength="2"
+            maxlength="50"
+            required
+            (keypress)="omit_special_char($event)"
+            type="text"
+            formControlName="firstName"
+            class="form-control"
+             [ngClass]="{
+                'has-error':
+                  registerForm.get('firstName').errors &&
+                  (registerForm.get('firstName').touched ||
+                    registerForm.get('firstName').dirty)
+              }"
+          />
+          <span class="help-block" *ngIf="registerForm.get('firstName').errors &&
+              (registerForm.get('firstName').touched ||
+              registerForm.get('firstName').dirty)">
+            <span *ngIf="registerForm.get('firstName').errors.required">
+              Name is required
+            </span>
+            <span *ngIf="registerForm.get('contact').errors.minlength || registerForm.get('contact').errors.maxLength">
+              Name must have between 2 and 5 characters.
+            </span>
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Surname</label>
+          <input
+            id="surname"
+            minlength="2"
+            maxlength="50"
+            required
+            (keypress)="omit_special_char($event)"
+            type="text"
+            formControlName="lastName"
+            class="form-control"
+             [ngClass]="{
+                'has-error':
+                  registerForm.get('lastName').errors &&
+                  (registerForm.get('lastName').touched ||
+                    registerForm.get('lastName').dirty)
+              }"
+          />
+          <span *ngIf="registerForm.get('lastName').errors &&
+            (registerForm.get('lastName').touched ||
+            registerForm.get('lastName').dirty)">
+          <span *ngIf="registerForm.get('lastName').errors.required">
+            Surname is required
+          </span>
+        </span>
+        </div>
+
+        <div class="form-group">
+          <label>Contact Number</label>
+          <input
+            maxlength="10"
+            minlength="10"
+            id="number"
+            required
+            (keypress)="omit_special_char($event)"
+            type="text"
+            formControlName="contact"
+            max="10"
+            class="form-control"
+             [ngClass]="{
+                'has-error':
+                  registerForm.get('contact').errors &&
+                  (registerForm.get('contact').touched ||
+                    registerForm.get('contact').dirty)
+              }"
+          />
+          <span *ngIf="registerForm.get('contact').errors &&
+          (registerForm.get('contact').touched ||
+          registerForm.get('contact').dirty)">
+        <span *ngIf="registerForm.get('contact').errors.required">
+          Contact Number is required
+        </span>
+        <span *ngIf="registerForm.get('contact').errors.minlength || registerForm.get('contact').errors.maxLength">
+          Contact Number exactly 10 digits
+        </span>
+      </span>
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input
+            id="email"
+            required
+            type="text"
+            formControlName="email"
+            class="form-control"
+             [ngClass]="{
+                'has-error':
+                  registerForm.get('email').errors &&
+                  (registerForm.get('email').touched ||
+                    registerForm.get('email').dirty)
+              }"
+          />
+          <span *ngIf="registerForm.get('email').errors &&
+          (registerForm.get('email').touched ||
+          registerForm.get('email').dirty)">
+        <span *ngIf="registerForm.get('email').errors.required">
+          Email Address is required
+        </span>
+      </span>
+        </div>
+        <div class="form-group" style="text-align: center;">
+          <button
+            class="btn btn-primary" type="submit"
+            style="color: white; background-color: green;"
+          >
+            Register
+          </button>
+          <button
+            class="btn btn-primary"
+            style="color: white; background-color: green;"
+          >
+            Reset
+          </button>
+          <button
+            class="btn btn-primary"
+            style="color: white; background-color: green;"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,6 +14,11 @@ export class DeleteServiceComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  Cancel()
+{
+  window.history.back();
+}
+
   formData = this.service.ServicesData;
 
   Delete()
@@ -26,12 +31,12 @@ export class DeleteServiceComponent implements OnInit {
           if(res == "success")
           {
             alert("Successfully deleted");
-            this.router.navigateByUrl("/service/Services");
+            this.router.navigateByUrl("/services/Services");
           }
           else
           {
             alert("Error deleting service. Redirecting to Serivces screen");
-            this.router.navigateByUrl("/service/Services");
+            this.router.navigateByUrl("/services/Services");
           }
         })
       

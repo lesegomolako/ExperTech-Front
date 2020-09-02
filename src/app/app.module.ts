@@ -1,6 +1,6 @@
 //******************************* Angular materials *************************************/
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,6 +19,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {HttpClientModule} from '@angular/common/http';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+
+
+
 
 //******************************* Components *************************************/
 import { TServicesComponent } from './Service/tservices/tservices.component';
@@ -34,7 +39,11 @@ import { DeleteProductComponent } from './Product/delete-product/delete-product.
 import { DeleteServiceComponent } from './Service/delete-service/delete-service.component';
 import { DeleteServiceTypeComponent } from './Service/delete-service-type/delete-service-type.component';
 import { DeleteSOComponent } from './Service/delete-so/delete-so.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './User/login/login.component';
+import { ForgotComponent} from './User/forgot/forgot.component';
+import { FpasswordComponent} from './User/fpassword/fpassword.component';
+import { RegisterComponent} from './User/register/register.component';
+import { SetupComponent} from './User/setup/setup.component';
 
 //******************************* Services *************************************/
 
@@ -62,8 +71,11 @@ import {ProductService} from './API Services/for Product/product.service'
     DeleteServiceTypeComponent,
     DeleteSOComponent,
     LoginComponent,
-    
-    
+    ForgotComponent,
+    RegisterComponent,
+    SetupComponent,
+    FpasswordComponent
+
   ],
   imports: [
     BrowserModule, MatTableModule, MatSelectModule,
@@ -71,9 +83,12 @@ import {ProductService} from './API Services/for Product/product.service'
     BrowserAnimationsModule, MatInputModule,
     MatIconModule, FormsModule, ReactiveFormsModule,
     MatToolbarModule, MatMenuModule , MatFormFieldModule, MatSidenavModule,
-    HttpClientModule
+    HttpClientModule, MatDialogModule, 
+    FormsModule,
+    ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule
   ],
   providers: [ServicesService, ProductService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

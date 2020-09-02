@@ -7,13 +7,13 @@
     <h2>Enter Service Option details</h2>
     <input hidden name = "OptionID" [(ngModel)] = "service.OptionData.OptionID"> 
     <div class="details">
-        <div class="inputs">
+        <div class="form-group">
             <label for="TypeName">Name</label>    
-            <input type="text" name="Name" [(ngModel)] ="service.OptionData.Name" placeholder="Example: Long or Short">
+            <input type="text" class="form-control" name="Name" [(ngModel)] ="service.OptionData.Name" placeholder="Example: Long or Short">
         </div>
-        <div class="inputs">
+        <div class="form-group">
             <label for="TypeName">Duration</label>    
-            <input type="text" name="Duration" [(ngModel)] ="service.OptionData.Duration" placeholder="Example: +5min">
+            <input type="text" class="form-control" name="Duration" [(ngModel)] ="service.OptionData.Duration" placeholder="Example: +5min">
         </div>
     </div>
 </div>

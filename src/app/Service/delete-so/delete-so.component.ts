@@ -14,6 +14,11 @@ export class DeleteSOComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  Cancel()
+{
+  window.history.back();
+}
+
   formData = this.service.OptionData;
 
   Delete(OptionID: any)

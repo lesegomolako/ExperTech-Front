@@ -50,7 +50,7 @@ export class ServiceOptionData
 export class PackageData
 {
     PackageID: any;
-    Service: string;
+    ServiceID: string;
     Name: string;
     Price: any;
     Quantity: any;

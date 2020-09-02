@@ -2,15 +2,14 @@
     <h1>Create Service Package</h1>
 </div>
 
+<form [formGroup]="PackageForm" (ngSubmit)="Save()">
 <div class ="contents">
     <h2>Select Service</h2>
     
 
-      <select name="cars" id="cars" class="inputs" required>
-        <option label="- Select Service -"></option>
-        <option value="">Hair</option>
-        <option value="">Nail</option>
-        <option value="">Massage</option>
+      <select name="cars" class="form-control"  id="cars" class="inputs" required>
+        <option label="- Select Service -" disabled selected></option>
+        <option *ngFor="let x of ServiceList" formControlName="serviceid" value="{{x.ServiceID}}">{{x.Name}}</option>
       </select>
 </div>
     
@@ -18,25 +17,30 @@
     <h2>Enter Service Package details</h2>
 
     <div class="details">
-        <div class="inputs">
-            <label for="TypeName">Descripton</label>    
-            <input type="text" id="TypeName" placeholder="Example: Hair">
+        <div class="form-group">
+            <label for="Name">Name</label>    
+            <input type="text" class="form-control" formControlName="name" id="Name" placeholder="Example: Hair">
         </div>
-        <div class="inputs">
-            <label for="TypeName">Price</label>    
-            <input type="text" id="TypeName" placeholder="Enter price">
+        <div class="form-group">
+            <label for="Price">Price (R)</label>    
+            <input type="text" class="form-control" formControlName="price" id="Price"  placeholder="Enter service package price">
         </div>
     </div>
     <div class="details">
-        <div class="inputs">
-            <label for="TypeName">Quantity</label>    
-            <input type="number" id="TypeName" placeholder="Example: 5 uses">
+        <div class="form-group">
+            <label for="quantity">Quantity</label>    
+            <input type="number" class="form-control" formControlName="quantity" id="quantity" placeholder="Example: 5 uses">
+        </div>
+        <div class="form-group">
+            <label for="duration">Duration (in Months)</label>    
+            <input type="number" class="form-control" formControlName="duration" id="duration" placeholder="Enter service package duration">
         </div>
     </div>
 </div>
 
 <div class="buttons">
-    <button class="btn btn-light">Cancel</button>
-    <button class="btn btn-success" (click)="Save()">Save</button>
+    <button class="btn btn-light" type="button" (click)="Cancel()">Cancel</button>
+    <button class="btn btn-success" type="submit">Save</button>
 </div>
 
+</form>

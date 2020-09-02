@@ -34,7 +34,7 @@
 
 .details div {
     display: inline-table;
-    
+    padding-right: 5px;
     
 }
 
@@ -60,3 +60,4 @@
     color: grey;
     opacity: 1;
   }
+
