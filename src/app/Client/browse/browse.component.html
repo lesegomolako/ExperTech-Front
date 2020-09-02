@@ -1,66 +1,68 @@
-<form class="browse-component">
 
-  <div style="float: right;">
-    <div class="example-button-container">
+<div style="background: green;">
+  <form class="browse-component">
 
-
-    </div>
-    <div class="example-button-container ">
-      <button mat-raised-button style="background-color: green;">
-          <mat-icon> keyboard_return</mat-icon>
-          Back
-        </button>
-
-    </div>
-  </div>
-
-
-
-
-
-  <mat-grid-list cols='3' rowHeight='2:1'>
-    <mat-grid-tile style="border: 1px solid black;" *ngFor="let basketproduct of product;">
-      <div class="c-card-flip ">
-        <div class="c-card-flip__flipper">
-
-          <div class="c-card-flip__front">
-            <img class="image"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTIPO1hJWjgrgHy5fRDv4FwWg75CjO4_mk_2g&usqp=CAU"
-              class="c-card-flip__image" alt="Card Image" />
-          </div>
-
-          <div class="c-card-flip__back">
-            <h4>Category: {{basketproduct.Category}} <br> Name:{{basketproduct.Name}}</h4>
-            <h4>Quantity on Hand:{{basketproduct.QuantityOnHand}} </h4>
-            <h4>Price:R{{basketproduct.Price}} </h4>
-            <h4>Description: {{basketproduct.Description}} </h4>
-
-
-            <div>
-              <div class="button" role="group" aria-label="Third group">
-                <button mat-raised-button style="background-color: green;" (click)="addproduct(basketproduct)">
-                  <mat-icon> add</mat-icon>
-                  Add
-                </button>
-
-                <mat-form-field style="background-color: gray;">
-                  <mat-label style="color: black;">Quantity</mat-label>
-                  <input style="color: black;" type="number" (change)='setQuantity($event,basketproduct)' value="{{basketproduct.SelectedQuantity}}" matInput>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-
-        </div>
+    <div style="float: right;">
+      <div class="example-button-container">
+  
+  
       </div>
-    </mat-grid-tile>
-
-    <div class="col-lg">
-
+      <div class="example-button-container ">
+        <button mat-raised-button style="background-color: gray;">
+            <mat-icon> keyboard_return</mat-icon>
+            Back
+          </button>
+  
+      </div>
     </div>
-  </mat-grid-list>
+  
+  
+  
+  
+  <div class="card_hover" style="align-items: center;" >
+    <mat-grid-list cols='4'  rowHeight='1:1' style="width: 99%; height: 90%;">
+      <mat-grid-tile  *ngFor="let basketproduct of product;">
+        <div class="c-card-flip ">
+          <div class="c-card-flip__flipper">
+  
+            <div class="c-card-flip__front">
+              <img class="image"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTIPO1hJWjgrgHy5fRDv4FwWg75CjO4_mk_2g&usqp=CAU"
+                class="c-card-flip__image" alt="Card Image" />
+            </div>
+  
+            <div class="c-card-flip__back">
+              <h5>Category: {{basketproduct.Category}} <br> Name:{{basketproduct.Name}}</h5>
+              <h5>Quantity on Hand:{{basketproduct.QuantityOnHand}} </h5>
+              <h5>Price:R{{basketproduct.Price}} </h5>
+              <h5>Description: {{basketproduct.Description}} </h5>
+                <div class="button" role="group" aria-label="Third group">
+                  <button mat-raised-button style="background-color: gray;"  (click)="addproduct(basketproduct)">
+                    <mat-icon> add</mat-icon>
+                    Add
+                  </button>
+  
+                  <mat-form-field style="background-color: gray;">
+                    <mat-label style="color: black;"  >Quantity</mat-label>
+                    <input style="color: black;" min="1" type="number" (change)='setQuantity($event,basketproduct)' value="{{basketproduct.SelectedQuantity}}" matInput>
+                  </mat-form-field>
+                </div>
 
-
-
-
-</form>
+            </div>
+  
+          </div>
+        </div>
+      </mat-grid-tile>
+  
+      <div class="col-lg">
+  
+      </div>
+    </mat-grid-list>
+  </div>
+  
+  
+  
+  
+  
+  </form>
+</div>

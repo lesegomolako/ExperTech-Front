@@ -1,7 +1,7 @@
 import { Component, OnInit, ɵSWITCH_COMPILE_NGMODULE__POST_R3__ } from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Router,ActivatedRoute } from "@angular/router";
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -33,7 +33,7 @@ export class MakebookingComponent implements OnInit {
     this.step--;
   }
 
-  constructor(private http: HttpClient,private api: ExperTexhService, private fb: FormBuilder,
+  constructor(public dialog: MatDialog,private http: HttpClient,private api: ExperTexhService, private fb: FormBuilder,
      private router: Router,private route: ActivatedRoute) { }
 
   Employee = [];
@@ -172,4 +172,15 @@ LoadList()
 list(){
   this.router.navigate(['Home']);
 }
+// openDialog() {
+
+//   const dialogConfig = new MatDialogConfig();
+
+//   dialogConfig.disableClose = true;
+//   dialogConfig.autoFocus = true;
+
+//   this.dialog.open(CourseDialogComponent, dialogConfig);
+// }
 }
+
+

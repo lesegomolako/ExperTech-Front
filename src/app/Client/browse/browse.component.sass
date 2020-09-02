@@ -1,16 +1,18 @@
+background-color:green
 
 image
-  width: 50px
+  width: 10px
   height: 50px
 
 .c-card-flip
-  width: 450px
+  width: 300px
   height: 250px
 
   margin: 20px auto
   cursor: pointer
   perspective: 1000
   -webkit-perspective: 1000
+ 
 
   &__flipper
     position: relative
@@ -23,12 +25,14 @@ image
     position: absolute
     top: 0
     left: 0
-    width: 450px
+    width: 250px
     height: 250px
     -webkit-perspective: 1000
     perspective: 1000
     -webkit-backface-visibility: hidden
     backface-visibility: hidden
+    border: 2px solid 
+    border-radius: 8px
 
   &__back
     transform: rotateY(180deg)
@@ -48,12 +52,15 @@ image
   &:hover
     .c-card-flip__flipper
       transform: rotateY(180deg)
+
       
 .card-data 
   width: 100%
   display: flex
   flex-direction: row
   flex-wrap: wrap
+  border: 3px solid black
+  border-radius: 8px
 
 
 .card 
@@ -65,10 +72,20 @@ image
   color: white
   text-align: center
   vertical-align: middle
+  border: 3px solid black
+  border-radius: 8px
 
-.horizontal 
-    display: flex
-    justify-content: space-between
+.card_hover
+    transform: translateY(-5px)
+    box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
+    margin: auto
+    margin-left: auto
+    width: 70%
+    height: 94%
+    background: white
+  
+
+
 
 
 .button 

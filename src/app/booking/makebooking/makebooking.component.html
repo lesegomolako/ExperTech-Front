@@ -10,8 +10,11 @@
       </button></a>
       <br>
       <br>
-      <button mat-raised-button type="submit" style="background-color: gray; align-items: center; width:99% " >
+      <button mat-raised-button type="submit" [disabled]="!BookingForm.valid" style="background-color: gray; align-items: center; width:99% "  >
         Submit 
+      </button>
+      <button mat-raised-button type="submit"  style="background-color: gray; align-items: center; width:99% "  >
+        Add Client 
       </button>
     </div>
 
@@ -72,19 +75,7 @@ style="float: right;" alt="service image" height="50" width="50" />
 <mat-hint>{{OptionControl.value?.sound}}</mat-hint> -->
 </mat-form-field>
 
-<!-- <h4>Select Employee for service type</h4>
-<mat-form-field appearance="fill">
-<mat-label style="color: black;">Employee Name</mat-label>
-<mat-select [formControl]="bookingControl" [(ngModel)]="BookingData." required>
- <mat-option>--</mat-option>
- <mat-option *ngFor="let x of Employee " value ={{x.EmployeeID}}>
-  {{x.Name}}
- </mat-option>
-</mat-select>
-<mat-error *ngIf="bookingControl.hasError('required')">Please choose an employee</mat-error>
-<mat-hint>{{bookingControl.value?.sound}}</mat-hint>
-</mat-form-field>
-<br> -->
+
 
 <h4>Pick date and time for Appointment</h4>
 <mat-form-field color="accent" appearance="fill">

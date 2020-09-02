@@ -60,10 +60,10 @@ export class EditComponent implements OnInit {
     }, error => console.log("error edit component",error));
     
     this.editForm = this.formBuilder.group({
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        contact: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
+        firstName: ['', [ Validators.required,Validators.minLength(2),Validators.maxLength(50)]],
+        lastName: ['', [Validators.required,Validators.minLength(2),Validators.maxLength(100)]],
+        contact: ['', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]],
+        email: ['', [Validators.required, Validators.email,Validators.minLength(2),Validators.maxLength(50)]],
 
     }, {
  

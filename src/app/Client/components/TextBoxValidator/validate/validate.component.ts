@@ -7,11 +7,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ExperTexhService } from 'src/app/exper-texh.service';
 import { Router } from "@angular/router";
 import { FormsModule  } from "@angular/forms";
-import{ User} from 'src/app/client';
+import{ User, Client} from 'src/app/client';
 import { MustMatch } from 'src/app/components/must-match.validator';
 import { Observable } from 'rxjs';
-
-
+import { sha256, sha224 } from 'js-sha256';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -41,7 +40,7 @@ export class ValidateComponent implements OnInit {
 
   }
   user: User;
-
+  client:Client[] = [];
 
   password(formGroup: FormGroup) {
     const { value: password } = formGroup.get('password');
@@ -58,28 +57,22 @@ export class ValidateComponent implements OnInit {
   {
     UserID: null,
     RoleID: null,
-    Username: "",
-    Password: "",
-    SessionID: "",
-    Clients: 
-      {
-            Name: "",
-            Surname: "",
-            ContactNo: "",
-            Email: "",
-      }
-
+    Username: null,
+    Password: null,
+    SessionID: null,
+    Clients: null,
   }
+
     this.validateForm = this.formBuilder.group({
       Username: ['', [Validators.required, Validators.minLength(2)]],
       Password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
-      Name: ['', Validators.required],
-      Surname: ['', Validators.required],
-      ContactNo: ['', [Validators.required, Validators.maxLength(10)]],
-      Email: ['', [Validators.required, Validators.email]],
+      Name: ['', [Validators.required,Validators.minLength(2),Validators.maxLength(50)]],
+      Surname: ['', [Validators.required,Validators.minLength(2),Validators.maxLength(100)]],
+      ContactNo: ['', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]],
+      Email: ['', [Validators.required, Validators.email,Validators.minLength(2),Validators.maxLength(50)]],
   }, {
-      validator: MustMatch('password', 'confirmPassword')
+    validator: MustMatch('Password', 'confirmPassword')
   });
   
 
@@ -122,31 +115,50 @@ omit_special_char(event)
        
       this.submitted=true
        // stop here if form is invalid
-       if (this.validateForm.invalid) {
+      if (this.validateForm.invalid) 
+      {
+        console.log(this.validateForm)
       // confirm("FORM IS INVALID");
        return;
-    }
+      }
 
       // display form values on success
-     if (confirm('SUCCESS!! :-)\n\n' + JSON.stringify(this.validateForm.value, null, 4)) )
+     if (confirm('SUCCESS!! :-)\n\n') )
      {
-       this.user.Username=form.value.Username
-       this.user.Password=form.value.Password
-       this.user.Clients.Name=form.value.Name
-       this.user.Clients.Email=form.value.Email
-       this.user.Clients.Surname=form.value.Surname
-       this.user.Clients.ContactNo=form.value.ContactNo
-       
+
+      var temp:Client =
+      {
+        ClientID:null,
+        Name:form.value.Name,
+        Surname: form.value.Surname,
+        ContactNo: form.value.ContactNo,
+        Email: form.value.Email,
+      }
+      
+      this.client.push(temp)
+       this.user=
+       {
+         UserID: "",
+         RoleID: 1,
+         Username:form.value.Username,
+         Password: (form.value.Password),
+         //Password: sha256(form.value.Password),
+         SessionID: "",
+         Clients: this.client
+        }
         console.log("User data",this.user)
-        this.api.RegisterClient(this.user).subscribe((res: User)=>{
+        this.api.RegisterClient(this.user).subscribe((res: any)=>{
+          if(res.Message == "success")
+          {
           localStorage.setItem("accessToken", res.SessionID);
           this.router.navigate(['ClientProfile'])
+          }
         })
           this.submitted = true;
   
         this.submitted = true;
 
-     }
+      }
     }
 
   public checkError = (controlName: string, errorName: string) => {

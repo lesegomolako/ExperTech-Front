@@ -23,6 +23,7 @@ export class BrowseComponent implements OnInit {
   submitted = false;
   productForm: FormGroup;
 
+
   constructor(public dialog: MatDialog, private api: ExperTexhService, private router: Router,private route: ActivatedRoute) { }
   openDialog() {
     confirm("Successfully added to product")
@@ -49,8 +50,9 @@ list(){
 setQuantity(newValue,item:Product)
 {
   console.log("SETTING",newValue.target.value)
-  item.SelectedQuantity+= Number(newValue.target.value)
+  item.SelectedQuantity = Number(newValue.target.value)
 }
+
 
 addproduct(BasketProduct:Product){
   this.id = this.route.snapshot.params['id'];
@@ -62,10 +64,22 @@ addproduct(BasketProduct:Product){
 
     if(BasketProduct.SelectedQuantity > BasketProduct.QuantityOnHand)
     {
-      alert("You've selected to much")
+      alert("You've selected too much")
       return;
     }
+
+    if(BasketProduct.SelectedQuantity <= 0)
+    return;
+    
     _basketLine.Quantity=BasketProduct.SelectedQuantity;
+    
+    // Else if(BasketProduct.ProductID == BasketProduct.ProductID)
+    // {
+    //   alert("You've selected this product already")
+    //   return;
+    // }
+
+
 
 
   this.api.Addproduct(this.basketID,_basketLine).subscribe(data => {

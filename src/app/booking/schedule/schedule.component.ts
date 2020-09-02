@@ -2,9 +2,42 @@
 import { Component,ChangeDetectionStrategy,ViewChild,TemplateRef,OnInit} from '@angular/core';
 import {startOfDay,endOfDay, subDays,addDays,endOfMonth,isSameDay,isSameMonth,addHours,} from 'date-fns';
 import { Subject } from 'rxjs';
+import {map} from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {CalendarEvent,CalendarEventAction,CalendarEventTimesChangedEvent,CalendarView,} from 'angular-calendar';
 import {Router } from '@angular/router';
+
+export class Schedule
+{
+  BookingID: any;
+  BookingStatusID: any;
+  BookingStatus: string;
+  Client: string;
+  BookingRequest:
+  [
+    {
+      Dates: Date;
+      Time: any;
+    }
+  ];
+  BookingLine:
+  [
+    {
+      Service: string;
+      Option: string;
+    }
+  ];
+  BookingSchedule:
+  [
+    {
+      Employee: string;
+      Dates: Date;
+      StartTime: any;
+      EndTime: any;
+      Status: string;
+    }
+  ]
+}
 
 const colors: any = {
   red: {
@@ -27,6 +60,8 @@ const colors: any = {
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.sass']
 })
+
+
 export class ScheduleComponent implements OnInit {
 
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
@@ -34,6 +69,7 @@ export class ScheduleComponent implements OnInit {
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
+
 
   viewDate: Date = new Date();
 

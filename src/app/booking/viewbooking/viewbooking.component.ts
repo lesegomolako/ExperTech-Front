@@ -46,6 +46,11 @@ export class ViewbookingComponent implements OnInit {
       alert("Booking successfully rejected,Booking will be deleted. Please make another booking with a different time")
      });
   }
+  cancel(){
+    this.api.CancelBooking(this.id).subscribe(data=>{
+      alert("Booking successfully canceled")
+     });
+  }
   Accept(){
     this.api.AcceptBooking(this.id).subscribe(data=>{
       alert("Booking successfully accepted")

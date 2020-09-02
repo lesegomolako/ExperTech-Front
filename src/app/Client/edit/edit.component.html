@@ -14,33 +14,34 @@
               <form [formGroup]="editForm" (ngSubmit)="onSubmit(editForm)">
                   <div class="form-group">
                       <label> Name</label>
-                    
-                      <input type="text"[(ngModel)]="client.Name" (keypress)="omit_special_char($event)" mdInput name="name" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
-                      <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                          <div *ngIf="f.firstName.errors.required">First Name is required</div>
-                      </div>
+                      <input type="text"[(ngModel)]="client.Name" (keypress)="omit_special_char($event)" mdInput name="name" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': editForm.get('firstName').errors && (editForm.get('firstName').touched || editForm.get('firstName').dirty) }" />
+                      <div *ngIf="editForm.get('firstName').errors" class="invalid-feedback">
+                        <div *ngIf=" editForm.get('firstName').errors.required">First Name is required</div>
+                    </div>
                   </div>
                   <div class="form-group">
                       <label>Surname</label>
-                      <input type="text" [(ngModel)]="client.Surname" (keypress)="omit_special_char($event)" mdInput name="name" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
-                      <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                          <div *ngIf="f.lastName.errors.required">Last Name is required</div>
-                      </div>
+                      <input type="text" [(ngModel)]="client.Surname" (keypress)="omit_special_char($event)" mdInput name="name" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': editForm.get('lastName').errors && (editForm.get('lastName').touched || editForm.get('lastName').dirty) }" />
+                      <div *ngIf="editForm.get('lastName').errors" class="invalid-feedback">
+                        <div *ngIf=" editForm.get('lastName').errors.required">First Name is required</div>
+                    </div>
                   </div>
                   <div class="form-group">
                     <label>Contact number</label>
-                    <input type="number" [(ngModel)]="client.ContactNo" (keypress)="omit_special_char($event)" mdInput name="name" formControlName="contact" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contact.errors }" maxlength="10" />
-                    <div *ngIf="submitted && f.contact.errors" class="invalid-feedback">
-                        <div *ngIf="f.contact.errors.required">Contact No is required</div>
+                    <input type="number" [(ngModel)]="client.ContactNo" (keypress)="omit_special_char($event)" mdInput name="name" formControlName="contact" class="form-control" [ngClass]="{  'is-invalid': editForm.get('contact').errors && (editForm.get('contact').touched || editForm.get('contact').dirty)}" maxlength="10" />
+                    <div *ngIf="editForm.get('contact').errors" class="invalid-feedback">
+                        <div *ngIf="editForm.get('contact').errors.required">Contact Number is required</div>
+                        <div *ngIf="editForm.get('contact').errors.minlength">Contact must be 10 characters long </div>
+                        <div *ngIf="editForm.get('contact').errors.maxlength">Contact must be 10 characters long </div>
                     </div>
                 </div>
                   <div class="form-group">
                       <label>Email</label>
-                      <input type="email" [(ngModel)]="client.Email"  formControlName="email" class="form-control"  />
-                      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                          <div *ngIf="f.email.errors.required">Email is required</div>
-                          <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
-                      </div>
+                      <input type="email" [(ngModel)]="client.Email"  formControlName="email" class="form-control" [ngClass]="{  'is-invalid': editForm.get('email').errors && (editForm.get('email').touched || editForm.get('email').dirty)}"  />
+                      <div *ngIf="submitted && editForm.get('Email').errors" class="invalid-feedback">
+                        <div *ngIf=" editForm.get('email').errors.required">Email is required</div>
+                        <div *ngIf="editForm.get('email').errors.email">Email must be a valid email address</div>
+                    </div>
                   </div>
 
                   <div class="form-group">
