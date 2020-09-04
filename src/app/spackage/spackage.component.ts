@@ -11,24 +11,24 @@ import { Observable } from 'rxjs';
 import { ServicesService } from '../services.service';
 import { ServiceData } from '../services';
 
-
 @Component({
   selector: 'app-spackage',
   templateUrl: './spackage.component.html',
-  styleUrls: ['./spackage.component.css']
+  styleUrls: ['./spackage.component.css'],
 })
 export class SpackageComponent implements OnInit {
+  constructor(public dialog: MatDialog, public service: ServicesService) {}
 
-  constructor(
-    public dialog: MatDialog, 
-    public service: ServicesService
-  ) { }
-
-  loadList(){
+  loadList() {
     this.List = this.service.getPackage();
   }
-  
-  List: Observable<ServiceData[]>
+
+  hide = true;
+  previousForm() {
+    window.history.back();
+  }
+
+  List: Observable<ServiceData[]>;
   ngOnInit(): void {
     this.loadList();
   }
