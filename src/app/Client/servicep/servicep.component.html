@@ -14,26 +14,24 @@
   </div>
 
     <div style="align-items: center;">
-      <h1>Angular HTML Table Example</h1>
+      <h1>Service Package</h1>
       <table style="width: 800px;" >
          <thead>
             <tr *ngFor= "let y of allservicepackage | async">
                <td>Service: {{y.ServicePackage.Name}}</td>
-               <td>Expiry Date: {{y.ExpiryDate}}</td>
+               <td>Expiry Date: {{y.ExpiryDate |date:'shortDate'}}</td>
             </tr>
          </thead>
         <br>
          <thead>
           <tr *ngFor= "let y of allservicepackage | async">
-            <td>Date: {{y.Date}}</td>
-             <td>Service Package used: {{y.InstanceStatu.Status}} </td>
+            <td>Date: {{y.Date |date:'shortDate'}}</td>
           </tr>
        </thead>
          <thead>
           <tr *ngFor= "let y of allservicepackage | async">
-             <th>Number of Service Package left:</th>
-  
-             <td>{{y.TotalAvailable}}</td>
+            <!-- <th>Number of Service Package left:</th> -->
+            <td><strong>Number of Service Packages left:</strong> {{y.TotalAvailable}}</td>
           </tr>
        </thead>
       </table>

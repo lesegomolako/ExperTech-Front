@@ -48,9 +48,7 @@ export class ValidateComponent implements OnInit {
     return password === confirmPassword ? null : { passwordNotMatch: true };
   }
 
-  openDialog() {
-    confirm("Successfully registered ")
-  }
+
   
   ngOnInit() {
       this.user=
@@ -141,8 +139,8 @@ omit_special_char(event)
          UserID: "",
          RoleID: 1,
          Username:form.value.Username,
-         Password: (form.value.Password),
-         //Password: sha256(form.value.Password),
+        //  Password: (form.value.Password),
+         Password: sha256(form.value.Password),
          SessionID: "",
          Clients: this.client
         }

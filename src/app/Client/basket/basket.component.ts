@@ -29,7 +29,7 @@ export class BasketComponent implements OnInit {
   ngOnInit()  {
     //this.basket = new BasketLine();
 
-    this.quantity = 2;
+    this.quantity = 0;
 
     this.id = this.route.snapshot.params['id'];
     
@@ -39,19 +39,21 @@ export class BasketComponent implements OnInit {
       this.cal();
       this.item();
 
+
+
     }, error => console.log("error edit component",error));
     
   
 
 }
 list(){
-  this.router.navigate(['ClientProfile']);
+  this.router.navigate(['basket']);
 }
 
 cal(){
   
   this.basket.forEach(res => {
-this.total +=(res.Quantity * res.Product.Price)
+this.total =(res.Quantity * res.Product.Price)
   })
 
 }
@@ -60,8 +62,10 @@ item(){
   this.pro=0
   this.basket.forEach(res => {
     
-    this.pro +=(res.Quantity)
+    this.pro = (res.Quantity)
       })
+
+  this.api.badgeCount = this.pro;   
 }
 
 
@@ -87,7 +91,7 @@ updateBasket(event,line:BasketLine)
   line.Quantity=num;
   this.item();
   console.log("New Value",line)
-  this.api.Addproduct(line.BasketID,line).subscribe(data => {
+  this.api.Updateproduct(line).subscribe(data => {
   }, error => console.log("error edit component",error));
 }
 

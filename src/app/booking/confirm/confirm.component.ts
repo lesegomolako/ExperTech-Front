@@ -15,25 +15,47 @@ import { ExperTexhService } from 'src/app/exper-texh.service';
 })
 export class ConfirmComponent implements OnInit {
   id: any;
-  booking :  Booking[];
+
+  booking :  Booking;
+  name: string;
+
   constructor(private api: ExperTexhService, private router: Router,private route: ActivatedRoute) { }
   openDialog() {
-    confirm("Successfully deleted")
+    confirm("Successfully cancelled")
   }
 
   ngOnInit(): void {
+    this.booking = new Booking();
+
+    this.id = 2
+
+    this.api.ViewClientBooking(this.id).subscribe(data => {
+      console.log("Client Booking Details",data)
+      this.booking = data;
+    }, error => console.log("Error",error));
+
+  }
+
+  list(){
+    this.router.navigate(['Booking']);
   }
 
   confirm(){
-    this.api.ConfirmBooking(this.id).subscribe(data=>{
-      alert("Booking successfully confirmed")
+    this.api.RejectBooking(this.id).subscribe(data=>{
+      alert("Booking successfully rejected,Booking will be deleted. Please make another booking with a different time")
      });
+    
   }
-
   deletes(){
     this.api.RejectBooking(this.id).subscribe(data=>{
-      alert("Booking successfully deleted")
+      alert("Booking successfully rejected,Booking will be deleted. Please make another booking with a different time")
      });
+    
   }
-
+  cancel(){
+    this.api.CancelBooking(this.id).subscribe(data=>{
+      alert("Booking successfully rejected,Booking will be deleted. Please make another booking with a different time")
+     });
+    
+  }
 }

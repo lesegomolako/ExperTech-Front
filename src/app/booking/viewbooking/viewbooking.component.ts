@@ -35,6 +35,7 @@ export class ViewbookingComponent implements OnInit {
       this.booking = data;
     }, error => console.log("Error",error));
 
+
   }
 
   list(){
@@ -45,15 +46,24 @@ export class ViewbookingComponent implements OnInit {
     this.api.RejectBooking(this.id).subscribe(data=>{
       alert("Booking successfully rejected,Booking will be deleted. Please make another booking with a different time")
      });
+    
   }
   cancel(){
     this.api.CancelBooking(this.id).subscribe(data=>{
-      alert("Booking successfully canceled")
+      alert("Booking successfully rejected,Booking will be deleted. Please make another booking with a different time")
      });
+    
   }
+
+  // click(form: Booking)
+  // {
+  //   alert(JSON.stringify(form))
+  // }
+
   Accept(){
     this.api.AcceptBooking(this.id).subscribe(data=>{
-      alert("Booking successfully accepted")
+      alert("Booking successfully")
      });
+    
   }
 }

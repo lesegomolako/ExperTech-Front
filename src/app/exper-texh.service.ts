@@ -15,6 +15,7 @@ export class ExperTexhService {
   url = 'https://localhost:44375/api/';  
   UserData: User;
   clientData: Client;
+  badgeCount = 0;
 
   constructor(private http:HttpClient) { }
 
@@ -26,7 +27,7 @@ export class ExperTexhService {
   }
 
   getClientdetails(Id: any): Observable<Client> {  
-    return this.http.get<Client>(this.url + 'Clients/getallClients?id=3');  
+    return this.http.get<Client>(this.url + 'Clients/getallClients?id=1');  
   }  
 
   getClientById(cleintId: any): Observable<Client> {  
@@ -50,8 +51,16 @@ export class ExperTexhService {
         'BasketID':BasketID,},
         body:BasketProduct
     });  
- 
-  } 
+  }
+
+  Updateproduct(BasketProduct:BasketLine): Observable<any> {  
+    return this.http.request('post',this.url + 'Client/Updatebasketline/',{
+      headers:{ 'Content-Type': 'application/json'},
+        body:BasketProduct
+    });  
+  }
+  
+  
   ViewBasket(Id:BasketLine): Observable<BasketLine[]> {  
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
     return this.http.get<BasketLine[]>(this.url + 'Client/getBasketlinewithProduct/');  
@@ -66,6 +75,8 @@ export class ExperTexhService {
       }
     });  
   }  
+
+ 
 
   ViewServicePackage(): Observable<ClientPackage[]> {  
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
@@ -90,17 +101,9 @@ export class ExperTexhService {
   } 
 
 
-  ConfirmBooking(BookingID: Booking): Observable<Booking> {  
+  ConfirmBooking(BookingID:Booking): Observable<Booking> {  
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.post<Booking>(this.url + 'api/Booking/ConfirmClientBookings/',  
-    + BookingID);  
-
-  }
-
-
-  RejectBooking(BookingID:Booking): Observable<Booking> {  
-    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.delete<Booking>(this.url + 'api/Clients/DeleteClientBooking' ,{
+    return this.http.delete<Booking>(this.url + 'api/Booking/ConfirmClientBookings' ,{
       headers:{ 'Content-Type': 'application/json'},
       params:{
         'id':BookingID.toString(),
@@ -109,9 +112,30 @@ export class ExperTexhService {
     });   
   }
 
-  AcceptBooking(BookingID:Booking): Observable<Booking> {  
+  RejectBooking(BookingID:Booking): Observable<Booking> {  
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.delete<Booking>(this.url + 'api/Client/AcceptClientBooking' ,{
+    return this.http.delete<Booking>(this.url + 'Clients/DeleteClientBooking' ,{
+      headers:{ 'Content-Type': 'application/json'},
+      params:{
+        'id':BookingID.toString(),
+
+      }
+    });   
+  }
+
+  AcceptBooking(BookingID:Booking) {  
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
+    return this.http.post(this.url + 'Clients/AcceptClientsBooking?bookingID=' + BookingID ,{
+      headers:{ 'Content-Type': 'application/json'},
+      params:{
+        'bookingID':BookingID.toString(),
+
+      }
+    });   
+  }
+  CancelBooking(BookingID:Booking): Observable<Booking> {  
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
+    return this.http.delete<Booking>(this.url + 'Clients/CancelClientBooking?id='+ BookingID ,{
       headers:{ 'Content-Type': 'application/json'},
       params:{
         'bookingID':BookingID.toString(),

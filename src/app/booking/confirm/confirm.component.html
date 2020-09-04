@@ -7,64 +7,65 @@
         </button></a>
         <br>
         <br>
-        <button mat-raised-button style="background-color: green; align-content: center;width:99% " (click)="deletes()"  >
-            <mat-icon>clear</mat-icon>
-            Delete
-        </button>
-        <br>
-        <br>
-        <button mat-raised-button style="background-color: green; width:99%" (click)="confirm()"  >
-            <mat-icon>event_available</mat-icon>
-            Confirm
-        </button>
+
     </div>
 
-    <div style="text-align: center; color: black;" class="card-hover">
-        <article  class="c-card c-card--center">
-    
+    <div *ngFor="let client of booking" style="text-align: center; color: black;" class="card-hover">
+      <article  class="c-card c-card--center">
+  
 
-            <div class="c-card__body">
-              <h1 >
-                Current Booking request details
-            </h1>
+        <div class="c-card__body">
+          <label for="">
+            <h1 > Current Booking request details</h1>
+          </label>
+          <label for="">
+            <h2 class="c-card__title">Service type: </h2>
+          </label>
+          <br>
+          
+          <div *ngFor="let x of client.BookingLines">
+            <label  ><h2 class="c-card__title">
+              Service: {{x.Service}}
+            </h2></label>
+            <br>
+            <label><h2 class="c-card__title">
+              Service option: {{x.Option}}
+            </h2></label>
+          </div>
 
-          <h2 class="c-card__title">
-           Service type: Hair
-          </h2>
-<br>
-          <h2 class="c-card__title">
-            Service: Wash and Blow
-          </h2>
-          <br>
-          <h2 class="c-card__title">
-            Service option: Long
-          </h2>
-          <br>
-          <h2 class="c-card__title">
-            Employee for Service: Ally
-          </h2>
-          <br>
-          <h2 class="c-card__title">
-            Appointment Date: 7/22/2020
-          </h2>
-          <br>
-          <h2 class="c-card__title">
-            Appointment Time: 12:30-13:30
-          </h2>
-<br>
-<br>
-              
-            </div>
-        
-            <footer style="align-items: center;" class="c-card__footer">
-              
-                    <button mat-raised-button style="background-color: gray; align-items: center; color: black;" >
-                      Okay
-                  </button>
+          <div *ngFor="let x of client.EmployeeSchedule">
+            <br>
+            <label for="">
+              <h2 class="c-card__title">Employee for Service: {{x.Employee}}</h2>
+            </label>
+            <br>
+            <label for="">
+              <h2 class="c-card__title">Appointment Date: {{x.Date |date:'shortDate'}}</h2>
+            </label>
+            <br>
+            <label for=""><h2 class="c-card__title">
+              Start Time: {{x.StartTime}}
+            </h2> </label> 
+          </div>
 
-           
-            </footer>
-        
-          </article>
-    </div>
+          <div >
+            <label ><h2 class="c-card__title">
+              Booking status: {{client.Status}}
+            </h2> </label> 
+          </div>
+          <div style="align-content: center; " *ngIf="client.Status == 'Advised'" class="c-card__footer">
+            <button mat-raised-button style="background-color: gray; color: white; " (click)="deletes()"  >
+
+              Delete
+          </button>
+
+          <button mat-raised-button style="background-color: gray; color: white;" (click)="confirm()"  >
+
+              Confirm
+          </button>
+          </div>
+
+        </div>
+      </article>
+  </div>
 
