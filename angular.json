@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "Screens"
+  "defaultProject": "Screens",
+  "cli": {
+    "analytics": false
+  }
 }
