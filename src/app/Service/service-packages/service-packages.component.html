@@ -1,21 +1,21 @@
 <div class="heading">
     <h1>Service Packages</h1>
-    <a [routerLink]="['/services/EditServicePackage']" class="btn btn-success" title="Add Service Package" style="width: 35px; height: 35px; margin-left: 10px;">+</a>
-    </div>
+    <a [routerLink]="['/services/CreateServicePackage']" class="btn btn-success" title="Add Service Package" style="width: 35px; height: 35px; margin-left: 10px;">+</a>
+</div>
 
     <div class="contents">
         <ul>
             <li *ngFor="let x of myServicePackageList | async">
                 <div class="icon"><mat-icon>face</mat-icon></div>
                 <div class="typeinfo">
-                    <div class="name">{{x.Service}}</div>
+                    <div class="name">{{x.Name}}</div>
                     <div class="sub-text">
                         <div>Price: {{x.Price | number:'1.2-2'}}</div>
                         <div>Quantity: {{x.Quantity}} uses</div>
                     </div>
                 </div>
                 <div class="buttons">
-                <button class="btn btn-danger" (click)="Delete(x)"><mat-icon inline=true>delete</mat-icon></button>
+                <button class="btn btn-danger" (click)="Delete(x.PackageID)"><mat-icon inline=true>delete</mat-icon></button>
                 </div>
             </li>
         </ul>

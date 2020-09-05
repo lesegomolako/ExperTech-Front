@@ -40,7 +40,7 @@ const routes: Routes = [
       {path:'EditServiceType', component: EditSTComponent},
       {path:'EditService', component: EditServiceComponent},
       {path:'EditServiceOption', component: EditSOComponent},
-      {path:'EditServicePackage', component: EditSPComponent},
+      {path:'CreateServicePackage', component: EditSPComponent},
       {path:'DeleteServiceType', component: DeleteServiceTypeComponent},
       {path:'DeleteServiceOption', component: DeleteSOComponent},
       {path:'DeleteService', component: DeleteServiceComponent},

@@ -29,19 +29,24 @@ export class ServicePackagesComponent implements OnInit {
   AddServicePackage()
   {
     this.service.PackageData = null;
-    this.router.navigateByUrl("services/EditServicePackage");
+    this.router.navigateByUrl("services/CreateServicePackage");
   }
 
-  EditServicePackage(data: PackageData)
-  {
-    this.service.PackageData = data;
-    this.router.navigateByUrl("services/EditServicePackage");
-  }
 
-  DeleteServiceOption(data: PackageData)
+
+  Delete(PackageID: any)
   {
-    this.service.PackageData = data;
-    this.router.navigateByUrl("services/DeleteServicePackage");
+    if(confirm("Are you sure you want to delete?"))
+    {
+      this.service.DeleteServicePackage(PackageID).subscribe(
+        res => {
+          if(res == "success")
+          {
+            alert("Successfully deleted")
+          }
+        }
+      )
+    }
   }
 }
 

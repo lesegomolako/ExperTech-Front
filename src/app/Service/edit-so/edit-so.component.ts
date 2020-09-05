@@ -17,7 +17,7 @@ export class EditSOComponent implements OnInit {
 
   ngOnInit(): void {
     
-
+    this.service.OptionData = JSON.parse(localStorage.getItem('soEdit'))
     if (this.service.OptionData == null)
     {
         this.title = "Add Service Option"

@@ -81,7 +81,7 @@ export class ServicesService {
   UpdateServiceOption(form: ServiceOptionData)
   {
     
-    return this.http.post(this.url + "Services/UpdateServiceOption" , form)
+    return this.http.put(this.url + "Services/UpdateServiceOption" , form)
   }
 
   AddServiceOption(form: ServiceOptionData)
@@ -93,7 +93,7 @@ export class ServicesService {
   DeleteServiceOption(OptionID: any)
   {    
     const params = new HttpParams().set('OptionID', OptionID );
-    return this.http.delete(this.url + 'Services/DeleteServiceType', {
+    return this.http.delete(this.url + 'Services/DeleteServiceOption', {
       headers: {'Content-Type': 'aaplication/json'},
       params: params})
   }
@@ -116,7 +116,7 @@ export class ServicesService {
   DeleteServicePackage(PackageID: any)
   {    
     const params = new HttpParams().set('PackageID', PackageID );
-    return this.http.delete(this.url + 'Services/DeleteServiceType', {
+    return this.http.delete(this.url + 'Services/RemoveServicePackage', {
       headers: {'Content-Type': 'aaplication/json'},
       params: params})
   }

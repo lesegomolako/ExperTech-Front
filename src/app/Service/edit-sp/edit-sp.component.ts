@@ -13,16 +13,17 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 export class EditSPComponent implements OnInit {
 
   constructor(private service: ServicesService, private router: Router, private fb: FormBuilder) { }
-  ServiceList: Observable<ServiceData[]>
+  ServiceList = this.service.getServices()
   PackageForm: FormGroup;
+  PackageObject;
 
   ngOnInit(): void {
 
-    this.ServiceList = this.service.getServices();
-
+    
+    console.log(this.ServiceList)
     this.PackageForm = this.fb.group({
       serviceid: new FormControl(),
-      name: ["", Validators.required],
+      description: ['', Validators.required],
       price: ['', Validators.required],
       quantity: ['', Validators.required],
       duration: ['', Validators.required]
@@ -34,14 +35,31 @@ export class EditSPComponent implements OnInit {
     window.history.back();
   }
 
-  Save()
+  Save(packageForm)
   {
-    //this.mapValues()
-    //alert("Successfully saved")
-    confirm("Service Package already exists/ Would you like to view the package?")
-    //confirm("Service Type already exists. Would you like to update instead?")
-    //confirm("Information has not been changed. Would you like to re-enter details?");
-    //alert("Successfully updated");
+    this.PackageObject = packageForm.value
+    //console.log(packageForm)
+    this.service.AddServicePackage(this.PackageObject).subscribe(res => {
+      if (res =="success")
+      {
+        alert("Successfully saved")
+        this.router.navigateByUrl("services/ServicePackages")
+      }
+      else if(res =="duplicate")
+      {
+        alert("ServicePackage already exists. Redirecting to Service Package")
+        this.router.navigateByUrl("services/ServicePackages")
+      }
+    })
+  }
+
+  mapValues(packageForm)
+  {
+    this.PackageObject.ServiceID = packageForm.supplierid;
+    this.PackageObject.Description = this.PackageForm.value.description;
+    this.PackageObject.Price = this.PackageForm.value.price;
+    this.PackageObject.Quantity = this.PackageForm.value.quantity;
+    this.PackageObject.Duration = this.PackageForm.value.duration;
   }
 
 
