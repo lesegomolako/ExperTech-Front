@@ -10,7 +10,7 @@
         (serviceForm.get('typeid').touched || serviceForm.get('typeid').dirty)}">
       <select name="TypeID" class="form-control" formControlName="typeid">
         <option value="" disabled>- Select Service Type -</option>
-        <option *ngFor="let x of TypeList | async" value="{{x.TypeID}}">{{x.Name}}</option>
+        <option  *ngFor="let x of TypeList | async" value="{{x.TypeID}}">{{x.Name}}</option>
       </select>
     </div>
 </div>
