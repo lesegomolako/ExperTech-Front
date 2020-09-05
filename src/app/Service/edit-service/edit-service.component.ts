@@ -5,6 +5,7 @@ import { NgForm, FormArray, FormGroup, FormControl, Validators, FormBuilder } fr
 import { ServiceData } from '../../API Services/for Service/services';
 import {Observable} from 'rxjs';
 import { formatCurrency, FormatWidth } from '@angular/common';
+import { timestamp } from 'rxjs/operators';
 
 export class IOption
 {
@@ -25,13 +26,27 @@ export class EditServiceComponent implements OnInit {
   
   constructor(public service: ServicesService, private router: Router, private fb: FormBuilder ) { }
   serviceForm: FormGroup;
-  serviceObject = this.service.ServicesData;
+  serviceObject;
   //options = this.service.getServiceOptions('options') as FormArray
  
 
   title: string;
   OptionsList = this.service.getServiceOptions();
   TypeList = this.service.getServiceTypes();
+
+  UploadFile: File = null;
+  imageURL: string = null;
+
+  onFileChanged(event)
+  {
+    this.UploadFile= event.target.files[0]
+
+    var reader = new FileReader();
+    reader.onload = (event:any) => {
+      this.imageURL = event.target.result;
+    }
+    reader.readAsDataURL(this.UploadFile);
+  }
 
   //home = new ServiceData().ServiceTypeOptions[0]
   //dataarray = new ServiceData().ServiceTypeOptions;
@@ -42,12 +57,15 @@ export class EditServiceComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.serviceObject = JSON.parse(localStorage.getItem('sEdit'))
+
     this.serviceForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       description:['', Validators.required],
       duration: ['', Validators.required],
       typeid: ['', Validators.required],
       sprice: this.fb.array([this.fb.group({price: new FormControl()})]),
+      photos: this.fb.array([this.fb.group({photo: ['', Validators.required]})]),
       options: this.fb.array(
         [
           
@@ -60,7 +78,7 @@ export class EditServiceComponent implements OnInit {
 
   checkForm()
   {
-    if(this.service.ServicesData == null)
+    if(this.serviceObject == null)
     {
       this.title = "Add Service";
       this.resetForm();
@@ -131,6 +149,7 @@ export class EditServiceComponent implements OnInit {
 
   onSubmit(): void
   {
+    //this.serviceForm.getError('name').value
     if(this.serviceObject.ServiceID == null)
     {
        this.mapValues();
@@ -183,6 +202,7 @@ export class EditServiceComponent implements OnInit {
     this.serviceObject.TypeID = this.serviceForm.value.typeid;
     this.serviceObject.ServicePrices = this.serviceForm.value.sprice
     this.serviceObject.ServiceTypeOptions = this.serviceForm.value.options;
+    this.serviceObject.ServiceImage = this.serviceForm.value.photos;
     
 
     if(this.serviceObject.ServiceTypeOptions.length>0)

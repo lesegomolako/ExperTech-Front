@@ -54,6 +54,7 @@
     margin-top: 10px;
     width: 25%;
     float: right;
+    padding-right: 5px;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */

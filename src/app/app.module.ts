@@ -48,7 +48,8 @@ import { SetupComponent} from './User/setup/setup.component';
 //******************************* Services *************************************/
 
 import { ServicesService }  from './API Services/for Service/services.service';
-import {ProductService} from './API Services/for Product/product.service'
+import {ProductService} from './API Services/for Product/product.service';
+import { ClickSpinDirective } from './click-spin.directive';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import {ProductService} from './API Services/for Product/product.service'
     ForgotComponent,
     RegisterComponent,
     SetupComponent,
-    FpasswordComponent
+    FpasswordComponent,
+    ClickSpinDirective
 
   ],
   imports: [

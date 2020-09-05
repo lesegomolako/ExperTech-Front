@@ -17,34 +17,50 @@
     
 <div class="contents">
     <h2>Enter Service details</h2>
-    
-    <div class="details">
-        <div class="form-group">
-            <label for="Name">Name</label>    
-            <input type="text" class="form-control" name="Name" formControlName="name" placeholder="Enter Service Name">
-        </div>
-        <div class="form-group">
-            <label for="Description">Description</label>  
-            <textarea type="text" class="form-control" rows="1" cols="21" name="Description" formControlName="description" placeholder="Enter text..."></textarea>
-        </div>
-    </div>
-    <div class="details">
-        <div class="form-group">
-            <label for="Duration">Duration (in minutes)</label>    
-            <input type="number" class="form-control" name="Duration" formControlName="duration"
-             placeholder="Example: 15" 
-             max="120">
-        </div>
-        <ng-container formArrayName="sprice">
-        <div class="form-group"  *ngFor="let x of serviceForm.get('sprice')['controls']; let j = index" [hidden]="serviceForm.get('options')['controls'].length>0">
-            <div [formGroupName]="j">
-            <label for="Price">Price (R)</label> 
-            <input type="number" class="form-control" name="price" formControlName="price" placeholder="Enter Price">
+    <div class="row">
+        <div class="col-6">
+        <div class="details">
+            <div class="form-group">
+                <label for="Name">Name</label>    
+                <input type="text" class="form-control" name="Name" formControlName="name" placeholder="Enter Service Name">
+            </div>
+            <div class="form-group">
+                <label for="Description">Description</label>  
+                <textarea type="text" class="form-control" rows="1" cols="21" name="Description" formControlName="description" placeholder="Enter text..."></textarea>
             </div>
         </div>
+        <div class="details">
+            <div class="form-group">
+                <label for="Duration">Duration (in minutes)</label>    
+                <input type="number" class="form-control" name="Duration" formControlName="duration"
+                        placeholder="Example: 15" 
+                                        max="120">
+            </div>
+        <ng-container formArrayName="sprice">
+            <div class="form-group"  *ngFor="let x of serviceForm.get('sprice')['controls']; let j = index" [hidden]="serviceForm.get('options')['controls'].length>0">
+                <div [formGroupName]="j">
+                    <label for="Price">Price (R)</label> 
+                    <input type="number" class="form-control" name="price" formControlName="price" placeholder="Enter Price">
+                </div>
+            </div>
         </ng-container>
+        </div>
+        </div>
+        <div class="col-4">
+            <div formArrayName="photos">
+                <div  class="form-group"  *ngFor="let x of serviceForm.get('photos')['controls']; let j = index">
+                    <div [formGroupName]="j">
+                        <div style="float: right;">
+                            <img [src]="imageURL" alt="choose an image" style="height: 200px; width: 200px;">
+                            <input type="file" (change)="onFileChanged($event)" accept="Image/*" hidden  #fileInput formControlName="photo">
+                        <br>    
+                            <button class="btn btn-success" type="button" (click)="fileInput.click()"><mat-icon>add_a_photo</mat-icon>Add Photo</button>
+                        </div> 
+                    </div>
+            </div>
+        </div>
+        </div>
     </div>
-    
 </div>
 
 <div class="contents">

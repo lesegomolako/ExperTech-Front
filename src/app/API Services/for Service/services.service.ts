@@ -43,6 +43,7 @@ export class ServicesService {
 
   //*********************Service **************/
   ServicesData: ServiceData = null;
+  
 
   getServices(): Observable<ServiceData[]>
   {

@@ -12,14 +12,14 @@ import { NgForm } from '@angular/forms';
 })
 export class EditSTComponent implements OnInit {
 
-  constructor(public service: ServicesService, private router: Router) { }
+  constructor(public service: ServicesService, private router: Router) {}
 
   title: string;
   
 
   ngOnInit(): void {
     
-
+    this.service.TypeData = JSON.parse(localStorage.getItem('stEdit'))
     if (this.service.TypeData == null)
     {
         this.title = "Add Service Type"
@@ -27,7 +27,7 @@ export class EditSTComponent implements OnInit {
     }
     else
     {
-        this.title = "Edit Service Type"
+        this.title = "Edit Service Type"   
     }
 
     
@@ -91,8 +91,11 @@ UpdateType(form: NgForm)
 
 Cancel()
 {
+  localStorage.removeItem("stEdit");
   window.history.back();
 }
+
+
 
  resetForm(form?: NgForm)
 {

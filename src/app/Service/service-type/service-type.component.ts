@@ -26,19 +26,22 @@ export class ServiceTypeComponent implements OnInit {
 
   AddServiceType()
   {
-    this.service.TypeData = null;
+    //this.service.TypeData = null;
+    localStorage.removeItem('stEdit')
     this.router.navigateByUrl("services/EditServiceType");
   }
 
   EditServiceType(data: ServiceTypeData)
   {
-    this.service.TypeData = data;
+    //this.service.TypeData = data;
+    localStorage.setItem('stEdit', JSON.stringify(data))
     this.router.navigateByUrl("services/EditServiceType")
   }
 
   DeleteServiceType(data: ServiceTypeData)
   {
-    this.service.TypeData = data;
+    //this.service.TypeData = data;
+    localStorage.setItem("stDelete", JSON.stringify(data))
     this.router.navigateByUrl("services/DeleteServiceType")
   }
 }

@@ -15,6 +15,7 @@ export class ServiceOptionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadList();
+    localStorage.clear();
   }
 
   myServiceOptionsList : Observable<ServiceOptionData[]>;
@@ -26,19 +27,22 @@ export class ServiceOptionsComponent implements OnInit {
 
   AddServiceOption()
   {
-    this.service.OptionData = null;
+    //this.service.OptionData = null;
+    localStorage.clear();
     this.router.navigateByUrl("services/EditServiceOption");
   }
 
   EditServiceOption(data: ServiceOptionData)
   {
-    this.service.OptionData = data;
+    //this.service.OptionData = data;
+    localStorage.setItem('soEdit', JSON.stringify(data))
     this.router.navigateByUrl("services/EditServiceOption");
   }
 
   DeleteServiceOption(data: ServiceOptionData)
   {
-    this.service.OptionData = data;
+    //this.service.OptionData = data;
+    localStorage.setItem('soDelete', JSON.stringify(data))
     this.router.navigateByUrl("services/DeleteServiceOption");
   }
 }

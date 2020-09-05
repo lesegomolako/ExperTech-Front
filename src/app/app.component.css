@@ -1,30 +1,41 @@
 
 #sidebar
 {
-    position: fixed;
+
     width: 200px;
-    height: 100%;
-    background: black;
-    left:-200px;
-    transition: all 500ms linear;
-    z-index: 1;
+    height: 100%;  
     background: #35b729;
+    /* background: #333131; */
+}
+
+.footer
+{
+
+    background-color: #333131;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
 }
 
 #sidebar ul li
-{
-     
+{     
     color: white;
     list-style: none;
     padding: 15px 10px;
     border-bottom: 1px solid white ;
+    height: 64px;
 }
 
-#sidebar.active
+#sidebar ul li:hover
 {
-   left:0px;
-   
-   
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+}
+
+#sidebar a
+{
+    text-decoration: none;
+    color: white;
 }
 
 .example-spacer {

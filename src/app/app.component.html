@@ -1,25 +1,40 @@
-<mat-toolbar style="background-color: #333131">
-    <button mat-icon-button class="example-icon" (click)="toggleSidebar()">
-      <mat-icon style="color:white">menu</mat-icon>
-    </button>
-    <img src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;"/>
-    <span class="example-spacer"></span>
 
-    <span class="example-spacer"></span>
-    <div style="padding: 10px">
-    <a><mat-icon style="color: white; font-size: 35px;">account_circle</mat-icon></a>
-  </div>
-</mat-toolbar>
+<mat-drawer-container class="example-container" fullscreen autosize hasBackdrop="true">
+  <mat-drawer #drawer mode="over">
+    <div id="sidebar">
+      <li style="background-color: #333131; padding:2px 0; width:100%; height:64px">
+        <button mat-icon-button class="example-icon"(click)="drawer.toggle()">
+          <mat-icon style="color:white">menu</mat-icon>
+        </button>
+        <img src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;"/></li>
+      <ul>
+        <a routerLink="/services"><li> View Services</li></a>
+        <a routerLink="/services"><li>View Products</li></a>
+        <a routerLink="/services"><li>Service Types</li></a>
+        <a routerLink="/services"><li>Service Types</li></a>
+        <a routerLink="/client"><li>Client</li></a>
+      </ul>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <mat-toolbar style="background-color: #333131">
+      <button mat-icon-button class="example-icon"(click)="drawer.toggle()">
+        <mat-icon style="color:white">menu</mat-icon>
+      </button>
+      <img src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;"/>
+      <span class="example-spacer"></span>
+  
+      <span class="example-spacer"></span>
+      <div style="padding: 10px">
+      <a><mat-icon style="color: white; font-size: 35px;">account_circle</mat-icon></a>
+    </div>
+  </mat-toolbar>
+    <router-outlet></router-outlet>
 
-<div id="sidebar">
-    <ul>
-      <a routerLink="/services"><li> Products</li></a>
-      <a routerLink="/services"><li>Bookings</li></a>
-      <a routerLink="/services"><li>Service Types</li></a>
-      <a routerLink="/services"><li>Service Types</li></a>
-      <a routerLink="/Login"><li>Login</li></a>
-    </ul>
-</div>
+  </mat-drawer-content>
+  
+</mat-drawer-container>
+
 
 <!--
   **this is the sidebar for client-side 
@@ -36,4 +51,3 @@
 -->
 
 
-<router-outlet></router-outlet>

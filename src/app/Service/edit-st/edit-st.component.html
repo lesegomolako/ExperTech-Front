@@ -7,13 +7,13 @@
     <h2>Enter Service Type details</h2>
     <input type="hidden"  name="TypeID" [(ngModel)]="service.TypeData.TypeID">
     <div class="details">
-        <div class="inputs">
+        <div class="form-group">
             <label for="TypeName">Name</label>    
-            <input type="text" name="Name" [(ngModel)]="service.TypeData.Name" placeholder="Example: Hair" required>
+            <input type="text" #name="ngModel" minlength="2" class="form-control" name="Name" [(ngModel)]="service.TypeData.Name" placeholder="Example: Hair" required>
         </div>
-        <div class="inputs">
+        <div class="form-group">
             <label for="STName">Description</label>  
-            <textarea type="text" name="Description" [(ngModel)]="service.TypeData.Description" required placeholder="Enter text..."></textarea>
+            <textarea type="text" class="form-control" rows="1" name="Description" [(ngModel)]="service.TypeData.Description" required placeholder="Enter text..."></textarea>
         </div>
     </div>
 </div>

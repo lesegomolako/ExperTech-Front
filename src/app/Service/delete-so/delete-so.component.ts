@@ -12,14 +12,20 @@ export class DeleteSOComponent implements OnInit {
   constructor(private service: ServicesService, private router: Router) { }
 
   ngOnInit(): void {
+    this.formData = JSON.parse(localStorage.getItem('soDelete'))
+    if(!this.formData)
+    {
+      this.router.navigateByUrl('services/ServiceOptions')
+    }
   }
 
   Cancel()
 {
+  localStorage.removeItem('soDelete')
   window.history.back();
 }
 
-  formData = this.service.OptionData;
+  formData;
 
   Delete(OptionID: any)
   {
@@ -30,8 +36,9 @@ export class DeleteSOComponent implements OnInit {
         {
           if(res = "success")
           {
+            localStorage.removeItem('soDelete')
             alert("Sucessfully deleted");
-            this.router.navigateByUrl("service/ServiceOptions");
+            this.router.navigateByUrl("services/ServiceOptions");
           }
 
         })

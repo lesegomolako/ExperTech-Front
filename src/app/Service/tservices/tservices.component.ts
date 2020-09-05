@@ -18,6 +18,7 @@ export class TServicesComponent implements OnInit {
   ngOnInit() 
   {
     this.loadList();
+    localStorage.clear();
   }
 
   loadList()
@@ -27,19 +28,22 @@ export class TServicesComponent implements OnInit {
 
   EditService(form: ServiceData)
   {
-    this.service.ServicesData = form;
+    //this.service.ServicesData = form;
+    localStorage.setItem("sEdit", JSON.stringify(form))
     this.rouuter.navigateByUrl("/services/EditService")
   }
 
   AddService()
   {
-    this.service.ServicesData = null;
+    //this.service.ServicesData = null;
+    localStorage.removeItem("sEdit")
     this.rouuter.navigateByUrl("/services/EditService")
   }
 
   DeleteService(form: ServiceData)
   {
-    this.service.ServicesData = form;
+    //this.service.ServicesData = form;
+    localStorage.setItem("sDelete", JSON.stringify(form))
     this.rouuter.navigateByUrl("/services/DeleteService")
   }
 
