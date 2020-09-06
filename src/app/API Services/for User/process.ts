@@ -25,8 +25,12 @@ export class Process {
     Description: string;
     PackageID: any;
     ServiceID: any;
+    Type: string;
+    StatusID: any;
     TypeID: any;
     SessionID: any;
+    InfoID: any;
+    Address: string;
 }
 
 export class Schedule

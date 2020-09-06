@@ -10,6 +10,8 @@ import {
 } from 'rxjs/operators';
 import { Process, Schedule, Package } from './process';
 import { User } from 'src/app/User/register/register.component';
+import { AvailData } from 'src/app/User/available/available.component';
+
 //import 'rxjs/add/operator/map'
 
 @Injectable({
@@ -90,32 +92,32 @@ export class ReportingService {
   }
   ///*********************************************************Employee CRUD*****************************************************************
   readEmployee(): Observable<Process[]> {
-    return this.http.get<Process[]>(this.url + 'Employee/getEmployee');
+    return this.http.get<Process[]>(this.url + 'Employees/getEmployee');
   }
   createEmployee(formData: Process) {
     let body = JSON.stringify(formData);
     if (confirm(body)) {
       return this.http.post<Process>(
-        this.url + 'Employee/addEmployee',
+        this.url + 'Employees/addEmployee',
         formData
       );} }
   updateEmployee(formData: Process) {
     let body = JSON.stringify(formData);
     if (confirm(body)) {
       return this.http.put<Process>(
-        this.url + 'Employee/updateEmployee',
+        this.url + 'Employees/updateEmployee',
         formData
       ); }}
   employeeServiceType(): Observable<Process[]>{
       return this.http.get<Process[]>(
-        this.url + 'Employee/getEmployeeType'
+        this.url + 'Employees/getEmployeeType'
       );
   }
   updateEmployeeST(formData: Process){
     let body = JSON.stringify(formData);
     if (confirm(body)) {
       return this.http.put<Process>(
-        this.url + 'Employee/updateEST', 
+        this.url + 'Employees/updateEST', 
         formData
       );
     }
@@ -128,7 +130,7 @@ export class ReportingService {
         body: body,
       };
       return this.http.delete<Process>(
-        this.url + 'Employee/deleteEmployee',
+        this.url + 'Employees/deleteEmployee',
         httpOptions
       );
     } else {
@@ -199,6 +201,28 @@ export class ReportingService {
       );
     }
   }
+
+  AvailableorNot(formData: Process) {
+    let body = JSON.stringify(formData);
+    if (confirm(body)) {
+      return this.http.post<Process>(
+        this.url + 'Employee/createSchedule',
+        formData
+      );
+    }
+  }
+
+   //set the schedule
+   Schedule(form: AvailData) {
+    const formData: FormData = new FormData();
+    formData.append("StartDate", form.StartDate)
+    formData.append("EndDate", form.EndDate)
+    formData.append("EndTime", form.EndTime)
+    formData.append("StartTime", form.StartTime)
+    formData.append("Availbilness", form.Avail)
+
+    return this.http.post(this.url + 'Employee/EmployeeAvailability', formData);
+  }
   //***********************************************Service Package ******************************************
 
   getPackage(): Observable<Package[]> {
@@ -241,4 +265,36 @@ export class ReportingService {
       )
       .pipe(map((result) => result));
   }
+    //***************************Company Information*********************************** */
+    readCompany(): Observable<Process[]> {
+      return this.http.get<Process[]>(this.url + 'Admin/getCompany');
+    }
+    createCompany(formData: Process) {
+      let body = JSON.stringify(formData);
+      if (confirm(body)) {
+        return this.http.post<Process>(this.url + 'Admin/addCompany', formData);
+      }
+    }
+    updateCompany(formData: Process) {
+      let body = JSON.stringify(formData);
+      if (confirm(body)) {
+        return this.http.put<Process>(this.url + 'Admin/updateCompany', formData);
+      }
+    }
+    deleteCompany(formData: Process) {
+      let body = JSON.stringify(formData);
+      if (confirm(body)) {
+        const httpOptions = {
+          headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+          body: body,
+        };
+  
+        return this.http.delete<Process>(
+          this.url + 'Admin/deleteCompany',
+          httpOptions
+        );
+      } else {
+        return null;
+      }
+    }
 }

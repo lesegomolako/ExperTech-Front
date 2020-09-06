@@ -22,9 +22,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 
-
-
-
 //******************************* Components *************************************/
 import { TServicesComponent } from './Service/tservices/tservices.component';
 import { ServiceOptionsComponent } from './Service/service-options/service-options.component';
@@ -44,12 +41,22 @@ import { ForgotComponent} from './User/forgot/forgot.component';
 import { FpasswordComponent} from './User/fpassword/fpassword.component';
 import { RegisterComponent} from './User/register/register.component';
 import { SetupComponent} from './User/setup/setup.component';
+import {AdminComponent} from './User/admin/admin.component';
+import {AvailableComponent} from './User/available/available.component';
+import {CbookingComponent} from './User/cbooking/cbooking.component';
+import {ClientComponent} from './User/client/client.component';
+import {CompanyinfoComponent} from './User/companyinfo/companyinfo.component';
+import {EmployeeComponent} from './User/employee/employee.component';
+import {EmployeeSTComponent} from './User/employee-st/employee-st.component';
+import {PaymentComponent} from './User/payment/payment.component';
+import {PickupComponent} from './User/pickup/pickup.component'
 
 //******************************* Services *************************************/
 
 import { ServicesService }  from './API Services/for Service/services.service';
 import {ProductService} from './API Services/for Product/product.service';
 import { ClickSpinDirective } from './click-spin.directive';
+import { from } from 'rxjs';
 
 
 @NgModule({
@@ -76,7 +83,16 @@ import { ClickSpinDirective } from './click-spin.directive';
     RegisterComponent,
     SetupComponent,
     FpasswordComponent,
-    ClickSpinDirective
+    ClickSpinDirective,
+    PickupComponent,
+    PaymentComponent,
+    EmployeeSTComponent,
+    EmployeeComponent,
+    CompanyinfoComponent,
+    ClientComponent,
+    CbookingComponent,
+    AvailableComponent,
+    AdminComponent
 
   ],
   imports: [

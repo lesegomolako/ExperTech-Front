@@ -20,7 +20,7 @@ export class EditProductComponent implements OnInit {
     ) { }
 
     ProductForm: FormGroup;
-    ProdFormData = this.service.ProductForm;
+    ProdFormData = JSON.parse(localStorage.getItem('prodEdit'))
     categoryList: [];
     SupplierList: [];
     title: string;
@@ -80,7 +80,7 @@ export class EditProductComponent implements OnInit {
       price:  ['', [Validators.required, Validators.min(1)]],
       supplierid: ['', Validators.required],
       categoryid:  ['', Validators.required],
-      productid: new FormControl(),
+      productid: [''],
       photos:  this.fb.array([this.fb.group({photo :['', Validators.required]})])
     })
   }
@@ -107,14 +107,19 @@ export class EditProductComponent implements OnInit {
 
   setProduct()
   {
-    this.ProductForm.setValue({
+    this.ProductForm.patchValue({
       name: this.ProdFormData.Name,
       description: this.ProdFormData.Description,
       quantity: this.ProdFormData.QuantityOnHand,
       price: this.ProdFormData.Price,
       supplierid: this.ProdFormData.SupplierID,
-      categoryid: this.ProdFormData.CategoryID
+      categoryid: this.ProdFormData.CategoryID,
+      productid: this.ProdFormData.ProductID,
     })
+
+  
+        this.imageURL= this.ProdFormData.Photos[0].Photo
+    
   }
 
   mapValues()

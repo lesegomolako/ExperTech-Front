@@ -21,6 +21,15 @@ import { ForgotComponent } from './User/forgot/forgot.component';
 import { RegisterComponent } from './User/register/register.component';
 import { SetupComponent } from './User/setup/setup.component';
 import { FpasswordComponent } from './User/fpassword/fpassword.component';
+import { AdminComponent } from './User/admin/admin.component';
+import { AvailableComponent } from './User/available/available.component';
+import { CbookingComponent } from './User/cbooking/cbooking.component';
+import { ClientComponent } from './User/client/client.component';
+import { CompanyinfoComponent } from './User/companyinfo/companyinfo.component';
+import { EmployeeComponent } from './User/employee/employee.component';
+import { EmployeeSTComponent } from './User/employee-st/employee-st.component';
+import { PaymentComponent } from './User/payment/payment.component';
+import { PickupComponent } from './User/pickup/pickup.component';
 
 //import {MatDialogModule} from '@angular/material/dialog';
 
@@ -57,7 +66,16 @@ const routes: Routes = [
   {path:'forgot', component: ForgotComponent},
   {path:'fpassword', component: FpasswordComponent},
   {path:'register', component: RegisterComponent},
-  {path:'setup', component: SetupComponent}
+  {path:'setup', component: SetupComponent},
+  {path:'admin', component: AdminComponent},
+  {path:'available', component: AvailableComponent},
+  {path:'cbooking', component: CbookingComponent},
+  {path:'client', component: ClientComponent},
+  {path:'companyinfo', component: CompanyinfoComponent},
+  {path:'employee', component: EmployeeComponent},
+  {path:'employeeST', component: EmployeeSTComponent},
+  {path:'payment', component: PaymentComponent},
+  {path:'pickup', component: PickupComponent}
    
   
 

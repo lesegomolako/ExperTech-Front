@@ -1,7 +1,7 @@
 import { Directive, HostBinding } from '@angular/core';
 
 @Directive({
-  selector: '[click]'
+  selector: '[submit]'
 })
 export class ClickSpinDirective {
 
