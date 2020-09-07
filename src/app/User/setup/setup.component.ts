@@ -51,6 +51,13 @@ export class SetupComponent implements OnInit {
     return this.setupForm.controls;
   }
 
+  checkPasswords(group:FormGroup){
+    let pw = group.get('password').value;
+    let confirmpw = group.get('cpassword').value;
+
+    return pw == confirmpw ? null : {notSame: true}
+  }
+
   public checkError = (controlName: string, errorName: string) => {
     return this.SetupFormGroup.controls[controlName].hasError(errorName);
   };
@@ -92,6 +99,6 @@ export class SetupComponent implements OnInit {
   }
   loadList() {
     throw new Error("Method not implemented.");
-  }
-  
+  } 
+ 
 }

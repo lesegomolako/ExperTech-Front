@@ -22,7 +22,11 @@
     "@angular/platform-browser-dynamic": "~10.0.0",
     "@angular/router": "~10.0.0",
     "bootstrap": "^4.5.2",
+    "chart.js": "^2.9.3",
+    "jspdf": "^2.1.0",
+    "jspdf-autotable": "^3.5.10",
     "rxjs": "~6.5.5",
+    "sha.js": "^2.4.11",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },

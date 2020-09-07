@@ -21,6 +21,10 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {HttpClientModule} from '@angular/common/http';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import { CommonModule } from '@angular/common';
+import {MatRadioModule} from '@angular/material/radio';
+
+
 
 //******************************* Components *************************************/
 import { TServicesComponent } from './Service/tservices/tservices.component';
@@ -49,7 +53,9 @@ import {CompanyinfoComponent} from './User/companyinfo/companyinfo.component';
 import {EmployeeComponent} from './User/employee/employee.component';
 import {EmployeeSTComponent} from './User/employee-st/employee-st.component';
 import {PaymentComponent} from './User/payment/payment.component';
-import {PickupComponent} from './User/pickup/pickup.component'
+import {PickupComponent} from './User/pickup/pickup.component';
+import {ConfirmComponent} from './User/confirm/confirm.component';
+import {SpackageComponent} from './User/spackage/spackage.component';
 
 //******************************* Services *************************************/
 
@@ -57,6 +63,12 @@ import { ServicesService }  from './API Services/for Service/services.service';
 import {ProductService} from './API Services/for Product/product.service';
 import { ClickSpinDirective } from './click-spin.directive';
 import { from } from 'rxjs';
+import { SalesReportComponent } from './Reporting/sales-report/sales-report.component';
+import { ReportsService } from './API Services/for Reports/reports.service';
+import { FinancialReportComponent } from './Reporting/financial-report/financial-report.component';
+import { ProductReportComponent } from './Reporting/product-report/product-report.component';
+import { SupplierReportComponent } from './Reporting/supplier-report/supplier-report.component';
+import { BookingReportComponent } from './Reporting/booking-report/booking-report.component';
 
 
 @NgModule({
@@ -92,7 +104,14 @@ import { from } from 'rxjs';
     ClientComponent,
     CbookingComponent,
     AvailableComponent,
-    AdminComponent
+    AdminComponent,
+    ConfirmComponent,
+    SpackageComponent,
+    SalesReportComponent,
+    FinancialReportComponent,
+    ProductReportComponent,
+    SupplierReportComponent,
+    BookingReportComponent
 
   ],
   imports: [
@@ -102,10 +121,10 @@ import { from } from 'rxjs';
     MatIconModule, FormsModule, ReactiveFormsModule,
     MatToolbarModule, MatMenuModule , MatFormFieldModule, MatSidenavModule,
     HttpClientModule, MatDialogModule, 
-    FormsModule,
-    ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule
+    FormsModule, MatRadioModule,
+    ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule, CommonModule
   ],
-  providers: [ServicesService, ProductService],
+  providers: [ServicesService, ProductService, ReportsService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

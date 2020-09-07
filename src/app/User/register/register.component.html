@@ -5,7 +5,12 @@
         <h3 style="text-align: center;">Register Employee/Admin</h3>
 
         <form [formGroup]="registerForm" (ngSubmit)="RegisterEA()"> 
-        <div class="form-group">
+        <div class="form-group" [ngClass]="{
+          'has-error':
+            registerForm.get('firstName').errors &&
+            (registerForm.get('firstName').touched ||
+              registerForm.get('firstName').dirty)
+        }">
           <label>Name</label>
           <input
             id="name"
@@ -29,13 +34,18 @@
             <span *ngIf="registerForm.get('firstName').errors.required">
               Name is required
             </span>
-            <span *ngIf="registerForm.get('contact').errors.minlength || registerForm.get('contact').errors.maxLength">
-              Name must have between 2 and 5 characters.
+            <span *ngIf="registerForm.get('firstName').errors.minlength || registerForm.get('firstName').errors.maxLength">
+              Surname must have between 2 and 50 characters.
             </span>
           </span>
         </div>
 
-        <div class="form-group">
+        <div class="form-group"  [ngClass]="{
+          'has-error':
+            registerForm.get('lastName').errors &&
+            (registerForm.get('lastName').touched ||
+              registerForm.get('lastName').dirty)
+        }">
           <label>Surname</label>
           <input
             id="surname"
@@ -53,16 +63,24 @@
                     registerForm.get('lastName').dirty)
               }"
           />
-          <span *ngIf="registerForm.get('lastName').errors &&
+          <span class="help-block" *ngIf="registerForm.get('lastName').errors &&
             (registerForm.get('lastName').touched ||
             registerForm.get('lastName').dirty)">
           <span *ngIf="registerForm.get('lastName').errors.required">
             Surname is required
           </span>
+          <span *ngIf="registerForm.get('lastName').errors.minlength || registerForm.get('lastName').errors.maxLength">
+            Surname must have between 2 and 50 characters.
+          </span>
         </span>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" [ngClass]="{
+          'has-error':
+            registerForm.get('contact').errors &&
+            (registerForm.get('contact').touched ||
+              registerForm.get('contact').dirty)
+        }">
           <label>Contact Number</label>
           <input
             maxlength="10"
@@ -81,7 +99,7 @@
                     registerForm.get('contact').dirty)
               }"
           />
-          <span *ngIf="registerForm.get('contact').errors &&
+          <span class="help-block" *ngIf="registerForm.get('contact').errors &&
           (registerForm.get('contact').touched ||
           registerForm.get('contact').dirty)">
         <span *ngIf="registerForm.get('contact').errors.required">
@@ -93,7 +111,12 @@
       </span>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" [ngClass]="{
+          'has-error':
+            registerForm.get('email').errors &&
+            (registerForm.get('email').touched ||
+              registerForm.get('email').dirty)
+        }">
           <label>Email Address</label>
           <input
             id="email"
@@ -108,7 +131,7 @@
                     registerForm.get('email').dirty)
               }"
           />
-          <span *ngIf="registerForm.get('email').errors &&
+          <span class="help-block" *ngIf="registerForm.get('email').errors &&
           (registerForm.get('email').touched ||
           registerForm.get('email').dirty)">
         <span *ngIf="registerForm.get('email').errors.required">
@@ -118,6 +141,7 @@
         </div>
         <div class="form-group" style="text-align: center;">
           <button
+            type="submit"
             class="btn btn-primary" type="submit"
             style="color: white; background-color: green;"
           >
@@ -130,6 +154,7 @@
             Reset
           </button>
           <button
+          (click)="previousForm()"
             class="btn btn-primary"
             style="color: white; background-color: green;"
           >

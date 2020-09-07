@@ -1,0 +1,27 @@
+<div class="jumbotron" style="background-color: whitesmoke">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <form style="background-color: whitesmoke">
+            <h3 style="text-align: center">Booking Payment</h3>
+
+            <div class="form-group">
+                <strong>Client:</strong
+                ><label name="Payment">{{ bookingObject.Name }}</label>
+              </div>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Payment Type</mat-label>
+                <mat-select>
+                  <mat-option
+                    *ngFor="let option of List | async"
+                    value="{{ option.Type}}"
+                    >{{option.Type}}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>

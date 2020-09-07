@@ -1,0 +1,48 @@
+.sale
+{
+    height: 297mm;
+    width: 210mm;
+    /* to centre page on screen*/
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+h1 {
+    text-align: center;
+  }
+  
+  .dropList {
+    width: 200px;
+  }
+  
+ 
+  body {
+    text-align: center;
+    align-items: center;
+  }
+  
+  /* table {
+    width: 680px;
+    height: 680px;
+    margin-left: auto;
+    margin-right: auto;
+  } */
+  table th {
+    -webkit-text-decoration-color: indianred;
+            text-decoration-color: indianred;
+    border-top: 1px solid crimson;
+    border-bottom: 1px solid crimson;
+  }
+  table tr {
+    text-align: center;
+    border-bottom: 1px solid black;
+  }
+  
+  .reportChart 
+  {
+    width: 680px;
+    height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }

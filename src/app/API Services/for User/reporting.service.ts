@@ -178,16 +178,16 @@ export class ReportingService {
   }
   ///***********************************************Availability*********************************************
   getTime(): Observable<Schedule[]> {
-    return this.http.get<Schedule[]>(this.url + 'Employee/getTime');
+    return this.http.get<Schedule[]>(this.url + 'Employees/getTime');
   }
   getDate(): Observable<Schedule[]> {
-    return this.http.get<Schedule[]>(this.url + 'Employee/getDate');
+    return this.http.get<Schedule[]>(this.url + 'Employees/getDate');
   }
   createSchedule(formData: Process) {
     let body = JSON.stringify(formData);
     if (confirm(body)) {
       return this.http.post<Process>(
-        this.url + 'Employee/createSchedule',
+        this.url + 'Employees/createSchedule',
         formData
       );
     }
@@ -196,7 +196,7 @@ export class ReportingService {
     let body = JSON.stringify(formData);
     if (confirm(body)) {
       return this.http.post<Process>(
-        this.url + 'Employee/updateSchedule',
+        this.url + 'Employees/updateSchedule',
         formData
       );
     }
@@ -206,7 +206,7 @@ export class ReportingService {
     let body = JSON.stringify(formData);
     if (confirm(body)) {
       return this.http.post<Process>(
-        this.url + 'Employee/createSchedule',
+        this.url + 'Employees/createSchedule',
         formData
       );
     }
@@ -244,6 +244,7 @@ export class ReportingService {
       return this.http.post<Process>(this.url + 'User/salePayment', formData);
     }
   }
+  
   bookingPayment(formData: Process) {
     let body = JSON.stringify(formData);
     if (confirm(body)) {

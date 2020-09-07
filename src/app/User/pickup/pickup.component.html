@@ -1,0 +1,52 @@
+<div class="jumbotron" style="background-color: whitesmoke">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <form style="background-color: whitesmoke">
+            <h3 style="text-align: center">Sale Payment</h3>
+            <div class="form-group">
+              <strong>Name:</strong
+              ><label name="Name">{{ productObject.Name }}</label>
+            </div>
+            <div class="form-group">
+              <strong>Contact Number:</strong
+              ><label name="ContactNo">{{ productObject.ContactNo }}</label>
+            </div>
+            <div class="form-group">
+              <strong>Description:</strong
+              ><label name="Description">{{ productObject.Description }}</label>
+            </div>
+            <div class="form-group">
+              <strong>Reminder:</strong
+              ><label name="Reminder">{{ productObject.Reminder }}</label>
+            </div>
+            <div class="form-group">
+              <strong>Quantity:</strong
+              ><label name="Quantity">{{ productObject.Quantity }}</label>
+            </div>
+            <div class="form-group">
+              <strong>Total:</strong
+              ><label name="Payment">{{ productObject.Payment }}</label>
+            </div>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Payment Type</mat-label>
+              <mat-select>
+                <mat-option
+                  *ngFor="let option of List | async"
+                  value="{{ option.Type}}"
+                  >{{option.Type}}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+            
+            <div style="text-align: center;">
+              <button class="btn btn-success">Pay</button>
+              <button class="btn btn-success">Back</button>
+              </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+</div>

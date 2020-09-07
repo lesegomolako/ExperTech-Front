@@ -8,12 +8,13 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
-//import { Process } from '../process';
 import { Observable } from 'rxjs';
-//import { ReportingService } from '../reporting.service';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process} from '../../API Services/for User/process';
 import { Router } from '@angular/router';
+//import { sha256, sha224 } from 'js-sha256';
+
+
 
 export class User
 {
@@ -52,10 +53,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+      lastName: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
-      contact: ['', [Validators.required, Validators.maxLength(10)]],
+      contact: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
       username: ['', [Validators.required, Validators.minLength(2)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       cpassword: ['', [Validators.required, Validators.minLength(6)]],
@@ -105,13 +106,27 @@ export class RegisterComponent implements OnInit {
 
   user: User;
 
+  
   RegisterEA(){
+    SesseionID: "";
+    
     this.mapValues();
-    this.service.RegisterEA(this.user).subscribe((res: Process) =>
+    this.service.RegisterEA(this.user).subscribe((res: any) =>{
+    if(res.Message == "success")
     {
-      //localStorage.set("accessToken", res.SessionID);
-      //this.router.navigate(["home"]);
+      sessionStorage.set("accessToken", res.SessionID);
+      this.router.navigate(["client"]);
+    }
     })
+    this.submitted = true;
+    
+    // this.user = {
+    //   UserID: "",
+    //   RoleID: 2,
+    //   Username: form.value.Username,
+    //   Password: sha256(form.value.Password),
+    //   SessionID: "",
+    // }
   }
 
 mapValues()
@@ -129,6 +144,9 @@ mapValues()
       ContactNo: this.registerForm.value.contact
     }]
   }
+}
+previousForm() {
+  window.history.back();
 }
 
   resetForm(form?: NgForm) {
@@ -159,8 +177,12 @@ mapValues()
       Description: null,
       PackageID: null,
       ServiceID: null,
+      Type: null,
+      StatusID: null,
       TypeID: null,
-      SessionID:  null,
+      SessionID: null,
+      InfoID: null,
+      Address: null,
     };
   }
 }

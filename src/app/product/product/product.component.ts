@@ -15,25 +15,28 @@ export class ProductComponent implements OnInit {
   ProductList :Observable<ProductData[]>;
 
   ngOnInit(): void {
-
+    localStorage.clear();
     this.ProductList = this.service.getProducts();
   }
 
   addProduct()
   { 
-    this.service.ProductForm = null;
+    //this.service.ProductForm = null;
+    localStorage.removeItem('prodEdit')
     this.router.navigateByUrl("/EditProduct")
   }
 
   editProduct(data: ProductData)
   {
-     this.service.ProductForm = data;
+     //this.service.ProductForm = data;
+     localStorage.setItem('prodEdit', JSON.stringify(data))
      this.router.navigateByUrl("/EditProduct")
   }
 
   deleteProduct(data: ProductData)
   {
-    this.service.ProductForm = data;
+    //this.service.ProductForm = data;
+    localStorage.setItem('prodDelete', JSON.stringify(data))
     this.router.navigateByUrl("/DeleteProduct")
   }
 

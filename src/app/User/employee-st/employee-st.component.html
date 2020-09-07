@@ -1,0 +1,34 @@
+<div style="width: 100%; height: 100%">
+    <div
+      style="background-color: whitesmoke; text-align: center"
+      class="card_hover"
+    >
+      <h1 style="text-align: center">Employee Service Type</h1>
+    <br>
+      <mat-form-field appearance="fill">
+          <mat-label>Service Type</mat-label>
+          <mat-select>
+              <mat-option
+              *ngFor="let option of List | async"
+              value="{{option.Name}}">
+              {{option.Name}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+      <button class="btn btn-success" (click)="AddForm()"> + </button>
+      <br>
+      <button class="btn btn-success">Submit</button>
+    </div>
+
+    <ng-container formArrayName="itemLine">
+      <div *ngFor="let rr of employeestForm.get('itemLine')['control']; let j = index">
+        <div [formGroupName]="j">
+          <mat-label class="example-full-width" cellspacing="0">
+            <mat-select formControl="TypeID">
+              <option *ngFor="let x of List" value="{{x.TypeID}}">{{x.Name}}</option>
+            </mat-select>
+          </mat-label>
+        </div>
+      </div>
+    </ng-container>
+</div>

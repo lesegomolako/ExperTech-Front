@@ -30,10 +30,11 @@ import { EmployeeComponent } from './User/employee/employee.component';
 import { EmployeeSTComponent } from './User/employee-st/employee-st.component';
 import { PaymentComponent } from './User/payment/payment.component';
 import { PickupComponent } from './User/pickup/pickup.component';
+import { ConfirmComponent } from './User/confirm/confirm.component';
+import { SpackageComponent } from './User/spackage/spackage.component';
+import { SalesReportComponent } from './Reporting/sales-report/sales-report.component';
 
 //import {MatDialogModule} from '@angular/material/dialog';
-
-
 
 const routes: Routes = [
 
@@ -52,9 +53,7 @@ const routes: Routes = [
       {path:'CreateServicePackage', component: EditSPComponent},
       {path:'DeleteServiceType', component: DeleteServiceTypeComponent},
       {path:'DeleteServiceOption', component: DeleteSOComponent},
-      {path:'DeleteService', component: DeleteServiceComponent},
-         
-      
+      {path:'DeleteService', component: DeleteServiceComponent},  
    ]
   },
 
@@ -75,12 +74,11 @@ const routes: Routes = [
   {path:'employee', component: EmployeeComponent},
   {path:'employeeST', component: EmployeeSTComponent},
   {path:'payment', component: PaymentComponent},
-  {path:'pickup', component: PickupComponent}
-   
+  {path:'pickup', component: PickupComponent},
+  {path:'confirm', component: ConfirmComponent},
+  {path: 'spackage', component: SpackageComponent},
+  {path: 'salereport', component: SalesReportComponent}
   
-
-
-
 ];
 
 @NgModule({

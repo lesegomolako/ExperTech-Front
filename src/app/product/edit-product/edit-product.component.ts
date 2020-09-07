@@ -80,7 +80,7 @@ export class EditProductComponent implements OnInit {
       price:  ['', [Validators.required, Validators.min(1)]],
       supplierid: ['', Validators.required],
       categoryid:  ['', Validators.required],
-      productid: [''],
+      productid: [null],
       photos:  this.fb.array([this.fb.group({photo :['', Validators.required]})])
     })
   }
@@ -90,6 +90,7 @@ export class EditProductComponent implements OnInit {
     
     if(this.ProductForm.value.productid == null)
     {
+      alert("hello")
       this.mapValues();
       this.AddProduct();   
     }
@@ -150,9 +151,10 @@ export class EditProductComponent implements OnInit {
         {
           alert("Successfully saved")
           this.router.navigateByUrl("AdminProduct")
+          
         }
         else if(res == "duplicate")
-      {
+        {
         if (confirm("Product already exists. Would you like to update instead?"))
         {
           this.service.ProductForm = this.ProdFormData;
@@ -179,6 +181,7 @@ export class EditProductComponent implements OnInit {
         {
           alert("Successfully updated");
           this.router.navigateByUrl("AdminProduct")
+          localStorage.removeItem('prodEdit')
         }
     })
   }

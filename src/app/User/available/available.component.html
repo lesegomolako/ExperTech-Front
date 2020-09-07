@@ -1,0 +1,78 @@
+<div style="width: 100%; height: 100%">
+  <div
+    style="background-color: whitesmoke; text-align: center"
+    class="card_hover"
+  >
+    <form [formGroup]="AvailabilityForm" (ngSubmit)="addAvailability()">
+      <h1 style="text-align: center">Schedule</h1>
+      <br />
+
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [min]="minDate"
+          placeholder="Start Date"
+          formControlName="StartDate"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker (click)="setMinDate()"
+          >Start Date</mat-datepicker
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          placeholder="End Date"
+          [min]="maxDate"
+          formControlName="EndDate"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1>End Date</mat-datepicker>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field appearance="fill">
+        <mat-label>Start Time</mat-label>
+        <mat-select formControlName="StartTime">
+          <mat-option
+            *ngFor="let times of List | async"
+            value="{{ times.TimeID }}"
+            >{{ times.StartTime }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>End Time</mat-label>
+        <mat-select formControlName="EndTime">
+          <mat-option
+            *ngFor="let times of List | async"
+            value="{{ times.TimeID }}"
+            >{{ times.EndTime }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+
+      <br />
+      <mat-radio-group aria-label="Select an option" formControlName="Avail">
+        <mat-radio-button value="1">Available</mat-radio-button>
+        <mat-radio-button value="2">Not Available</mat-radio-button>
+      </mat-radio-group>
+
+      <br />
+      <button
+        class="btn btn-primary"
+        style="color: white; background-color: green"
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
