@@ -1,86 +1,121 @@
-<div class="jumbotron" style="background-color: white;">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 offset-md-3">
-          <h3 style="text-align: center;">User setup</h3>
-          <div class="form-group">
-            <label>Username</label>
-            <input
-              id="username"
-              (keypress)="omit_special_char($event)"
-              type="text"
-              formControlName="username"
-              class="form-control"
-              [ngClass]="{
-                'has-error':
+<div class="jumbotron" style="background-color: white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h3 style="text-align: center">User setup</h3>
+        <div
+          class="form-group"
+          [ngClass]="{
+            'has-error':
+              setupForm.get('username').errors &&
+              (setupForm.get('username').touched ||
+                setupForm.get('username').dirty)
+          }"
+        >
+          <label>Username</label>
+          <input
+            id="username"
+            (keypress)="omit_special_char($event)"
+            type="text"
+            formControlName="username"
+            class="form-control"
+            [ngClass]="{
+              'has-error':
                 setupForm.get('username').errors &&
-                  (setupForm.get('username').touched ||
+                (setupForm.get('username').touched ||
                   setupForm.get('username').dirty)
-              }"
-            />
-            <span *ngIf="setupForm.get('username').errors &&
-            (setupForm.get('username').touched ||
-            setupForm.get('username').dirty)">
-          <span *ngIf="setupForm.get('username').errors.required">
-            Username is required
+            }"
+          />
+          <span
+            *ngIf="
+              setupForm.get('username').errors &&
+              (setupForm.get('username').touched ||
+                setupForm.get('username').dirty)
+            "
+          >
+            <span *ngIf="setupForm.get('username').errors.required">
+              Username is required
+            </span>
           </span>
-        </span>
-          </div>
-          <div class="form-group">
-            <label>Password</label>
-            <input
-              id="password"
-              minlength="6"
-              type="password"
-              formControlName="password"
-              class="form-control"
-              [ngClass]="{
-                'has-error':
-                setupForm.get('password').errors &&
-                  (setupForm.get('password').touched ||
-                  setupForm.get('password').dirty)
-              }"/>
-              <span *ngIf="setupForm.get('password').errors &&
+        </div>
+        <div
+          class="form-group"
+          [ngClass]="{
+            'has-error':
+              setupForm.get('password').errors &&
               (setupForm.get('password').touched ||
-              setupForm.get('password').dirty)">
+                setupForm.get('password').dirty)
+          }"
+        >
+          <label>Password</label>
+          <input
+            id="password"
+            minlength="6"
+            type="password"
+            formControlName="password"
+            class="form-control"
+            [ngClass]="{
+              'has-error':
+                setupForm.get('password').errors &&
+                (setupForm.get('password').touched ||
+                  setupForm.get('password').dirty)
+            }"
+          />
+          <span
+            *ngIf="
+              setupForm.get('password').errors &&
+              (setupForm.get('password').touched ||
+                setupForm.get('password').dirty)
+            "
+          >
             <span *ngIf="setupForm.get('password').errors.required">
               Password is required
             </span>
           </span>
-          </div>
-          <div class="form-group">
-            <label>Confirm Password</label>
-            <input
-              id="cpassword"
-              minlength="10"
-              type="password"
-              formControlName="cpassword"
-              class="form-control"
-              [ngClass]="{
-                'has-error':
+        </div>
+        <div
+          class="form-group"
+          [ngClass]="{
+            'has-error':
+              setupForm.get('cpassword').errors &&
+              (setupForm.get('cpassword').touched ||
+                setupForm.get('cpassword').dirty)
+          }"
+        >
+          <label>Confirm Password</label>
+          <input
+            id="cpassword"
+            minlength="10"
+            type="password"
+            formControlName="cpassword"
+            class="form-control"
+            [ngClass]="{
+              'has-error':
                 setupForm.get('cpassword').errors &&
-                  (setupForm.get('cpassword').touched ||
+                (setupForm.get('cpassword').touched ||
                   setupForm.get('cpassword').dirty)
-              }"
-            />
-            <span *ngIf="setupForm.get('cpassword').errors &&
-            (setupForm.get('cpassword').touched ||
-            setupForm.get('cpassword').dirty)">
-          <span *ngIf="setupForm.get('cpassword').errors.required">
-            Password is required
+            }"
+          />
+          <span
+            *ngIf="
+              setupForm.get('cpassword').errors &&
+              (setupForm.get('cpassword').touched ||
+                setupForm.get('cpassword').dirty)
+            "
+          >
+            <span *ngIf="setupForm.get('cpassword').errors.required">
+              Password is required
+            </span>
           </span>
-        </span>
 
-            <br>
+          <br />
+        </div>
+        <div style="text-align: center">
+          <div class="form-group">
+            <button class="btn btn-success" style="color: white">Submit</button>
           </div>
-          <div style="text-align: center;">
-            <div class="form-group">
-                <button
-              class="btn btn-success"
-              style="color: white;"
-            >Submit</button>
-            </div>
-      </div>
+        </div>
       </div>
     </div>
+  </div>
 </div>

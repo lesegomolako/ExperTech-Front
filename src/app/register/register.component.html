@@ -5,7 +5,12 @@
         <h3 style="text-align: center">Register Employee/Admin</h3>
 
         <form [formGroup]="registerForm" (ngSubmit)="RegisterEA()">
-          <div class="form-group">
+          <div class="form-group" [ngClass]="{
+            'has-error':
+              registerForm.get('firstName').errors &&
+              (registerForm.get('firstName').touched ||
+                registerForm.get('firstName').dirty)
+          }">
             <label for="firstName">Name</label>
             <input
               id="firstName"
@@ -36,7 +41,12 @@
               </span>
             </span>
           </div>
-          <div class="form-group">
+          <div class="form-group" [ngClass]="{
+            'has-error':
+              registerForm.get('lastName').errors &&
+              (registerForm.get('lastName').touched ||
+                registerForm.get('lastName').dirty)
+          }">
             <label>Surname</label>
             <input
               id="surname"
@@ -66,7 +76,12 @@
               </span>
             </span>
           </div>
-          <div class="form-group">
+          <div class="form-group" [ngClass]="{
+            'has-error':
+              registerForm.get('contact').errors &&
+              (registerForm.get('contact').touched ||
+                registerForm.get('contact').dirty)
+          }">
             <label>Contact Number</label>
             <input
               id="number"
@@ -104,7 +119,12 @@
               </span>
             </span>
           </div>
-          <div class="form-group">
+          <div class="form-group"  [ngClass]="{
+            'has-error':
+              registerForm.get('email').errors &&
+              (registerForm.get('email').touched ||
+                registerForm.get('email').dirty)
+          }">
             <label>Email Address</label>
             <input
               id="email"
