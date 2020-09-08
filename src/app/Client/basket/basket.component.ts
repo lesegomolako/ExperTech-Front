@@ -60,12 +60,14 @@ this.total =(res.Quantity * res.Product.Price)
 
 item(){
   this.pro=0
+
   this.basket.forEach(res => {
     
     this.pro = (res.Quantity)
       })
 
   this.api.badgeCount = this.pro;   
+  localStorage.setItem("itemsCount",this.pro.toString())
 }
 
 

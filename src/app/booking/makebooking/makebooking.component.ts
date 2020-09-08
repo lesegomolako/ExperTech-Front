@@ -5,7 +5,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { Router,ActivatedRoute } from "@angular/router";
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import{ BasketLine, Schedule, Booking} from 'src/app/client';
+import{ Client, Schedule, Booking} from 'src/app/client';
 import { ExperTexhService } from 'src/app/exper-texh.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -18,8 +18,17 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MakebookingComponent implements OnInit {
   BookingForm: FormGroup;
-
   step = 0;
+  submitted = false;
+  title = 'Edit';
+  user: any;
+  id: number;
+
+  client :  Client;
+  name: string;
+  dataSaved = false;  
+  customerForm: any;   
+  massage = null;  
 
   setStep(index: number) {
     this.step = index;
@@ -32,7 +41,7 @@ export class MakebookingComponent implements OnInit {
   prevStep() {
     this.step--;
   }
-
+  public MakeFormGroup: FormGroup;
   constructor(public dialog: MatDialog,private http: HttpClient,private api: ExperTexhService, private fb: FormBuilder,
      private router: Router,private route: ActivatedRoute) { }
 
@@ -66,7 +75,11 @@ export class MakebookingComponent implements OnInit {
     this.TimeDateControl = false;
 
   }
-
+  password(formGroup: FormGroup) {
+    const { value: password } = formGroup.get('password');
+    const { value: confirmPassword } = formGroup.get('confirmpassword');
+    return password === confirmPassword ? null : { passwordNotMatch: true };
+  }
   ngOnInit(): void {
     
     this.BookingForm = this.fb.group({
@@ -75,13 +88,27 @@ export class MakebookingComponent implements OnInit {
       TimeControl : new FormControl('', Validators.required),
       OptionControl : new FormControl('',Validators.required),
       NotesControl : new FormControl(''),
+      firstName: ['', [ Validators.required,Validators.minLength(2),Validators.maxLength(50)]],
+      lastName: ['', [Validators.required,Validators.minLength(2),Validators.maxLength(100)]],
+      contact: ['', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]],
+      email: ['', [Validators.required, Validators.email,Validators.minLength(2),Validators.maxLength(50)]],
+
+
+ 
     })
     this.LoadList();
     this.resetForm();
 
     this.BookingData.ClientID = 2;
 }
-
+omit_special_char(event)
+{   
+   var k;  
+   k = event.charCode;  //         k = event.keyCode;  (Both can be used)
+   return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57)); 
+}
+    // convenience getter for easy access to form fields
+    get f() { return this.BookingForm.controls; }
 resetForm(form?: NgForm)
 {
   if(form != null)
@@ -122,8 +149,24 @@ resetForm(form?: NgForm)
   
 }
 
-onSubmit()
+onSubmit(form)
 {
+  this.BookingForm=form;
+  this.submitted = true;
+
+  // stop here if form is invalid
+  if (this.BookingForm.invalid) {
+      return;
+  }
+
+  let updatedClient:Client = {
+    ClientID:this.client.ClientID,
+    Name:this.BookingForm.value.firstName,
+    Email:this.BookingForm.value.email,
+    ContactNo:this.BookingForm.value.contact,
+    Surname:this.BookingForm.value.lastName
+  }
+  
   this.MapValue();
   this.api.Requestbookingdetails(this.BookingData)
   .subscribe(res =>
@@ -140,6 +183,13 @@ onSubmit()
     })
 
   console.log(this.BookingForm.value)
+}
+public checkError = (controlName: string, errorName: string) => {
+  return this.MakeFormGroup.controls[controlName].hasError(errorName);
+}
+onReset() {
+  this.submitted = false;
+  this.BookingForm.reset();
 }
 
 MapValue()

@@ -16,12 +16,13 @@ export class ExperTexhService {
   UserData: User;
   clientData: Client;
   badgeCount = 0;
+  
 
   constructor(private http:HttpClient) { }
 
   RegisterClient(formData: User): Observable<User> {  
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.post<User>(this.url + 'Clients/registerUser/',  
+    return this.http.post<User>(this.url + 'Clients/registerUser',  
     formData);  
 
   }
@@ -142,6 +143,10 @@ export class ExperTexhService {
 
       }
     });   
+  }
+
+  getBasketQuantity(Id: any): Observable<BasketLine> {  
+    return this.http.get<BasketLine>(this.url + 'Clients/getbasketQuantity?id=4');  
   }
 
   

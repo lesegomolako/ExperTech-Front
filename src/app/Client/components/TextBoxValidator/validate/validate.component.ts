@@ -140,7 +140,7 @@ omit_special_char(event)
          RoleID: 1,
          Username:form.value.Username,
         //  Password: (form.value.Password),
-         Password: sha256(form.value.Password),
+         Password: sha256(form.value.Password).toString(),
          SessionID: "",
          Clients: this.client
         }
@@ -148,7 +148,7 @@ omit_special_char(event)
         this.api.RegisterClient(this.user).subscribe((res: any)=>{
           if(res.Message == "success")
           {
-          localStorage.setItem("accessToken", res.SessionID);
+          sessionStorage.setItem("accessToken", res.SessionID);
           this.router.navigate(['ClientProfile'])
           }
         })

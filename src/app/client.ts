@@ -15,19 +15,7 @@ export class User {
     Username: string;
     Password: string;
     SessionID: string;
-    Clients: 
-      {
-
-            Name: string;
-            Surname: string;
-            ContactNo: string;
-            Email: any;
-
-
-
-        }
-    
-    
+    Clients: Client[];
 }
 
 export class BasketLine {
@@ -73,17 +61,13 @@ export class ClientPackage{
         Name: string;
     }
     PackageInsatance:
-    {
+    [{
         PackageID: any;
         Date: Date;
         SaleID: any;
         StatusID: any;
-    }
-    InstanceStatu:
-    {
-
-        Status: string;
-    }
+    }]
+  
 
 
 }

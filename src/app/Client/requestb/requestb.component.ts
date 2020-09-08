@@ -69,8 +69,6 @@ export class RequestbComponent implements OnInit {
     this.TypesID = this.BookingForm.value.TypeControl
   }
 
-  
-
   EnableOptForm()
   {
     this.optControl = false;
@@ -83,7 +81,8 @@ export class RequestbComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     
     this.BookingForm = this.fb.group({
       ServiceControl : new FormControl('', Validators.required),
@@ -98,7 +97,7 @@ export class RequestbComponent implements OnInit {
     this.TypesID = 0
    
     this.BookingData.ClientID = 2;
-}
+  }
 
 
 resetForm(form?: NgForm)
@@ -165,7 +164,10 @@ MapValue()
 {
   this.BookingData.BookingLines[0].ServiceID = this.BookingForm.value.ServiceControl
   this.BookingData.BookingLines[0].OptionID = this.BookingForm.value.OptionControl;
+
+  if(this.BookingForm != null)
   this.BookingData.BookingNotes[0].Notes = this.BookingForm.value.NotesControl;
+  
   this.BookingData.DateRequesteds[0].Date  = this.BookingForm.value.DateControl;
   this.BookingData.DateRequesteds[0].StartTime = this.BookingForm.value.TimeControl;
 }

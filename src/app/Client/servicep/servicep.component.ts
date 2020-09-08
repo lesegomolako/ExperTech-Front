@@ -19,7 +19,7 @@ export class ServicepComponent implements OnInit {
   
   dataSaved = false;  
   packageForm: any;  
-  allservicepackage: Observable<ClientPackage[]>;
+  allservicepackage:ClientPackage[];
   total: 0;
   
 
@@ -36,7 +36,9 @@ export class ServicepComponent implements OnInit {
 }
 
 loadservicepackage() {  
-  this.allservicepackage = this.service.ViewServicePackage();
+  this.service.ViewServicePackage().subscribe(res => {
+    this.allservicepackage = res;
+  });
 }
 
 }
