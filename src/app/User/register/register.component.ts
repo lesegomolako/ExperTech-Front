@@ -30,6 +30,15 @@ export class User
       ContactNo: string;
       Email: string;
     }
+  ];
+  Employees:
+  [
+    {
+      Name: string;
+      Surname: string;
+      ContactNo: string;
+      Email: string;
+    }
   ]
 }
 
@@ -41,7 +50,7 @@ export class User
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
-  RoleID = 2;
+  RoleID;
 
   public RegisterFormGroup: FormGroup;
   constructor(
@@ -58,6 +67,16 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       contact: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
     });
+
+    var role = localStorage.getItem("registerID")
+    if(role == "admin")
+    {
+      this.RoleID = 2;
+    }
+    else
+    {
+      this.RoleID = 3;
+    }
   }
   // convenience getter for easy access to form fields
   get f() {
@@ -110,10 +129,17 @@ export class RegisterComponent implements OnInit {
     {
     this.mapValues();
     this.service.RegisterEA(this.user).subscribe((res: any) =>{
-    if(res.Message == "success")
+    if(res == "success")
     {
-      sessionStorage.set("accessToken", res.SessionID);
-      this.router.navigate(["client"]);
+      localStorage.removeItem("registerID")
+      if(this.RoleID == 2)
+      {
+        this.router.navigate(["admin"]);
+      }
+      if(this.RoleID == 3)
+      {
+        this.router.navigate(["employee"])
+      }
     }
     })
     this.submitted = true;
@@ -133,18 +159,43 @@ export class RegisterComponent implements OnInit {
 
 mapValues()
 {
+  if(this.RoleID == 3)
+  {
   this.user = {
     RoleID: this.RoleID,
     SessionID: "",
     Username:"",
     Password:"",
     Admins:
+    [null],
+    Employees:
     [{
       Name: this.registerForm.value.firstName,
       Surname: this.registerForm.value.lastName,
       Email: this.registerForm.value.email,
       ContactNo: this.registerForm.value.contact
     }]
+    
+  }}
+
+  if(this.RoleID == 2)
+  {
+    this.user = {
+      RoleID: this.RoleID,
+      SessionID: "",
+      Username:"",
+      Password:"",
+      Admins:
+      [{
+        Name: this.registerForm.value.firstName,
+        Surname: this.registerForm.value.lastName,
+        Email: this.registerForm.value.email,
+        ContactNo: this.registerForm.value.contact
+      }],
+      Employees:
+      [null]
+      
+    }
   }
 }
 previousForm() {

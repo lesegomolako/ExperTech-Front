@@ -8,14 +8,24 @@
         </button>
         <img src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;"/></li>
       <ul>
+        <!-- client sidnav stuff -->
+        <a routerLink="/home" *ngIf="clientLoggedIn || !LoggedIn" (click)="drawer.close()" ><li> Home</li></a>
         <a routerLink="/ViewServices" (click)="drawer.close()" ><li> View Services</li></a>
         <a routerLink="/browse" (click)="drawer.close()" ><li>View Products</li></a>
         <a routerLink="/ViewBooking" *ngIf="clientLoggedIn" (click)="drawer.close()" ><li>Bookings</li></a>
         <a routerLink="/Orders" *ngIf="clientLoggedIn" (click)="drawer.close()"><li>View Sales</li></a>
-        <a routerLink="/spackage" (click)="drawer.close()"><li>Service Package</li></a>
+        <!-- admin sidnav stuff -->
+        <a routerLink="/schedule" (click)="drawer.close()" ><li> View Schedule</li></a>
+        <a routerLink="/services" (click)="drawer.close()"><li>Services</li></a>
         <a routerLink="/client" (click)="drawer.close()"><li>Client</li></a>
+        <a routerLink="/reports" (click)="drawer.close()" ><li> Reports</li></a>
+        <a routerLink="/ViewServices" (click)="drawer.close()" ><li> Settings</li></a>
+
+        
         <li (click)="logout(); drawer.close()" *ngIf="LoggedIn">Logout</li>
         <li *ngIf="!LoggedIn" (click)="login(); drawer.close()">Login</li>
+        <a routerLink="/clienthome" *ngIf="AdminLoggedIn" (click)="drawer.close()" ><li> Home</li></a>
+
       </ul>
     </div>
   </mat-drawer>

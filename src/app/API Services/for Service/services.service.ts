@@ -120,4 +120,16 @@ export class ServicesService {
       headers: {'Content-Type': 'application/json'},
       params: params})
   }
+
+  AddServicePhoto(ServiceID: any, UploadFile:File )
+  {
+    const formData: FormData = new FormData();
+    formData.append('ServiceID', ServiceID)
+    formData.append('Image', UploadFile, UploadFile.name)
+    console.log(formData)
+    console.log(UploadFile)
+    return this.http.post(this.url+'Services/AddServicePhoto', formData )
+  }
+
+  
 }

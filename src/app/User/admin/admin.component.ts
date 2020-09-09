@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
@@ -10,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process} from '../../API Services/for User/process';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -30,7 +32,8 @@ export class AdminComponent implements OnInit {
   }
   constructor(
     public dialog: MatDialog, 
-    public service: ReportingService) { }
+    public service: ReportingService,
+    private router: Router) { }
 
   List: Observable<Process[]>;
 
@@ -40,6 +43,12 @@ export class AdminComponent implements OnInit {
   }
   loadList() {
     this.List = this.service.readAdmin();
+  }
+
+  registerAdmin()
+  {
+    localStorage.setItem("registerID", "admin")
+    this.router.navigateByUrl("/register")
   }
 
   emailFormControl = new FormControl('', [

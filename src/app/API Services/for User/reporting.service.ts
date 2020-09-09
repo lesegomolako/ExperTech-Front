@@ -11,6 +11,7 @@ import {
 import { Process, Schedule, Package } from './process';
 import { User } from 'src/app/User/register/register.component';
 import { AvailData } from 'src/app/User/available/available.component';
+import { UserData } from 'src/app/User/setup/setup.component';
 
 //import 'rxjs/add/operator/map'
 
@@ -24,6 +25,15 @@ export class ReportingService {
   user: any;
 
   constructor(private http: HttpClient) {}
+  //*******************Valid Session ***********************/
+  ValidSession(seshID)
+  {
+    const params = new HttpParams().set('seshin', seshID );
+
+    return this.http.post(this.url +'User/ValidSession', {
+      headers: {'Content-Type': 'application/json'},
+      params: params})
+  }
   //*******************Check User Role************************/
   CheckRole(seshID)
   {
@@ -170,21 +180,18 @@ export class ReportingService {
     return this.http.post(this.url + 'User/Login', formData);
     
   }  
-  userSetup(formData: User){
-    let body = JSON.stringify(formData);
-
-    if (confirm(body)) {
+  userSetup(formData: UserData){
+   
       return this.http.put(
         this.url + 'User/userSetup', formData)
-    }
+    
   }
   RegisterEA(formData: User){ 
-    let body = JSON.stringify(formData);
-    if (confirm(body)) {
+    
       return this.http.post<Process>(
         this.url + 'User/RegisterEA', formData
       );
-    }
+    
   }
   ///***********************************************Availability*********************************************
   getTime(): Observable<Schedule[]> {

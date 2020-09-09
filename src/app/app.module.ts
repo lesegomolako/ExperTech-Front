@@ -32,6 +32,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 
 
 
+
 //******************************* Components *************************************/
 import { TServicesComponent } from './Service/tservices/tservices.component';
 import { ServiceOptionsComponent } from './Service/service-options/service-options.component';
@@ -76,10 +77,9 @@ import { MakebookingComponent } from './Booking/makebooking/makebooking.componen
 import { ViewbookingComponent } from './Client/viewbooking/viewbooking.component';
 import { ServicepComponent } from './Client/servicep/servicep.component';
 import { BookingConfirmComponent } from './Booking/confirm/confirm.component';
-import { AdviseComponent } from './Booking/advise/advise.component';
 import { BasketComponent } from './Client/basket/basket.component';
 import { RequestbComponent } from './Booking/requestb/requestb.component';
-//import { ScheduleComponent } from './Booking/schedule/schedule.component';
+import {EmployeehomeComponent} from './User/employeehome/employeehome.component';
 import { BrowseComponent } from './product/browse/browse.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {ViewdetailComponent} from './Supplier/sale/viewdetail/viewdetail.component';
@@ -115,6 +115,8 @@ import { customFilter } from './API Services/for Booking/requestb.pipe';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ScheduleComponent } from './Booking/schedule/schedule.component';
+import { AdviseComponent } from './Booking/advise/advise.component';
 
 
 @NgModule({
@@ -128,11 +130,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AvailableComponent,AdminComponent,ConfirmComponent,SpackageComponent,SalesReportComponent,
     FinancialReportComponent,ProductReportComponent,SupplierReportComponent,
     BookingReportComponent,ValidateComponent,EditComponent,BellComponent,ClientprofileComponent,
-    MakebookingComponent,ViewbookingComponent,ServicepComponent,AdviseComponent,BasketComponent,
+    MakebookingComponent,ViewbookingComponent,ServicepComponent,BasketComponent,
     RequestbComponent,BrowseComponent,BookingConfirmComponent, OptionsFilterPipe,
     customFilter,SupplierComponent,orderform,PlaceorderComponent,EditsupplierComponent,AddsupplierComponent,
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
-    ViewdetailComponent,ViewServicesComponent
+    ViewdetailComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent
 
   ],
   imports: [

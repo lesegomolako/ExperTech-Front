@@ -13,7 +13,14 @@ import { from } from 'rxjs';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process} from '../../API Services/for User/process';
-import { User } from '../register/register.component';
+import { HttpClient } from '@angular/common/http';
+
+export class UserData
+{
+  Username: string;
+  Password: string;
+  SessionID: string;
+}
 
 @Component({
   selector: 'app-setup',
@@ -24,7 +31,7 @@ export class SetupComponent implements OnInit {
   setupForm: FormGroup;
   submitted = false;
   public SetupFormGroup: FormGroup;
-  user: User;
+  user: UserData;
   SessionID: any;
 
   constructor(
@@ -32,10 +39,19 @@ export class SetupComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     public service: ReportingService,
-    private ActRoute: ActivatedRoute
+    private ActRoute: ActivatedRoute,
+    private http: HttpClient
   ) { }
 
+  ValidSession;
+
   ngOnInit(){
+
+    this.ValidSession = this.service.ValidSession(sessionStorage.getItem("SessionID"))
+
+    if(this.ValidSession == true)
+    {
+
     this.setupForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -45,7 +61,12 @@ export class SetupComponent implements OnInit {
     
       this.SessionID = this.ActRoute.snapshot.queryParams['SessionID']
       console.log(this.SessionID);     
-
+    }
+    else
+    {
+      alert("Session is no longer valid. Redirecting to homepage")
+      this.router.navigateByUrl("/home")
+    }
   }
   get f() {
     return this.setupForm.controls;
@@ -89,11 +110,19 @@ export class SetupComponent implements OnInit {
   //user: User;
   setupUser(){
     
-    this.user.Username = this.setupForm.value.username;
+    this.user = this.setupForm.value;
     this.user.Password = this.setupForm.value.password;
     this.user.SessionID = this.SessionID;
-    this.service.userSetup(this.user).subscribe((ref) => {
-      this.loadList();
+    this.service.userSetup(this.user).subscribe((res: any) => {
+        if(res.Message)
+        {
+          alert("User successfully set up. Redirecting to homepage")
+          this.router.navigateByUrl("/clienthome")
+        }
+        else if(res.Error)
+        {
+
+        }
     })
 //loser
   }

@@ -37,13 +37,11 @@ import { ValidateComponent } from './components/TextBoxValidator/validate/valida
 import { EditComponent } from './Client/edit/edit.component';
 import { BrowseComponent } from './product/browse/browse.component';
 import { RequestbComponent } from './Booking/requestb/requestb.component';
-//import { ScheduleComponent } from './Booking/schedule/schedule.component';
 import { BasketComponent } from './Client/basket/basket.component';
 import { MakebookingComponent } from './Booking/makebooking/makebooking.component';
 import { ViewbookingComponent } from './Client/viewbooking/viewbooking.component';
 import { ServicepComponent } from './Client/servicep/servicep.component';
 import { BookingConfirmComponent } from './Booking/confirm/confirm.component';
-import { AdviseComponent } from './Booking/advise/advise.component';
 import { ClientprofileComponent } from './Client/clientprofile/clientprofile.component';
 import { BellComponent } from './Client/bell/bell.component';
 import { FinancialReportComponent } from './Reporting/financial-report/financial-report.component';
@@ -63,7 +61,7 @@ import { EditsupplierComponent } from './Supplier/supplier/editsupplier/editsupp
 import { PlaceorderComponent } from './Supplier/supplier/placeorder/placeorder.component';
 import { SupplierComponent } from './Supplier/supplier/supplier.component';
 import { ViewServicesComponent } from './Service/view-services/view-services.component';
-
+import { ScheduleComponent } from './Booking/schedule/schedule.component';
 //import {MatDialogModule} from '@angular/material/dialog';
 
 const routes: Routes = [
@@ -128,23 +126,23 @@ const routes: Routes = [
   {path: 'placeorder', component: PlaceorderComponent},
   {path: 'supplier', component: SupplierComponent},
 
+  // { path: '**', redirectTo: '/home'},
 
 
 
-
-
+  {path: 'schedule', component: ScheduleComponent},
 
   { path: 'clientregister', component: ValidateComponent},
   {path: 'edit', component: EditComponent },
   {path: 'browse', component: BrowseComponent },
   {path: 'request', component: RequestbComponent },
- // {path: 'schedule', component: ScheduleComponent },
+
   {path: 'basket', component: BasketComponent },
   {path: 'Booking', component: MakebookingComponent },
   {path: 'ViewBooking', component: ViewbookingComponent },
   {path: 'ServicePackage', component: ServicepComponent },
   {path: 'confirmbooking', component: BookingConfirmComponent },
-  {path: 'Advise', component: AdviseComponent },
+  
   {path: 'ClientProfile', component: ClientprofileComponent },
   {path: 'Notification', component: BellComponent },
   

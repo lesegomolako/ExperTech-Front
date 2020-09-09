@@ -119,7 +119,6 @@ export class EditServiceComponent implements OnInit {
               if (errorKey)
               {
                 this.formErrors[key] += messages[errorKey] + ' ';
-                console.log(errorKey)
               }
             }
           }
@@ -204,12 +203,17 @@ export class EditServiceComponent implements OnInit {
     if(this.serviceObject.ServiceID == null)
     {
        this.mapValues();
-       this.service.AddService(this.serviceObject).subscribe(res => {
+       var ServiceID;
+       this.service.AddService(this.serviceObject).subscribe((res:any) => {
 
-        if(res == "success")
+        if(res.Message == "success")
         {
           alert("Successfully saved")
           this.router.navigateByUrl("/services/Services")
+          ServiceID = res.ServiceID
+          this.service.AddServicePhoto(ServiceID, this.UploadFile).subscribe(
+          res => 
+          {})         
         }
         else if(res == "duplicate")
         {
@@ -219,6 +223,8 @@ export class EditServiceComponent implements OnInit {
           }
         }
        })
+
+       
     }
     else
     {

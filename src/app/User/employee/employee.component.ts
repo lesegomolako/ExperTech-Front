@@ -45,6 +45,12 @@ export class EmployeeComponent implements OnInit {
     this.List = this.service.readEmployee();
   }
 
+  registerEmp()
+  {
+    localStorage.setItem("registerID", "employee")
+    this.router.navigateByUrl("/register")
+  }
+
   //populating the diting stuff
   fillUP(formData: Process) {
     this.service.formData = formData;
