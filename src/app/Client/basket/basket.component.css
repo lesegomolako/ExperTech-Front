@@ -1,0 +1,100 @@
+.example-card {
+  max-width: 400px;
+  color: black;
+  padding: 5px 10px;
+  display: block;
+  line-height: 30px;
+  text-align: center;
+  float: center;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 50px;
+  /* display-line-height: 30px;
+  display-text-align: center;
+  display-float: center;
+  display-padding-left: 8px;
+  display-padding-right: 8px;
+  display-padding-bottom: 50px;
+   */
+}
+
+.example-header-image {
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-size: cover;
+}
+
+.c-card--wide {
+  max-width: 740px;
+}
+.c-card--wide .c-card__header {
+  float: left;
+}
+.c-card--wide .c-card__body {
+  float: left;
+  padding-top: 30px;
+}
+.c-card--wide .c-card__footer {
+  clear: both;
+  text-align: center;
+}
+
+.c-card--center {
+  text-align: center;
+}
+
+.cartchec {
+  width: 20%;
+}
+.card-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.c-card {
+  display: inline-block;
+  width: 100%;
+  max-width: 60%;
+  margin: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  background: #fff;
+  box-shadow: 0 6px 10px -5px rgba(0, 0, 0, 0.2);
+}
+.c-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3);
+}
+.c-card__image {
+  max-width: 100%;
+}
+.c-card__body {
+  padding: 20px;
+}
+.c-card__title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  padding: 0;
+  text-transform: uppercase;
+}
+.c-card__subtitle {
+  font-size: 13px;
+  margin-top: 5px;
+  padding: 0;
+}
+.c-card__intro {
+  margin-bottom: 0;
+}
+.c-card__footer {
+  padding: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 10px;
+  padding: 30px;
+}

@@ -1,0 +1,44 @@
+
+
+<div class="main-div">
+  <form class="example-form" [formGroup]="EditForm" (submit)="EditSupp(EditForm)">
+    <mat-form-field class="example-full-width">
+      <mat-label>Update Supplier Details</mat-label>
+      <input matInput disabled>
+    </mat-form-field>
+    
+     <input formControlName = 'supplierid' hidden>
+      <table class="example-full-width" cellspacing="0"><tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName='name'>
+        </mat-form-field></td>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Contact Number</mat-label>
+          <input matInput formControlName='contactno'>
+        </mat-form-field></td>
+      </tr></table>
+    
+      <p>
+        <mat-form-field class="example-full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName='email'>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Address</mat-label>
+          <input matInput formControlName='address'>
+        </mat-form-field>
+      </p>
+      <div class="side-div">
+        <a [routerLink] = "['/supplier']">
+          <button mat-raised-button style="background-color:red" ><mat-icon style="color:white">cancel</mat-icon>Cancel
+         </button></a>
+        
+        <button mat-raised-button style="background-color:forestgreen;" type="submit">
+          <mat-icon style="color:white">done</mat-icon> Save
+        </button>
+      </div>
+    </form>
+  </div>
+  
+    <router-outlet></router-outlet>

@@ -19,15 +19,66 @@ export class EditSPComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
-    console.log(this.ServiceList)
     this.PackageForm = this.fb.group({
-      serviceid: new FormControl(),
+      serviceid: new FormControl(Validators.required),
       description: ['', Validators.required],
       price: ['', Validators.required],
       quantity: ['', Validators.required],
       duration: ['', Validators.required]
     })
+
+   this.PackageForm.valueChanges.subscribe(res =>
+    {
+      this.logValidationErrors(this.PackageForm)
+    })
+  }
+
+  validationMessages = 
+  {
+    'serviceid': {'required':'A Service must be selected'},
+    'description' :
+    {
+      'required': 'Description field is required',
+    },
+    'duration': {'required':'Duration field is required'},
+    'quantity': {'required': 'Quantity field must be selected'},
+    'price': {'required': 'Price field is required'},
+  }
+
+  formErrors =
+  {
+    'serviceid':'',
+    'description':'',
+    'duration':'',
+    'quantity':'',
+    'price':'',
+  }
+
+  logValidationErrors(group: FormGroup = this.PackageForm)
+  {
+      Object.keys(group.controls).forEach((key: string) =>
+      {
+        const abstractControl = group.get(key)
+        if(abstractControl instanceof FormGroup)
+          {this.logValidationErrors(abstractControl)}
+        else
+        {
+          this.formErrors[key] = ''
+          if (abstractControl && !abstractControl.valid && 
+            (abstractControl.touched || abstractControl.dirty))
+          {
+            const messages = this.validationMessages[key]
+            for(const errorKey in abstractControl.errors)
+            {
+              if (errorKey)
+              {
+                this.formErrors[key] += messages[errorKey] + ' ';
+                console.log(errorKey)
+              }
+            }
+          }
+        }
+      })
   }
 
   Cancel()

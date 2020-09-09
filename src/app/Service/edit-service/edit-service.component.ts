@@ -17,6 +17,8 @@ export class IPrice
   Price: number;
 }
 
+
+
 @Component({
   selector: 'app-edit-service',
   templateUrl: './edit-service.component.html',
@@ -61,7 +63,7 @@ export class EditServiceComponent implements OnInit {
 
     this.serviceForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
-      description:['', Validators.required],
+      description:[''],
       duration: ['', Validators.required],
       typeid: ['', Validators.required],
       sprice: this.fb.array([this.fb.group({price: new FormControl()})]),
@@ -71,9 +73,58 @@ export class EditServiceComponent implements OnInit {
           
         ])
     })
-
+    this.serviceForm.valueChanges.subscribe((res)  =>
+      {this.logValidationErrors(this.serviceForm)});
     this.checkForm();
+  }
 
+  validationMessages = 
+  {
+    'name' :
+    {
+      'required': 'Service name is required',
+      'minlength': 'Name must be greater than 2 characters'
+    },
+    'duration': {'required':'Duration is required'},
+    'typeid': {'required': 'Service type must be selected'},
+    'price': {'required': 'Price is required'},
+    'optionid': {'required': 'Service Option must be selected'}
+  }
+
+  formErrors =
+  {
+    'name':'',
+    'duration':'',
+    'typeid':'',
+    'price':'',
+    'optionid':''
+  }
+
+  logValidationErrors(group: FormGroup = this.serviceForm)
+  {
+      Object.keys(group.controls).forEach((key: string) =>
+      {
+        const abstractControl = group.get(key)
+        if(abstractControl instanceof FormGroup)
+          {this.logValidationErrors(abstractControl)}
+        else
+        {
+          this.formErrors[key] = ''
+          if (abstractControl && !abstractControl.valid && 
+            (abstractControl.touched || abstractControl.dirty))
+          {
+            const messages = this.validationMessages[key]
+            for(const errorKey in abstractControl.errors)
+            {
+              if (errorKey)
+              {
+                this.formErrors[key] += messages[errorKey] + ' ';
+                console.log(errorKey)
+              }
+            }
+          }
+        }
+      })
   }
 
   checkForm()

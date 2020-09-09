@@ -1,0 +1,89 @@
+<h1 class="md-display-3">Sales Management</h1>
+
+<div class="mat-elevation-z8 app-supplier">
+  <a [routerLink] = "['/addstock']">
+    <button mat-raised-button style="background-color:forestgreen" ><mat-icon style="color:white">add</mat-icon> Add  
+    </button></a>
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
+  <table mat-table class="dataSource?" matSort aria-label="Elements">
+
+    <!-- SaleId Column -->
+    <ng-container matColumnDef="saleid" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>SaleID</th>
+      <td mat-cell *matCellDef="let row">{{row.SaleID}}</td>
+    </ng-container>
+
+    <!-- StatusID Column -->
+    <ng-container matColumnDef="saletype">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sale Type</th>
+      <td mat-cell *matCellDef="let row">{{row.SaleType}}</td>
+    </ng-container>
+
+    <!-- Reminder Number Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let row">{{row.Status}}</td>
+    </ng-container>
+
+    <!-- PaymentTypeID Column -->
+    <ng-container matColumnDef="client">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
+      <td mat-cell *matCellDef="let row">{{row.Client}}</td>
+    </ng-container>
+
+    <!-- ClientID Column -->
+    <ng-container matColumnDef="payment">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment</th>
+      <td mat-cell *matCellDef="let row">R{{row.Payment}}</td>
+    </ng-container>
+
+    <!-- come back to the N/A thing-->
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="paymenttype">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Type</th>
+      <td mat-cell *matCellDef="let row">{{row.PaymentType}}</td>
+    </ng-container>
+
+    <!-- SaleTypeID Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+      <td mat-cell *matCellDef="let row">{{row.Date}}</td>
+    </ng-container>
+
+    <!-- Payment Column -->
+    <ng-container matColumnDef="reminder">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Days to reminder</th>
+      <td mat-cell *matCellDef="let row">{{row.Reminder}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="viewdetail">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>View Details</th>
+      <td mat-cell *matCellDef="let row">
+      <button *ngIf="row.SaleType == 'Product Purchase'" style="background-color:teal" (click)="ViewDetails(row)"><mat-icon style="color:white">content_paste</mat-icon></button>
+      </td >
+    </ng-container>
+
+
+    
+    
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <router-outlet></router-outlet>
+
+  <mat-paginator #paginator
+      [length]="dataSource?.data.length"
+      [pageIndex]=""
+      [pageSize]=""
+      [pageSizeOptions]="[]">
+  </mat-paginator>
+
+
+</div>

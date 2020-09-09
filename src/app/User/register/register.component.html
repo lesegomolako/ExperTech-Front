@@ -90,7 +90,6 @@
             (keypress)="omit_special_char($event)"
             type="text"
             formControlName="contact"
-            max="10"
             class="form-control"
              [ngClass]="{
                 'has-error':
@@ -144,12 +143,15 @@
             type="submit"
             class="btn btn-primary" type="submit"
             style="color: white; background-color: green;"
+            [disabled]="!registerForm.valid"
+            type="submit"
           >
             Register
           </button>
           <button
             class="btn btn-primary"
             style="color: white; background-color: green;"
+            type="button"
           >
             Reset
           </button>
@@ -157,6 +159,7 @@
           (click)="previousForm()"
             class="btn btn-primary"
             style="color: white; background-color: green;"
+            type="button"
           >
             Cancel
           </button>

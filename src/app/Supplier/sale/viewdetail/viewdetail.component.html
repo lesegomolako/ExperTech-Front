@@ -1,0 +1,57 @@
+<div class ="jumbotron" style="background-color: whitesmoke;">
+ <div class="container">
+   <div class= "row">
+     <div class= "col-md-6 offset-md-3">
+       <form style="background-color: whitesmoke;">
+        <h3 style="text-align: center;">View Details</h3>
+
+        <div class="form-group">
+          <strong>SaleID: </strong>
+          <label name="SaleID">{{clientObject.SaleID}}</label>
+        </div>
+        <div class="form-group">
+          <strong>Name: </strong>
+          <label name="Name">{{clientObject.ClientName}}</label>
+        </div>
+        <div class="form-group">
+          <strong>Email: </strong>
+          <label name="Email">{{clientObject.ClientEmail}}</label>
+        </div>
+        <div class="form-group">
+          <strong>Contact: </strong>
+          <label name="Address">{{clientObject.ClientContact}}</label>
+        </div>
+        
+        <div class="form-group">
+          <strong>SaleStatus: </strong>
+          <label name="Status">{{clientObject.Status}}</label>
+        </div>
+        <div class="form-group">
+          <strong>SaleType: </strong>
+          <label name="SaleType">{{clientObject.SaleType}}</label>
+        </div>
+        <div class="form-group">
+          <strong>Products: </strong>
+          <!-- <label name="Products">{{clientObject.SaleType}}</label> -->
+          <ul>
+            <li *ngFor="let x of clientObject.Products" ></li>
+          </ul>
+        </div>
+
+        <div class="side-div">
+          <a [routerLink] = "['/sale']">
+            <button mat-raised-button style="background-color:red" ><mat-icon style="color:white">cancel</mat-icon>Cancel
+           </button></a>
+          
+          <button mat-raised-button style="background-color:forestgreen;" type="submit">
+            <mat-icon style="color:white">receipt</mat-icon> Regenerate Sale Invoice
+          </button>
+        </div>
+
+
+      
+      </form>
+     </div>
+   </div>
+ </div>
+</div>

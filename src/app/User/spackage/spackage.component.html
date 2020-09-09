@@ -3,11 +3,11 @@
     <h1 style="text-align: center">Service Packages</h1>
 
     <div>
-      <div class="card column" style="width: 20rem" id="child">
+      <div class="card column" style="width: 20rem" id="child" *ngFor="let item of List | async">
         <div
           class="card-body"
           style="text-align: center"
-          *ngFor="let item of List | async"
+          
         >
           <strong style="font-size: larger" class="card-title">{{
             item.Name
@@ -17,7 +17,7 @@
           <p class="card-text">Quantity : {{ item.Quantity }}</p>
           <p class="card-text">R{{ item.Price }}</p>
           <p class="card-text">Valid for {{ item.Duration }} months</p>
-          <a routerLink="/client" class="btn btn-success"
+          <a (click)="getID(item.PackageID)" class="btn btn-success"
             >Activate for client</a
           >
         </div>

@@ -2,10 +2,11 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <form style="background-color: whitesmoke">
           <h3 style="text-align: center">Confirm Payment</h3>
 
-          <div class="form-group" style="display: none;">
+          <form [formGroup]="confirmForm" (ngSubmit)="SPackage()" style="background-color: whitesmoke">
+
+          <div class="form-group">
             <strong>ClientID:</strong
             ><label name="ClientID">{{ clientObject.ClientID }}</label>
           </div>

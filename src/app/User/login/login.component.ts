@@ -11,7 +11,8 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { from } from 'rxjs';
 import { Router } from '@angular/router';
-//import { ServicesService } from '../services.service';
+import { ReportingService } from 'src/app/API Services/for User/reporting.service';
+//import {Service } from '../services.service';
 
 
 @Component({
@@ -25,12 +26,13 @@ export class LoginComponent implements OnInit {
   submitted = false;
   public LoginFormGroup: FormGroup;
   user: any;
+  
 
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-   // public service: ServicesService
+   public service: ReportingService
 
   ) { }
 
@@ -71,9 +73,29 @@ export class LoginComponent implements OnInit {
     localStorage.removeItem('accessToken');
     this.router.navigate(['']);
   }
+
   errorMessage: string;
   userMessage: string;
   showError: any;
+  //success = false;
+  //loginFalied = false;
+  
+  Login(){
+    this.user = this.loginForm.value;
+    this.service.Login(this.user).subscribe((res : any) =>
+    {
+      console.log(res);
+      if(res.Error) {   //lol
+        this.errorMessage = res.Error;
+        this.showError = true;
+      }
+      else{
+        sessionStorage.setItem("accessToken", res.SessionID);
+        this.router.navigate(["home"])
+        this.showError = false;
+      }
+    })
+  }
 
   matcher = new ErrorStateMatcher();
 

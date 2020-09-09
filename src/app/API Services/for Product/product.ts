@@ -9,6 +9,8 @@ export class ProductData {
     CategoryID: any;
     Category: string;
     Supplier: string;
+    SelectedQuantity:number;
+    Image: any;
 
     Photos:
     [

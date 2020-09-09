@@ -41,3 +41,14 @@
 .example-spacer {
     flex: 1 1 auto;
   }
+
+
+
+.mat-icon {
+    vertical-align: middle;
+ }
+
+.icons a :hover
+{
+    cursor: pointer
+}

@@ -1,0 +1,39 @@
+.contents
+{
+    padding: 10px;
+    align-content: center;
+}
+
+li
+{
+    list-style: none;
+    display: flex;
+    border-bottom: 1px solid grey;
+    padding-top: 10px;
+    width: 80%;
+
+}
+
+.typeinfo
+{
+    display: table-cell;
+    vertical-align: top;
+    padding-right: 15px;
+    width: 500px;
+    padding-top: 0;
+    padding-bottom: 0;
+    
+}
+
+.sub-text
+{
+    display: inline-flex;
+    vertical-align: top;
+    font-size: 12pt;
+    color: grey;
+}
+
+.sub-text div
+{
+    padding-right: 5px;
+}

@@ -1,0 +1,99 @@
+background-color:green
+
+image
+  width: 10px
+  height: 50px
+
+.c-card-flip
+  width: 300px
+  height: 250px
+
+  margin: 20px auto
+  cursor: pointer
+  perspective: 1000
+  -webkit-perspective: 1000
+ 
+
+  &__flipper
+    position: relative
+    display: flex
+    transition: 0.8s ease-in-out
+    transform-style: preserve-3d
+
+  &__front,
+  &__back
+    position: absolute
+    top: 0
+    left: 0
+    width: 250px
+    height: 250px
+    -webkit-perspective: 1000
+    perspective: 1000
+    -webkit-backface-visibility: hidden
+    backface-visibility: hidden
+    border: 2px solid 
+    border-radius: 8px
+
+  &__back
+    transform: rotateY(180deg)
+    background: green
+
+  &__title
+    position: center
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    height: 50px
+    margin: auto
+
+
+
+  &:hover
+    .c-card-flip__flipper
+      transform: rotateY(180deg)
+
+      
+.card-data 
+  width: 100%
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  border: 3px solid black
+  border-radius: 8px
+
+
+.card 
+  width: 40%
+  height: 100px
+  line-height: 100px
+  background-color: grey
+  margin: 10px
+  color: white
+  text-align: center
+  vertical-align: middle
+  border: 3px solid black
+  border-radius: 8px
+
+.card_hover
+    transform: translateY(-5px)
+    box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
+    margin: auto
+    margin-left: auto
+    width: 70%
+    height: 94%
+    background: white
+  
+
+
+
+
+.button 
+  position: absolute
+  bottom: 0
+
+img 
+   width: 247px
+   height: 246px
+   border: 0px solid black
+   border-radius: 8px

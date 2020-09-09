@@ -3,7 +3,7 @@
         <div class="row">
           <div class="col-md-6 offset-md-3">
             <h3 style="text-align: center;">Login</h3>
-            <form [formGroup]="loginForm">
+            <form [formGroup]="loginForm" (submit)="Login()">
                 <div class="form-group">
                     <label>Username</label>
                     <input (keypress)="omit_special_char($event)"
@@ -40,6 +40,7 @@
                       <button
                         class="btn btn-primary"
                         style="color: white; background-color: green;"
+                        type="submit"
                       >
                         Submit
                       </button>
@@ -47,14 +48,16 @@
                         <button
                           class="btn btn-primary"
                           style="color: white; background-color: green;"
+                          type="button"
                         >
                           Forgot Password
                         </button>
                       </a>
-                      <a routerLink="/register">
+                      <a routerLink="/clientregister">
                       <button
                         class="btn btn-primary"
                         style="color: white; background-color: green;"
+                        type="button"
                       >
                         Register
                       </button>

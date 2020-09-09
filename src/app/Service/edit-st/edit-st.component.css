@@ -55,6 +55,21 @@
     float: right;
 }
 
+.form-group input
+{
+    width: 25em;
+}
+
+.form-group textarea
+{
+    width: 25em;
+}
+
+.form-group select
+{
+    width: 25em;
+}
+
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: grey;
     opacity: 1;

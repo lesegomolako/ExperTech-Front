@@ -54,5 +54,6 @@ export class PackageData
     Name: string;
     Price: any;
     Quantity: any;
+    Duration: any;
 
 }

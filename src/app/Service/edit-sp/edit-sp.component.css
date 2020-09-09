@@ -21,6 +21,21 @@
     
 }
 
+.form-group input
+{
+    width: 25em;
+}
+
+.form-group textarea
+{
+    width: 25em;
+}
+
+.form-group select
+{
+    width: 25em;
+}
+
 
 .inputs textarea
 {

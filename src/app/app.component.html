@@ -8,11 +8,14 @@
         </button>
         <img src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;"/></li>
       <ul>
-        <a routerLink="/services"><li> View Services</li></a>
-        <a routerLink="/services"><li>View Products</li></a>
-        <a routerLink="/services"><li>Service Types</li></a>
-        <a routerLink="/services"><li>Service Types</li></a>
-        <a routerLink="/client"><li>Client</li></a>
+        <a routerLink="/ViewServices" (click)="drawer.close()" ><li> View Services</li></a>
+        <a routerLink="/browse" (click)="drawer.close()" ><li>View Products</li></a>
+        <a routerLink="/ViewBooking" *ngIf="clientLoggedIn" (click)="drawer.close()" ><li>Bookings</li></a>
+        <a routerLink="/Orders" *ngIf="clientLoggedIn" (click)="drawer.close()"><li>View Sales</li></a>
+        <a routerLink="/spackage" (click)="drawer.close()"><li>Service Package</li></a>
+        <a routerLink="/client" (click)="drawer.close()"><li>Client</li></a>
+        <li (click)="logout(); drawer.close()" *ngIf="LoggedIn">Logout</li>
+        <li *ngIf="!LoggedIn" (click)="login(); drawer.close()">Login</li>
       </ul>
     </div>
   </mat-drawer>
@@ -24,10 +27,21 @@
       <img src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;"/>
       <span class="example-spacer"></span>
   
-      <span class="example-spacer"></span>
-      <div style="padding: 10px">
-      <a><mat-icon style="color: white; font-size: 35px;">account_circle</mat-icon></a>
-    </div>
+      
+      <div class="icons">
+        
+      <a routerLink='/basket'><button style="color: white;" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"  >
+        <mat-icon *ngIf="showBadges" [matBadge]="api.badgeCount" [matBadgeHidden]="api.badgeCount == 0">shopping_cart</mat-icon>
+        
+      </button></a>
+      
+      <!-- <a routerLink='/ViewBooking'><button style="color: white;" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+        <mat-icon>notifications_none</mat-icon>
+      </button></a> -->
+      
+      <a (click)="login()"><mat-icon style="color: white; font-size: 30px;">account_circle</mat-icon></a>
+    
+      </div>
   </mat-toolbar>
     <router-outlet></router-outlet>
 

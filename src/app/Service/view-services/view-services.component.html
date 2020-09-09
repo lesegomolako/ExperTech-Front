@@ -1,0 +1,15 @@
+<div class="contents">
+    <ul>
+        <li *ngFor = "let x of ServicesList | async">
+            <div class="typeinfo">
+                <div class="name">{{x.Name}}</div>
+                <div class="sub-text">
+                    <div *ngFor = "let y of x.ServicePrices">Price: R{{y.Price}}</div>
+                </div>
+                <div class="sub-text">
+                    <div *ngFor = "let y of x.ServiceTypeOptions">{{y.Option}}: R<span *ngFor ="let z of y.ServicePrices">{{z.Price}}</span></div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

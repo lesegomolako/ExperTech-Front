@@ -1,0 +1,84 @@
+
+  <div class="container">
+    <a routerLink='/register'><button mat-raised-button style="background-color: green; float: right;  " >
+      <mat-icon> keyboard_return</mat-icon>
+      Cancel
+    </button></a>
+    <div class="jumbotron" style="background-color: white;">
+        <div class="row">
+          
+            <div class="col-md-6 offset-md-3">
+                <h1>All fields need to be filled in</h1>
+                <form  [formGroup]="validateForm" (ngSubmit)="onSubmit(validateForm)">
+                    <div class="form-group">
+                        <label> Name</label>
+                        <input type="text" id="Name" name="name" 
+                        required  formControlName="Name" (keypress)="omit_special_char($event)" mdInput class="form-control" [ngClass]="{ 'is-invalid': validateForm.get('Name').errors && (validateForm.get('Name').touched || validateForm.get('Name').dirty)}" />
+                        <div *ngIf="validateForm.get('Name').errors" class="invalid-feedback">
+                            <div *ngIf=" validateForm.get('Name').errors.required">First Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Surname">Surname</label>
+                        <input type="text"id="Surname" name="surname" 
+                        required formControlName="Surname"  (keypress)="omit_special_char($event)" mdInput name="name"  class="form-control" [ngClass]="{ 'is-invalid': validateForm.get('Surname').errors && (validateForm.get('Surname').touched || validateForm.get('Surname').dirty)}" />
+                        <div *ngIf=" validateForm.get('Surname').errors" class="invalid-feedback">
+                            <div *ngIf=" validateForm.get('Surname').errors.required">Surname is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Contact number</label>
+                      <input type="tel" pattern='\d*'name="Contact" minlength='10'maxlength='10'
+                      required id="ContactNo" formControlName="ContactNo"  (keypress)="omit_special_char($event)" mdInput name="name"  class="form-control" [ngClass]="{ 'is-invalid': validateForm.get('ContactNo').errors && (validateForm.get('ContactNo').touched || validateForm.get('ContactNo').dirty)}"  />
+                      <div *ngIf="validateForm.get('ContactNo').errors" class="invalid-feedback">
+                          <div *ngIf="validateForm.get('ContactNo').errors.required">Contact Number is required</div>
+                          <div *ngIf="validateForm.get('ContactNo').errors.minlength">Contact must be 10 characters long </div>
+                          <div *ngIf="validateForm.get('ContactNo').errors.maxlength">Contact must be 10 characters long </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" formControlName="Email" class="form-control" [ngClass]="{ 'is-invalid': validateForm.get('Email').errors && (validateForm.get('Email').touched || validateForm.get('Email').dirty)}" />
+                    <div *ngIf="submitted && validateForm.get('Email').errors" class="invalid-feedback">
+                        <div *ngIf=" validateForm.get('Email').errors.required">Email is required</div>
+                        <div *ngIf="validateForm.get('Email').errors.email">Email must be a valid email address</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Username">Username</label>
+                    <input type="text"  name="username" 
+                    required id="Username" required   formControlName="Username"  class="form-control" [ngClass]="{ 'is-invalid': validateForm.get('Username').errors && (validateForm.get('Username').touched || validateForm.get('Username').dirty)}" />
+                    <div *ngIf=" validateForm.get('Username').errors" class="invalid-feedback">
+                        <div *ngIf=" validateForm.get('Username').errors.required">Username is required</div>
+                        <div *ngIf="validateForm.get('Username').errors.minlength">Username must be at least 2 characters long </div>
+                       
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label>Password</label>
+                    <input type="password" id="Password" name="password"    
+                    required   formControlName="Password" class="form-control" [ngClass]="{ 'is-invalid': validateForm.get('Password').errors && (validateForm.get('Password').touched || validateForm.get('Password').dirty)}" />
+                    <div *ngIf=" validateForm.get('Password').errors" class="invalid-feedback">
+                        <div *ngIf=" validateForm.get('Password').errors.required">Password is required</div>
+                        <div *ngIf="validateForm.get('Password').errors.minlength">Password must be at least 6 characters</div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label>Confirm Password</label>
+                    <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': validateForm.get('confirmPassword').errors && (validateForm.get('confirmPassword').touched || validateForm.get('confirmPassword').dirty)}" />
+                    <div *ngIf=" validateForm.get('confirmPassword').errors" class="invalid-feedback">
+                        <div *ngIf=" validateForm.get('confirmPassword').errors.required">Confirm Password is required</div>
+                        <div *ngIf="validateForm.get('confirmPassword').errors.mustMatch">Passwords must match</div>
+                    </div>
+                </div>
+
+  
+                        <div class="text-center">
+                            <button class="btn btn-primary mr-1" [disabled]="!validateForm.valid" >Register</button>
+                            <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

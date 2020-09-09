@@ -1,0 +1,20 @@
+.app-placeorder {
+    width: 90%;
+    margin: 20px auto;
+    
+  }
+  
+  table {
+      width: 100%;
+  }
+  
+  .mat-raised-button .matBadge {
+    top: unset;
+    right: unset;
+    position: relative;
+  }
+  .md-display-3{
+    position: relative;
+    margin: 20px auto;
+    width: 90%;
+  }

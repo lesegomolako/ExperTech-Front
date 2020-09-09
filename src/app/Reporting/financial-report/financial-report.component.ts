@@ -27,8 +27,10 @@ export class FinancialReportComponent implements OnInit {
 
   title = 'hw4-frontend';
 
-  chart=[];
-  products: Object;
+  ichart=[];
+  echart=[];
+  incomes: tabledata[];
+  expenses:tabledata[];
 
   constructor(private service: ReportsService){}
 
@@ -79,7 +81,8 @@ export class FinancialReportComponent implements OnInit {
     return 'rgba(' + o(r()*s) + ',' + + o(r()*s) + ',' + o(r()*s) + ', 0.7)';
   }
 
-
+  incomeTotal =0;
+  expenseTotal =0;
   SubmitRequest(){
     var tTitle = "Product Sales per category";
   
@@ -90,23 +93,35 @@ export class FinancialReportComponent implements OnInit {
 
     //console.log(this.Criteria)
 
-    this.service.GetSaleReportingData(this.Criteria).subscribe(response => {
+    this.service.GetFinancialReportingData(this.Criteria).subscribe(response => {
 
-      let keys = response['Category'].map(d=> d.Name);
-      let values = response['Category'].map(d=> d.Total);
+      let ikeys = response['Income'].map(d=> d.Name);
+      let ivalues = response['Income'].map(d=> d.Total);
 
-      this.products = response['Product'];
+      let ekeys = response['Expense'].map(d=> d.Name);
+      let evalues = response['Expense'].map(d=> d.Total);
+
+      console.log(evalues);
+
+      this.incomes = response['Income'];
+      this.expenses = response['Expense'];
       
-     
+      this.incomes.forEach(zz => {
+        this.incomeTotal += zz.Total
+      })
 
-      this.chart = new Chart('canvas',{
+      this.expenses.forEach(zz => {
+        this.expenseTotal += zz.Total
+      })
+
+      this.ichart = new Chart('icanvas',{
         type:'pie',
         data:{
-          labels: keys,
+          labels: ikeys,
           datasets: [
             {
-              data: values,
-              fill: false,
+              data: ivalues,
+              fill: true,
               backgroundColor: [
                 "#39ff14",
                 "#04d9ff",
@@ -128,10 +143,49 @@ export class FinancialReportComponent implements OnInit {
         },
         options: {   
           
-          title: {display: true, text:tTitle},
+          title: {display: true, text:"Monthly Income"},
+        }
+      })
+
+      this.echart = new Chart('ecanvas',{
+        type:'pie',
+        data:{
+          labels: ekeys,
+          datasets: [
+            {
+              data: evalues,
+              fill: true,
+              backgroundColor: [
+                "#bc13f3",
+                "#ff073a",
+                "#cfff04",
+                "#ff0055",
+                "#48929B",
+                "#003171",
+                "#FFDDCA",
+                "#D9B611",
+                "#ff5555",
+                "#39ff14",
+                "#04d9ff",
+                "#ff5721",
+                "#fe019a",
+
+              ]
+            }
+          ]
+        },
+        options: {   
+          
+          title: {display: true, text:"Monthly Expenses"},
         }
       })
     })
   }
 
+}
+
+export class tabledata
+{
+  Name: any;
+  Total: any;
 }

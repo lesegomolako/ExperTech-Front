@@ -1,0 +1,63 @@
+
+
+<div class="main-div">
+  <form class="example-form" [formGroup]="stockTake" (submit)="AddStockTake()">
+      <mat-form-field class="example-full-width">
+        <mat-label>Perform Stock Take</mat-label>
+        <input matInput value disabled>
+      </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>
+
+            <mat-form-field class="example-full-width" disabled>
+            <mat-label>Quantity (units)</mat-label>
+            <input [value]="Quantity" readonly disabled matInput>
+            </mat-form-field>
+
+           
+         
+          
+      <input formControlName = 'adminid' hidden>
+      <ng-container formArrayName="stocktakelines">
+        <div *ngFor="let x of stockTake.get('stocktakelines')['controls']; let j = index" >
+          <div [formGroupName]="j">
+            <table class="example-full-width" cellspacing="0">
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                  <mat-label> Select Stock Item</mat-label>
+                  <mat-select formControlName="itemid">
+                    <mat-option *ngFor="let x of StockList" (click) ="countQuantity(x.QuantityInStock)" value="{{x.ItemID}}">{{x.Name}}</mat-option>
+                  </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="example-full-width">
+                  <mat-label>Quantity</mat-label>
+                  <input matInput type="number" matInput formControlName="quantity">
+                  </mat-form-field></td>
+                  <button type= "button" (click)="AddForm()">+</button>
+                  <button type="button" *ngIf="j>0" (click)="DeleteForm(j)">-</button>
+                </tr>
+              </table>
+            </div>
+            </div>
+        </ng-container>
+          
+
+        <div class="side-div">
+          <a [routerLink] = "['/stock']">
+          <button mat-raised-button style="background-color:red" ><mat-icon style="color:white">cancel</mat-icon>Cancel
+         </button></a>
+          
+          <button mat-raised-button style="background-color:forestgreen;">
+            <mat-icon style="color:white">done</mat-icon> Save
+          </button>
+        </div>
+  </form>      
+</div>
+    
+      

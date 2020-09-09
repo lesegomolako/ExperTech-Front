@@ -17,7 +17,7 @@
     border-radius: 3px;
     border: 1px solid #838383;
     height: 2.5em;
-    width: 15em;
+    width: 20em;
     
 }
 
@@ -55,6 +55,21 @@
     margin-top: 10px;
     width: 25%;
     float: right;
+}
+
+.form-group input
+{
+    width: 25em;
+}
+
+.form-group textarea
+{
+    width: 25em;
+}
+
+.form-group select
+{
+    width: 25em;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */

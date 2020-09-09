@@ -39,14 +39,15 @@
       </div>
     </div>
       <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-      <h3 style="text-align: center;">SALE REPORT</h3>
+      <h3 style="text-align: center;"> EMPLOYEE BOOKING REPORT</h3>
       <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
       <strong>PROJECT SUMMARY</strong>
       <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
   
     <div class="bottom">
       <strong>DESCRIPTION</strong>
-      <p>The purpose of this report is to show the trend so far in the company, this will clearly show how well the business is doing so far and thus can decide going forward</p>
+      <p>The purpose of this report is to show the trend so far in the company.
+        This will show how often individual employees are being booked.</p>
       <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
       <b>SALE CHART</b>
       <p *ngIf="chart==null" class="content">******CHART DATA******</p>
@@ -64,9 +65,9 @@
               <table class="table table-bordered" id="testing{{i}}">
               <thead>
                 <tr>
-                  <th>Product Name</th>
-                  <th>Total Products Sold</th>
-                  <th>Total Price (R)</th>
+                  <th>Employee Name</th>
+                  <th>Number Of Bookings</th>
+                  <th>% of total</th>
                 </tr>
               </thead> 
               <tbody>
@@ -75,6 +76,11 @@
                   <td>{{y.Total}}</td>
                   <td>{{y.Price}}</td>
                 </tr>
+                <tr>
+                  <td><strong>Total</strong></td>
+                  <td></td>
+                  <td>100%</td>
+                </tr>
               </tbody>  
               </table>
               <br>
@@ -82,7 +88,7 @@
         </div>
   
       <strong>CONCLUSION</strong>
-      <p>Therefore, based on the above report one will be able to see the trend so far.</p>
+      <p>This gives a broad overview of the supplier orders, quantity of the items ordered and items orderd</p>
     </div>
   </div>
     

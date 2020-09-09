@@ -1,0 +1,71 @@
+
+<div >
+    <div style="float: right;">
+        <a routerLink='/register'><button  mat-raised-button style="background-color: green; width:99%" >
+            <mat-icon> keyboard_return</mat-icon>
+            Back
+        </button></a>
+        <br>
+        <br>
+
+    </div>
+
+    <div *ngFor="let client of booking" style="text-align: center; color: black;" class="card-hover">
+      <article  class="c-card c-card--center">
+  
+
+        <div class="c-card__body">
+          <label for="">
+            <h1 > Current Booking request details</h1>
+          </label>
+          <label for="">
+            <h2 class="c-card__title">Service type: </h2>
+          </label>
+          <br>
+          
+          <div *ngFor="let x of client.BookingLines">
+            <label  ><h2 class="c-card__title">
+              Service: {{x.Service}}
+            </h2></label>
+            <br>
+            <label><h2 class="c-card__title">
+              Service option: {{x.Option}}
+            </h2></label>
+          </div>
+
+          <div *ngFor="let x of client.EmployeeSchedule">
+            <br>
+            <label for="">
+              <h2 class="c-card__title">Employee for Service: {{x.Employee}}</h2>
+            </label>
+            <br>
+            <label for="">
+              <h2 class="c-card__title">Appointment Date: {{x.Date |date:'shortDate'}}</h2>
+            </label>
+            <br>
+            <label for=""><h2 class="c-card__title">
+              Start Time: {{x.StartTime}}
+            </h2> </label> 
+          </div>
+
+          <div >
+            <label ><h2 class="c-card__title">
+              Booking status: {{client.Status}}
+            </h2> </label> 
+          </div>
+          <div style="align-content: center; " *ngIf="client.Status == 'Advised'" class="c-card__footer">
+            <button mat-raised-button style="background-color: gray; color: white; " (click)="deletes()"  >
+
+              Delete
+          </button>
+
+          <button mat-raised-button style="background-color: gray; color: white;" (click)="confirm()"  >
+
+              Confirm
+          </button>
+          </div>
+
+        </div>
+      </article>
+  </div>
+

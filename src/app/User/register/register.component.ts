@@ -57,9 +57,6 @@ export class RegisterComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       contact: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
-      username: ['', [Validators.required, Validators.minLength(2)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      cpassword: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
   // convenience getter for easy access to form fields
@@ -109,7 +106,8 @@ export class RegisterComponent implements OnInit {
   
   RegisterEA(){
     SesseionID: "";
-    
+    if(this.registerForm.valid)
+    {
     this.mapValues();
     this.service.RegisterEA(this.user).subscribe((res: any) =>{
     if(res.Message == "success")
@@ -119,7 +117,11 @@ export class RegisterComponent implements OnInit {
     }
     })
     this.submitted = true;
-    
+  }
+  else
+  {
+    alert("form is invalid")
+  }
     // this.user = {
     //   UserID: "",
     //   RoleID: 2,

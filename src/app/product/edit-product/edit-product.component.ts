@@ -39,6 +39,8 @@ export class EditProductComponent implements OnInit {
       reader.readAsDataURL(this.UploadFile);
     }
 
+    
+
   ngOnInit(): void {
     this.http.get<[]>("https://localhost:44380/api/Products/getSuppliers")
     .subscribe(res => {
@@ -53,7 +55,72 @@ export class EditProductComponent implements OnInit {
     this.CreateForm();
     this.CheckForm();
 
+
+   this.ProductForm.valueChanges.subscribe(res => 
+    {
+      this.logValidationErrors(this.ProductForm)
+    })
+  }
+
+  validationMessages = 
+  {
+    'name': {
+      'required':'Name field is required',
+      'maxlength': 'Name may not exceed 50 characters'
+  },
+
+    'description':  {
+      'required':'description field is required',
+      'maxlength': 'description may not exceed 150 characters'
+    },
+    'quantity':  {
+      'required':'quantity field is required',
+      'min': 'Quanitity has to be a minimum of 1'
+      },
+    'price':  {
+      'required':'Price is required',
+      'min':'Price has to be a minimum of 1'
+  },
+    'supplierid': {'required':'A Supplier must be selected'} ,
+    'categoryid':  {'required':'A Product Category must be selected'}
+  }
+
+  formErrors =
+  { 
+    'name': '',
+    'description':  '',
+    'quantity':  '',
+    'price':  '',
+    'supplierid':'' ,
+    'categoryid':  ''
    
+  }
+
+  logValidationErrors(group: FormGroup = this.ProductForm)
+  {
+      Object.keys(group.controls).forEach((key: string) =>
+      {
+        const abstractControl = group.get(key)
+        if(abstractControl instanceof FormGroup)
+          {this.logValidationErrors(abstractControl)}
+        else
+        {
+          this.formErrors[key] = ''
+          if (abstractControl && !abstractControl.valid && 
+            (abstractControl.touched || abstractControl.dirty))
+          {
+            const messages = this.validationMessages[key]
+            for(const errorKey in abstractControl.errors)
+            {
+              if (errorKey)
+              {
+                this.formErrors[key] += messages[errorKey] + ' ';
+                console.log(errorKey)
+              }
+            }
+          }
+        }
+      })
   }
 
   CheckForm()
@@ -76,7 +143,7 @@ export class EditProductComponent implements OnInit {
     this.ProductForm = this.fb.group({
       name: ['',[ Validators.required, Validators.maxLength(50)]],
       description:  ['', [Validators.required, Validators.maxLength(150)]],
-      quantity:  ['', [Validators.required, Validators.min(1)]],
+      quantity:  [1, [Validators.required, Validators.min(1)]],
       price:  ['', [Validators.required, Validators.min(1)]],
       supplierid: ['', Validators.required],
       categoryid:  ['', Validators.required],
@@ -84,6 +151,8 @@ export class EditProductComponent implements OnInit {
       photos:  this.fb.array([this.fb.group({photo :['', Validators.required]})])
     })
   }
+
+
 
   onSubmit(): void
   {
@@ -210,7 +279,8 @@ export class EditProductComponent implements OnInit {
       CategoryID: null,
       Category: null,
       Supplier: null,
-
+      SelectedQuantity:null,
+      Image: null,
       Photos:
       [
         {

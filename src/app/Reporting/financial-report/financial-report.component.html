@@ -39,50 +39,99 @@
       </div>
     </div>
       <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-      <h3 style="text-align: center;">SALE REPORT</h3>
+      <h3 style="text-align: center;">FINANCIAL REPORT</h3>
       <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
       <strong>PROJECT SUMMARY</strong>
       <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
   
     <div class="bottom">
       <strong>DESCRIPTION</strong>
-      <p>The purpose of this report is to show the trend so far in the company, this will clearly show how well the business is doing so far and thus can decide going forward</p>
+      <p>The purpose of this report is to track and analyse the business income.
+         This report examines resource usage and business performance and the overall
+        financial standing of the business. It also helps make informed decsions
+        about how to manage the business.</p>
       <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
       <b>SALE CHART</b>
-      <p *ngIf="chart==null" class="content">******CHART DATA******</p>
-      <div *ngIf="chart" class="reportChart">
-        <canvas id="canvas">{{chart}}</canvas>
+      <p *ngIf="ichart==null" class="content">******CHART DATA******</p>
+      <div class="row">
+
+        <div class="col-6">
+          <div *ngIf="ichart" class="reportChart">
+            <canvas id="icanvas">{{ichart}}</canvas>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div *ngIf="echart" class="reportChart">
+            <canvas id="ecanvas">{{echart}}</canvas>
+          </div>
+        </div>
+
       </div>
       <br><br>
   
       <b>SALE CHART</b>
-      <p *ngIf="products==null" class="content">******TABLE DATA******</p>
-      <div *ngIf="products">
+      <p *ngIf="incomes==null" class="content">******TABLE DATA******</p>
+      <div *ngIf="incomes">
         <div class="productsTable">
-           <div *ngFor="let x of products; let i = index">
-            <caption style="width:200px"><strong>Product Category: </strong>{{x.Name}}</caption>
-              <table class="table table-bordered" id="testing{{i}}">
+           <div>
+              <table class="table table-bordered" >
               <thead>
                 <tr>
-                  <th>Product Name</th>
-                  <th>Total Products Sold</th>
-                  <th>Total Price (R)</th>
+                  <th>Income Source</th>
+                  <th>Income Amount (R)</th>
+                  <th>% of Total</th>
                 </tr>
               </thead> 
               <tbody>
-                <tr *ngFor="let y of x.StockCount" >
-                  <td>{{y.Name}}</td>
-                  <td>{{y.Total}}</td>
-                  <td>{{y.Price}}</td>
+                <tr  *ngFor="let x of incomes; let i = index">
+                  <td>{{x.Name}}</td>
+                  <td>{{x.Total}}</td>
+                  <td>{{x.Total/incomeTotal | percent}}</td>
+                </tr>
+                <tr>
+                  <td>Total</td>
+                  <td>{{incomeTotal}}</td>
+                  <td>100%</td>
                 </tr>
               </tbody>  
               </table>
               <br>
            </div>
         </div>
+
+        <div *ngIf="expenses">
+          <div class="productsTable">
+             <div >
+                <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Income Source</th>
+                    <th>Income Amount (R)</th>
+                    <th>% of Total</th>
+                  </tr>
+                </thead> 
+                <tbody>
+                  <tr *ngFor="let x of expenses; let i = index">
+                    <td>{{x.Name}}</td>
+                    <td>{{x.Total}}</td>
+                    <td>{{x.Total/expenseTotal | percent}}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Total</strong></td>
+                    <td>{{expenseTotal}}</td>
+                    <td>100%</td>
+                  </tr>
+                </tbody>  
+                </table>
+                <br>
+             </div>
+          </div>
   
       <strong>CONCLUSION</strong>
-      <p>Therefore, based on the above report one will be able to see the trend so far.</p>
+      <p>From the details above, we are able to conclude whether or not
+        the company is making profit and the manager can determine if
+        changes are necessary to generate more income.</p>
     </div>
   </div>
     

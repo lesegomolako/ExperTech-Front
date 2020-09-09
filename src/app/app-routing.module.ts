@@ -33,12 +33,43 @@ import { PickupComponent } from './User/pickup/pickup.component';
 import { ConfirmComponent } from './User/confirm/confirm.component';
 import { SpackageComponent } from './User/spackage/spackage.component';
 import { SalesReportComponent } from './Reporting/sales-report/sales-report.component';
+import { ValidateComponent } from './components/TextBoxValidator/validate/validate.component';
+import { EditComponent } from './Client/edit/edit.component';
+import { BrowseComponent } from './product/browse/browse.component';
+import { RequestbComponent } from './Booking/requestb/requestb.component';
+//import { ScheduleComponent } from './Booking/schedule/schedule.component';
+import { BasketComponent } from './Client/basket/basket.component';
+import { MakebookingComponent } from './Booking/makebooking/makebooking.component';
+import { ViewbookingComponent } from './Client/viewbooking/viewbooking.component';
+import { ServicepComponent } from './Client/servicep/servicep.component';
+import { BookingConfirmComponent } from './Booking/confirm/confirm.component';
+import { AdviseComponent } from './Booking/advise/advise.component';
+import { ClientprofileComponent } from './Client/clientprofile/clientprofile.component';
+import { BellComponent } from './Client/bell/bell.component';
+import { FinancialReportComponent } from './Reporting/financial-report/financial-report.component';
+import { ProductReportComponent } from './Reporting/product-report/product-report.component';
+import { BookingReportComponent } from './Reporting/booking-report/booking-report.component';
+import { SupplierReportComponent } from './Reporting/supplier-report/supplier-report.component';
+import { ViewdetailComponent } from './Supplier/sale/viewdetail/viewdetail.component';
+import { SaleComponent } from './Supplier/sale/sale.component';
+import { AddstockComponent } from './Supplier/stock/addstock/addstock.component';
+import { EditstockComponent } from './Supplier/stock/editstock/editstock.component';
+import { StocktakeComponent } from './Supplier/stock/stocktake/stocktake.component';
+import { WriteoffComponent } from './Supplier/stock/writeoff/writeoff.component';
+import { StockComponent } from './Supplier/stock/stock.component';
+import { AddsupplierComponent } from './Supplier/supplier/addsupplier/addsupplier.component';
+import { orderform } from './Supplier/supplier/placeorder/orderform/orderform.component';
+import { EditsupplierComponent } from './Supplier/supplier/editsupplier/editsupplier.component';
+import { PlaceorderComponent } from './Supplier/supplier/placeorder/placeorder.component';
+import { SupplierComponent } from './Supplier/supplier/supplier.component';
+import { ViewServicesComponent } from './Service/view-services/view-services.component';
 
 //import {MatDialogModule} from '@angular/material/dialog';
 
 const routes: Routes = [
 
   {path: '', redirectTo: '/home',pathMatch: 'full'},
+ 
 
   {path:'services', component: ServicesComponent,
    children: [
@@ -77,7 +108,45 @@ const routes: Routes = [
   {path:'pickup', component: PickupComponent},
   {path:'confirm', component: ConfirmComponent},
   {path: 'spackage', component: SpackageComponent},
-  {path: 'salereport', component: SalesReportComponent}
+  {path: 'ViewServices', component: ViewServicesComponent},
+  {path: 'salereport', component: SalesReportComponent},
+  {path: 'financialreport', component: FinancialReportComponent},
+  {path: 'productreport', component: ProductReportComponent},
+  {path: 'bookingreport', component: BookingReportComponent},
+  {path: 'supplierreport', component: SupplierReportComponent},
+  {path: 'viewdetail', component: ViewdetailComponent},
+  {path: 'sale', component: SaleComponent},
+  {path: 'viewdetail', component: ViewdetailComponent},
+  {path: 'addstock', component: AddstockComponent},
+  {path: 'editstock', component: EditstockComponent},
+  {path: 'stocktake', component: StocktakeComponent},
+  {path: 'writeoff', component: WriteoffComponent},
+  {path: 'stock', component: StockComponent},
+  {path: 'addsupplier', component: AddsupplierComponent},
+  {path: 'editsupplier', component: EditsupplierComponent},
+  {path: 'orderform', component: orderform},
+  {path: 'placeorder', component: PlaceorderComponent},
+  {path: 'supplier', component: SupplierComponent},
+
+
+
+
+
+
+
+  { path: 'clientregister', component: ValidateComponent},
+  {path: 'edit', component: EditComponent },
+  {path: 'browse', component: BrowseComponent },
+  {path: 'request', component: RequestbComponent },
+ // {path: 'schedule', component: ScheduleComponent },
+  {path: 'basket', component: BasketComponent },
+  {path: 'Booking', component: MakebookingComponent },
+  {path: 'ViewBooking', component: ViewbookingComponent },
+  {path: 'ServicePackage', component: ServicepComponent },
+  {path: 'confirmbooking', component: BookingConfirmComponent },
+  {path: 'Advise', component: AdviseComponent },
+  {path: 'ClientProfile', component: ClientprofileComponent },
+  {path: 'Notification', component: BellComponent },
   
 ];
 

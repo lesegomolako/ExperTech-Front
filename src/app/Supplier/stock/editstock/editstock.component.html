@@ -1,0 +1,44 @@
+
+
+<div class="main-div">
+  <form class="example-form" [formGroup] = "EditForm" (submit)="EditStockItem(EditForm)">
+    <mat-form-field class="example-full-width">
+      <mat-label>Update Stock Details</mat-label>
+      <input matInput value disabled="">
+    </mat-form-field>
+    
+    <input formControlName = 'itemid' hidden>
+      <table class="example-full-width" cellspacing="0"><tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Stock name</mat-label>
+          <input matInput formControlName='name'>
+        </mat-form-field></td>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName='description'>
+        </mat-form-field></td>
+      </tr></table>
+    
+      <p>
+        <mat-form-field class="example-full-width">
+          <mat-label>Price</mat-label>
+          <input matInput formControlName='price'>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Quantity</mat-label>
+          <input matInput formControlName='quantityinstock'>
+        </mat-form-field>
+      </p>
+      <div class="side-div">
+        <a [routerLink] = "['/stock']">
+          <button mat-raised-button style="background-color:red" ><mat-icon style="color:white">cancel</mat-icon>Cancel
+         </button></a>
+        
+        <button mat-raised-button style="background-color:forestgreen;" type="submit">
+          <mat-icon style="color:white">done</mat-icon> Save
+        </button>
+      </div>
+    </form>
+  </div>
+  
+    <router-outlet></router-outlet>

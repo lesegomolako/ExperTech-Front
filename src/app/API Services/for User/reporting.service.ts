@@ -24,6 +24,15 @@ export class ReportingService {
   user: any;
 
   constructor(private http: HttpClient) {}
+  //*******************Check User Role************************/
+  CheckRole(seshID)
+  {
+    const params = new HttpParams().set('seshin', seshID );
+
+    return this.http.post(this.url+'User/CheckRole',  {
+      headers: {'Content-Type': 'application/json'},
+      params: params})
+  }
   ///********************************************************Admin CRUD*********************************************************************
   readAdmin(): Observable<Process[]> {
     return this.http.get<Process[]>(this.url + 'Admin/getAdmin');
@@ -155,10 +164,11 @@ export class ReportingService {
     }
   }
   Login(formData: Process) {
+    
     let body = JSON.stringify(formData);
-    if (confirm(body)) {
-      return this.http.post(this.url + 'User/Login', formData);
-    }
+  
+    return this.http.post(this.url + 'User/Login', formData);
+    
   }  
   userSetup(formData: User){
     let body = JSON.stringify(formData);
@@ -226,7 +236,7 @@ export class ReportingService {
   //***********************************************Service Package ******************************************
 
   getPackage(): Observable<Package[]> {
-    return this.http.get<Package[]>(this.url + 'User/getServicePackage');
+    return this.http.get<Package[]>(this.url + 'Services/RetrieveServicePackage');
   }
 
   activateSerPackage(formData: Process){

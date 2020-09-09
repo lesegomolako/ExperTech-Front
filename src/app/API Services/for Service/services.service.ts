@@ -36,7 +36,7 @@ export class ServicesService {
   {    
     const params = new HttpParams().set('TypeID', TypeID );
     return this.http.delete(this.url + 'Services/DeleteServiceType', {
-      headers: {'Content-Type': 'aaplication/json'},
+      headers: {'Content-Type': 'application/json'},
       params: params
     })
   }
@@ -66,7 +66,7 @@ export class ServicesService {
     const params = new HttpParams().set('ServiceID', ServiceID );
     return this.http.delete(this.url + 'Services/DeleteService',
      {
-      headers: {'Content-Type': 'aaplication/json'},
+      headers: {'Content-Type': 'application/json'},
       params: params})
   }
 
@@ -94,7 +94,7 @@ export class ServicesService {
   {    
     const params = new HttpParams().set('OptionID', OptionID );
     return this.http.delete(this.url + 'Services/DeleteServiceOption', {
-      headers: {'Content-Type': 'aaplication/json'},
+      headers: {'Content-Type': 'application/json'},
       params: params})
   }
 
@@ -117,7 +117,7 @@ export class ServicesService {
   {    
     const params = new HttpParams().set('PackageID', PackageID );
     return this.http.delete(this.url + 'Services/RemoveServicePackage', {
-      headers: {'Content-Type': 'aaplication/json'},
+      headers: {'Content-Type': 'application/json'},
       params: params})
   }
 }

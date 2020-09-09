@@ -1,0 +1,21 @@
+.app-sale {
+  width: 90%;
+  margin: 20px auto;
+  
+}
+
+table {
+    width: 100%;
+}
+
+.md-display-3{
+  position: relative;
+  margin: 20px auto;
+  width: 90%;
+}
+
+.mat-raised-button .matBadge {
+  top: unset;
+  right: unset;
+  position: relative;
+}

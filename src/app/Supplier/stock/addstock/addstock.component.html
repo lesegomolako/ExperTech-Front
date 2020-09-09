@@ -1,0 +1,44 @@
+
+
+<div class="main-div">
+  <form [formGroup]="StockForm" (submit)="AddStock(StockForm)" class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Addition of Stock</mat-label>
+      <input matInput value disabled="">
+    </mat-form-field>
+    
+      <table class="example-full-width" cellspacing="0"><tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Stock name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field></td>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description">
+        </mat-form-field></td>
+        <p></p>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Price</mat-label>
+          <input matInput formControlName="price">
+        </mat-form-field></td>
+      </tr></table>
+        <mat-form-field appearance="fill">
+          <mat-label>Quantity</mat-label>
+          <input matInput type="number" formControlName="quantity">
+        </mat-form-field>
+
+
+      <div class="side-div">
+        <a [routerLink] = "['/stock']">
+          <button mat-raised-button type="button" style="background-color:red" ><mat-icon style="color:white">cancel</mat-icon>Cancel
+         </button></a>
+        
+        <button mat-raised-button type="submit" style="background-color:forestgreen;" >
+          <mat-icon style="color:white">done</mat-icon> Save
+        </button>
+      </div>
+      
+    </form>
+  </div>
+  
+   

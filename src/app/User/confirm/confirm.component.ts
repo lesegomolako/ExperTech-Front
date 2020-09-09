@@ -71,6 +71,11 @@ forgotPassword(form: NgForm){
     this.service.activateSerPackage(form.value).subscribe(ref => {this.loadList()});
  }
 
+ user:Process;
+ SPackage(){
+   this.service.activateSerPackage(this.user).subscribe(ref => {this.loadList()});
+ }
+
 
 
 }

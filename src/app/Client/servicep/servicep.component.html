@@ -1,0 +1,43 @@
+<div>
+  <div  class="example-button-container" style="float: right;">
+    <a routerLink='/register'><button mat-raised-button style="background-color: green; width: 166px; " >
+      <mat-icon> keyboard_return</mat-icon>
+      Back
+  </button></a>
+  <br>
+  <br>
+  <a routerLink='/request'><button mat-raised-button style="background-color: green;" >
+    <mat-icon> question_answer</mat-icon>
+    Request Booking
+</button></a>
+
+  </div>
+
+    <div style="align-items: center;">
+      <h1>Service Package</h1>
+      <table style="width: 800px;" >
+         <thead>
+            <tr *ngFor= "let y of allservicepackage | async">
+               <td>Service: {{y.ServicePackage.Name}}</td>
+               <td>Expiry Date: {{y.ExpiryDate |date:'shortDate'}}</td>
+            </tr>
+         </thead>
+        <br>
+         <thead>
+          <tr *ngFor= "let y of allservicepackage | async">
+            <td>Date: {{y.Date |date:'shortDate'}}</td>
+          </tr>
+       </thead>
+         <thead>
+          <tr *ngFor= "let y of allservicepackage | async">
+            <!-- <th>Number of Service Package left:</th> -->
+            <td><strong>Number of Service Packages left:</strong> {{y.TotalAvailable}}</td>
+          </tr>
+       </thead>
+      </table>
+   </div>
+
+
+    
+      
+</div>

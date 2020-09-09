@@ -7,9 +7,11 @@
     <h2>Enter Service Type details</h2>
     <input type="hidden"  name="TypeID" [(ngModel)]="service.TypeData.TypeID">
     <div class="details">
-        <div class="form-group">
-            <label for="TypeName">Name</label>    
+        <div class="form-group" [ngClass]="{'has-error': name.errors && (name.touched || name.dirty)}">
+            <label for="name">Name</label>    
             <input type="text" #name="ngModel" minlength="2" class="form-control" name="Name" [(ngModel)]="service.TypeData.Name" placeholder="Example: Hair" required>
+            <span class="help-block" *ngIf="name.errors.required && (name.touched || name.dirty)">Name is required</span>
+            <span class="help-block" *ngIf="name.errors.minlength && (name.touched || name.dirty)">Minimum name length should be 2</span>
         </div>
         <div class="form-group">
             <label for="STName">Description</label>  

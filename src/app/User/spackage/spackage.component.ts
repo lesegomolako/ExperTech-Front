@@ -10,6 +10,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process, Package} from '../../API Services/for User/process';
+import { Router } from '@angular/router';
+import { ServicesService } from 'src/app/API Services/for Service/services.service';
+import { PackageData } from 'src/app/API Services/for Service/services';
 
 @Component({
   selector: 'app-spackage',
@@ -30,10 +33,12 @@ export class SpackageComponent implements OnInit {
   }
   constructor(
     public dialog: MatDialog, 
-    public service: ReportingService
+    public service: ReportingService,
+    private router: Router,
+    private api: ServicesService
   ) { }
 
-  List: Observable<Package[]>
+  List: Observable<PackageData[]>
   ngOnInit(): void {
     this.loadList();
   }
@@ -49,7 +54,12 @@ export class SpackageComponent implements OnInit {
   }
 
   loadList(){
-    this.List = this.service.getPackage();
+    this.List = this.api.getServicePackages();
   }
 
+  //local storage for the service package packageID
+  getID(PackageID: any){
+    localStorage.setItem("PackageID", PackageID)
+    this.router.navigateByUrl("/client")
+  }
 }
