@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ReportingService } from 'src/app/API Services/for User/reporting.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ServicesService } from 'src/app/API Services/for Service/services.service';
+import { HttpClient } from '@angular/common/http';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { Schedule } from '../schedule/schedule.component';
+import { Router} from '@angular/router'
 
 @Component({
   selector: 'app-advise',
@@ -7,9 +14,62 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdviseComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: ReportingService, private router: Router,
+    private api:ExperTexhService, private http:HttpClient, private fb: FormBuilder) { }
+  EmployeeList: []
+  Times: [];
+  chosenDate: any;
+  Booking: Schedule;
+  
+  AdviseForm: FormGroup;
 
   ngOnInit(): void {
+    this.chosenDate = localStorage.getItem("DateChosen")
+    this.http.get<[]>(this.api.url + "Employees/getEmployee").subscribe(res =>
+      {
+        this.EmployeeList = res;
+      })
+
+    this.http.get<[]>(this.api.url + "Booking/getTimes")
+    .subscribe(res => {this.Times = res})
+    
+    this.Booking = JSON.parse(localStorage.getItem("BookingDetails"))
+
+    console.log(this.Booking)
+
+    this.AdviseForm = this.fb.group({
+      employeeid: [''],
+      timesid: ['']
+    })
+  }
+
+
+  AdviseBooking(form)
+  {
+    const BookingData =
+    {
+      BookingID: this.Booking.BookingID,
+      EmployeeID: form.value.employeeid,
+      RequestedID: this.Booking.BookingRequest.RequestedID,
+      Date: this.chosenDate,
+      TimeID: form.value.timesid
+    }
+
+    console.log(BookingData)
+    this.api.AdviseBooking(BookingData).subscribe(res => 
+      {
+        if (res = "success")
+        {
+          alert("Booking advise successfully sent to client")
+          this.router.navigateByUrl("/schedule")
+        }
+      })
+
+  }
+
+  cancel()
+  {
+    window.history.back();
   }
 
 }

@@ -45,7 +45,8 @@ export class BrowseComponent implements OnInit {
       console.log(data)
       this.product = data;
       console.log(this.product)
-      
+      this.myImages = data.Image
+      console.log(data.Image)
       //console.log(this.myImages)
       // this.product.forEach(p=>{
       //   p.SelectedQuantity=0;

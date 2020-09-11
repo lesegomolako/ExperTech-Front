@@ -12,6 +12,7 @@ export class ServicesService {
 
   url = "https://localhost:44380/api/"
 
+  
 //*************************Service Type************************************
   
   TypeData: ServiceTypeData = null;

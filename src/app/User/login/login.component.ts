@@ -88,10 +88,21 @@ export class LoginComponent implements OnInit {
       if(res.Error) {   //lol
         this.errorMessage = res.Error;
         this.showError = true;
+        alert("Username or Password are invalid")
       }
       else{
         sessionStorage.setItem("accessToken", res.SessionID);
-        this.router.navigate(["home"])
+        sessionStorage.setItem("RoleID", res.RoleID)
+        var RoleID = sessionStorage.getItem("RoleID")
+        if(RoleID == "2")
+        {
+          this.router.navigate(["home"])
+        }
+        else
+        {
+          this.router.navigate(["employeehome"])
+        }
+        
         this.showError = false;
       }
     })

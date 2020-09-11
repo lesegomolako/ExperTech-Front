@@ -57,12 +57,12 @@
       <br><br>
   
       <b>SALE CHART</b>
-      <p *ngIf="products==null" class="content">******TABLE DATA******</p>
-      <div *ngIf="products">
+      <p *ngIf="bookings==null" class="content">******TABLE DATA******</p>
+      <div *ngIf="bookings">
         <div class="productsTable">
-           <div *ngFor="let x of products; let i = index">
-            <caption style="width:200px"><strong>Product Category: </strong>{{x.Name}}</caption>
-              <table class="table table-bordered" id="testing{{i}}">
+           <div  let i = "index">
+            
+              <table class="table table-bordered">
               <thead>
                 <tr>
                   <th>Employee Name</th>
@@ -71,7 +71,7 @@
                 </tr>
               </thead> 
               <tbody>
-                <tr *ngFor="let y of x.StockCount" >
+                <tr *ngFor="let y of bookings" >
                   <td>{{y.Name}}</td>
                   <td>{{y.Total}}</td>
                   <td>{{y.Price}}</td>

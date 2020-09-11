@@ -29,7 +29,7 @@ export class BookingReportComponent implements OnInit {
   title = 'hw4-frontend';
 
   chart=[];
-  products: Object;
+  bookings: Object;
 
   constructor(private service: ReportsService){}
 
@@ -91,12 +91,12 @@ export class BookingReportComponent implements OnInit {
 
     //console.log(this.Criteria)
 
-    this.service.GetSaleReportingData(this.Criteria).subscribe(response => {
+    this.service.GetBookingReportingData(this.Criteria).subscribe(response => {
 
-      let keys = response['Category'].map(d=> d.Name);
-      let values = response['Category'].map(d=> d.Total);
+      let keys = response['Bookings'].map(d=> d.Name);
+      let values = response['Bookings'].map(d=> d.Total);
 
-      this.products = response['Product'];
+      this.bookings = response['Bookings'];
       
      
 

@@ -62,13 +62,16 @@ import { PlaceorderComponent } from './Supplier/supplier/placeorder/placeorder.c
 import { SupplierComponent } from './Supplier/supplier/supplier.component';
 import { ViewServicesComponent } from './Service/view-services/view-services.component';
 import { ScheduleComponent } from './Booking/schedule/schedule.component';
+import { AdviseComponent } from './Booking/advise/advise.component';
+import { EmployeehomeComponent } from './User/employeehome/employeehome.component';
+import { ReportsComponent } from './User/reports/reports.component';
 //import {MatDialogModule} from '@angular/material/dialog';
 
 const routes: Routes = [
 
   {path: '', redirectTo: '/home',pathMatch: 'full'},
  
-
+  {path: "advise", component: AdviseComponent},
   {path:'services', component: ServicesComponent,
    children: [
       {path:'', redirectTo: 'ServiceTypes',pathMatch: 'full' },
@@ -129,7 +132,7 @@ const routes: Routes = [
   // { path: '**', redirectTo: '/home'},
 
 
-
+  {path: 'employeehome', component: EmployeehomeComponent},
   {path: 'schedule', component: ScheduleComponent},
 
   { path: 'clientregister', component: ValidateComponent},
@@ -145,6 +148,8 @@ const routes: Routes = [
   
   {path: 'ClientProfile', component: ClientprofileComponent },
   {path: 'Notification', component: BellComponent },
+  {path: 'reports', component: ReportsComponent},
+  
   
 ];
 

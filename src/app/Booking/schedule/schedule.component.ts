@@ -17,6 +17,7 @@ export class Schedule
   Client: string;
   BookingRequest: 
     {
+      RequestedID: any
       Dates: string;
       Time: string;
       DateTime:string;
@@ -29,7 +30,7 @@ export class Schedule
       Option: string;
     }
   ];
-  EmployeeSchedule:
+  BookingSchedule:
   [
     {
       Employee: string;
@@ -37,6 +38,7 @@ export class Schedule
       StartTime: any;
       EndTime: any;
       Status: string;
+      DateTime:any
     }
   ]
 }
@@ -70,7 +72,7 @@ export class ScheduleComponent implements OnInit {
 
   CalendarView = CalendarView;
 
-  events$: Observable<CalendarEvent<{ Schedge: Schedule }>[]>;
+  events$: Observable<CalendarEvent<Schedule>[]>;
 
   events:CalendarEvent<{ Schedge: Schedule }>[];
 
@@ -233,24 +235,25 @@ export class ScheduleComponent implements OnInit {
             return {
               title: Schedules.Client + "'s Requested Booking",
               start: new Date(
-                Schedules.BookingRequest.Dates
+                Schedules.BookingRequest.DateTime
               ),
               color: colors.yellow,
-              meta: {Schedge: Schedules},
+              id: Schedules.BookingID,
               //allDay: true,
               draggable: true,
+              meta: Schedules,
             };}
             else if(Schedules.BookingStatus == "Confirmed")
             {
             return {
               title: Schedules.Client + "'s Confirmed Booking",
               start: new Date(
-                Schedules.EmployeeSchedule[0].Dates
+                Schedules.BookingSchedule[0].DateTime
               ),
               color: colors.green,
               allDay: true,
-              id: Schedules.BookingID,
               draggable: false,
+              meta: Schedules,
             }
             }
             else if(Schedules.BookingStatus == "Cancelled")
@@ -258,12 +261,14 @@ export class ScheduleComponent implements OnInit {
             return {
               title: Schedules.Client + "'s Cancelled Booking",
               start: new Date(
-                Schedules.EmployeeSchedule[0].Dates
+                Schedules.BookingSchedule[0].DateTime
               ),
               color: colors.red,
               allDay: true,
               draggable: false,
-              id: Schedules.BookingID,            
+              meta: Schedules,
+              
+                         
             }
             }
           });
@@ -310,8 +315,8 @@ export class ScheduleComponent implements OnInit {
     // this.refresh.next();
     if(confirm("Would you like to advise for this booking?"))
     {     
-      localStorage.setItem("DateChosen", event.start.toString())
-      localStorage.setItem("BookingDetails", JSON.stringify(event.meta.Schedge))
+      localStorage.setItem("DateChosen", event.start.toDateString())
+      localStorage.setItem("BookingDetails", JSON.stringify(event.meta))
       this.router.navigateByUrl("Advise")
     }
   }

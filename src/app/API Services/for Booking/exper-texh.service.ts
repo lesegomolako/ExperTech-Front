@@ -19,6 +19,12 @@ export class ExperTexhService {
 
   constructor(private http:HttpClient) { }
 
+  AdviseBooking(Booking)
+  {
+    console.log(Booking)
+    return this.http.post(this.url + "Booking/AdviseBooking", Booking)
+  }
+
   getBadgeCount(SessionID): Observable<number>
   {
     return this.http.get<number>(this.url+"CLient/getBadge?SessionID="+SessionID)

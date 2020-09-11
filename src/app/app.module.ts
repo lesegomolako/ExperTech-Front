@@ -117,6 +117,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ScheduleComponent } from './Booking/schedule/schedule.component';
 import { AdviseComponent } from './Booking/advise/advise.component';
+import { ReportsComponent } from './User/reports/reports.component';
 
 
 @NgModule({
@@ -134,7 +135,7 @@ import { AdviseComponent } from './Booking/advise/advise.component';
     RequestbComponent,BrowseComponent,BookingConfirmComponent, OptionsFilterPipe,
     customFilter,SupplierComponent,orderform,PlaceorderComponent,EditsupplierComponent,AddsupplierComponent,
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
-    ViewdetailComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent
+    ViewdetailComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent, ReportsComponent
 
   ],
   imports: [
