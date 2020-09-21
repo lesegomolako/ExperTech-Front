@@ -1,4 +1,4 @@
-<div style="float: top">
+<div style="float: top" class="row">
   <div style="background-color: white" class="card_hover">
     <div style="float: right" class="example-button-container"></div>
     <h1 style="text-align: center">Admin Homepage!</h1>
@@ -18,95 +18,117 @@
       <mat-card-subtitle>Welcome to your profile</mat-card-subtitle>
       <br />
 
-      <div class="row" style="text-align: center">
-        <mat-card
-          style="width: 220px; height: 150px; background-color: #97bc62ff"
-        >
-          <mat-icon>mode_comment</mat-icon>
-          <br />
-          <a href="./schedule"><button class="btn btn-light">Bookings</button></a>
-        </mat-card>
-        <mat-card
-          style="width: 220px; height: 150px; background-color: #97bc62ff"
-        >
-          <mat-icon>grid_on</mat-icon>
-          <br />
-          <a href="./available"><button class="btn btn-light">Availability</button></a>
-        </mat-card>
-        <mat-card
-          style="width: 220px; height: 150px; background-color: #97bc62ff"
-        >
-          <mat-icon>perm_identity</mat-icon>
-          <br />
-          <a href="./employee"><button class="btn btn-light">Employees</button></a>
-        </mat-card>
-        <!-- <mat-card
-          style="width: 220px; height: 150px; background-color: #97bc62ff"
-        >
-          <mat-icon>perm_identity</mat-icon>
-          <br />
-          <a href="./client"><button class="btn btn-light">Clients</button></a>
-        </mat-card> -->
-
-        <mat-card
-          style="width: 220px; height: 150px; background-color: #97bc62ff"
-        >
-          <mat-icon>perm_identity</mat-icon>
-          <br />
-          <a routerLink="/stock"><button  class="btn btn-dark">Stock</button></a>
-        </mat-card>
-        <mat-card
-          style="width: 220px; height: 150px; background-color: #97bc62ff"
-        >
-          <mat-icon>perm_identity</mat-icon>
-          <br />
-          <a href="./payment"
-            ><button class="btn btn-light">Payments</button></a
-          >
-        </mat-card>
-        <mat-card
-          style="width: 220px; height: 150px; background-color: #97bc62ff"
-        >
-          <mat-icon>local_grocery_store </mat-icon>
-          <br />
-          <a href="./sale"><button class="btn btn-light">Sales</button></a>
-        </mat-card>
-        <mat-card
-          style="width: 220px; height: 150px; background-color: #97bc62ff"
-        >
-          <mat-icon>perm_identity</mat-icon>
-          <br />
-          <a href="./admin"><button class="btn btn-light">Admins</button></a>
-        </mat-card>
-        <mat-card
-          style="width: 220px; height: 150px; background-color: #97bc62ff"
-        >
-          <mat-icon>perm_identity</mat-icon>
-          <br />
-          <a href="./reports"><button class="btn btn-light">Report</button></a>
-        </mat-card>
-        <mat-card
-          style="width: 220px; height: 150px; background-color: #97bc62ff"
-        >
-          <mat-icon>perm_identity</mat-icon>
-          <br />
-          <a href="./services"><button class="btn btn-light">Services</button></a>
-        </mat-card>
-        <mat-card
-          style="width: 220px; height: 150px; background-color: #97bc62ff"
-        >
-          <mat-icon>perm_identity</mat-icon>
-          <br />
-          <a href="./supplier"><button class="btn btn-light">Supplier</button></a>
-        </mat-card>
-        <!-- <mat-card
-          style="width: 220px; height: 150px; background-color: #97bc62ff"
-        >
-          <mat-icon>photo</mat-icon>
-          <br />
-          <a href="./admin"><button class="btn btn-light">Photo</button></a>
-        </mat-card> -->
+      <div class="site-section">
+        <div class="container">
+          <div class="row"> 
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <span class="icon flaticon-razor display-3 text-primary mb-4 d-block"></span>
+                <h3 class="text-black h4">Bookings</h3>
+                <p>View booking calendar</p>
+                <p><strong class="font-weight-bold text-primary"> <a href="./schedule"><button class="btn btn-success">Bookings</button></a></strong></p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <span class="icon flaticon-location-pin display-3 text-primary mb-4 d-block"></span>
+                <h3 class="text-black h4">Availability</h3>
+                <p>Setup employee availablity schedule</p>
+                <a href="./available"><button class="btn btn-success">Availability</button></a>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
+                <h3 class="text-black h4">Products</h3>
+                <p>Add, update or delete products from the system</p>
+                <p><strong class="font-weight-bold text-primary"><a routerLink="/AdminProduct"><button class="btn btn-success">Products</button></a></strong></p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
+                <h3 class="text-black h4">Services</h3>
+                <p>Manage services</p>
+                <p><strong class="font-weight-bold text-primary"><a href="./services"><button class="btn btn-success">Services</button></a></strong></p>
+              </div>
+            </div>
+          </div>
+      
+          <div class="row"> 
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <span class="icon flaticon-razor display-3 text-primary mb-4 d-block"></span>
+                <h3 class="text-black h4">Stock</h3>
+                <p>Manage stock</p>
+                <p><strong class="font-weight-bold text-primary"> <a routerLink="/stock"><button  class="btn btn-success">Stock</button></a></strong></p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <span class="icon flaticon-location-pin display-3 text-primary mb-4 d-block"></span>
+                <h3 class="text-black h4">Payments</h3>
+                <p>Make payments for bookings, sales or service packages</p>
+                <a href="./payment"><button class="btn btn-success">Payments</button></a>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
+                <h3 class="text-black h4">Sales</h3>
+                <p>Manage client sales</p>
+                <p><strong class="font-weight-bold text-primary"><a href="./sale"><button class="btn btn-success">Sales</button></a></strong></p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
+                <h3 class="text-black h4">Manage staff</h3>
+                <p>Add or remove staff from system</p>
+                <p><strong class="font-weight-bold text-primary"><a href="./admin"><button class="btn btn-success">Staff</button></a></strong></p>
+              </div>
+            </div>
+          </div>
+      
+          <div class="row"> 
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <span class="icon flaticon-razor display-3 text-primary mb-4 d-block"></span>
+                <h3 class="text-black h4">Reports</h3>
+                <p>View business reports</p>
+                <p><strong class="font-weight-bold text-primary"> <a routerLink="/reports"><button  class="btn btn-success">Reports</button></a></strong></p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <span class="icon flaticon-location-pin display-3 text-primary mb-4 d-block"></span>
+                <h3 class="text-black h4">Suppliers</h3>
+                <p>Manage suppliers and order stock</p>
+                <a href="./supplier"><button class="btn btn-success">Supplier</button></a>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
+                <h3 class="text-black h4">Service Packages</h3>
+                <p>Activate service packages</p>
+                <p><strong class="font-weight-bold text-primary"><a href="./spackage"><button class="btn btn-success">Activate Package</button></a></strong></p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
+                <h3 class="text-black h4">Manage staff</h3>
+                <p>Add or remove staff from system</p>
+                <p><strong class="font-weight-bold text-primary"><a href="./admin"><button class="btn btn-success">Staff</button></a></strong></p>
+              </div>
+            </div>
+          </div>
+      
+          
+        </div>
       </div>
+     
       <br />
       <br />
     </mat-card>
@@ -118,3 +140,4 @@
     </mat-card>
   </div>
 </div>
+

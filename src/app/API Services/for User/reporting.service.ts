@@ -76,7 +76,7 @@ export class ReportingService {
   }
   ///********************************************************Client CRUD*********************************************************************
   readClient(): Observable<Process[]>{
-    return this.http.get<Process[]>(this.url + 'Client/getClient');
+    return this.http.get<Process[]>(this.url + 'Clients/getClient');
     }
   walkinClient(formData: Process) {
     let body = JSON.stringify(formData);
@@ -91,7 +91,7 @@ export class ReportingService {
   updateClient(formData: Process) {
     let body = JSON.stringify(formData);
     if (confirm(body)) {
-      return this.http.put<Process>(this.url + 'User/updateClient', formData);
+      return this.http.put<Process>(this.url + 'Clients/updateClient', formData);
     }
   } 
   deleteClient(formData: Process) {
@@ -102,7 +102,7 @@ export class ReportingService {
         body: body,
       };
       return this.http.delete<Process>(
-        this.url + 'Client/deleteClient',
+        this.url + 'Clients/deleteClient',
         httpOptions
       );
     } else {

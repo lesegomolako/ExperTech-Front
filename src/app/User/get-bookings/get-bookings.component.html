@@ -7,16 +7,6 @@
      <input matInput (keyup)="applyFilter($event)" #input>
    </mat-form-field>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  
-      <!-- Select Column -->
-    <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef ><mat-checkbox></mat-checkbox></th>>
-      <td mat-cell *matCellDef="let row">
-        <mat-checkbox></mat-checkbox>{{row.select}}</td>
-    </ng-container>
-    
-      
-      
     
       <!-- OrderID Column -->
       <ng-container matColumnDef="BookingID">
@@ -46,20 +36,20 @@
       <!--OrderDetails Column -->
       <ng-container matColumnDef="Price">
         <th mat-header-cell *matHeaderCellDef> Price</th>
-        <td mat-cell *matCellDef="let row"> {{row.Price}} </td>
+        <td mat-cell *matCellDef="let row">R {{row.Price}} </td>
      </ng-container>
 
       <!-- Price Column -->
       <ng-container matColumnDef="Date">
         <th mat-header-cell *matHeaderCellDef> Date </th>
-        <td mat-cell *matCellDef="let row"> R{{row.Date | date:"dd/MM/yy"}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.Date | date:"dd/MM/yy"}} </td>
      </ng-container>
     
    
  
 
      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+     <tr (click)="makePayment()" id="tablerow" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
    </table>
       
 

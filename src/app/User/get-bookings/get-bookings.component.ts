@@ -11,7 +11,6 @@ import { MatSort } from '@angular/material/sort';
 import { Booking } from 'src/app/API Services/for Booking/client';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 export class BookingData
 {
@@ -51,9 +50,10 @@ export class GetBookingsComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource()
-    this.http.get<BookingData[]>(this.api.url + "Admin/GetBookings").subscribe()
-    this.dataSource.data = this.BookingsList;
-    console.log(this.BookingsList)
+    this.http.get<BookingData[]>(this.api.url + "Admin/GetBookings").subscribe((res:BookingData[]) => {this.dataSource.data = res});
+    
+    
+    //console.log(this.BookingsList)
     
   }
 
@@ -75,6 +75,11 @@ export class GetBookingsComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  makePayment()
+  {
+    
   }
 
   // onDelete(OrderID: any)

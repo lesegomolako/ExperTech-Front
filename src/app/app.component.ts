@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
     sessionStorage.clear();
 
     this.RoleID = null;
-    confirm("Logged out successfully. Re-directing to homepage");
+    alert("Logged out successfully. Re-directing to homepage");
 
     this.router.navigateByUrl('/home')
     .then(() => {
