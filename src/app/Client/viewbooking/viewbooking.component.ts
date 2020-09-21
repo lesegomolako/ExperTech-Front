@@ -16,7 +16,7 @@ import { ExperTexhService } from '../../API Services/for Booking/exper-texh.serv
 export class ViewbookingComponent implements OnInit {
   id: any;
 
-  booking :  Booking;
+  booking :  Booking[];
   name: string;
 
   constructor(private api: ExperTexhService, private router: Router,private route: ActivatedRoute) { }
@@ -25,17 +25,17 @@ export class ViewbookingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.booking = new Booking();
-
-    this.id = 2
-    // this.id = this.route.snapshot.params['id'];
-    
-    this.api.ViewClientBooking(this.id).subscribe(data => {
-      console.log("Client Booking Details",data)
-      this.booking = data;
-    }, error => console.log("Error",error));
-
-
+    if(this.api.RoleID == "1")
+    {
+      this.api.ViewBookings(this.api.SessionID).subscribe(data => {
+        console.log("Client Booking Details",data)
+        this.booking = data;
+      }, error => console.log("Error",error));
+    }
+    else
+    {
+      this.router.navigate(["404Page"])
+    }
   }
 
   list(){
@@ -62,7 +62,7 @@ export class ViewbookingComponent implements OnInit {
 
   Accept(){
     this.api.AcceptBooking(this.id).subscribe(data=>{
-      alert("Booking successfully")
+      alert("Booking successfully accepted")
      });
     
   }

@@ -65,12 +65,14 @@ import { ScheduleComponent } from './Booking/schedule/schedule.component';
 import { AdviseComponent } from './Booking/advise/advise.component';
 import { EmployeehomeComponent } from './User/employeehome/employeehome.component';
 import { ReportsComponent } from './User/reports/reports.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
+import { GetBookingsComponent } from './User/get-bookings/get-bookings.component';
 //import {MatDialogModule} from '@angular/material/dialog';
 
 const routes: Routes = [
 
   {path: '', redirectTo: '/home',pathMatch: 'full'},
- 
   {path: "advise", component: AdviseComponent},
   {path:'services', component: ServicesComponent,
    children: [
@@ -88,7 +90,6 @@ const routes: Routes = [
       {path:'DeleteService', component: DeleteServiceComponent},  
    ]
   },
-
   {path:'home', component: ClientMenuComponent},
   {path:'EditProduct', component: EditProductComponent},
   {path:'AdminProduct', component: ProductComponent},
@@ -128,29 +129,25 @@ const routes: Routes = [
   {path: 'orderform', component: orderform},
   {path: 'placeorder', component: PlaceorderComponent},
   {path: 'supplier', component: SupplierComponent},
-
-  // { path: '**', redirectTo: '/home'},
-
-
   {path: 'employeehome', component: EmployeehomeComponent},
   {path: 'schedule', component: ScheduleComponent},
-
   { path: 'clientregister', component: ValidateComponent},
   {path: 'edit', component: EditComponent },
   {path: 'browse', component: BrowseComponent },
   {path: 'request', component: RequestbComponent },
-
   {path: 'basket', component: BasketComponent },
   {path: 'Booking', component: MakebookingComponent },
   {path: 'ViewBooking', component: ViewbookingComponent },
   {path: 'ServicePackage', component: ServicepComponent },
-  {path: 'confirmbooking', component: BookingConfirmComponent },
-  
+  {path: 'confirmbooking', component: BookingConfirmComponent }, 
   {path: 'ClientProfile', component: ClientprofileComponent },
   {path: 'Notification', component: BellComponent },
   {path: 'reports', component: ReportsComponent},
+  {path: '403Forbidden', component: ForbiddenPageComponent},
+  {path: 'getbookings', component: GetBookingsComponent},
   
-  
+  {path: '**', redirectTo: '/404Page'},
+  {path: '404Page', component: ErrorPageComponent},
 ];
 
 @NgModule({

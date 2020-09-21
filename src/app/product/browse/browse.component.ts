@@ -67,35 +67,37 @@ setQuantity(newValue,item:Product)
 
 
 addproduct(BasketProduct:Product){
-  this.id = this.route.snapshot.params['id'];
-    var _basketLine:BasketLine = {
-      BasketID:this.basketID,
-      Product:BasketProduct,
-      ProductID:BasketProduct.ProductID,
-    }
+  if(this.api.SessionID != null)
+  {
+    //this.id = this.route.snapshot.params['id'];
+      var _basketLine:BasketLine = {
+        Product:BasketProduct,
+        ProductID:BasketProduct.ProductID,
+      }
 
-    if(BasketProduct.SelectedQuantity > BasketProduct.QuantityOnHand)
-    {
-      alert("You've selected too much")
+      if(BasketProduct.SelectedQuantity > BasketProduct.QuantityOnHand)
+      {
+        alert("You've selected too much")
+        return;
+      }
+
+      if(BasketProduct.SelectedQuantity <= 0)
       return;
+      
+      _basketLine.Quantity=BasketProduct.SelectedQuantity;
+
+    this.api.Addproduct(_basketLine).subscribe(data => {
+      this.basket = data;
+    }, error => console.log("error edit component",error));
+    this.api.getBadgeCount()
+  }
+  else
+  {
+    if(confirm("You may only add a product when logged in. Would you like to log in?"))
+    {
+      localStorage.setItem('redirectTo', this.router.url);
+      this.router.navigateByUrl('/login');
     }
-
-    if(BasketProduct.SelectedQuantity <= 0)
-    return;
-    
-    _basketLine.Quantity=BasketProduct.SelectedQuantity;
-    
-    // Else if(BasketProduct.ProductID == BasketProduct.ProductID)
-    // {
-    //   alert("You've selected this product already")
-    //   return;
-    // }
-
-
-
-
-  this.api.Addproduct(this.basketID,_basketLine).subscribe(data => {
-    this.basket = data;
-  }, error => console.log("error edit component",error));
+  }
 }
 }

@@ -28,9 +28,9 @@
       </ng-container>
   
       <!-- SupplierID Column -->
-      <ng-container matColumnDef="SupplierID">
-         <th mat-header-cell *matHeaderCellDef> SupplierID </th>
-         <td mat-cell *matCellDef="let row"> {{row.SupplierID}} </td>
+      <ng-container matColumnDef="Supplier">
+         <th mat-header-cell *matHeaderCellDef> Supplier </th>
+         <td mat-cell *matCellDef="let row"> {{row.Supplier}} </td>
       </ng-container>
   
   
@@ -41,9 +41,9 @@
      </ng-container>
 
       <!--OrderDetails Column -->
-      <ng-container matColumnDef="Details">
-        <th mat-header-cell *matHeaderCellDef> Details</th>
-        <td mat-cell *matCellDef="let row"> {{row.Details}} </td>
+      <ng-container matColumnDef="Total items">
+        <th mat-header-cell *matHeaderCellDef> Total items</th>
+        <td mat-cell *matCellDef="let row"> {{row.StockItemLine.length}} </td>
      </ng-container>
 
       <!-- Price Column -->
@@ -55,7 +55,7 @@
       <!-- Date Column -->
       <ng-container matColumnDef="Date">
         <th mat-header-cell *matHeaderCellDef> Date </th>
-        <td mat-cell *matCellDef="let row"> {{row.Date}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.Date | date:"dd/MM/yy"}} </td>
      </ng-container>
 
      <!-- Return Supplier Order -->

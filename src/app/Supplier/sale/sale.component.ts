@@ -25,7 +25,7 @@ export class SaleComponent implements AfterViewInit, OnInit {
   value = 'Clear me';
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['saleid', 'saletype' ,'status', 'client' , 'payment' ,'paymenttype', 'date', 'reminder', 'viewdetail'];
+  displayedColumns = ['saleid', 'client', 'saletype' ,'status' , 'payment' ,'paymenttype', 'date', 'reminder', 'viewdetail'];
   dialog: any;
   searchKey: string;
   SaleData: any;
@@ -45,7 +45,7 @@ export class SaleComponent implements AfterViewInit, OnInit {
         this.dataSource.data = this.SaleList;
       })
 
-      
+      console.log(this.SaleList)
   }
 
   ngAfterViewInit() {

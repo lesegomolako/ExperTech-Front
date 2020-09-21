@@ -12,7 +12,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ExperTexhService {
 
-  url = 'https://localhost:44380/api/';  
+  url = 'https://localhost:44380/api/'; 
+
+  RoleID = sessionStorage.getItem("RoleID"); 
+  SessionID = sessionStorage.getItem("accessToken");
+
   UserData: User;
   clientData: Client;
   badgeCount;
@@ -25,9 +29,10 @@ export class ExperTexhService {
     return this.http.post(this.url + "Booking/AdviseBooking", Booking)
   }
 
-  getBadgeCount(SessionID): Observable<number>
+  getBadgeCount()
   {
-    return this.http.get<number>(this.url+"CLient/getBadge?SessionID="+SessionID)
+    return this.http.get<number>(this.url+"Clients/getBadge?SessionID="+this.SessionID)
+    .subscribe(res => {this.badgeCount = res})
   }
 
 
@@ -48,42 +53,47 @@ export class ExperTexhService {
 
   updateClient(client:Client): Observable<Client> {  
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.put<Client>(this.url + 'Client/UpdateClient/',  
+    return this.http.put<Client>(this.url + 'Clients/UpdateClient/',  
     client, httpOptions);  
   } 
   ViewProduct(Id:Product): Observable<Product[]> {  
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.get<Product[]>(this.url + 'Client/getALLProductsWithPhoto/');  
+    return this.http.get<Product[]>(this.url + 'Clients/getALLProductsWithPhoto/');  
   } 
 
-  Addproduct(BasketID:string,BasketProduct:BasketLine): Observable<any> {  
-    return this.http.request('post',this.url + 'Client/addtBasketline/',{
+  Addproduct(BasketProduct:BasketLine): Observable<any> {  
+    return this.http.request('post',this.url + 'Clients/addtBasketline/',{
       headers:{ 'Content-Type': 'application/json'},
       params:{
-        'BasketID':BasketID,},
+        'SessionID':this.SessionID,},
         body:BasketProduct
     });  
   }
 
   Updateproduct(BasketProduct:BasketLine): Observable<any> {  
-    return this.http.request('post',this.url + 'Client/Updatebasketline/',{
+    return this.http.request('post',this.url + 'Clients/Updatebasketline',{
       headers:{ 'Content-Type': 'application/json'},
-        body:BasketProduct
+        body:BasketProduct, params:{"SessionID": this.SessionID}
     });  
   }
   
   
-  ViewBasket(Id:BasketLine): Observable<BasketLine[]> {  
+  ViewBasket(SessionID:string): Observable<BasketLine[]> {  
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.get<BasketLine[]>(this.url + 'Client/getBasketlinewithProduct/');  
+    return this.http.get<BasketLine[]>(this.url + 'Clients/getBasketlinewithProduct',{
+      headers:{ 'Content-Type': 'application/json'},
+      params:{
+        'SessionID':SessionID
+      }});  
   } 
 
   RemoveProduct(BasketID:number,ProductID:number): Observable<any> {  
-    return this.http.request('delete',this.url +'Client/DeleteClientBasket/',{
+    return this.http.request('delete',this.url +'Clients/DeleteClientBasket',{
       headers:{ 'Content-Type': 'application/json'},
       params:{
         'BasketID':BasketID.toString(),
-        'ProductID':ProductID.toString()
+        'ProductID':ProductID.toString(),
+        'SessionID': this.SessionID
       }
     });  
   }  
@@ -92,7 +102,7 @@ export class ExperTexhService {
 
   ViewServicePackage(): Observable<ClientPackage[]> {  
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.get<ClientPackage[]>(this.url + 'Client/getClientPackage/');  
+    return this.http.get<ClientPackage[]>(this.url + 'Clients/getClientPackage/');  
   }
 
   Requestbookingdetails(form: Booking) 
@@ -100,13 +110,30 @@ export class ExperTexhService {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
     return this.http.post(this.url + 'Bookings/RequestBooking',  form);  
   }
+
+  Makebooking(form: any) 
+  {  
+    //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
+    return this.http.post(this.url + 'Bookings/MakeBooking',  form);  
+  }
   
-  ViewClientBooking(BookingID:Booking): Observable<Booking> {  
+  ViewClientBooking(SessionID): Observable<Booking> {  
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
     return this.http.get<Booking>(this.url + 'Bookings/ViewClientBooking' ,{
       headers:{ 'Content-Type': 'application/json'},
       params:{
-        'ClientID':BookingID.toString(),
+        'SessionID':SessionID,
+
+      }
+    });   
+  } 
+
+  ViewBookings(SessionID): Observable<Booking[]> {  
+    //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
+    return this.http.get<Booking[]>(this.url + 'Bookings/ViewBookings' ,{
+      headers:{ 'Content-Type': 'application/json'},
+      params:{
+        'SessionID':SessionID,
 
       }
     });   

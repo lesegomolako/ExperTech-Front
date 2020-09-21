@@ -24,6 +24,8 @@ export class AdviseComponent implements OnInit {
   AdviseForm: FormGroup;
 
   ngOnInit(): void {
+    if(this.api.RoleID == "2")
+    {
     this.chosenDate = localStorage.getItem("DateChosen")
     this.http.get<[]>(this.api.url + "Employees/getEmployee").subscribe(res =>
       {
@@ -41,6 +43,11 @@ export class AdviseComponent implements OnInit {
       employeeid: [''],
       timesid: ['']
     })
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
   }
 
 
@@ -48,10 +55,11 @@ export class AdviseComponent implements OnInit {
   {
     const BookingData =
     {
+      SessionID: this.api.SessionID,
       BookingID: this.Booking.BookingID,
       EmployeeID: form.value.employeeid,
       RequestedID: this.Booking.BookingRequest.RequestedID,
-      Date: this.chosenDate,
+      Date: new Date(this.chosenDate).toLocaleDateString(),
       TimeID: form.value.timesid
     }
 

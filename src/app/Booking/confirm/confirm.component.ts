@@ -25,14 +25,20 @@ export class BookingConfirmComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    if(this.api.RoleID == "1")
+    {
     this.booking = new Booking();
-
-    this.id = 2
-
-    this.api.ViewClientBooking(this.id).subscribe(data => {
+      console.log(this.api.SessionID)
+    this.api.ViewClientBooking(this.api.SessionID).subscribe(data => {
       console.log("Client Booking Details",data)
       this.booking = data;
     }, error => console.log("Error",error));
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
 
   }
 
@@ -55,7 +61,11 @@ export class BookingConfirmComponent implements OnInit {
   cancel(){
     this.api.CancelBooking(this.id).subscribe(data=>{
       alert("Booking successfully rejected,Booking will be deleted. Please make another booking with a different time")
-     });
-    
+     });   
+  }
+
+  goBack()
+  {
+    window.history.back();
   }
 }

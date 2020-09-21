@@ -1,1 +1,45 @@
-<p>All ou need to know </p>
+<form [formGroup]="ClientForm" (submit)="onSubmit(ClientForm)">
+  <h1 mat-dialog-title>Add Client</h1>
+  <div mat-dialog-content>
+    <p>Enter client details</p>
+      <mat-form-field style="padding: right 10px;">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="Name" (keypress)="omit_special_char($event)" >  
+        <mat-error *ngIf="ClientForm.get('Name').errors && (ClientForm.get('Name').touched || ClientForm.get('Name').dirty)">    
+          <mat-error *ngIf=" ClientForm.get('Name').errors.required">First Name is required</mat-error> 
+          <mat-error *ngIf=" ClientForm.get('Name').errors.minLength">Minimum of 2 characters required</mat-error>
+          <mat-error *ngIf=" ClientForm.get('Name').errors.maxLength">Maximum of 50 characters required</mat-error>   
+        </mat-error> 
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Surname</mat-label>
+        <input matInput formControlName="Surname" (keypress)="omit_special_char($event)" >
+        <mat-error *ngIf="ClientForm.get('Surname').errors && (ClientForm.get('Surname').touched || ClientForm.get('Surname').dirty)">    
+          <mat-error *ngIf=" ClientForm.get('Surname').errors.required">Surname is required</mat-error> 
+          <mat-error *ngIf=" ClientForm.get('Surname').errors.minLength">Minimum of 2 characters required</mat-error>
+          <mat-error *ngIf=" ClientForm.get('Surname').errors.maxLength">Maximum of 100 characters required</mat-error>   
+        </mat-error> 
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Contact Number</mat-label>
+        <input matInput (keypress)="omit_special_char($event)" formControlName="ContactNo" >  
+        <mat-error *ngIf="ClientForm.get('Surname').errors && (ClientForm.get('Surname').touched || ClientForm.get('Surname').dirty)">   
+          <mat-error *ngIf="ClientForm.get('ContactNo').errors.required">Contact Number is required</mat-error>      
+          <mat-error *ngIf="ClientForm.get('ContactNo').errors.maxlength || ClientForm.get('ContactNo').errors.minlength ">Contact must be 10 characters long </mat-error>  
+        </mat-error>       
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="Email" >
+        <mat-error *ngIf="ClientForm.get('Surname').errors && (ClientForm.get('Surname').touched)">
+          <mat-error *ngIf=" ClientForm.get('Email').errors.required">Email is required</mat-error>
+          <mat-error *ngIf="ClientForm.get('Email').errors.email">Email must be a valid email address</mat-error>  
+        </mat-error>  
+      </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button type="button" mat-dialog-close>Cancel</button>
+    <button mat-button type="submit" cdkFocusInitial>Save</button>
+  </div>
+</form>

@@ -47,26 +47,27 @@ export class SetupComponent implements OnInit {
 
   ngOnInit(){
 
-    this.ValidSession = this.service.ValidSession(sessionStorage.getItem("SessionID"))
+    this.SessionID = this.ActRoute.snapshot.queryParams['SessionID']
+    this.ValidSession = this.service.ValidSession(this.SessionID)
 
-    if(this.ValidSession == true)
-    {
+    // if(this.ValidSession == true)
+    // {
 
     this.setupForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       cpassword: ['', [Validators.required, Validators.minLength(6)]],
-    });
+     });
 
     
-      this.SessionID = this.ActRoute.snapshot.queryParams['SessionID']
-      console.log(this.SessionID);     
-    }
-    else
-    {
-      alert("Session is no longer valid. Redirecting to homepage")
-      this.router.navigateByUrl("/home")
-    }
+      
+    //   console.log(this.SessionID);     
+    // }
+    // else
+    // {
+    //   // alert("Session is no longer valid. Redirecting to homepage")
+    //   // this.router.navigateByUrl("/home")
+    // }
   }
   get f() {
     return this.setupForm.controls;

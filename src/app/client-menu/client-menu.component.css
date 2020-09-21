@@ -1,12 +1,12 @@
 .footer
-{
-
+{  
     background-color: #333131;
-    bottom: 0;
-    left: 0;
     width: 100%;
-
+    position: relative;
+    bottom:0;
 }
+
+
 
 .menu-items
 {
@@ -17,6 +17,7 @@
 .homepage
 {
     overflow: hidden;
+    min-height: 100%;
 }
 
 ul

@@ -153,7 +153,11 @@ omit_special_char(event)
           {
             alert("Successfully registered")
             sessionStorage.setItem("accessToken", res.SessionID);
+            sessionStorage.setItem("RoleID", res.RoleID)
             this.router.navigateByUrl('/home')
+            .then(() => {
+              window.location.reload();
+            });
           }
         })
  

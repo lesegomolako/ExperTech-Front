@@ -2,7 +2,7 @@ export class SaleData
 {
   SaleID: any;
   Status: string;
-  Reminder: string;
+  Reminder: any;
   Payment: any;
   ClientID: any;
   ClientName: string;
@@ -75,6 +75,7 @@ export class SupplierOrderData
 {
   OrderID: any;
   SupplierID: any;
+  Supplier: string;
   Description: string;
   Price: string;
   Date: string;

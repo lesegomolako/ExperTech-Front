@@ -21,7 +21,7 @@ export class User {
 export class BasketLine {
     LineID?: any;
     ProductID: any;
-    BasketID: any;
+    BasketID?: any;
     Quantity?: any;
     Product:
     {
@@ -30,7 +30,7 @@ export class BasketLine {
         Price: any;
         Description: string;
         QuantityOnHand: any;
-        Photo: any;
+        Photo: [{Image: any}]
         Category: string;
     }
     
@@ -88,12 +88,13 @@ export class Booking
 {
   BookingID: any;
   Status: string;
-  ClientID = 2;
+  Client: string;
   BookingLines:
     [{
       ServiceID: any;
       OptionID: any;
       Service: string;
+      Option: string;
     }]
     EmployeeSchedule: [
       {

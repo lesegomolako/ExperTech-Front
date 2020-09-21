@@ -28,8 +28,8 @@ export class ReportingService {
   //*******************Valid Session ***********************/
   ValidSession(seshID)
   {
-    const params = new HttpParams().set('seshin', seshID );
-
+    const params = new HttpParams().set('SessionID', seshID );
+    
     return this.http.post(this.url +'User/ValidSession', {
       headers: {'Content-Type': 'application/json'},
       params: params})

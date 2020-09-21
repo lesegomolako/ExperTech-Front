@@ -12,10 +12,7 @@ export class AppComponent implements OnInit {
 
   title = 'Screens';
   showBadges = true;
-  clientLoggedIn = false;
-  AdminLoggedIn = false;
-  EmpLoggedIn = false;
-  LoggedIn = false;
+  RoleID = null;
   
   toggleSidebar()
   {
@@ -26,36 +23,13 @@ export class AppComponent implements OnInit {
    
   ngOnInit()
   {
-    var sesh = sessionStorage.getItem("accessToken")
-    if (sesh != null)
+    
+    if (this.api.SessionID != null)
     {
-    this.rService.CheckRole(sesh).subscribe(res => 
-      {
-        if (res = "client")
-        {
-          this.showBadges = true;
-          this.api.getBadgeCount(sesh).subscribe(
-            res =>
-            {this.api.badgeCount = res}
-          )
-          this.clientLoggedIn = true;
-          this.LoggedIn = true;
-        }
-        else if(res = "admin")
-        {
-          this.showBadges = false;
-          this.AdminLoggedIn = true;
-          this.LoggedIn = true;
-        }
-        else if(res = "employee")
-        {
-          this.showBadges = false;
-          this.EmpLoggedIn = true;
-          this.LoggedIn = true;
-        }
-      }
-    )
+      this.RoleID = this.api.RoleID;
     }
+
+    this.api.getBadgeCount();
     
   }
 
@@ -74,13 +48,15 @@ export class AppComponent implements OnInit {
 
   logout()
   {
-    sessionStorage.removeItem('accessToken')
-    this.clientLoggedIn = false;
-    this.AdminLoggedIn = false;
-    this.EmpLoggedIn = false;
-    this.LoggedIn = false;
-    confirm("Logged out successfully. Re-directing to homepage")
+    sessionStorage.clear();
+
+    this.RoleID = null;
+    confirm("Logged out successfully. Re-directing to homepage");
+
     this.router.navigateByUrl('/home')
+    .then(() => {
+      window.location.reload();
+    });
 
   }
   

@@ -26,14 +26,25 @@ export class ClientprofileComponent implements OnInit {
 
   ngOnInit() {
 
-    this.client = new Client();
-
-    this.id = this.route.snapshot.params['id'];
     
-    this.api.getClientdetails(this.id).subscribe(data => {
-      console.log("Client Details",data.ContactNo)
-      this.client = data;
-    }, error => console.log("Error",error));
+    if(this.api.RoleID != null)
+    {
+      this.client = new Client();
+      console.log(this.api.RoleID)
+
+      this.id = this.route.snapshot.params['id'];
+      
+      this.api.getClientdetails(this.id).subscribe(data => {
+        console.log("Client Details",data.ContactNo)
+        this.client = data;
+      }, error => console.log("Error",error));
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+      return;
+    }
+    
 
   }
 

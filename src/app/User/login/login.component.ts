@@ -94,13 +94,19 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem("accessToken", res.SessionID);
         sessionStorage.setItem("RoleID", res.RoleID)
         var RoleID = sessionStorage.getItem("RoleID")
-        if(RoleID == "2")
+        if(RoleID == "1")
         {
           this.router.navigate(["home"])
+          .then(() => {
+            window.location.reload();
+          });
         }
         else
         {
           this.router.navigate(["employeehome"])
+          .then(() => {
+            window.location.reload();
+          });
         }
         
         this.showError = false;

@@ -8,6 +8,7 @@ import {Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {startOfMonth,startOfWeek,endOfWeek,format,getDate} from 'date-fns';
 import { Observable } from 'rxjs';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 export class Schedule
 {
@@ -139,7 +140,7 @@ export class ScheduleComponent implements OnInit {
   //   },
   // ];
 
-  constructor(private modal: NgbModal, 
+  constructor(private modal: NgbModal, private api: ExperTexhService,
     private router: Router,
     private http: HttpClient) {}
 
@@ -209,7 +210,19 @@ export class ScheduleComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
   ngOnInit(): void {
-    this.fetchEvents();
+    if(this.api.RoleID = "2")
+    {
+      this.fetchEvents();
+    }
+    else if(this.api.RoleID = "3")
+    {
+      this.fetchEvents;
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
+    
   }
 
   fetchEvents(): void {
@@ -266,9 +279,20 @@ export class ScheduleComponent implements OnInit {
               color: colors.red,
               allDay: true,
               draggable: false,
+              meta: Schedules,                       
+            }
+            }
+            else if(Schedules.BookingStatus == "Advised")
+            {
+            return {
+              title: Schedules.Client + "'s Advised Booking (Awaiting Confirmation)",
+              start: new Date(
+                Schedules.BookingSchedule[0].DateTime
+              ),
+              color: colors.yellow,
+              allDay: true,
+              draggable: false,
               meta: Schedules,
-              
-                         
             }
             }
           });
@@ -315,10 +339,15 @@ export class ScheduleComponent implements OnInit {
     // this.refresh.next();
     if(confirm("Would you like to advise for this booking?"))
     {     
-      localStorage.setItem("DateChosen", event.start.toDateString())
+      localStorage.setItem("DateChosen", newStart.toDateString())
       localStorage.setItem("BookingDetails", JSON.stringify(event.meta))
-      this.router.navigateByUrl("Advise")
+      this.router.navigateByUrl("advise")
     }
+  }
+
+  cancel()
+  {
+    window.history.back();
   }
 
 }

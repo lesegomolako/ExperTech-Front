@@ -50,24 +50,30 @@ export class EditComponent implements OnInit {
   }
   ngOnInit() {
 
-    this.client = new Client();
+    if(this.api.RoleID != null)
+    {
+      this.client = new Client();
 
-    this.id = this.route.snapshot.params['id'];
-    
-    this.api.getClientdetails(this.id).subscribe(data => {
-      console.log("Contact Number",data.ContactNo)
-      this.client = data;
-    }, error => console.log("error edit component",error));
-    
-    this.editForm = this.formBuilder.group({
-        firstName: ['', [ Validators.required,Validators.minLength(2),Validators.maxLength(50)]],
-        lastName: ['', [Validators.required,Validators.minLength(2),Validators.maxLength(100)]],
-        contact: ['', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]],
-        email: ['', [Validators.required, Validators.email,Validators.minLength(2),Validators.maxLength(50)]],
-
-    }, {
- 
-  });
+      this.id = this.route.snapshot.params['id'];
+      
+      this.api.getClientdetails(this.id).subscribe(data => {
+        console.log("Contact Number",data.ContactNo)
+        this.client = data;
+      }, error => console.log("error edit component",error));
+      
+      this.editForm = this.formBuilder.group({
+          firstName: ['', [ Validators.required,Validators.minLength(2),Validators.maxLength(50)]],
+          lastName: ['', [Validators.required,Validators.minLength(2),Validators.maxLength(100)]],
+          contact: ['', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]],
+          email: ['', [Validators.required, Validators.email,Validators.minLength(2),Validators.maxLength(50)]],
+          }, {
+      
+        });
+    } 
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
 
 }
 list(){

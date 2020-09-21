@@ -11,7 +11,7 @@ export class DeleteProductComponent implements OnInit {
 
   constructor(public service: ProductService, private router: Router) { }
 
-  formData = this.service.ProductForm;
+  formData = JSON.parse(localStorage.getItem("prodDelete"))
 
   ngOnInit(): void {
   }

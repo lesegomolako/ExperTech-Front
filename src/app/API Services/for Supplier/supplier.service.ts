@@ -20,7 +20,7 @@ export class SupplierService {
   
   constructor(private http: HttpClient) { }
 
-  url = "https://localhost:44391/api/"
+  url = "https://localhost:44380/api/"
 
   getSupplierList(): Observable<SupplierData[]>
   {

@@ -83,20 +83,26 @@ export class RequestbComponent implements OnInit {
 
   ngOnInit(): void 
   {
+    if(this.api.RoleID == "1")
+    {
+      this.BookingForm = this.fb.group({
+        ServiceControl : new FormControl('', Validators.required),
+        DateControl : new FormControl('', Validators.required),
+        TimeControl : new FormControl('', Validators.required),
+        OptionControl : new FormControl('',Validators.required),
+        NotesControl : new FormControl(''),
+        TypeControl: new FormControl()
+      })
+      this.LoadList();
+      this.resetForm();
+      this.TypesID = 0
     
-    this.BookingForm = this.fb.group({
-      ServiceControl : new FormControl('', Validators.required),
-      DateControl : new FormControl('', Validators.required),
-      TimeControl : new FormControl('', Validators.required),
-      OptionControl : new FormControl('',Validators.required),
-      NotesControl : new FormControl(''),
-      TypeControl: new FormControl()
-    })
-    this.LoadList();
-    this.resetForm();
-    this.TypesID = 0
-   
-    this.BookingData.ClientID = 2;
+      //this.BookingData.ClientID = 2;
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
   }
 
 
@@ -105,16 +111,17 @@ resetForm(form?: NgForm)
   if(form != null)
   form.reset();
 
-  this.BookingData =
+  this.BookingData = 
   {
      BookingID: null,
-    ClientID : 2,
+    Client : null,
     Status: null,
     BookingLines:
       [{
         ServiceID: null,
         OptionID: null,
         Service:null,
+        Option:null,
       }],
       EmployeeSchedule: [
         {

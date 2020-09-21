@@ -15,7 +15,7 @@ export class StockService {
 
   constructor(private http: HttpClient) { }
 
-  url = "https://localhost:44391/api/"
+  url = "https://localhost:44380/api/"
 
   getStockList(): Observable<StockData[]>
   {

@@ -29,20 +29,27 @@ export class BasketComponent implements OnInit {
   ngOnInit()  {
     //this.basket = new BasketLine();
 
-    this.quantity = 0;
+    if(this.api.RoleID == "1")
+    {
+      this.quantity = 0;
 
-    this.id = this.route.snapshot.params['id'];
-    
-    this.api.ViewBasket(this.id).subscribe(data => {
-      console.log(data)
-      this.basket = data;
-      this.cal();
-      this.item();
+      this.id = this.route.snapshot.params['id'];
+
+      
+      this.api.ViewBasket(this.api.SessionID).subscribe(data => {
+        console.log(data)
+        this.basket = data;
+        this.cal();
+        this.item();
 
 
 
-    }, error => console.log("error edit component",error));
-    
+      }, error => console.log("error edit component",error));
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
   
 
 }
@@ -83,6 +90,7 @@ remove(item_in_basket:BasketLine){
     }
     //alert("Successfully removed Product "+item_in_basket.Product.Name)
   }, error => console.log("Error",error));
+  this.api.getBadgeCount()
 }
 
 updateBasket(event,line:BasketLine)
@@ -93,7 +101,11 @@ updateBasket(event,line:BasketLine)
   console.log("New Value",line)
   this.api.Updateproduct(line).subscribe(data => {
   }, error => console.log("error edit component",error));
+  
 }
 
-
+cancel()
+  {
+    window.history.back();
+  }
 }

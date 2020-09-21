@@ -15,7 +15,7 @@ export class SaleService {
 
   constructor(private http: HttpClient) { }
 
-  url = "https://localhost:44391/api/"
+  url = "https://localhost:44380/api/"
 
   getSaleList(): Observable<SaleData[]>
   {

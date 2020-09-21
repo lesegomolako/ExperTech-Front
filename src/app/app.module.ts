@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceTypeComponent } from './Service/service-type/service-type.component';
 import { EditSTComponent } from './Service/edit-st/edit-st.component';
 import { ServicesComponent } from './Service/services/services.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
@@ -29,7 +29,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatExpansionModule} from '@angular/material/expansion';
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 
@@ -73,7 +73,7 @@ import { ValidateComponent } from './components/TextBoxValidator/validate/valida
 import { EditComponent } from './Client/edit/edit.component';
 import { BellComponent } from './Client/bell/bell.component';
 import { ClientprofileComponent } from './Client/clientprofile/clientprofile.component';
-import { MakebookingComponent } from './Booking/makebooking/makebooking.component';
+import { AddClientDialog,SearchClientDialog, MakebookingComponent } from './Booking/makebooking/makebooking.component';
 import { ViewbookingComponent } from './Client/viewbooking/viewbooking.component';
 import { ServicepComponent } from './Client/servicep/servicep.component';
 import { BookingConfirmComponent } from './Booking/confirm/confirm.component';
@@ -110,14 +110,18 @@ import { ClickSpinDirective } from './click-spin.directive';
 import { from } from 'rxjs';
 
 import {ExperTexhService} from "./API Services/for Booking/exper-texh.service";
-import {OptionsFilterPipe} from "./API Services/for Booking/options-filter.pipe";
-import { customFilter } from './API Services/for Booking/requestb.pipe';
+import {OptionsFilterPipe} from "./API Services/for Booking/Pipes/options-filter.pipe";
+import { customFilter } from './API Services/for Booking/Pipes/requestb.pipe';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ScheduleComponent } from './Booking/schedule/schedule.component';
 import { AdviseComponent } from './Booking/advise/advise.component';
 import { ReportsComponent } from './User/reports/reports.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { EmployeePipe } from './API Services/for Booking/Pipes/employee.pipe';
+import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
+import { GetBookingsComponent } from './User/get-bookings/get-bookings.component';
 
 
 @NgModule({
@@ -132,15 +136,15 @@ import { ReportsComponent } from './User/reports/reports.component';
     FinancialReportComponent,ProductReportComponent,SupplierReportComponent,
     BookingReportComponent,ValidateComponent,EditComponent,BellComponent,ClientprofileComponent,
     MakebookingComponent,ViewbookingComponent,ServicepComponent,BasketComponent,
-    RequestbComponent,BrowseComponent,BookingConfirmComponent, OptionsFilterPipe,
+    RequestbComponent,BrowseComponent,BookingConfirmComponent, OptionsFilterPipe, AddClientDialog, SearchClientDialog,
     customFilter,SupplierComponent,orderform,PlaceorderComponent,EditsupplierComponent,AddsupplierComponent,
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
-    ViewdetailComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent, ReportsComponent
+    ViewdetailComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent, ReportsComponent, ErrorPageComponent, EmployeePipe, ForbiddenPageComponent, GetBookingsComponent
 
   ],
   imports: [
     BrowserModule, MatTableModule, MatSelectModule,
-    AppRoutingModule, MatButtonModule,
+    AppRoutingModule, MatButtonModule, MatAutocompleteModule,
     BrowserAnimationsModule, MatInputModule,MatExpansionModule,
     MatIconModule, FormsModule, ReactiveFormsModule, MatGridListModule,
     MatToolbarModule, MatMenuModule , MatFormFieldModule, MatSidenavModule,
@@ -150,8 +154,15 @@ import { ReportsComponent } from './User/reports/reports.component';
   ],
   providers: [ServicesService,SaleService,StockService,SupplierService,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
-    ExperTexhService, ProductService, ReportsService],
+    ExperTexhService, ProductService, ReportsService,
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}
+  ],
+    
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
+  entryComponents: [
+    AddClientDialog, SearchClientDialog
+  ],
 })
 export class AppModule { }

@@ -21,9 +21,14 @@ export class SalesReportComponent implements OnInit {
     end: new FormControl()
   });
 
-  maxDate = new Date();
+  today = new Date();
+  maxDate = new Date(new Date().setDate(this.today.getDay()))
+  displayed = true;
 
   ngOnInit(): void {
+
+  
+    console.log(this.maxDate)
   }
 
   title = 'hw4-frontend';
@@ -82,6 +87,7 @@ export class SalesReportComponent implements OnInit {
 
 
   SubmitRequest(){
+    this.displayed = false;
     var tTitle = "Product Sales per category";
   
     this.Criteria = ({
@@ -96,7 +102,7 @@ export class SalesReportComponent implements OnInit {
       let keys = response['Category'].map(d=> d.Name);
       let values = response['Category'].map(d=> d.Total);
 
-      this.products = response['Product'];
+      this.products = response['Category'];
       
      
 

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ServiceOption } from '../../Booking/requestb/requestb.component';
+import { ServiceOption } from '../../../Booking/requestb/requestb.component';
 
 @Pipe({
   name: 'optionsFilter'
