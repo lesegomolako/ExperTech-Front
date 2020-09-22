@@ -11,6 +11,7 @@
 .page-wrapper
 {
     min-height: 100%;
+    
 }
 
 
@@ -44,7 +45,7 @@
     vertical-align: middle;
  }
 
-.icons a :hover
+a :hover
 {
     cursor: pointer
 }
@@ -52,6 +53,7 @@
 /*@charset "utf-8";**/
 body {
   font-family: 'Open Sans', 'sans-serif';
+  max-width: 100%;
 }
 .navbar-default{background:#3285D1;border-color: #3285D1;}
 .navbar-default .navbar-nav > li > a{color:#FFF;}
@@ -89,3 +91,12 @@ body {
     font-size: 87px;
 }
 
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+ }
+
+ .dropdown-toggle::after {
+    display:none;
+    content:initial
+ }

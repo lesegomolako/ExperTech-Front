@@ -11,6 +11,7 @@ import { MatSort } from '@angular/material/sort';
 import { Booking } from 'src/app/API Services/for Booking/client';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 export class BookingData
 {
@@ -43,7 +44,7 @@ export class GetBookingsComponent implements OnInit {
   searchKey: string;
 
 
-  constructor(public api: ExperTexhService, private http: HttpClient){}
+  constructor(public api: ExperTexhService, private http: HttpClient, private router: Router){}
 
   BookingsList: BookingData[];
   dataSource;
@@ -77,9 +78,10 @@ export class GetBookingsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  makePayment()
+  makePayment(form)
   {
-    
+    localStorage.setItem("bookingPayment", JSON.stringify(form))
+    this.router.navigate(["cbooking"])
   }
 
   // onDelete(OrderID: any)

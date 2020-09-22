@@ -262,18 +262,18 @@ export class ReportingService {
     }
   }
   
-  bookingPayment(formData: Process) {
+  bookingPayment(formData) {
     let body = JSON.stringify(formData);
     if (confirm(body)) {
-      return this.http.post<Process>(
+      return this.http.post(
         this.url + 'User/bookingPayment',
         formData
       );
     }
   }
     ///********************************************************Payments Types**************************************************************
-    getPaymentType(): Observable<Process[]>{
-      return this.http.get<Process[]>(this.url + 'User/getPaymentType');
+    getPaymentType(): Observable<any[]>{
+      return this.http.get<any[]>(this.url + 'User/getPaymentType');
     }
 
   GetReportingData(selected) {

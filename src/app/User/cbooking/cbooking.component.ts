@@ -13,6 +13,8 @@ import { Observable } from 'rxjs';
 //import { ReportingService } from '../reporting.service';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process} from '../../API Services/for User/process';
+import { BookingData } from '../get-bookings/get-bookings.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-cbooking',
@@ -24,35 +26,45 @@ export class CbookingComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    public service: ReportingService
+    public service: ReportingService,
+    private http: HttpClient
   ) { }
 
-  List: Observable<Process[]>
+  List: any;
   cbookingForm: FormGroup;
   submitted = false;
   public CbookingFormGroup: FormGroup;
-  bookingObject = this.service.formData;
+  bookingObject : BookingData;
+  type: any;
 
-  ngOnInit() {
-    this.loadList();
+  ngOnInit() 
+  {
+    //this.type = new FormControl();
+    this.List = this.service.getPaymentType();
+    //console.log(JSON.parse(localStorage.getItem("bookingPayment")))
+    this.bookingObject = JSON.parse(localStorage.getItem("bookingPayment"))
   }
-  //populating the editing stuff
-  fillUP(formData: Process)
- {
-   this.service.formData = formData;
- }
+ 
  
  previousForm() {
   window.history.back();
 }
 
-  loadList(){
-    // this.List = this.service.getItem()
-     this.bookingObject = this.service.formData;
-   }
+onSubmit()
+{
+  const payDetails =
+  {
+    BookingID: this.bookingObject.BookingID,
+    PaymentTypeID: this.type,
+    Price: this.bookingObject.Price   
+  }
 
+  this.service.bookingPayment(payDetails);
+  console.log(payDetails)
+}
+  
   BookingPayment(form: NgForm){
-    this.service.bookingPayment(form.value).subscribe(ref => {this.loadList()});
+   
   }
 
 }

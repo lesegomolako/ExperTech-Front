@@ -32,73 +32,74 @@
     </div>
   </mat-drawer>
   
-    <mat-toolbar style="background-color: #333131">
-      <button mat-icon-button class="example-icon"(click)="drawer.toggle()">
-        <mat-icon style="color:white">menu</mat-icon>
-      </button>
-      <img src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;"/>
-      <span class="example-spacer"></span>
-  
-      
-      <div class="icons">
-        
-      <a routerLink='/basket'><button style="color: white;" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"  >
-        <mat-icon *ngIf="showBadges" [matBadge]="api.badgeCount" [matBadgeHidden]="api.badgeCount == 0">shopping_cart</mat-icon>
-        
-      </button></a>
-      
-      <!-- <a routerLink='/ViewBooking'><button style="color: white;" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-        <mat-icon>notifications_none</mat-icon>
-      </button></a> -->
-      
-      <a (click)="login()"><mat-icon style="color: white; font-size: 30px;">account_circle</mat-icon></a>
-      
-      
-      <!-- <span ngbDropdown >
-        <span ngbDropdownToggle ><mat-icon style="color: white; font-size: 30px;">account_circle</mat-icon></span>
-        <ul ngbDropdownMenu >
-          <li>
-              <div class="navbar-login">
-                  <div class="row">
-                      <div class="col-lg-4">
-                          <p class="text-center">
-                              <span class="glyphicon glyphicon-user icon-size"></span>
-                          </p>
-                      </div>
-                      <div class="col-lg-8">
-                          <p class="text-left"><strong>Mahesh</strong></p>
-                          <p class="text-left small">justdemo@gmail.com</p>
-                          <p class="text-left">
-                              <a href="#" class="btn btn-primary btn-block btn-sm">Logout</a>
-                          </p>
-                      </div>
-                  </div>
-              </div>
-          </li>
-          <li class="divider"></li>
-          <li>
-              <div class="navbar-login navbar-login-session">
-                  <div class="row">
-                      <div class="col-lg-12">
-                          <p>
-                            <a href="#" class="btn btn-primary btn-block">My Profile</a>
-                              <a href="#" class="btn btn-danger btn-block">Change Password</a>
-                          </p>
-                      </div>
-                  </div>
-              </div>
-          </li>
-      </ul>
-      </span> -->
+    <nav style="background-color: #333131">
+      <div class="row">
 
-      </div> 
-    </mat-toolbar>
-    <div class="page-wrapper">
+        <div class="col-11">
+          <div style="padding: 10px; left:0">
+            <button mat-icon-button class="example-icon"(click)="drawer.toggle()">
+              <mat-icon style="color:white">menu</mat-icon>
+            </button>
+            <img src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;"/>
+          </div>
+        </div>
+    
+        <div class="col-1.5 col-offset-1">
+          <div style="padding: 10px; justify-content: center;">                  
+              <!-- <a routerLink='/ViewBooking'><button style="color: white;" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+                <mat-icon>notifications_none</mat-icon>
+              </button></a> -->
+              
+              <!-- <a (click)="login()"><mat-icon style="color: white; font-size: 30px;">account_circle</mat-icon></a> -->              
+              <span ngbDropdown >
+                <a routerLink='/basket'><button style="color: white;" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"  >
+                  <mat-icon *ngIf="showBadges" [matBadge]="api.badgeCount" [matBadgeHidden]="api.badgeCount == 0">shopping_cart</mat-icon>
+                  
+                </button></a>
+                <button ngbDropdownToggle style="color: white;"  mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"  >
+                  <mat-icon  style="font-size: 30px;" >account_circle</mat-icon>             
+                </button>
+                <ul ngbDropdownMenu >
+                  <li>
+                      <div class="navbar-login">
+                          <div class="row">
+                              <div class="col-lg-4">
+                                  <p class="text-center">
+                                      <span class="glyphicon glyphicon-user icon-size"></span>
+                                  </p>
+                              </div>
+                              <div class="col-lg-8">
+                                  <p class="text-left"><strong>Mahesh</strong></p>
+                                  <p class="text-left small">justdemo@gmail.com</p>
+                                  <p class="text-left">
+                                      <a href="#" class="btn btn-primary btn-block btn-sm">Logout</a>
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                      <div class="navbar-login navbar-login-session">
+                          <div class="row">
+                              <div class="col-lg-12">
+                                  <p>
+                                    <a href="#" class="btn btn-primary btn-block">My Profile</a>
+                                      <a href="#" class="btn btn-danger btn-block">Change Password</a>
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                  </li>
+              </ul>
+              </span>
+            
+          </div> 
+        </div>
+      </div>
+    </nav>
+    
     <router-outlet></router-outlet>
-  </div>
-
-  
-
 </mat-drawer-container>
 
 

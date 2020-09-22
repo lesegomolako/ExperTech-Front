@@ -49,7 +49,7 @@
  
 
      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-     <tr (click)="makePayment()" id="tablerow" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+     <tr (click)="makePayment(row)" id="tablerow" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
    </table>
       
 

@@ -5,7 +5,7 @@ import { ExperTexhService } from '../API Services/for Booking/exper-texh.service
 @Component({
   selector: 'app-forbidden-page',
   templateUrl: './forbidden-page.component.html',
-  styleUrls: ['./forbidden-page.component.css']
+  styleUrls: ['./forbidden-page.component.scss']
 })
 export class ForbiddenPageComponent implements OnInit {
 
