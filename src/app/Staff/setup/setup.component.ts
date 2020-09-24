@@ -43,15 +43,12 @@ export class SetupComponent implements OnInit {
     private http: HttpClient
   ) { }
 
-  ValidSession;
+  ValidSession = false;
 
   ngOnInit(){
 
     this.SessionID = this.ActRoute.snapshot.queryParams['SessionID']
-    this.ValidSession = this.service.ValidSession(this.SessionID)
-
-    // if(this.ValidSession == true)
-    // {
+   
 
     this.setupForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -59,15 +56,6 @@ export class SetupComponent implements OnInit {
       cpassword: ['', [Validators.required, Validators.minLength(6)]],
      });
 
-    
-      
-    //   console.log(this.SessionID);     
-    // }
-    // else
-    // {
-    //   // alert("Session is no longer valid. Redirecting to homepage")
-    //   // this.router.navigateByUrl("/home")
-    // }
   }
   get f() {
     return this.setupForm.controls;
@@ -115,10 +103,12 @@ export class SetupComponent implements OnInit {
     this.user.Password = this.setupForm.value.password;
     this.user.SessionID = this.SessionID;
     this.service.userSetup(this.user).subscribe((res: any) => {
-        if(res.Message)
+        if(res.Message == "success")
         {
-          alert("User successfully set up. Redirecting to homepage")
-          this.router.navigateByUrl("/clienthome")
+          alert("Profile successfully set up. Redirecting to homepage")
+          sessionStorage.setItem("accessToken", res.SessionID);
+          sessionStorage.setItem("RoleID", res.RoleID)
+          this.router.navigateByUrl("/employeehome")
         }
         else if(res.Error)
         {

@@ -1,4 +1,4 @@
-import { Component,ChangeDetectionStrategy,ViewChild,TemplateRef,OnInit} from '@angular/core';
+import { Component,ChangeDetectionStrategy,ViewChild,TemplateRef,OnInit, Inject} from '@angular/core';
 import {startOfDay,endOfDay, subDays,addDays,endOfMonth,isSameDay,isSameMonth,addHours,} from 'date-fns';
 import { Subject } from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import {startOfMonth,startOfWeek,endOfWeek,format,getDate} from 'date-fns';
 import { Observable } from 'rxjs';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import {MatDialog,MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export class Schedule
 {
@@ -45,6 +46,8 @@ export class Schedule
 }
 
 
+
+
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -74,6 +77,7 @@ export class ScheduleComponent implements OnInit {
   CalendarView = CalendarView;
 
   events$: Observable<CalendarEvent<Schedule>[]>;
+  
 
   events:CalendarEvent<{ Schedge: Schedule }>[];
 
@@ -140,7 +144,7 @@ export class ScheduleComponent implements OnInit {
   //   },
   // ];
 
-  constructor(private modal: NgbModal, private api: ExperTexhService,
+  constructor(public dialog: MatDialog, private api: ExperTexhService,
     private router: Router,
     private http: HttpClient) {}
 
@@ -176,9 +180,10 @@ export class ScheduleComponent implements OnInit {
   //   this.handleEvent('Dropped or resized', event);
   // }
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+  handleEvent(event: CalendarEvent): void {
+    //this.modalData = { event, action };
+    const dialogRef = this.dialog.open(BookingDialog)
+    //this.dialog.open(content, { size: 'lg' });
   }
 
   // addEvent(): void {
@@ -210,19 +215,45 @@ export class ScheduleComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
   ngOnInit(): void {
-    if(this.api.RoleID = "2")
+    if(this.api.RoleID == "2")
     {
       this.fetchEvents();
     }
-    else if(this.api.RoleID = "3")
+    else if(this.api.RoleID == "3")
     {
-      this.fetchEvents;
+      this.fetchEmpEvents();
     }
     else
     {
       this.router.navigate(["403Forbidden"])
     }
     
+  }
+
+  fetchEmpEvents()
+  {
+    const params = new HttpParams()
+    .set(
+      'SessionID', this.api.SessionID)
+
+    this.events$ = this.http
+      .get('https://localhost:44380/api/Employees/RetrieveEmployeeBooking', {params})
+      .pipe(
+        map(( res :  Schedule[] ) => {
+          return res.map((Schedules: Schedule) => {
+            return {
+              title: Schedules.Client + "'s Booking",
+              start: new Date(
+                Schedules.BookingSchedule[0].DateTime
+              ),
+              color: colors.green,
+              allDay: true,
+              draggable: false,
+              meta: Schedules,
+            }
+          });
+        })
+      );
   }
 
   fetchEvents(): void {
@@ -269,19 +300,6 @@ export class ScheduleComponent implements OnInit {
               meta: Schedules,
             }
             }
-            else if(Schedules.BookingStatus == "Cancelled")
-            {
-            return {
-              title: Schedules.Client + "'s Cancelled Booking",
-              start: new Date(
-                Schedules.BookingSchedule[0].DateTime
-              ),
-              color: colors.red,
-              allDay: true,
-              draggable: false,
-              meta: Schedules,                       
-            }
-            }
             else if(Schedules.BookingStatus == "Advised")
             {
             return {
@@ -320,9 +338,14 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
-  eventClicked(event: CalendarEvent<{ Schedge: Schedule }>[]): void 
+  eventClicked(event: CalendarEvent): void 
   {
+    const dialogConfig = new MatDialogConfig();
 
+    dialogConfig.width = '500px';
+    dialogConfig.data = event.meta;
+
+   const dialogRef = this.dialog.open(BookingDialog, dialogConfig)
   }
 
   
@@ -350,4 +373,68 @@ export class ScheduleComponent implements OnInit {
     window.history.back();
   }
 
+}
+
+@Component({
+  selector: 'booking-dialog',
+  template: `
+    <div class="modal-header" >
+    <h3 mat-dialog-title><strong>{{title}}</strong></h3>
+    <button mat-dialog-close type="button" class="close" mat-dialog-close>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" mat-dialog-content>
+    <div>
+    <div>
+      Status:{{ data.BookingStatus }}
+    </div>
+      Details:
+      <p>Service: {{ data.BookingLines[0].Service}}</p>
+      <p *ngIf="data.BookingLines[0].Option">Option: {{data.BookingLines[0].Option}}</p>
+    </div>
+    
+  </div>
+  <div class="modal-footer" mat-dialog-actions>
+    <button type="button" class="btn btn-outline-secondary"mat-dialog-close>
+      Close
+    </button>
+    <button (click)="Advise()" *ngIf="data.BookingStatus == 'Requested'" type="button" class="btn btn-outline-secondary">
+      Advise
+    </button>
+  </div> `,
+  
+})
+export class BookingDialog implements OnInit
+{
+  constructor(public dialogRef: MatDialogRef<BookingDialog>, private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: Schedule) {}
+
+  title: string;
+  ngOnInit()
+  {
+    if(this.data.BookingStatus == "Requested")
+    {
+      this.title = this.data.Client + "'s Requested Booking"
+    }
+    else if(this.data.BookingStatus == "Confirmed")
+    {
+      this.title = this.data.Client + "'s Confirmed Booking"
+    }
+    else if(this.data.BookingStatus == "Advised")
+    {
+      this.title = this.data.Client + "'s Confirmed Booking"
+    }
+  }
+
+  Advise()
+  {
+    if(confirm("Would you like to advise for this booking?"))
+    {     
+      localStorage.setItem("DateChosen", this.data.BookingRequest.Dates)
+      localStorage.setItem("BookingDetails", JSON.stringify(this.data))
+      this.router.navigateByUrl("advise")
+      this.dialogRef.close();
+    }
+  }
 }

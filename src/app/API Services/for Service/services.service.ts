@@ -66,9 +66,10 @@ export class ServicesService {
   {    
     const params = new HttpParams().set('ServiceID', ServiceID );
     return this.http.delete(this.url + 'Services/DeleteService',
-     {
+    {
       headers: {'Content-Type': 'application/json'},
-      params: params})
+      params: params
+    })
   }
 
   //************************Service Option *******************/

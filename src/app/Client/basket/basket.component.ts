@@ -42,8 +42,6 @@ export class BasketComponent implements OnInit {
         this.cal();
         this.item();
 
-
-
       }, error => console.log("error edit component",error));
     }
     else
@@ -62,7 +60,7 @@ cal(){
   this.basket.forEach(res => {
 this.total =(res.Quantity * res.Product.Price)
   })
-
+  console.log(this.total)
 }
 
 item(){

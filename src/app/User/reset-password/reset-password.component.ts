@@ -15,12 +15,12 @@ import { ReportingService } from '../../API Services/for User/reporting.service'
 import {Process} from '../../API Services/for User/process';
 
 @Component({
-  selector: 'app-fpassword',
-  templateUrl: './fpassword.component.html',
-  styleUrls: ['./fpassword.component.sass'],
+  selector: 'app-reset-password',
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.sass'],
 })
-export class FpasswordComponent implements OnInit {
-  fpasswordForm: FormGroup;
+export class ResetPasswordComponent implements OnInit {
+  resetForm: FormGroup;
   submitted = false;
   public FpasswordFormGroup: FormGroup;
   constructor(
@@ -30,14 +30,14 @@ export class FpasswordComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fpasswordForm = this.formBoilder.group({
+    this.resetForm = this.formBoilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       cpassword: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
   //convenienve getter for easy access to form fields
   get f() {
-    return this.fpasswordForm.controls;
+    return this.resetForm.controls;
   }
 
   toggleSidebar() {
@@ -46,7 +46,7 @@ export class FpasswordComponent implements OnInit {
 
   onSubmit() {
     //stop here if form is invalid
-    if (this.fpasswordForm.invalid) {
+    if (this.resetForm.invalid) {
       return;
     }
   }

@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process} from '../../API Services/for User/process';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forgot',
@@ -22,32 +23,48 @@ import {Process} from '../../API Services/for User/process';
 export class ForgotComponent implements OnInit {
 
   forgotForm: FormGroup;
+  email: FormControl;
   submitted = false;
   public ForgotFormGroup: FormGroup;
   constructor(
     public dialog: MatDialog, 
     private formBoilder: FormBuilder,
-    public service: ReportingService
+    public service: ReportingService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.forgotForm = this.formBoilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
-    });
+    this.email = this.formBoilder.control('', Validators.required)
+    // this.forgotForm = this.formBoilder.group({
+    //   email: ['', Validators.required],
+    //   password: ['', Validators.required]
+    // });
   }
   //convenienve getter for easy access to form fields
-  get f() {return this.forgotForm.controls; }
+  get f() {return this.email; }
 
   onSubmit() {
     this.submitted = true;
 
     //stop here if form is invalid
-    if(this.forgotForm.invalid){
-      return;
-    }
+    
+    
 
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.forgotForm.value))
+    this.service.forgotPassword(this.email.value).subscribe(res =>
+      {
+        if(res == "success")
+        {
+          alert("Check your email for reset link")
+          this.router.navigate(["home"])
+        }
+        else
+        {
+          alert("Email is invalid. Enter a valid email")
+          this.email.reset();
+        }
+      })
+
+    //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.forgotForm.value))
   }
   public checkError = (controlName: string, errorName: string) => {
     return this.ForgotFormGroup.controls[controlName].hasError(errorName);

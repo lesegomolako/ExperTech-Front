@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process} from '../../API Services/for User/process';
 import { Router } from '@angular/router';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 @Component({
   selector: 'app-employee',
@@ -32,13 +33,21 @@ export class EmployeeComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public service: ReportingService,
-    private router: Router
+    private router: Router,
+    private api: ExperTexhService
   ) {}
   List: Observable<Process[]>;
 
   ngOnInit(): void {
-    this.loadList();
-    this.resetForm();
+    if(this.api.RoleID == "2")
+    {
+      this.loadList();
+      this.resetForm();
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
   }
 
   loadList() {
@@ -46,9 +55,8 @@ export class EmployeeComponent implements OnInit {
   }
 
   registerEmp()
-  {
-    localStorage.setItem("registerID", "employee")
-    this.router.navigateByUrl("/register")
+  { 
+    this.router.navigateByUrl("/employeeregister")
   }
 
   //populating the diting stuff

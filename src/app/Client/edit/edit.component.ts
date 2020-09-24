@@ -34,8 +34,6 @@ export class EditComponent implements OnInit {
   customerForm: any;   
   massage = null;  
   
-
-
   public EditFormGroup: FormGroup;
   constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private route: ActivatedRoute ,private api: ExperTexhService, private router: Router,) { }
  

@@ -10,7 +10,7 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { from } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReportingService } from 'src/app/API Services/for User/reporting.service';
 //import {Service } from '../services.service';
 
@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
-   public service: ReportingService
+    public service: ReportingService,
+    private route: ActivatedRoute
 
   ) { }
 
@@ -79,8 +80,15 @@ export class LoginComponent implements OnInit {
   showError: any;
   //success = false;
   //loginFalied = false;
-  
+  redirectURL: string;
+
   Login(){
+
+    let params = this.route.snapshot.queryParams;
+    if (params['redirectURL']) {
+        this.redirectURL = params['redirectURL'];
+    }
+
     this.user = this.loginForm.value;
     this.service.Login(this.user).subscribe((res : any) =>
     {
@@ -96,6 +104,15 @@ export class LoginComponent implements OnInit {
         var RoleID = sessionStorage.getItem("RoleID")
         if(RoleID == "1")
         {
+
+        //   if (this.redirectURL) {        
+        //     this.router.navigateByUrl(this.redirectURL,)
+        //         .catch(() => this.router.navigate(['homepage']))
+        // } else {
+        
+        //     this.router.navigate(['homepage'])
+        // }
+
           this.router.navigate(["home"])
           .then(() => {
             window.location.reload();
@@ -103,6 +120,15 @@ export class LoginComponent implements OnInit {
         }
         else
         {
+
+        //   if (this.redirectURL) {        
+        //     this.router.navigateByUrl(this.redirectURL,)
+        //         .catch(() => this.router.navigate(['homepage']))
+        // } else {
+        
+        //     this.router.navigate(['homepage'])
+        // }
+
           this.router.navigate(["employeehome"])
           .then(() => {
             window.location.reload();

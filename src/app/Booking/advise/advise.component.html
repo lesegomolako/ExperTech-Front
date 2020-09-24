@@ -2,9 +2,6 @@
 <div   style="text-align: center; color: black;" class="card-hover">
     <article  class="c-card c-card--center">
 
-      <button mat-raised-button style="background-color: gray; align-items: center; color: black; float: right;" (click)="cancel()" >
-        Cancel
-      </button>
       <div class="c-card__body">
         <label for="">
           <h1 > Current Booking request details</h1>
@@ -60,8 +57,11 @@
     
         <div style="align-content: center; "  class="c-card__footer">
           <br>
-          <button mat-raised-button style="background-color: gray;"    >
+          <button mat-raised-button style="background-color: gray;"  type="submit"  >
             Send
+          </button>
+          <button mat-raised-button style="background-color: gray;" (click)="cancel()" type="button">
+            Cancel
           </button>
         </div>
 

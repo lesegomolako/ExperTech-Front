@@ -1,59 +1,29 @@
-<form  class="browse-component">
-  <div style="align-items: center;">
+<div class="row">
+  <h1 class="col-10">Basket Items</h1>
+  <div style="float: right;" class="example-button-container">
+    <button (click)="cancel()" mat-raised-button style="background-color: green;" >
+      <mat-icon> keyboard_return</mat-icon>
+        Back
+    </button>
 
-      <div style="float: right;" class="example-button-container">
-        <button (click)="cancel()" mat-raised-button style="background-color: green;" >
-          <mat-icon> keyboard_return</mat-icon>
-          Back
-      </button>
-<br>
-<br>
-<a routerLink='/browse'><button mat-raised-button style="background-color: green;" >
-  <mat-icon> add</mat-icon>
-  Add
-</button></a>
-      </div>
-      
-  </div>
+    <a routerLink='/browse'><button mat-raised-button style="background-color: green;" >
+      <mat-icon> add</mat-icon>
+        Add
+    </button></a>
+  </div>      
+</div>
   
  <br>
+ <br>
  
-  <div  style="background-color: green; float: right; " class="cartchec c-card--center" >
-
-  
-    <div class="c-card__body">
-      <h2 class="c-card__title">
-        Cart Summary
-      </h2>
-      <p class="c-card__subtitle">
-        center modifier
-      </p>
-      
-      <p class="c-card__intro">
-        Total:({{pro}} item) 
-      </p>
-      <p class="c-card__intro">
-        R: {{total}}
-      </p>
-    </div>
-  
-    <footer class="c-card__footer">
-      <button mat-raised-button style="background-color: grey; width: 80%;"  (click)="openDialog()">
-
-        Submit
-    </button>
-    </footer>
-  </div>
-  <div>
-
-      <form> 
-    <div *ngFor="let line of basket" class="c-card c-card--wide">
-      <div class="c-card-flip__flipper">
- 
+<div class="row" style="padding: 5px">
+  <div class="col-9">
+    <div *ngFor="let line of basket" class="c-card c-card--wide" width="75%;">
+      <div class="c-card-flip__flipper "> 
         <header class="c-card__header">
           <img src="{{line.Product.Photo[0].Image}}"  class="c-card__image" alt="Product Image" />
         </header>
-    
+        
         <div class="c-card__body">
           <h2 class="c-card__title">
             Category {{line.Product.Category}}
@@ -63,34 +33,56 @@
           </h2>
           <label>
             Price:  {{line.Product.Price}}
-           </label>
-<p></p>
-           <label class="c-card__subtitle">{{line.Product.Description}}</label>
+          </label>
+          <p></p>
+          <label class="c-card__subtitle">{{line.Product.Description}}</label>
         </div>
-    
+        
         <footer class="c-card__footer">
           <input value="{{line.Quantity}}" (change)='updateBasket($event,line)'>
-
           <button mat-raised-button style="background-color: green;" (click)="remove(line)" >
             <mat-icon> remove_circle</mat-icon>
-            Remove
-        </button>
+              Remove
+          </button>
         </footer>
-
       </div>
-
-    </div>
-  </form>   
-   </div>
-
-
-  <div>
-
+    </div> 
   </div>
+  
+  <div class="col-3 " style="margin-top:20px">
+    <div style="background-color: green; " class="c-card--center" >  
+      <div class="c-card__body">
+        <h2 class="c-card__title">
+          Cart Summary
+        </h2>
+        <!-- <p class="c-card__subtitle">
+          center modifier
+        </p> -->
+          
+        <p class="c-card__intro">
+          Total:({{pro}} item) 
+        </p>
+        <p class="c-card__intro">
+          R: {{total}}
+        </p>
+      </div>
+      
+      <footer class="c-card__footer">
+        <button mat-raised-button style="background-color: grey; width: 80%;" [disabled]="!basket"  (click)="openDialog()">
+          Submit
+        </button>
+      </footer>
+    </div>
+  </div>
+</div>  
 
-</form>
 
 
+<ng-template #EmptyBasket>
+  <div>
+    
+  </div>
+</ng-template>
   
   
   

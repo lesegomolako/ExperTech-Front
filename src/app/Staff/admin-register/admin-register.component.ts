@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process} from '../../API Services/for User/process';
 import { Router } from '@angular/router';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 //import { sha256, sha224 } from 'js-sha256';
 
 
@@ -31,52 +32,43 @@ export class User
       Email: string;
     }
   ];
-  Employees:
-  [
-    {
-      Name: string;
-      Surname: string;
-      ContactNo: string;
-      Email: string;
-    }
-  ]
 }
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.sass'],
+  selector: 'app-admin-register',
+  templateUrl: './admin-register.component.html',
+  styleUrls: ['./admin-register.component.sass'],
 })
-export class RegisterComponent implements OnInit {
+export class AdminRegisterComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
-  RoleID;
+  RoleID = 2;
 
   public RegisterFormGroup: FormGroup;
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     public service: ReportingService,
-    private router: Router
+    private router: Router,
+    private api: ExperTexhService
   ) {}
 
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      contact: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
-    });
-
-    var role = localStorage.getItem("registerID")
-    if(role == "admin")
+    if(this.api.RoleID == "2")
     {
-      this.RoleID = 2;
+      this.registerForm = this.formBuilder.group({
+        firstName: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+        lastName: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+        email: ['', [Validators.required, Validators.email]],
+        contact: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+      });
     }
     else
     {
-      this.RoleID = 3;
+      this.router.navigate(["403Forbidden"])
     }
+
+    
   }
   // convenience getter for easy access to form fields
   get f() {
@@ -128,18 +120,10 @@ export class RegisterComponent implements OnInit {
     if(this.registerForm.valid)
     {
     this.mapValues();
-    this.service.RegisterEA(this.user).subscribe((res: any) =>{
+    this.service.RegisterAdmin(this.user).subscribe((res: any) =>{
     if(res == "success")
     {
-      localStorage.removeItem("registerID")
-      if(this.RoleID == 2)
-      {
         this.router.navigate(["admin"]);
-      }
-      if(this.RoleID == 3)
-      {
-        this.router.navigate(["employee"])
-      }
     }
     })
     this.submitted = true;
@@ -158,28 +142,7 @@ export class RegisterComponent implements OnInit {
   }
 
 mapValues()
-{
-  if(this.RoleID == 3)
-  {
-  this.user = {
-    RoleID: this.RoleID,
-    SessionID: "",
-    Username:"",
-    Password:"",
-    Admins:
-    [null],
-    Employees:
-    [{
-      Name: this.registerForm.value.firstName,
-      Surname: this.registerForm.value.lastName,
-      Email: this.registerForm.value.email,
-      ContactNo: this.registerForm.value.contact
-    }]
-    
-  }}
-
-  if(this.RoleID == 2)
-  {
+{ 
     this.user = {
       RoleID: this.RoleID,
       SessionID: "",
@@ -191,18 +154,17 @@ mapValues()
         Surname: this.registerForm.value.lastName,
         Email: this.registerForm.value.email,
         ContactNo: this.registerForm.value.contact
-      }],
-      Employees:
-      [null]
-      
+      }], 
     }
-  }
+  
 }
 previousForm() {
   window.history.back();
 }
 
-  resetForm(form?: NgForm) {
+
+
+resetForm(form?: NgForm) {
     if (form != null) form.reset();
 
     this.service.formData = {

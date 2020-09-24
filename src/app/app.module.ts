@@ -49,15 +49,15 @@ import { DeleteServiceTypeComponent } from './Service/delete-service-type/delete
 import { DeleteSOComponent } from './Service/delete-so/delete-so.component';
 import { LoginComponent } from './User/login/login.component';
 import { ForgotComponent} from './User/forgot/forgot.component';
-import { FpasswordComponent} from './User/fpassword/fpassword.component';
-import { RegisterComponent} from './User/register/register.component';
-import { SetupComponent} from './User/setup/setup.component';
+import { ResetPasswordComponent} from './User/reset-password/reset-password.component';
+import { AdminRegisterComponent} from './Staff/admin-register/admin-register.component';
+import { EmployeeRegisterComponent} from './Staff/employee-register/employee-register.component';
+import { SetupComponent} from './Staff/setup/setup.component';
 import {AdminComponent} from './User/admin/admin.component';
 import {AvailableComponent} from './User/available/available.component';
-import {CbookingComponent} from './User/cbooking/cbooking.component';
 import {ClientComponent} from './User/client/client.component';
 import {CompanyinfoComponent} from './User/companyinfo/companyinfo.component';
-import {EmployeeComponent} from './User/employee/employee.component';
+import {EmployeeComponent} from './Staff/employee/employee.component';
 import {EmployeeSTComponent} from './User/employee-st/employee-st.component';
 import {PaymentComponent} from './User/payment/payment.component';
 import {PickupComponent} from './User/pickup/pickup.component';
@@ -115,13 +115,16 @@ import { customFilter } from './API Services/for Booking/Pipes/requestb.pipe';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ScheduleComponent } from './Booking/schedule/schedule.component';
+import { ScheduleComponent, BookingDialog} from './Booking/schedule/schedule.component';
 import { AdviseComponent } from './Booking/advise/advise.component';
 import { ReportsComponent } from './User/reports/reports.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { EmployeePipe } from './API Services/for Booking/Pipes/employee.pipe';
 import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
-import { GetBookingsComponent } from './User/get-bookings/get-bookings.component';
+import { GetBookingsComponent, CbookingDialog } from './Staff/get-bookings/get-bookings.component';
+import { StaffComponent } from './Staff/staff/staff.component';
+import { EditCompanyComponent } from './User/edit-company/edit-company.component';
+import { CompanySettingsComponent } from './User/company-settings/company-settings.component';
 
 
 @NgModule({
@@ -130,16 +133,16 @@ import { GetBookingsComponent } from './User/get-bookings/get-bookings.component
     ServiceOptionsComponent,ServicePackagesComponent,ClientMenuComponent,EditServiceComponent,
     EditSOComponent, EditSPComponent, EditProductComponent, ProductComponent, DeleteProductComponent,
     DeleteServiceComponent,DeleteServiceTypeComponent,DeleteSOComponent,LoginComponent,ForgotComponent,
-    RegisterComponent,SetupComponent,FpasswordComponent,ClickSpinDirective,PickupComponent,PaymentComponent,
-    EmployeeSTComponent,EmployeeComponent,CompanyinfoComponent,ClientComponent,CbookingComponent,
+    AdminRegisterComponent,SetupComponent,ResetPasswordComponent,ClickSpinDirective,PickupComponent,PaymentComponent,
+    EmployeeSTComponent,EmployeeComponent,CompanyinfoComponent,ClientComponent,CbookingDialog,
     AvailableComponent,AdminComponent,ConfirmComponent,SpackageComponent,SalesReportComponent,
-    FinancialReportComponent,ProductReportComponent,SupplierReportComponent,
+    FinancialReportComponent,ProductReportComponent,SupplierReportComponent, EmployeeRegisterComponent,
     BookingReportComponent,ValidateComponent,EditComponent,BellComponent,ClientprofileComponent,
-    MakebookingComponent,ViewbookingComponent,ServicepComponent,BasketComponent,
+    MakebookingComponent,ViewbookingComponent,ServicepComponent,BasketComponent, BookingDialog,
     RequestbComponent,BrowseComponent,BookingConfirmComponent, OptionsFilterPipe, AddClientDialog, SearchClientDialog,
     customFilter,SupplierComponent,orderform,PlaceorderComponent,EditsupplierComponent,AddsupplierComponent,
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
-    ViewdetailComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent, ReportsComponent, ErrorPageComponent, EmployeePipe, ForbiddenPageComponent, GetBookingsComponent
+    ViewdetailComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent, ReportsComponent, ErrorPageComponent, EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, EditCompanyComponent, CompanySettingsComponent
 
   ],
   imports: [
@@ -162,7 +165,7 @@ import { GetBookingsComponent } from './User/get-bookings/get-bookings.component
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   entryComponents: [
-    AddClientDialog, SearchClientDialog
+    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog
   ],
 })
 export class AppModule { }

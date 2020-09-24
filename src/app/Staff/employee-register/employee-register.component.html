@@ -1,0 +1,178 @@
+<div class="jumbotron" style="background-color: whitesmoke;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h3 style="text-align: center;">Register Employee</h3>
+
+        <form [formGroup]="empForm" (ngSubmit)="RegisterEA()"> 
+
+        <div class="form-group" [ngClass]="{
+          'has-error':
+            empForm.get('firstName').errors &&
+            (empForm.get('firstName').touched ||
+              empForm.get('firstName').dirty)}">
+          <label>Name</label>
+          <input
+            id="name"
+            minlength="2"
+            maxlength="50"
+            required
+            (keypress)="omit_special_char($event)"
+            type="text"
+            formControlName="firstName"
+            class="form-control"
+             [ngClass]="{
+                'has-error':
+                  empForm.get('firstName').errors &&
+                  (empForm.get('firstName').touched ||
+                    empForm.get('firstName').dirty)
+              }"
+          />
+          <span class="help-block" *ngIf="empForm.get('firstName').errors &&
+              (empForm.get('firstName').touched ||
+              empForm.get('firstName').dirty)">
+            <span *ngIf="empForm.get('firstName').errors.required">
+              Name is required
+            </span>
+            <span *ngIf="empForm.get('firstName').errors.minlength || empForm.get('firstName').errors.maxLength">
+              Surname must have between 2 and 50 characters.
+            </span>
+          </span>
+        </div>
+
+        <div class="form-group"  [ngClass]="{
+          'has-error':
+            empForm.get('lastName').errors &&
+            (empForm.get('lastName').touched ||
+              empForm.get('lastName').dirty)
+        }">
+          <label>Surname</label>
+          <input
+            id="surname"
+            minlength="2"
+            maxlength="50"
+            required
+            (keypress)="omit_special_char($event)"
+            type="text"
+            formControlName="lastName"
+            class="form-control"
+             [ngClass]="{
+                'has-error':
+                  empForm.get('lastName').errors &&
+                  (empForm.get('lastName').touched ||
+                    empForm.get('lastName').dirty)
+              }"
+          />
+          <span class="help-block" *ngIf="empForm.get('lastName').errors &&
+            (empForm.get('lastName').touched ||
+            empForm.get('lastName').dirty)">
+          <span *ngIf="empForm.get('lastName').errors.required">
+            Surname is required
+          </span>
+          <span *ngIf="empForm.get('lastName').errors.minlength || empForm.get('lastName').errors.maxLength">
+            Surname must have between 2 and 50 characters.
+          </span>
+        </span>
+        </div>
+
+        <div class="form-group" [ngClass]="{
+          'has-error':
+            empForm.get('contact').errors &&
+            (empForm.get('contact').touched ||
+              empForm.get('contact').dirty)
+        }">
+          <label>Contact Number</label>
+          <input
+            maxlength="10"
+            minlength="10"
+            id="number"
+            required
+            (keypress)="omit_special_char($event)"
+            type="text"
+            formControlName="contact"
+            class="form-control"
+             [ngClass]="{
+                'has-error':
+                  empForm.get('contact').errors &&
+                  (empForm.get('contact').touched ||
+                    empForm.get('contact').dirty)
+              }"
+          />
+          <span class="help-block" *ngIf="empForm.get('contact').errors &&
+          (empForm.get('contact').touched ||
+          empForm.get('contact').dirty)">
+        <span *ngIf="empForm.get('contact').errors.required">
+          Contact Number is required
+        </span>
+        <span *ngIf="empForm.get('contact').errors.minlength || empForm.get('contact').errors.maxLength">
+          Contact Number exactly 10 digits
+        </span>
+      </span>
+        </div>
+
+        <div class="form-group" [ngClass]="{
+          'has-error':
+            empForm.get('email').errors &&
+            (empForm.get('email').touched ||
+              empForm.get('email').dirty)
+        }">
+          <label>Email Address</label>
+          <input
+            id="email"
+            required
+            type="text"
+            formControlName="email"
+            class="form-control"
+             [ngClass]="{
+                'has-error':
+                  empForm.get('email').errors &&
+                  (empForm.get('email').touched ||
+                    empForm.get('email').dirty)
+              }"
+          />
+          <span class="help-block" *ngIf="empForm.get('email').errors &&
+          (empForm.get('email').touched ||
+          empForm.get('email').dirty)">
+        <span *ngIf="empForm.get('email').errors.required">
+          Email Address is required
+        </span>
+      </span>
+        </div>
+
+       <div>
+        <label for="options">Select Service Type: </label>
+        <label class="form-check" formArrayName="types" *ngFor="let items of empForm.get('types')['controls']; let i = index">
+          <input id="{{i}}" type="checkbox" [formControlName]="i">
+          {{Types[i].Name}}
+        </label>
+        <div class="text-danger" *ngIf="empForm.get('types').errors && (empForm.get('types').touched || empForm.get('types').dirty)">
+          At least one checkbox needs to be selected
+        </div>
+      </div> 
+
+        <div class="form-group" style="text-align: center;">
+          <button
+            type="submit"
+            class="btn btn-primary" type="submit"
+            style="color: white; background-color: green;"
+            [disabled]="!empForm.valid"
+            type="submit"
+          >
+            Register
+          </button>
+          <button
+          (click)="previousForm()"
+            class="btn btn-primary"
+            style="color: white; background-color: green;"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+

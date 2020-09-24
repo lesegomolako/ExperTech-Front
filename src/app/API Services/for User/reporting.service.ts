@@ -9,9 +9,9 @@ import {
   switchMap,
 } from 'rxjs/operators';
 import { Process, Schedule, Package } from './process';
-import { User } from 'src/app/User/register/register.component';
+import { User } from 'src/app/Staff/admin-register/admin-register.component';
 import { AvailData } from 'src/app/User/available/available.component';
-import { UserData } from 'src/app/User/setup/setup.component';
+import { UserData } from 'src/app/Staff/setup/setup.component';
 
 //import 'rxjs/add/operator/map'
 
@@ -25,24 +25,8 @@ export class ReportingService {
   user: any;
 
   constructor(private http: HttpClient) {}
-  //*******************Valid Session ***********************/
-  ValidSession(seshID)
-  {
-    const params = new HttpParams().set('SessionID', seshID );
-    
-    return this.http.post(this.url +'User/ValidSession', {
-      headers: {'Content-Type': 'application/json'},
-      params: params})
-  }
-  //*******************Check User Role************************/
-  CheckRole(seshID)
-  {
-    const params = new HttpParams().set('seshin', seshID );
-
-    return this.http.post(this.url+'User/CheckRole',  {
-      headers: {'Content-Type': 'application/json'},
-      params: params})
-  }
+  
+  
   ///********************************************************Admin CRUD*********************************************************************
   readAdmin(): Observable<Process[]> {
     return this.http.get<Process[]>(this.url + 'Admin/getAdmin');
@@ -157,14 +141,17 @@ export class ReportingService {
     }
   }
   ///***********************************************User**************************************************
-  forgotPassword(formData: Process) {
-    let body = JSON.stringify(formData);
-    if (confirm(body)) {
-      return this.http.put<Process[]>(
-        this.url + 'User/ForgotPassword',
-        formData
-      );
-    }
+  forgotPassword(email) {
+
+    const params = new HttpParams().set('Email', email );
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      params: params,
+    };
+    
+    return this.http.post(this.url + 'User/ForgotPassword', httpOptions);
+    
   }
   //use this one refiloe
   FORGOTPASSWORD(formData: Process) {
@@ -186,13 +173,21 @@ export class ReportingService {
         this.url + 'User/userSetup', formData)
     
   }
-  RegisterEA(formData: User){ 
+  RegisterAdmin(formData: User){ 
     
       return this.http.post<Process>(
-        this.url + 'User/RegisterEA', formData
+        this.url + 'User/RegisterAdmin', formData
       );
     
   }
+
+  RegisterEmployee(formData){ 
+    
+    return this.http.post(
+      this.url + 'User/RegisterEmployee', formData
+    );
+  
+}
   ///***********************************************Availability*********************************************
   getTime(): Observable<Schedule[]> {
     return this.http.get<Schedule[]>(this.url + 'Employees/getTime');
@@ -262,14 +257,11 @@ export class ReportingService {
     }
   }
   
-  bookingPayment(formData) {
-    let body = JSON.stringify(formData);
-    if (confirm(body)) {
-      return this.http.post(
-        this.url + 'User/bookingPayment',
-        formData
-      );
-    }
+  bookingPayment(formData) 
+  { 
+    const httpOptions = {headers: new HttpHeaders({ 'Content-Type': 'application/json' }),body: formData};
+    
+    return this.http.post(this.url + "User/bookingPayment", httpOptions);   
   }
     ///********************************************************Payments Types**************************************************************
     getPaymentType(): Observable<any[]>{

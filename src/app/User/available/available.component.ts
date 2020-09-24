@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process, Schedule} from '../../API Services/for User/process';
-import { User } from '../register/register.component';
+import { User } from '../../Staff/admin-register/admin-register.component';
 
 export class AvailData {
   StartDate: any;

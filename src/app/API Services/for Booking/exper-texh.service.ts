@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import{Observable} from 'rxjs';
 import{Client, User, BasketLine,ClientPackage, Product, Booking} from './client';
 //import 'rxjs/add/operator/map';
-import { HttpHeaders } from '@angular/common/http';  
+import { HttpHeaders, HttpParams } from '@angular/common/http';  
 import { HttpClient } from '@angular/common/http';
 
 
@@ -31,7 +31,8 @@ export class ExperTexhService {
 
   getBadgeCount()
   {
-    return this.http.get<number>(this.url+"Clients/getBadge?SessionID="+this.SessionID)
+    const params = new HttpParams().set("SessionID", this.SessionID)
+    return this.http.get<number>(this.url+"Clients/getBadge", {params})
     .subscribe(res => {this.badgeCount = res})
   }
 

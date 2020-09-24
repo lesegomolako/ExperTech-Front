@@ -77,6 +77,9 @@ export class AdviseComponent implements OnInit {
 
   cancel()
   {
+    localStorage.removeItem("DateChosen");
+    localStorage.removeItem("BookingDetails");
+    
     window.history.back();
   }
 

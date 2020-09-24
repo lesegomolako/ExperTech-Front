@@ -1,11 +1,5 @@
-
 import { Component, OnInit } from '@angular/core';
-import {
-  FormControl,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-} from '@angular/forms';
+import {FormControl,FormGroupDirective,NgForm,Validators,} from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
@@ -47,8 +41,8 @@ export class AdminComponent implements OnInit {
 
   registerAdmin()
   {
-    localStorage.setItem("registerID", "admin")
-    this.router.navigateByUrl("/register")
+    
+    this.router.navigateByUrl("/adminregister")
   }
 
   emailFormControl = new FormControl('', [

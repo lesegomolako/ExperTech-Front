@@ -18,15 +18,15 @@ import { DeleteSOComponent } from './Service/delete-so/delete-so.component';
 import { DeleteServiceComponent } from './Service/delete-service/delete-service.component';
 import { LoginComponent } from './User/login/login.component';
 import { ForgotComponent } from './User/forgot/forgot.component';
-import { RegisterComponent } from './User/register/register.component';
-import { SetupComponent } from './User/setup/setup.component';
-import { FpasswordComponent } from './User/fpassword/fpassword.component';
+import { AdminRegisterComponent } from './Staff/admin-register/admin-register.component';
+import { EmployeeRegisterComponent } from './Staff/employee-register/employee-register.component';
+import { SetupComponent } from './Staff/setup/setup.component';
+import { ResetPasswordComponent } from './User/reset-password/reset-password.component';
 import { AdminComponent } from './User/admin/admin.component';
 import { AvailableComponent } from './User/available/available.component';
-import { CbookingComponent } from './User/cbooking/cbooking.component';
 import { ClientComponent } from './User/client/client.component';
 import { CompanyinfoComponent } from './User/companyinfo/companyinfo.component';
-import { EmployeeComponent } from './User/employee/employee.component';
+import { EmployeeComponent } from './Staff/employee/employee.component';
 import { EmployeeSTComponent } from './User/employee-st/employee-st.component';
 import { PaymentComponent } from './User/payment/payment.component';
 import { PickupComponent } from './User/pickup/pickup.component';
@@ -67,7 +67,9 @@ import { EmployeehomeComponent } from './User/employeehome/employeehome.componen
 import { ReportsComponent } from './User/reports/reports.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
-import { GetBookingsComponent } from './User/get-bookings/get-bookings.component';
+import { GetBookingsComponent } from './Staff/get-bookings/get-bookings.component';
+import { EditCompanyComponent } from './User/edit-company/edit-company.component';
+import { StaffComponent } from './Staff/staff/staff.component';
 //import {MatDialogModule} from '@angular/material/dialog';
 
 const routes: Routes = [
@@ -96,12 +98,12 @@ const routes: Routes = [
   {path:'DeleteProduct', component: DeleteProductComponent},
   {path:'login', component: LoginComponent},
   {path:'forgot', component: ForgotComponent},
-  {path:'fpassword', component: FpasswordComponent},
-  {path:'register', component: RegisterComponent},
+  {path:'reset', component: ResetPasswordComponent},
+  {path:'adminregister', component: AdminRegisterComponent},
+  {path:'employeeregister', component: EmployeeRegisterComponent},
   {path:'setup', component: SetupComponent},
   {path:'admin', component: AdminComponent},
   {path:'available', component: AvailableComponent},
-  {path:'cbooking', component: CbookingComponent},
   {path:'client', component: ClientComponent},
   {path:'companyinfo', component: CompanyinfoComponent},
   {path:'employee', component: EmployeeComponent},
@@ -131,7 +133,7 @@ const routes: Routes = [
   {path: 'supplier', component: SupplierComponent},
   {path: 'employeehome', component: EmployeehomeComponent},
   {path: 'schedule', component: ScheduleComponent},
-  { path: 'clientregister', component: ValidateComponent},
+  {path: 'clientregister', component: ValidateComponent},
   {path: 'edit', component: EditComponent },
   {path: 'browse', component: BrowseComponent },
   {path: 'request', component: RequestbComponent },
@@ -145,6 +147,8 @@ const routes: Routes = [
   {path: 'reports', component: ReportsComponent},
   {path: '403Forbidden', component: ForbiddenPageComponent},
   {path: 'getbookings', component: GetBookingsComponent},
+  {path: 'staff', component: StaffComponent },
+  {path: 'editcompany', component: EditCompanyComponent},
   
   {path: '**', redirectTo: '/404Page'},
   {path: '404Page', component: ErrorPageComponent},
