@@ -30,9 +30,10 @@ export class StockComponent implements AfterViewInit, OnInit {
   constructor(public service: StockService, private router: Router){}
 
   StockList: StockData[];
-  dataSource = new MatTableDataSource(this.StockList)
-
+  dataSource;
   ngOnInit() {
+    this.dataSource = new MatTableDataSource(this.StockList)
+
     this.service.getStockList().subscribe(res => 
       {
         this.StockList = res;
@@ -48,6 +49,11 @@ export class StockComponent implements AfterViewInit, OnInit {
 
   onCreate(){
     this.dialog.open(StockComponent)
+  }
+
+  goBack()
+  {
+    window.history.back();
   }
 
   onSearchClear() {

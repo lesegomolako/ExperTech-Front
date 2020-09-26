@@ -22,8 +22,19 @@ export class BasketComponent implements OnInit {
  pro=0;
 
   constructor(public dialog: MatDialog,private api: ExperTexhService, private router: Router,private route: ActivatedRoute) { }
-  openDialog() {
-    confirm("Successfully sent")
+
+  SubmitBasket() 
+  {
+    if(confirm("Click ok to to submit basket and place order"))
+    {
+      this.api.SubmitBasket().subscribe(res => {
+        if(res=="success")
+        {
+          alert("Basket successfully submitted")
+          window.location.reload();      
+        }
+      })
+    }
   }
 
   ngOnInit()  {
@@ -36,11 +47,13 @@ export class BasketComponent implements OnInit {
       this.id = this.route.snapshot.params['id'];
 
       
-      this.api.ViewBasket(this.api.SessionID).subscribe(data => {
-        console.log(data)
-        this.basket = data;
-        this.cal();
-        this.item();
+      this.api.ViewBasket(this.api.SessionID).subscribe((data:BasketLine[]) => {
+        if(data.length >0)
+        {
+          this.basket = data;
+          this.cal();
+          this.item();
+        }
 
       }, error => console.log("error edit component",error));
     }
@@ -58,7 +71,7 @@ list(){
 cal(){
   
   this.basket.forEach(res => {
-this.total =(res.Quantity * res.Product.Price)
+this.total +=(res.Quantity * res.Product.Price)
   })
   console.log(this.total)
 }
@@ -67,7 +80,7 @@ item(){
   this.pro=0
   this.basket.forEach(res => {
     
-    this.pro = (res.Quantity)
+    this.pro += (res.Quantity)
       })
 
   this.api.badgeCount = this.pro;   

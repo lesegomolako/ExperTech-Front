@@ -9,6 +9,22 @@ export class Client {
     Email: string;
 }
 
+export class Employee {
+  EmployeeID: any;
+  Name: string;
+  Surname:string;
+  ContactNo: string;
+  Email: string;
+}
+
+export class Admin {
+  AdminID: any;
+  Name: string;
+  Surname:string;
+  ContactNo: string;
+  Email: string;
+}
+
 export class User {
     UserID: any;
     RoleID: any;
@@ -16,6 +32,8 @@ export class User {
     Password: string;
     SessionID: string;
     Clients: Client[];
+    Employees: Employee[];
+    Admins: Admin[];
 }
 
 export class BasketLine {

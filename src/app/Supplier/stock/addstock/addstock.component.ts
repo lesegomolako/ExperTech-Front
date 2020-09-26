@@ -27,10 +27,10 @@ export class AddstockComponent implements OnInit {
   ngOnInit(): void {
 
     this.StockForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      description: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
       price: ['', Validators.required],
-      quantity: ['', Validators.required],
+      quantity: ['', [Validators.required, Validators.min(1)]],
     })
   }
 

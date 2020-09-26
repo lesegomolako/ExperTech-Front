@@ -39,7 +39,11 @@ export class EditProductComponent implements OnInit {
       reader.readAsDataURL(this.UploadFile);
     }
 
-    
+    removeImage()
+    {
+      this.imageURL = null;
+      this.UploadFile = null;
+    }
 
   ngOnInit(): void {
     this.http.get<[]>("https://localhost:44380/api/Products/getSuppliers")
@@ -82,7 +86,8 @@ export class EditProductComponent implements OnInit {
       'min':'Price has to be a minimum of 1'
   },
     'supplierid': {'required':'A Supplier must be selected'} ,
-    'categoryid':  {'required':'A Product Category must be selected'}
+    'categoryid':  {'required':'A Product Category must be selected'},
+    'photo': {'required': 'A photo needs to be selected'}
   }
 
   formErrors =
@@ -92,7 +97,8 @@ export class EditProductComponent implements OnInit {
     'quantity':  '',
     'price':  '',
     'supplierid':'' ,
-    'categoryid':  ''
+    'categoryid':  '',
+    'photo':''
    
   }
 
@@ -115,13 +121,38 @@ export class EditProductComponent implements OnInit {
               if (errorKey)
               {
                 this.formErrors[key] += messages[errorKey] + ' ';
-                console.log(errorKey)
               }
             }
           }
         }
       })
   }
+
+  validateAllFormFields(group: FormGroup = this.ProductForm) 
+  {         
+    Object.keys(group.controls).forEach((key: string) =>
+      {
+        const abstractControl = group.get(key)
+        if(abstractControl instanceof FormGroup)
+          {this.logValidationErrors(abstractControl)}
+        else
+        {
+          this.formErrors[key] = ''
+          if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty) || 
+            abstractControl.untouched)
+          {
+            const messages = this.validationMessages[key]
+            for(const errorKey in abstractControl.errors)
+            {
+              if (errorKey)
+              {
+                this.formErrors[key] += messages[errorKey] + ' ';
+              }
+            }
+          }
+        }
+      })
+}
 
   CheckForm()
   {
@@ -159,8 +190,7 @@ export class EditProductComponent implements OnInit {
     
     if(this.ProductForm.value.productid == null)
     {
-      alert("hello")
-      this.mapValues();
+      
       this.AddProduct();   
     }
     else
@@ -188,7 +218,7 @@ export class EditProductComponent implements OnInit {
     })
 
   
-        this.imageURL= this.ProdFormData.Photos[0].Photo
+    this.imageURL= this.ProdFormData.Image;
     
   }
 
@@ -212,7 +242,12 @@ export class EditProductComponent implements OnInit {
   AddProduct()
   {
     //this.ProdFormData.Photos[0].Photo = this.imageURL;
-    
+    if(this.ProductForm.invalid)
+    {
+      this.validateAllFormFields(this.ProductForm)
+      return;
+    }
+    this.mapValues();
     this.service.AddProduct(this.ProdFormData,this.UploadFile)
     .subscribe(res => 
       {

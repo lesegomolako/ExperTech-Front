@@ -142,7 +142,7 @@ const routes: Routes = [
   {path: 'ViewBooking', component: ViewbookingComponent },
   {path: 'ServicePackage', component: ServicepComponent },
   {path: 'confirmbooking', component: BookingConfirmComponent }, 
-  {path: 'ClientProfile', component: ClientprofileComponent },
+  {path: 'Profile', component: ClientprofileComponent },
   {path: 'Notification', component: BellComponent },
   {path: 'reports', component: ReportsComponent},
   {path: '403Forbidden', component: ForbiddenPageComponent},

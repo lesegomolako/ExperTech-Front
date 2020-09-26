@@ -12,6 +12,11 @@ export class ServicesService {
 
   url = "https://localhost:44380/api/"
 
+//***********************View Services **********************************
+ViewServices()
+{
+  
+}
   
 //*************************Service Type************************************
   

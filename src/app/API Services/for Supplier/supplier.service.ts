@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -62,10 +63,9 @@ export class SupplierService {
     return this.http.post(this.url + "Supplier/AddSupplier", formData);
   }
 
-  EditSupplier(formData: SupplierData)
+  EditSupplier(formData: SupplierData, SessionID)
   {
-    
-    let body = JSON.stringify(this.formData);
-    return this.http.put(this.url + "Supplier/UpdateSupplier", formData);
+    const params = new HttpParams().set("SessionID", SessionID )
+    return this.http.put(this.url + "Supplier/UpdateSupplier", formData, {params});
   }
 }

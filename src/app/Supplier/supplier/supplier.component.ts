@@ -28,9 +28,10 @@ export class SupplierComponent implements AfterViewInit, OnInit {
   constructor(public service: SupplierService, private router: Router){}
 
   SupplierList: SupplierData[];
-  dataSource = new MatTableDataSource(this.SupplierList)
+  dataSource;
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource(this.SupplierList)
     this.service.getSupplierList().subscribe(res => 
       {
         this.SupplierList = res;
@@ -46,6 +47,11 @@ export class SupplierComponent implements AfterViewInit, OnInit {
 
   onCreate(){
     this.dialog.open(SupplierComponent)
+  }
+
+  goBack()
+  {
+    window.history.back();
   }
 
   onSearchClear() {

@@ -23,6 +23,18 @@ export class ExperTexhService {
 
   constructor(private http:HttpClient) { }
 
+  logout()
+  {
+    const params = new HttpParams().set("SessionID", this.SessionID)
+    return this.http.get(this.url + 'User/Logout', {params})
+  }
+
+  SubmitBasket()
+  {
+    const params = new HttpParams().set("SessionID", this.SessionID)
+    return this.http.get(this.url + "Sale/AddMakeSale", {params})
+  }
+
   AdviseBooking(Booking)
   {
     console.log(Booking)
@@ -37,25 +49,25 @@ export class ExperTexhService {
   }
 
 
-  RegisterClient(formData: User): Observable<User> {  
-    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
+  RegisterClient(formData): Observable<User> {  
     return this.http.post<User>(this.url + 'Clients/registerUser',  
     formData);  
 
   }
 
-  getClientdetails(Id: any): Observable<Client> {  
-    return this.http.get<Client>(this.url + 'Clients/getallClients?id=1');  
+  getProfile(): Observable<User> { 
+    const params = new HttpParams().set("SessionID", this.SessionID)
+    return this.http.get<User>(this.url + 'User/getProfile', {params});  
   }  
 
   getClientById(cleintId: any): Observable<Client> {  
     return this.http.get<Client>(this.url + 'getALLClientsWithUser/' + cleintId);  
   }  
 
-  updateClient(client:Client): Observable<Client> {  
+  updateClient(user){  
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.put<Client>(this.url + 'Clients/UpdateClient/',  
-    client, httpOptions);  
+    return this.http.post(this.url + 'User/updateProfile',  
+    user);  
   } 
   ViewProduct(Id:Product): Observable<Product[]> {  
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  

@@ -64,16 +64,24 @@
                 </div>  
         </div>
     </div> 
-        <div class="col-4">
+        <div class="col-2">
             <div formArrayName="photos">
                 <div  class="form-group"  *ngFor="let x of ProductForm.get('photos')['controls']; let j = index">
                     <div [formGroupName]="j">
                         <div>
-                            <img [src]="imageURL" alt="choose an image" style="height: 200px; width: 200px;">
+                            <div [ngClass]="{'has-error': formErrors.photo}">
+                                <button *ngIf="imageURL" type="button" class="close" (click)="removeImage()">
+                                    <span>&times;</span>
+                                </button>
+                                <img [src]="imageURL" alt="choose an image" style="height: 200px; width: 200px;">
+                            </div>
                             <input type="file" (change)="onFileChanged($event)" accept="Image/*" hidden  #fileInput formControlName="photo">
         <br>    
-                            <button class="btn btn-success" type="button" (click)="fileInput.click()"><mat-icon>add_a_photo</mat-icon>Add Photo</button>
+                            <button *ngIf="imageURL == null" class="btn btn-success" type="button" (click)="fileInput.click()"><mat-icon>add_a_photo</mat-icon>Add Photo</button>
                         </div> 
+                        <span class="help-block" *ngIf="formErrors.photo">
+                            {{formErrors.photo}}
+                        </span> 
                     </div>
             </div>
         </div>

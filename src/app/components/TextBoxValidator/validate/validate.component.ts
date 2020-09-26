@@ -51,15 +51,6 @@ export class ValidateComponent implements OnInit {
 
   
   ngOnInit() {
-      this.user=
-  {
-    UserID: null,
-    RoleID: null,
-    Username: null,
-    Password: null,
-    SessionID: null,
-    Clients: null,
-  }
 
     this.validateForm = this.formBuilder.group({
       Username: ['', [Validators.required, Validators.minLength(2)]],
@@ -73,32 +64,9 @@ export class ValidateComponent implements OnInit {
     validator: MustMatch('Password', 'confirmPassword')
   });
   
-
-  // this.resetForm();
 }
 
-// resetForm(form? : NgForm)
-// {
-//   if(form != null)
-//   this.validateForm.reset()
 
-//   this.user=
-//   {
-//     UserID: null,
-//     RoleID: null,
-//     Username: "",
-//     Password: "",
-//     SessionID: "",
-//     Clients: 
-//       {
-//             Name: "",
-//             Surname: "",
-//             ContactNo: "",
-//             Email: "",
-//       }
-
-//   }
-// }
 omit_special_char(event)
 {
   console.log("Omitting")
@@ -135,7 +103,7 @@ omit_special_char(event)
       
       this.client.push(temp)
 
-       this.user=
+       const user=
        {
          UserID: "",
          RoleID: 1,
@@ -146,9 +114,9 @@ omit_special_char(event)
          Clients: this.client
         }
 
-        console.log("User data",this.user)
+        console.log("User data",user)
 
-        this.api.RegisterClient(this.user).subscribe((res: any)=>{
+        this.api.RegisterClient(user).subscribe((res: any)=>{
           if(res.Message == "success")
           {
             alert("Successfully registered")
