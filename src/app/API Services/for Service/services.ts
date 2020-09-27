@@ -2,6 +2,7 @@ export class ServiceTypeData {
     TypeID: any;
     Name: string;
     Description: string;
+    Services: ServiceData[];
 }
 
 export class ServiceData

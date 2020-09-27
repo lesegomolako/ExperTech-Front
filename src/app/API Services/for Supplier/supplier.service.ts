@@ -33,33 +33,30 @@ export class SupplierService {
     return this.http.get<SupplierOrderData[]>(this.url + "Supplier/GetSupplierOrderList")
   }
 
-  DeleteSupplier(id:any) {
-    console.log(id)
-    const params = new HttpParams().set("SupplierID", id)
+  DeleteSupplier(SupplierID, SessionID) {
+    
+    const params = new HttpParams().set("SupplierID", SupplierID).set("SessionID", SessionID)
     return this.http.delete(this.url + 'Supplier/DeleteSupplier', 
     {headers: { 'Content-Type': 'application/json'},
-    params: params}).subscribe()
+    params: params})
   }
 
-  DeleteSupplierOrder(id: any) {
-    const params = new HttpParams().set("OrderID", id)
+  DeleteSupplierOrder(OrderID: any, SessionID) {
+    const params = new HttpParams().set("OrderID", OrderID).set("SessionID", SessionID)
     return this.http.delete(this.url + 'Supplier/DeleteSupplierOrder', 
     {headers: { 'Content-Type': 'application/json'},
-    params: params}).subscribe()
+    params: params})
   }
 
-  CreateOrder(formData: SupplierOrderData)
+  CreateOrder(formData: SupplierOrderData, SessionID)
   {  
-      return this.http.post(
-        this.url + 'Supplier/AddSupplierOrder',
-        formData
-      )
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post(this.url + 'Supplier/AddSupplierOrder',formData, {params})
   }
 
-  AddSupplier(formData: SupplierData)
+  AddSupplier(formData: SupplierData, SessionID)
   {
-    
-    let body = JSON.stringify(this.formData);
+    const paramas = new HttpParams().set("SessionID", SessionID)
     return this.http.post(this.url + "Supplier/AddSupplier", formData);
   }
 

@@ -1,11 +1,18 @@
-
-<div style="float: right; display:inline-table;">
-  <a routerLink='/register'>
-    <button  mat-raised-button style="background-color: green; width:99%" >
-      <mat-icon> keyboard_return</mat-icon>
-        Back
-    </button>
-  </a>
+<div class="row">
+  <h1 class="col-10 " style="margin: 10px">View Bookings</h1>
+  <div class="col-1.5" style="float: right;">
+    <a routerLink='/request'>
+      <button  mat-raised-button style="background-color: green;" >
+        Make Booking
+      </button>
+    </a>
+    <a routerLink='/home'>
+      <button  mat-raised-button style="background-color: green;" >
+        <mat-icon> keyboard_return</mat-icon>
+          Back
+      </button>
+    </a>
+  </div>
 </div>
 
 <br>
@@ -14,7 +21,9 @@
 <div *ngFor="let client of booking"  style="text-align: center; color: black;" class="card-hover">
   <article  class="c-card c-card--center">
     
-    <button mat-raised-button style="background-color: gray; align-items: center; color: black; float: right;" (click)="cancel()" >
+    <button [hidden]="((client.EmployeeSchedule && !client.EmployeeSchedule[0].canCancel) || !client.DateRequesteds)" 
+      mat-raised-button style="background-color: gray; align-items: center; color: black; float: right;" 
+      (click)="cancel(client.BookingID)">
       Cancel
     </button>
 
@@ -52,6 +61,16 @@
         </h2></label> 
       </div>
 
+      <div *ngFor="let z of client.DateRequesteds">
+        <br>
+        <label>
+          <h2 class="c-card__title">Requested Date: {{z.Date |date:'shortDate'}}</h2>
+        </label>
+        <label for=""><h2 class="c-card__title">
+          Requested Time: {{z.StartTime}}
+        </h2></label> 
+      </div>
+      <br>
       <div>
         <label ><h2 class="c-card__title">
           Booking status: {{client.Status}}

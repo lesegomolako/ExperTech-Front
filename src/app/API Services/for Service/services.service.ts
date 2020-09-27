@@ -13,9 +13,9 @@ export class ServicesService {
   url = "https://localhost:44380/api/"
 
 //***********************View Services **********************************
-ViewServices()
+ViewServices(): Observable<ServiceTypeData[]>
 {
-  
+  return this.http.get<ServiceTypeData[]>(this.url + "Services/ViewServices")
 }
   
 //*************************Service Type************************************

@@ -91,7 +91,7 @@ import {WriteoffComponent} from './Supplier/stock/writeoff/writeoff.component';
 import {StockComponent} from './Supplier/stock/stock.component';
 import {AddsupplierComponent} from './Supplier/supplier/addsupplier/addsupplier.component';
 import {EditsupplierComponent} from './Supplier/supplier/editsupplier/editsupplier.component';
-import {PlaceorderComponent} from './Supplier/supplier/placeorder/placeorder.component';
+import {PlaceorderComponent,OrderDialog} from './Supplier/supplier/placeorder/placeorder.component';
 import {orderform} from './Supplier/supplier/placeorder/orderform/orderform.component';
 import {SupplierComponent} from './Supplier/supplier/supplier.component';
 import { ViewServicesComponent } from './Service/view-services/view-services.component'
@@ -138,7 +138,7 @@ import { CompanySettingsComponent } from './User/company-settings/company-settin
     AvailableComponent,AdminComponent,ConfirmComponent,SpackageComponent,SalesReportComponent,
     FinancialReportComponent,ProductReportComponent,SupplierReportComponent, EmployeeRegisterComponent,
     BookingReportComponent,ValidateComponent,EditComponent,BellComponent,ClientprofileComponent,
-    MakebookingComponent,ViewbookingComponent,ServicepComponent,BasketComponent, BookingDialog,
+    MakebookingComponent,ViewbookingComponent,ServicepComponent,BasketComponent, BookingDialog,OrderDialog,
     RequestbComponent,BrowseComponent,BookingConfirmComponent, OptionsFilterPipe, AddClientDialog, SearchClientDialog,
     customFilter,SupplierComponent,orderform,PlaceorderComponent,EditsupplierComponent,AddsupplierComponent,
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
@@ -165,7 +165,7 @@ import { CompanySettingsComponent } from './User/company-settings/company-settin
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   entryComponents: [
-    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog
+    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog, OrderDialog
   ],
 })
 export class AppModule { }

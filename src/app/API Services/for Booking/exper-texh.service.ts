@@ -120,8 +120,8 @@ export class ExperTexhService {
 
   Requestbookingdetails(form: Booking) 
   {  
-    //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.post(this.url + 'Bookings/RequestBooking',  form);  
+    const params = new HttpParams().set("SessionID", this.SessionID);  
+    return this.http.post(this.url + 'Bookings/RequestBooking',  form, {params});  
   }
 
   Makebooking(form: any) 
@@ -147,7 +147,6 @@ export class ExperTexhService {
       headers:{ 'Content-Type': 'application/json'},
       params:{
         'SessionID':SessionID,
-
       }
     });   
   } 
@@ -185,13 +184,15 @@ export class ExperTexhService {
       }
     });   
   }
-  CancelBooking(BookingID:Booking): Observable<Booking> {  
-    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.delete<Booking>(this.url + 'Clients/CancelClientBooking?id='+ BookingID ,{
-      headers:{ 'Content-Type': 'application/json'},
-      params:{
-        'bookingID':BookingID.toString(),
 
+  CancelBooking(BookingID)
+  {  
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
+    return this.http.delete(this.url + 'Clients/CancelClientBooking' ,
+    {
+      params:{
+        'bookingID': BookingID,
+        'SessionID': this.SessionID,
       }
     });   
   }

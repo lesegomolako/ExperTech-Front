@@ -1,68 +1,50 @@
 
 <div style="background: green;">
-  <form class="browse-component">
-
     <div style="float: right;">
-      <div class="example-button-container">
-  
-  
-      </div>
       <div class="example-button-container ">
-        <button mat-raised-button style="background-color: gray;">
+        <button routerLink="/home" mat-raised-button style="background-color: gray;">
             <mat-icon> keyboard_return</mat-icon>
             Back
           </button>
-  
       </div>
     </div>
   
   
   
-  
-  <div class="card_hover" style="align-items: center;" >
-    <mat-grid-list cols='4'  rowHeight='1:1' style="width: 99%; height: 90%;">
-      <mat-grid-tile  *ngFor="let basketproduct of product;">
-        <div class="c-card-flip ">
-          <div class="c-card-flip__flipper">
-  
-            <div class="c-card-flip__front">
-              <img class="image img"
-                src="{{basketproduct.Image}}"
-                class="c-card-flip__image" alt="Product Image" />
-            </div>
-  
-            <div class="c-card-flip__back">
-              <h5>Category: {{basketproduct.Category}} <br> Name:{{basketproduct.Name}}</h5>
-              <h5>Quantity on Hand:{{basketproduct.QuantityOnHand}} </h5>
-              <h5>Price:R{{basketproduct.Price}} </h5>
-              <h5>Description: {{basketproduct.Description}} </h5>
-                <div class="button" role="group" aria-label="Third group">
-                  <button mat-raised-button style="background-color: gray;"  (click)="addproduct(basketproduct)">
-                    <mat-icon> add</mat-icon>
-                    Add
-                  </button>
-  
-                  <mat-form-field style="background-color: gray;">
-                    <mat-label style="color: black;"  >Quantity</mat-label>
-                    <input style="color: black;" min="1" max="{{basketproduct.QuantityOnHand}}" type="number" (change)='setQuantity($event,basketproduct)' value="{{basketproduct.SelectedQuantity}}" matInput>
-                  </mat-form-field>
+    <div>
+      <br>
+      <div class="card_hover" style="align-items: center;" >
+        <mat-grid-list cols='4'  rowHeight='1:1' style="width: 99%; height: 90%;">
+          <mat-grid-tile  *ngFor="let basketproduct of product;">
+            <div class="c-card-flip ">
+              <div class="c-card-flip__flipper">   
+                <div class="c-card-flip__front">
+                  <img class="image img"
+                    src="{{basketproduct.Image}}"
+                    class="c-card-flip__image" alt="Product Image" />
                 </div>
-
+      
+                <div class="c-card-flip__back">
+                  <h5>Category: {{basketproduct.Category}} <br> Name:{{basketproduct.Name}}</h5>
+                  <h5>Quantity on Hand:{{basketproduct.QuantityOnHand}} </h5>
+                  <h5>Price:R{{basketproduct.Price}} </h5>
+                  <h5>Description: {{basketproduct.Description}} </h5>
+                    <div class="button" role="group" aria-label="Third group">
+                      <button mat-raised-button style="background-color: gray;"  (click)="addproduct(basketproduct)">
+                        <mat-icon> add</mat-icon>
+                        Add
+                      </button>
+      
+                      <mat-form-field style="background-color: gray;">
+                        <mat-label style="color: black;"  >Quantity</mat-label>
+                        <input style="color: black;" min="1" max="{{basketproduct.QuantityOnHand}}" type="number" (change)='setQuantity($event,basketproduct)' value="{{basketproduct.SelectedQuantity}}" matInput>
+                      </mat-form-field>
+                    </div>
+                </div>  
+              </div>
             </div>
-  
-          </div>
-        </div>
-      </mat-grid-tile>
-  
-      <div class="col-lg">
-  
-      </div>
-    </mat-grid-list>
-  </div>
-  
-  
-  
-  
-  
-  </form>
+          </mat-grid-tile>      
+        </mat-grid-list>
+      </div> 
+    </div> 
 </div>

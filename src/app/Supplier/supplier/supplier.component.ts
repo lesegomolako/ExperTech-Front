@@ -6,6 +6,7 @@ import { SupplierService } from '../../API Services/for Supplier/supplier.servic
 import { SupplierData } from '../../API Services/for Supplier/sales';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 @Component({
   selector: 'app-supplier',
@@ -25,19 +26,29 @@ export class SupplierComponent implements AfterViewInit, OnInit {
   dialog:any;
   SupplierData: any;
 
-  constructor(public service: SupplierService, private router: Router){}
+  constructor(public service: SupplierService, private router: Router, private api: ExperTexhService){}
 
   SupplierList: SupplierData[];
   dataSource;
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.SupplierList)
-    this.service.getSupplierList().subscribe(res => 
-      {
-        this.SupplierList = res;
-        this.dataSource.data = this.SupplierList;
-      })
+
+    if(this.api.RoleID = "2")
+    {
+      this.dataSource = new MatTableDataSource(this.SupplierList)
+      this.service.getSupplierList().subscribe(res => 
+        {
+          this.SupplierList = res;
+          this.dataSource.data = this.SupplierList;
+        })
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
   }
+
+  
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -66,13 +77,31 @@ export class SupplierComponent implements AfterViewInit, OnInit {
 
   onDelete(SupplierID: any)
   {
-    this.service.DeleteSupplier(SupplierID);
-
-    this.service.getSupplierList().subscribe(res => 
+    this.service.DeleteSupplier(SupplierID, this.api.SessionID).subscribe((res: any) =>
       {
-        this.SupplierList = res;
-        this.dataSource.data = this.SupplierList;
+        if(res.Message == "success")
+        {
+          alert("Supplier successfully deleted")
+          this.service.getSupplierList().subscribe(res => 
+            {
+              this.SupplierList = res;
+              this.dataSource.data = this.SupplierList;
+            })
+          
+        }
+        else if(res.Error == "dependencies")
+        {
+          alert(res.Message)
+        }
+        else
+        {
+          alert(res.Error)
+        }
       })
+
+      
+
+   
   }
 
   EditSupplier(SupplierData)

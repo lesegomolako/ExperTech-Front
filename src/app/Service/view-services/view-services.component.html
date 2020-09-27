@@ -1,15 +1,34 @@
-<div class="contents">
-    <ul>
-        <li *ngFor = "let x of ServicesList | async">
-            <div class="typeinfo">
-                <div class="name">{{x.Name}}</div>
-                <div class="sub-text">
-                    <div *ngFor = "let y of x.ServicePrices">Price: R{{y.Price}}</div>
-                </div>
-                <div class="sub-text">
-                    <div *ngFor = "let y of x.ServiceTypeOptions">{{y.Option}}: R<span *ngFor ="let z of y.ServicePrices">{{z.Price}}</span></div>
-                </div>
+<mat-card style="background-color: #F0F0F0;">
+    <mat-card-header class="text-center w-100">
+        <h1 class="col-10">Services</h1>
+        <div class="example-button-container" style="float: right;">
+            <button [hidden]="RoleID != '1'" routerLink="/request" mat-raised-button style="background-color: green;">Make Booking</button>
+            <button routerLink="/home" mat-raised-button style="background-color: green;">
+                <mat-icon> keyboard_return</mat-icon>
+                Back
+            </button>
+        </div>
+    </mat-card-header>
+    <mat-card-content>  
+        <ul *ngFor="let list of ServicesList |async" [hidden]="!list.Services">
+            <div class="heading">
+                <h2>{{list.Name}}</h2>
             </div>
-        </li>
-    </ul>
-</div>
+            <li *ngFor = "let x of list.Services">
+                <div class="contents">
+                    <div class="typeinfo">
+                        <div class="name">{{x.Name}}</div>
+                        <div class="sub-text">
+                            <div *ngFor = "let y of x.ServicePrices">Price: R{{y.Price}}</div>
+                        </div>
+                        <div class="sub-text">
+                            <div *ngFor = "let y of x.ServiceTypeOptions">{{y.Option}}: R<span *ngFor ="let z of y.ServicePrices">{{z.Price}}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <br>
+        <br>
+    </mat-card-content> 
+</mat-card>

@@ -63,34 +63,35 @@ export class RequestbComponent implements OnInit {
   
   BookingData: Booking;
 
+  MinDate = new Date();
+
   EnableForm()
   {
-    this.servControl = false;
-    this.TypesID = this.BookingForm.value.TypeControl
+    this.BookingForm.get("ServiceControl").enable();  
+    this.TypesID = this.BookingForm.value.TypeControl;
+    console.log(this.Service)
   }
 
   EnableOptForm()
   {
-    this.optControl = false;
+    this.BookingForm.get("OptionControl").enable();
+    this.BookingForm.get("TimeControl").enable();
+    this.BookingForm.get("DateControl").enable();
     this.ServicesID = this.BookingForm.value.ServiceControl
-  }
-
-  EnableTimeForm()
-  {
-    this.TimeDateControl = false;
 
   }
+
 
   ngOnInit(): void 
   {
     if(this.api.RoleID == "1")
     {
       this.BookingForm = this.fb.group({
-        ServiceControl : new FormControl('', Validators.required),
-        DateControl : new FormControl('', Validators.required),
-        TimeControl : new FormControl('', Validators.required),
-        OptionControl : new FormControl('',Validators.required),
-        NotesControl : new FormControl(''),
+        ServiceControl : new FormControl({value: '', disabled: true}, Validators.required),
+        DateControl : new FormControl({value: '', disabled: true}, Validators.required),
+        TimeControl : new FormControl({value: '', disabled: true}, Validators.required),
+        OptionControl : new FormControl({value: '', disabled: true}),
+        NotesControl : new FormControl(null),
         TypeControl: new FormControl()
       })
       this.LoadList();
@@ -129,6 +130,7 @@ resetForm(form?: NgForm)
             StartTime: null,
             EndTime: null,
             Employee: null,
+            canCancel: null
         }
     ],
     DateRequesteds:
@@ -156,7 +158,7 @@ onSubmit()
       if(res == "success")
       {
         alert("Booking successfully requested")
-        
+        this.router.navigate(["ViewBooking"])
       }
       else
       {

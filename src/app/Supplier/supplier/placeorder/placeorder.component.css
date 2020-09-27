@@ -18,3 +18,8 @@
     margin: 20px auto;
     width: 90%;
   }
+
+  td:hover
+  {
+    cursor: pointer;
+  }

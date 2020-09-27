@@ -8,6 +8,7 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { AddstockComponent } from './addstock/addstock.component';
 import { Router } from '@angular/router';
 import { FormArray } from '@angular/forms';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 @Component({
   selector: 'app-stock',
@@ -27,18 +28,26 @@ export class StockComponent implements AfterViewInit, OnInit {
   searchKey: string;
   StockData: any;
 
-  constructor(public service: StockService, private router: Router){}
+  constructor(public service: StockService, private api: ExperTexhService,
+    private router: Router){}
 
   StockList: StockData[];
   dataSource;
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.StockList)
+    if(this.api.RoleID == "2")
+    {
+      this.dataSource = new MatTableDataSource(this.StockList)
 
-    this.service.getStockList().subscribe(res => 
-      {
-        this.StockList = res;
-        this.dataSource.data = this.StockList;
-      })
+      this.service.getStockList().subscribe(res => 
+        {
+          this.StockList = res;
+          this.dataSource.data = this.StockList;
+        })
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
   }
 
   ngAfterViewInit() {
@@ -68,6 +77,18 @@ export class StockComponent implements AfterViewInit, OnInit {
 
   onDelete(ItemID: any): void
   {
+    this.service.DeleteStockItem(ItemID, this.api.SessionID).subscribe(res =>
+      {
+        if(res =="success")
+        {
+          alert("Successfully deleted")
+          this.service.getStockList().subscribe(res => 
+            {
+              this.StockList = res;
+              this.dataSource.data = this.StockList;
+            })
+        }
+      })
   }
 
   EditStock(StockData)

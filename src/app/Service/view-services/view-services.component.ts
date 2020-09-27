@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ServiceData } from 'src/app/API Services/for Service/services';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { ServiceTypeData } from 'src/app/API Services/for Service/services';
 import { ServicesService } from 'src/app/API Services/for Service/services.service';
 
 @Component({
@@ -10,17 +11,19 @@ import { ServicesService } from 'src/app/API Services/for Service/services.servi
 })
 export class ViewServicesComponent implements OnInit {
 
-  constructor(private service: ServicesService) { }
-  ServicesList : Observable<ServiceData[]>;
+  constructor(private service: ServicesService, private api: ExperTexhService) { }
+  ServicesList : Observable<ServiceTypeData[]>;
+  RoleID;
 
   ngOnInit() 
   {
+    this.RoleID = this.api.RoleID;
     this.loadList();
   }
 
   loadList()
   {
-    this.ServicesList = this.service.getServices();
+    this.ServicesList = this.service.ViewServices();
   }
 
 }

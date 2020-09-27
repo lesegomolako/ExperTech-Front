@@ -93,7 +93,7 @@
           <h4>Select Service option</h4>
         <mat-form-field appearance="fill">
           <mat-label style="color: black;">Long, short, Medium</mat-label>
-          <mat-select formControlName="OptionControl" name="OptionID" >
+          <mat-select formControlName="OptionControl" name="OptionID" [disabled]="!ServiceOptions">
             <mat-option disabled>--</mat-option>
             <mat-option  (click)="EnableTimeForm()"  *ngFor="let x of ServiceOptions | optionsFilter:ServicesID" value ={{x.OptionID}} >
               {{x.Name}}

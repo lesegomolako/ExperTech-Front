@@ -22,24 +22,24 @@ export class StockService {
     return this.http.get<StockData[]>(this.url + "Stockitem/GetStockitemList")
   }
 
-  DeleteStockItem(id:any) 
+  DeleteStockItem(ItemID:any, SessionID) 
   {
-    const params = new HttpParams().set('ItemID', id)
+    const params = new HttpParams().set('ItemID', ItemID).set("SessionID", SessionID)
     return this.http.delete(this.url + 'StockItem/DeleteStockItem', {headers: {'Content-Type': 'application/json'}, 
     params: params} )
   }
 
-  AddStockItem(formData: StockData)
+  AddStockItem(formData: StockData, SessionID)
    {
-    let body = JSON.stringify(this.formData);
-    return this.http.post(this.url + "StockItem/AddStockItem", formData);
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post(this.url + "StockItem/AddStockItem", formData, {params});
 
    } 
-   EditStock(formData: StockData)
+
+   EditStock(formData: StockData, SessionID)
   {
-    
-    let body = JSON.stringify(this.formData);
-    return this.http.put(this.url + "StockItem/UpdateStockItem", formData);
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.put(this.url + "StockItem/UpdateStockItem", formData, {params});
   }
 
   getTakeList(): Observable<StockTakeData[]>

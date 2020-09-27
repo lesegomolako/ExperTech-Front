@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StockService } from '../../../API Services/for Supplier/stock.service';
 import { StockData } from '../../../API Services/for Supplier/sales';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 
 @Component({
@@ -12,29 +13,39 @@ import { StockData } from '../../../API Services/for Supplier/sales';
 })
 export class EditstockComponent implements OnInit {
 
-  constructor( private router: Router, private formBuilder: FormBuilder, private service: StockService) { }
+  constructor( private router: Router, private formBuilder: FormBuilder,
+     private service: StockService, private api: ExperTexhService) { }
   stock: StockData;
   EditForm: FormGroup;
 
   ngOnInit(): void {
-    this.stock= JSON.parse(localStorage.getItem('stock'));
-    this.EditForm = this.formBuilder.group({
-      itemid: [this.stock.ItemID],
-      name: [this.stock.Name, Validators.required],
-      description: [this.stock.Description, Validators.required],
-      price: [this.stock.Price, Validators.required],
-      quantityinstock: [this.stock.QuantityInStock, Validators.required]
-    })
+    if(this.api.RoleID == "2")
+    {
+      this.stock= JSON.parse(localStorage.getItem('stock'));
+      this.EditForm = this.formBuilder.group({
+        itemid: [this.stock.ItemID],
+        name: [this.stock.Name, Validators.required],
+        description: [this.stock.Description, Validators.required],
+        price: [this.stock.Price, Validators.required],
+        quantityinstock: [this.stock.QuantityInStock, Validators.required]
+      })
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
   }
+
   EditStockItem(stock)
   {
-    console.log(stock.value)
-    this.service.EditStock(stock.value)
+    
+    this.service.EditStock(stock.value, this.api.SessionID)
     .subscribe(res => {
       if (res == "success")
       {
         alert("Successfully Updated")
-        this.router.navigateByUrl("/stock")
+        localStorage.removeItem('stock')
+        this.router.navigateByUrl("/stock")     
       }
     })
 

@@ -34,7 +34,7 @@ export class ViewbookingComponent implements OnInit {
     }
     else
     {
-      this.router.navigate(["404Page"])
+      this.router.navigate(["404Forbidden"])
     }
   }
 
@@ -48,8 +48,8 @@ export class ViewbookingComponent implements OnInit {
      });
     
   }
-  cancel(){
-    this.api.CancelBooking(this.id).subscribe(data=>{
+  cancel(BookingID){
+    this.api.CancelBooking(BookingID).subscribe(data=>{
       alert("Booking successfully rejected,Booking will be deleted. Please make another booking with a different time")
      });
     

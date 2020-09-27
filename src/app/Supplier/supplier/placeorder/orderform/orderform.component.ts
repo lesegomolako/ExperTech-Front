@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { SupplierData } from '../../../../API Services/for Supplier/sales';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 @Component({
   selector: 'app-orderform',
@@ -37,7 +38,8 @@ export class orderform implements OnInit {
     private formBuilder: FormBuilder,
     private suppService: SupplierService,
     private http: HttpClient,
-    private route: Router ){}
+    private router: Router ,
+    private api:ExperTexhService ){}
 
   
   //dataSource = new MatTableDataSource(this.StockList)
@@ -55,28 +57,34 @@ export class orderform implements OnInit {
 
   ngOnInit(): void 
   {
-    this.Supp = JSON.parse(localStorage.getItem('supplier'))
-    
-    this.service.getStockList().subscribe(res => 
-      {   
-        this.StockList = res
-      })
-
-
-
-      this.SupplierList = this.suppService.getSupplierList();
+    if(this.api.RoleID == "2")
+    {
+      this.Supp = JSON.parse(localStorage.getItem('supplier'))
       
-      this.orderForm = this.formBuilder.group({
-        supplierid: [this.Supp.SupplierID, Validators.required],
-        description: ['', Validators.required],
-        price: [''],
-        stockitemlines: this.formBuilder.array(
-          [
-            this.AddStockItems()
-          ]
-        )
-      })
+      this.service.getStockList().subscribe(res => 
+        {   
+          this.StockList = res
+        })
 
+
+
+        this.SupplierList = this.suppService.getSupplierList();
+        
+        this.orderForm = this.formBuilder.group({
+          supplierid: [this.Supp.SupplierID, Validators.required],
+          description: ['', Validators.required],
+        // price: [''],
+          stockitemlines: this.formBuilder.array(
+            [
+              this.AddStockItems()
+            ]
+          )
+        })
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
      
   }
 
@@ -106,14 +114,22 @@ export class orderform implements OnInit {
     }
 
    
-  AddOrder(form){
-
-      this.suppService.CreateOrder(form.value).subscribe(ref => {
-       if(ref == "success")
-       {
+AddOrder(form)
+{
+  if(this.orderForm.invalid)
+  {
+    alert("Enter all details")
+    return;
+  }
+  
+  this.suppService.CreateOrder(form.value, this.api.SessionID).subscribe(ref => 
+  {
+    if(ref == "success")
+      {
         alert("Successfully saved")
-        this.route.navigateByUrl("placeorder")
-       }
-      });
-    }
+        this.router.navigateByUrl("placeorder")
+      }
+  });    
+}
+
 }

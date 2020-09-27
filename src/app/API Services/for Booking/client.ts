@@ -107,6 +107,7 @@ export class Booking
   BookingID: any;
   Status: string;
   Client: string;
+
   BookingLines:
     [{
       ServiceID: any;
@@ -120,6 +121,7 @@ export class Booking
           StartTime: Time;
           EndTime: Time;
           Employee: string;
+          canCancel: any;
       }
   ]
   
