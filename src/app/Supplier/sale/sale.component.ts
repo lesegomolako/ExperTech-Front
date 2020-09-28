@@ -34,11 +34,12 @@ export class SaleComponent implements AfterViewInit, OnInit {
   constructor(public service: SaleService, private router: Router){}
 
   SaleList: SaleData[];
-  dataSource = new MatTableDataSource(this.SaleList)
+ dataSource;
   sale;
   
 
   ngOnInit(): void {
+    this.dataSource = new MatTableDataSource(this.SaleList)
     this.service.getSaleList().subscribe(res => 
       {
         this.SaleList = res;

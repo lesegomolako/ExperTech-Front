@@ -7,6 +7,7 @@ import { NgForm, Validators, FormGroup, FormBuilder, FormArray, FormControl } fr
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 
 @Component({
@@ -20,11 +21,12 @@ export class WriteoffComponent implements OnInit {
   private formBuilder: FormBuilder,
   private writeService: StockService,
   private http: HttpClient,
-  private route: Router ) { }
+  private route: Router,
+  private api: ExperTexhService ) { }
 
 
   StockList: StockData[];
-  writeOff: FormGroup;
+  writeOffForm: FormGroup;
   Write: WriteOffData;
 
   WriteList: Observable<WriteOffData[]>;
@@ -39,34 +41,36 @@ export class WriteoffComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.Write = JSON.parse(localStorage.getItem('stock'))
+    if(this.api.RoleID == "2")
+    {
+      this.service.getStockList().subscribe(res =>
+        {
+          this.StockList =res;
+          
+        })
 
-    this.service.getStockList().subscribe(res =>
-      {
-        this.StockList =res;
-        
-      })
-
-      this.WriteList = this.writeService.getWriteList();
-
-      this.writeOff = this.formBuilder.group({
-        description: ['', Validators.required],
-        
-        writeofflines: this.formBuilder.array(
-          [
-            this.AddStockItems()
-          ]
-        )
-      })
+      this.writeOffForm = this.formBuilder.group({
+          description: ['', Validators.required],      
+          writeofflines: this.formBuilder.array(
+            [
+              this.AddStockItems()
+            ]
+          )
+        })
+    }
+    else
+    {
+      this.route.navigate(["403Forbidden"])
+    }
   }
 
   AddForm()
   {
-    (<FormArray>this.writeOff.get('writeofflines')).push(this.AddStockItems());
+    (<FormArray>this.writeOffForm.get('writeofflines')).push(this.AddStockItems());
   }
   DeleteForm(ItemID: any): void
   {
-    (<FormArray>this.writeOff.get('writeofflines')).removeAt(ItemID);
+    (<FormArray>this.writeOffForm.get('writeofflines')).removeAt(ItemID);
   }
 
   AddStockItems(): FormGroup
@@ -78,22 +82,28 @@ export class WriteoffComponent implements OnInit {
       })
     }
 
-    AddWriteOff(){
+AddWriteOff()
+{
+  if(this.writeOffForm.invalid)
+  {
+    alert("form is invalid")
+    return;
+  }
 
-      this.mapValues();
-      this.writeService.CreateWrite(this.Write).subscribe(ref => {
-       if(ref == "success")
-       {
-        alert("Successfully saved")
-        this.route.navigateByUrl("writeoff")
-       }
-      });
-    
+  this.mapValues();
+  this.writeService.CreateWrite(this.Write, this.api.SessionID).subscribe(ref => {
+    if(ref == "success")
+    {
+      alert("Successfully saved")
+      this.route.navigateByUrl("writeoff")
     }
+  });
+    
+}
 
     mapValues()
     {
-      this.Write = this.writeOff.value;
+      this.Write = this.writeOffForm.value;
       // this.Write.AdminID = 1;
     }
 

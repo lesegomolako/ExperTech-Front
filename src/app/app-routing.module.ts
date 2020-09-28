@@ -70,6 +70,7 @@ import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.componen
 import { GetBookingsComponent } from './Staff/get-bookings/get-bookings.component';
 import { EditCompanyComponent } from './User/edit-company/edit-company.component';
 import { StaffComponent } from './Staff/staff/staff.component';
+import { SaleinvoiceComponent } from './Supplier/sale/saleinvoice/saleinvoice.component';
 //import {MatDialogModule} from '@angular/material/dialog';
 
 const routes: Routes = [
@@ -118,7 +119,7 @@ const routes: Routes = [
   {path: 'productreport', component: ProductReportComponent},
   {path: 'bookingreport', component: BookingReportComponent},
   {path: 'supplierreport', component: SupplierReportComponent},
-  {path: 'viewdetail', component: ViewdetailComponent},
+  {path: 'saleinvoice', component: SaleinvoiceComponent},
   {path: 'sale', component: SaleComponent},
   {path: 'viewdetail', component: ViewdetailComponent},
   {path: 'addstock', component: AddstockComponent},

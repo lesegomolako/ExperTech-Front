@@ -7,20 +7,15 @@
         <input matInput value disabled>
       </mat-form-field>
 
-          <mat-form-field class="example-full-width">
-            <mat-label>Description</mat-label>
-            <textarea matInput></textarea>
-          </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
 
-            <mat-form-field class="example-full-width" disabled>
-            <mat-label>Quantity (units)</mat-label>
-            <input [value]="Quantity" readonly disabled matInput>
-            </mat-form-field>
-
-           
-         
-          
-      <input formControlName = 'adminid' hidden>
+      <div style="background-color: #fafafabb;" class="example-full-width">
+        <mat-label>Add Stock Items <button class="btn btn-success btn-sm" type="button" (click)="AddForm()">+</button></mat-label>                
+      </div>
+      <br>             
       <ng-container formArrayName="stocktakelines">
         <div *ngFor="let x of stockTake.get('stocktakelines')['controls']; let j = index" >
           <div [formGroupName]="j">
@@ -28,9 +23,9 @@
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
-                  <mat-label> Select Stock Item</mat-label>
+                  <mat-label>Select Stock Item</mat-label>
                   <mat-select formControlName="itemid">
-                    <mat-option *ngFor="let x of StockList" (click) ="countQuantity(x.QuantityInStock)" value="{{x.ItemID}}">{{x.Name}}</mat-option>
+                    <mat-option *ngFor="let x of StockList"  value="{{x.ItemID}}">{{x.Name}}</mat-option>
                   </mat-select>
                   </mat-form-field>
                 </td>
@@ -39,8 +34,7 @@
                   <mat-label>Quantity</mat-label>
                   <input matInput type="number" matInput formControlName="quantity">
                   </mat-form-field></td>
-                  <button type= "button" (click)="AddForm()">+</button>
-                  <button type="button" *ngIf="j>0" (click)="DeleteForm(j)">-</button>
+                  <button type="button" *ngIf="stockTake.get('stocktakelines')['controls'].length>1" class="btn btn-danger" (click)="DeleteForm(j)"><span class="glyphicon glyphicon-trash"></span></button>
                 </tr>
               </table>
             </div>

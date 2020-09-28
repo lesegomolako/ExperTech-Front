@@ -7,6 +7,7 @@ import { NgForm, Validators, FormGroup, FormBuilder, FormArray, FormControl } fr
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 
 
@@ -22,6 +23,7 @@ export class StocktakeComponent implements OnInit {
   constructor(
     public service: StockService,
     private formBuilder: FormBuilder,
+    private api: ExperTexhService,
     private takeService: StockService,
     private http: HttpClient,
     private route: Router ){} 
@@ -42,26 +44,27 @@ export class StocktakeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.Take = JSON.parse(localStorage.getItem('stock'))
-
-    this.service.getStockList().subscribe(res =>
-      {
-        this.StockList =res;
-        
-      })
-
-      this.TakeList = this.takeService.getTakeList();
+   if(this.api.RoleID == "2")
+    {
+      this.service.getStockList().subscribe(res =>
+        {
+          this.StockList =res;
+          
+        })
 
       this.stockTake = this.formBuilder.group({
-        adminid: [this.Take.AdminID, Validators.required],
-        description: ['',Validators.required],
-        price: ['', Validators.required],
-        stocktakelines: this.formBuilder.array(
-          [
-            this.AddStockItems()
-          ]
-        )
-      })
+          description: ['',Validators.required],
+          stocktakelines: this.formBuilder.array(
+            [
+              this.AddStockItems()
+            ]
+          )
+        })
+    }
+    else
+    {
+      this.route.navigate(["403Forbidden"])
+    }
   }
 
   AddForm()
@@ -81,23 +84,22 @@ export class StocktakeComponent implements OnInit {
       })
     }
 
-    AddStockTake(){
-
-      this.mapValues();
-      this.takeService.CreateTake(this.Take).subscribe(ref => {
-       if(ref == "success")
-       {
-        alert("Successfully saved")
-        this.route.navigateByUrl("stocktake")
-       }
-      });
-    }
-
-    mapValues()
+AddStockTake()
+{
+  this.mapValues();
+  this.takeService.CreateTake(this.Take, this.api.SessionID).subscribe(ref => {
+    if(ref == "success")
     {
-      this.Take = this.stockTake.value;
-      this.Take.AdminID = 1;
+      alert("Successfully saved")
+      this.route.navigate(["stocktake"])
     }
+  });
+}
+
+mapValues()
+{
+  this.Take = this.stockTake.value;
+}
 
     
-  }
+}

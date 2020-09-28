@@ -94,7 +94,8 @@ import {EditsupplierComponent} from './Supplier/supplier/editsupplier/editsuppli
 import {PlaceorderComponent,OrderDialog} from './Supplier/supplier/placeorder/placeorder.component';
 import {orderform} from './Supplier/supplier/placeorder/orderform/orderform.component';
 import {SupplierComponent} from './Supplier/supplier/supplier.component';
-import { ViewServicesComponent } from './Service/view-services/view-services.component'
+import { ViewServicesComponent } from './Service/view-services/view-services.component';
+import { SaleinvoiceComponent } from './Supplier/sale/saleinvoice/saleinvoice.component';
 
 
 //******************************* Services *************************************/
@@ -142,7 +143,7 @@ import { CompanySettingsComponent } from './User/company-settings/company-settin
     RequestbComponent,BrowseComponent,BookingConfirmComponent, OptionsFilterPipe, AddClientDialog, SearchClientDialog,
     customFilter,SupplierComponent,orderform,PlaceorderComponent,EditsupplierComponent,AddsupplierComponent,
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
-    ViewdetailComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent, ReportsComponent, ErrorPageComponent, EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, EditCompanyComponent, CompanySettingsComponent
+    ViewdetailComponent,SaleinvoiceComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent, ReportsComponent, ErrorPageComponent, EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, EditCompanyComponent, CompanySettingsComponent
 
   ],
   imports: [

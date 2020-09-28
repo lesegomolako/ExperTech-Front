@@ -42,29 +42,19 @@ export class StockService {
     return this.http.put(this.url + "StockItem/UpdateStockItem", formData, {params});
   }
 
-  getTakeList(): Observable<StockTakeData[]>
+
+  CreateTake(formData: StockTakeData, SessionID)
   {
-    return this.http.get<StockTakeData[]>(this.url + "StockTake/AddStockTake")
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post(this.url + 'StockTake/AddStockTake',formData, {params})
   }
 
-  getWriteList(): Observable<WriteOffData[]>
+  CreateWrite(formData: WriteOffData, SessionID)
   {
-    return this.http.get<WriteOffData[]>(this.url + "StockWriteOff/AddStockWriteOff")
-  }
-
-  CreateTake(formData: StockTakeData)
-  {
+    const params = new HttpParams().set("SessionID", SessionID)
     return this.http.post(
-      this.url + 'StockTake/AddStockTake',
-      formData
-    )
-  }
-
-  CreateWrite(formData: WriteOffData)
-  {
-    return this.http.post(
-      this.url + 'StockWriteOff/AddStockWriteOff',
-      formData
+      this.url + 'StockTake/AddStockWriteOff',
+      formData, {params}
     )
   }
   

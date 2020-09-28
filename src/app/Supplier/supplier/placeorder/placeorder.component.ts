@@ -29,7 +29,7 @@ export class PlaceorderComponent implements AfterViewInit, OnInit {
   value = 'Clear me'; 
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['OrderID', 'Supplier', 'Description', 'Total items', 'Price', 'Date', 'ReturnOrder'];
+  displayedColumns = ['OrderID', 'Supplier', 'Description', 'Total items', 'Price', 'Date','viewdetail', 'ReturnOrder'];
   searchKey: string;
 
 

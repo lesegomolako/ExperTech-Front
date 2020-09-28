@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ProductService } from 'src/app/API Services/for Product/product.service';
 import { NgForm, FormGroup,FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ProductData } from 'src/app/API Services/for Product/product';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -15,7 +16,7 @@ export class EditProductComponent implements OnInit {
 
   
   constructor(private http: HttpClient, private router: Router,
-     public service: ProductService,
+     public service: ProductService, private api: ExperTexhService,
      private fb: FormBuilder
     ) { }
 
@@ -46,6 +47,9 @@ export class EditProductComponent implements OnInit {
     }
 
   ngOnInit(): void {
+
+    if(this.api.RoleID == "2")
+    {
     this.http.get<[]>("https://localhost:44380/api/Products/getSuppliers")
     .subscribe(res => {
       this.SupplierList = res;
@@ -65,6 +69,11 @@ export class EditProductComponent implements OnInit {
       this.logValidationErrors(this.ProductForm)
     })
   }
+  else
+  {
+    this.router.navigate(["403Forbidden"])
+  }
+}
 
   validationMessages = 
   {

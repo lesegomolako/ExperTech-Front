@@ -14,6 +14,7 @@
         <a routerLink="/ViewServices" *ngIf="RoleID == null || RoleID == '1' " (click)="drawer.close()" ><li> View Services</li></a>
         <a routerLink="/browse" *ngIf="RoleID == null || RoleID == '1' " (click)="drawer.close()" ><li>View Products</li></a>
         <a routerLink="/ViewBooking" *ngIf="RoleID == '1'" (click)="drawer.close()" ><li>Bookings</li></a>
+        <a routerLink="/request" *ngIf="RoleID == '1'" (click)="drawer.close()" ><li> Request Booking</li></a>
         <a routerLink="/Orders" *ngIf="RoleID == '1'" (click)="drawer.close()"><li>View Sales</li></a>
 
         <!-- admin sidnav stuff -->

@@ -1,33 +1,75 @@
-<h1>Reporting</h1>
-<div class="row" style="width: 350px; text-align: center">
-  <mat-card style="width: 220px; height: 100px; background-color: green">
-    <mat-icon>mode_comment</mat-icon><br />
-    
-    <a routerLink="/salereport"><button  class="btn btn-dark">Sales</button></a>
-  </mat-card>
+<div class="row">
+  <div class="col-11">
+  <h1 class="md-display-3">Reporting</h1>
+  </div>
+  <div class="col-1 nopadding">
+  <button mat-raised-button style="float: right;" routerLink="/employeehome" style="background-color:forestgreen" >
+      <mat-icon style="color:white">keyboard_return</mat-icon> Back
+  </button>
+  </div>
+</div>
 
-  <mat-card style="width: 220px; height: 100px; background-color: green">
-    <mat-icon>mode_comment</mat-icon><br />
-    <button class="btn btn-dark">Financial</button>
-    <a routerLink="/financialreport"><button  class="btn btn-dark">Financial</button></a>
-  </mat-card>
 
-  <mat-card style="width: 220px; height: 100px; background-color: green">
-    <mat-icon>mode_comment</mat-icon><br />
-    <button class="btn btn-dark">Product</button>
-    <a routerLink="/productreport"><button  class="btn btn-dark">Product</button></a>
-  </mat-card>
 
-  <mat-card style="width: 220px; height: 100px; background-color: green">
-    <mat-icon>mode_comment</mat-icon><br />
-    <button class="btn btn-dark">Supplier</button>
-    <a routerLink="/salereport"><button  class="btn btn-dark">Sales</button></a>
-  </mat-card>
+<div class="row"> 
 
-  <mat-card style="width: 220px; height: 100px; background-color: green">
-    <mat-icon>mode_comment</mat-icon><br />
-    <button class="btn btn-dark">Employee Booking</button>
-    <a routerLink="/bookingreport"><button  class="btn btn-dark">Employee Bookings</button></a>
-  </mat-card>
+  <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+    <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+      <div class="h-50">
+        <span class="icon flaticon-razor display-3 text-primary mb-4 d-block"></span>
+        <h3 class="text-black h4">Sales Report</h3>
+      </div>
+      <div>
+        <p><strong class="font-weight-bold text-primary"> <a href="./salereport"><button class="btn btn-success">Generate report</button></a></strong></p>
+      </div>
+    </div>
+  </div>
 
+  <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+    <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+      <div class="h-50">
+        <span class="icon flaticon-location-pin display-3 text-primary mb-4 d-block"></span>
+        <h3 class="text-black h4">Financial Report</h3>
+      </div>
+      <div>
+      <a href="./financialreport"><button class="btn btn-success">Generate report</button></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+    <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+      <div class="h-50">
+        <span class="icon flaticon-razor display-3 text-primary mb-4 d-block"></span>
+        <h3 class="text-black h4">Supplier Report</h3>
+      </div>
+      <div>
+        <p><strong class="font-weight-bold text-primary"> <a href="./supplierreport"><button class="btn btn-success">Generate report</button></a></strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+    <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+      <div class="h-50">
+        <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
+        <h3 class="text-black h4">Products Report</h3>
+      </div>
+      <div>
+        <p><strong class="font-weight-bold text-primary"><a routerLink="/productreport"><button class="btn btn-success">Generate report</button></a></strong></p>
+      </div> 
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+    <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+      <div class="h-50">
+        <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
+        <h3 class="text-black h4">Bookings Report</h3>
+      </div>
+      <div>
+        <p><strong class="font-weight-bold text-primary"><a href="./bookingreport"><button class="btn btn-success">Generate Report</button></a></strong></p>
+      </div>
+    </div>
+  </div>
 </div>
