@@ -8,23 +8,24 @@
         </button>
         <img src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;"/></li>
       <ul>
-        <!-- client sidnav stuff -->
+        <!-- admin sidnav stuff -->
         <a routerLink="/home" *ngIf="RoleID == null || RoleID == '1' " (click)="drawer.close()" ><li> Home</li></a>
         <a routerLink="/employeehome" *ngIf="RoleID == '2' || RoleID == '3'" (click)="drawer.close()" ><li> Home</li></a>
         <a routerLink="/ViewServices" *ngIf="RoleID == null || RoleID == '1' " (click)="drawer.close()" ><li> View Services</li></a>
         <a routerLink="/browse" *ngIf="RoleID == null || RoleID == '1' " (click)="drawer.close()" ><li>View Products</li></a>
         <a routerLink="/ViewBooking" *ngIf="RoleID == '1'" (click)="drawer.close()" ><li>Bookings</li></a>
         <a routerLink="/request" *ngIf="RoleID == '1'" (click)="drawer.close()" ><li> Request Booking</li></a>
-        <a routerLink="/Orders" *ngIf="RoleID == '1'" (click)="drawer.close()"><li>View Sales</li></a>
+        <a routerLink="/ServicePackage" *ngIf="RoleID == '1'" (click)="drawer.close()"><li>View Service Package</li></a>
 
-        <!-- admin sidnav stuff -->
+        <!-- client sidnav stuff -->
         <a routerLink="/schedule" *ngIf="RoleID == '2'" (click)="drawer.close()" ><li> View Schedule</li></a>
         <a routerLink="/services" *ngIf="RoleID == '2'" (click)="drawer.close()"><li>Services</li></a>
         <a routerLink="/client" *ngIf="RoleID == '2'" (click)="drawer.close()"><li>Client</li></a>
         <a routerLink="/reports" *ngIf="RoleID == '2'" (click)="drawer.close()" ><li> Reports</li></a>
         <a routerLink="/ClientProfile" *ngIf="RoleID == '2'" (click)="drawer.close()" ><li> Settings</li></a>
 
-        
+        <!-- employee homepage stuff -->
+    
         <li (click)="logout(); drawer.close()" *ngIf="RoleID != null">Logout</li>
         <li *ngIf="RoleID == null" (click)="login(); drawer.close()">Login</li>
         

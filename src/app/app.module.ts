@@ -30,6 +30,7 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 
@@ -148,7 +149,7 @@ import { CompanySettingsComponent } from './User/company-settings/company-settin
   ],
   imports: [
     BrowserModule, MatTableModule, MatSelectModule,
-    AppRoutingModule, MatButtonModule, MatAutocompleteModule,
+    AppRoutingModule, MatButtonModule, MatAutocompleteModule, MatStepperModule,
     BrowserAnimationsModule, MatInputModule,MatExpansionModule,
     MatIconModule, FormsModule, ReactiveFormsModule, MatGridListModule,
     MatToolbarModule, MatMenuModule , MatFormFieldModule, MatSidenavModule,

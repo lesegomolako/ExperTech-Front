@@ -1,4 +1,4 @@
-<div class="jumbotron" style="background-color: whitesmoke">
+<!-- <div class="jumbotron" style="background-color: whitesmoke">
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
@@ -29,21 +29,21 @@
 
           <mat-form-field appearance="fill">
             <mat-label>Payment Type</mat-label>
-            <mat-select>
+            <mat-select #paymenttype>
               <mat-option
-                *ngFor="let option of List | async"
-                value="{{option.Type}}"
+               
+                value="{{option.TypeID}}"
                 >{{option.Type}}</mat-option
               >
             </mat-select>
           </mat-form-field>
           <br />
           <div style="text-align: center;">
-          <button class="btn btn-success" ng-click ="Activate()">Activate</button>
+          <button class="btn btn-success" (click)="Activate(paymenttype.value)">Activate</button>
           <button class="btn btn-success" (click)="previousForm()">Back</button>
           </div>
         </form>
       </div>
     </div>
   </div>
-</div>
+</div> -->

@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ReportingService } from '../../API Services/for User/reporting.service';
-import {Process} from '../../API Services/for User/process';
+import {PaymentType, Process} from '../../API Services/for User/process';
 
 @Component({
   selector: 'app-pickup',
@@ -25,7 +25,7 @@ export class PickupComponent implements OnInit {
     public service: ReportingService
   ) { }
 
-  List: Observable<Process[]>
+  List: Observable<PaymentType[]>
   pickupForm: FormGroup;
   submitted = false;
   public PickupFormGroup: FormGroup;

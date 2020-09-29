@@ -8,10 +8,11 @@ import {
   distinctUntilChanged,
   switchMap,
 } from 'rxjs/operators';
-import { Process, Schedule, Package } from './process';
+import { Process, Schedule, Package, PaymentType, Sale } from './process';
 import { User } from 'src/app/Staff/admin-register/admin-register.component';
 import { AvailData } from 'src/app/User/available/available.component';
 import { UserData } from 'src/app/Staff/setup/setup.component';
+import { Client } from '../for Booking/client';
 
 //import 'rxjs/add/operator/map'
 
@@ -59,8 +60,8 @@ export class ReportingService {
     }
   }
   ///********************************************************Client CRUD*********************************************************************
-  readClient(): Observable<Process[]>{
-    return this.http.get<Process[]>(this.url + 'Clients/getClient');
+  readClient(): Observable<Client[]>{
+    return this.http.get<Client[]>(this.url + 'Clients/getClient');
     }
   walkinClient(formData: Process) {
     let body = JSON.stringify(formData);
@@ -241,13 +242,11 @@ export class ReportingService {
     return this.http.get<Package[]>(this.url + 'Services/RetrieveServicePackage');
   }
 
-  activateSerPackage(formData: Process){
-    let body = JSON.stringify(formData);
-    if (confirm(body)) {
-      return this.http.post<Process>(
-        this.url + 'User/activeSP', formData
-      )
-    }
+  activateSerPackage(formData, SessionID)
+  {
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post(this.url + 'User/activeSP', formData, {params})
+    
   }
   ///**********************************************Payments**************************************************
   salePayment(formData: Process) {
@@ -264,8 +263,8 @@ export class ReportingService {
     return this.http.post(this.url + "User/bookingPayment", httpOptions);   
   }
     ///********************************************************Payments Types**************************************************************
-    getPaymentType(): Observable<any[]>{
-      return this.http.get<any[]>(this.url + 'User/getPaymentType');
+    getPaymentType(): Observable<PaymentType[]>{
+      return this.http.get<PaymentType[]>(this.url + 'User/getPaymentType');
     }
 
   GetReportingData(selected) {

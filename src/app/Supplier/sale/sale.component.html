@@ -63,7 +63,7 @@
     <!-- Payment Column -->
     <ng-container matColumnDef="reminder">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Days to reminder</th>
-      <td mat-cell *matCellDef="let row">{{row.Reminder}}</td>
+      <td mat-cell *matCellDef="let row">{{row.Reminder || "N/A"}}</td>
     </ng-container>
 
     <ng-container matColumnDef="viewdetail">

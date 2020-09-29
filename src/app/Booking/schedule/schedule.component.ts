@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import {MatDialog,MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-export class Schedule
+export class Schedules
 {
   BookingID: any;
   BookingStatusID: any;
@@ -70,16 +70,15 @@ const colors: any = {
 })
 export class ScheduleComponent implements OnInit {
 
-  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
-
+ 
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
 
-  events$: Observable<CalendarEvent<Schedule>[]>;
+  events$: Observable<CalendarEvent<Schedules>[]>;
   
 
-  events:CalendarEvent<{ Schedge: Schedule }>[];
+  events:CalendarEvent<{ Schedge: Schedules }>[];
 
   activeDayIsOpen: boolean = false;
 
@@ -90,122 +89,15 @@ export class ScheduleComponent implements OnInit {
     event: CalendarEvent;
   };
 
-  // actions: CalendarEventAction[] = [
-  //   {
-     
-  //     label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-  //     a11yLabel: 'Edit',
-  //     onClick: ({ event }: { event: CalendarEvent }): void => {
-  //       //this.handleEvent('Edited', event);
-  //       this.router.navigateByUrl("Confirm");
-  //     },
-  //   },
-  //   {
-  //     label: '<i class="fas fa-fw fa-trash-alt"></i>',
-  //     a11yLabel: 'Delete',
-  //     onClick: ({ event }: { event: CalendarEvent }): void => {
-  //       this.events = this.events.filter((iEvent) => iEvent !== event);
-  //       this.handleEvent('Deleted', event);
-
-  //     },
-  //   },
-  // ];
+ 
 
   refresh: Subject<any> = new Subject();
 
-  // events: CalendarEvent[] = [
-  //   {
-  //     start: subDays(startOfDay(new Date()), 1),
-  //     end: addDays(new Date(), 1),
-  //     title: 'Booking canceled ',
-      
-  //     color: colors.red,
-  //     actions: this.actions,
-  //     allDay: true,
-  //     resizable: {
-  //       beforeStart: true,
-  //       afterEnd: true,
-  //     },
-  //     draggable: true,
-      
-  //   },
-  //   {
-  //     start: startOfDay(new Date()),
-  //     title: 'Peding confirmation',
-  //     color: colors.yellow,
-  //     actions: this.actions,
-  //   },
-  //   {
-  //     start: subDays(endOfMonth(new Date()), 3),
-  //     end: addDays(endOfMonth(new Date()), 3),
-  //     title: 'Confirmed booking',
-  //     color: colors.green,
-  //     allDay: true,
-  //   },
-  // ];
+ 
 
   constructor(public dialog: MatDialog, private api: ExperTexhService,
     private router: Router,
-    private http: HttpClient) {}
-
-  // dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-  //   if (isSameMonth(date, this.viewDate)) {
-  //     if (
-  //       (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-  //       events.length === 0
-  //     ) {
-  //       this.activeDayIsOpen = false;
-  //     } else {
-  //       this.activeDayIsOpen = true;
-  //     }
-  //     this.viewDate = date;
-  //   }
-  // }
-
-  // eventTimesChanged({
-  //   event,
-  //   newStart,
-  //   newEnd,
-  // }: CalendarEventTimesChangedEvent): void {
-  //   this.events$ = this.events$.map((iEvent) => {
-  //     if (iEvent === event) {
-  //       return {
-  //         ...event,
-  //         start: newStart,
-  //         end: newEnd,
-  //       };
-  //     }
-  //     return iEvent;
-  //   });
-  //   this.handleEvent('Dropped or resized', event);
-  // }
-
-  handleEvent(event: CalendarEvent): void {
-    //this.modalData = { event, action };
-    const dialogRef = this.dialog.open(BookingDialog)
-    //this.dialog.open(content, { size: 'lg' });
-  }
-
-  // addEvent(): void {
-  //   this.events = [
-  //     ...this.events,
-  //     {
-  //       title: 'New event',
-  //       start: startOfDay(new Date()),
-  //       end: endOfDay(new Date()),
-  //       color: colors.red,
-  //       draggable: true,
-  //       resizable: {
-  //         beforeStart: true,
-  //         afterEnd: true,
-  //       },
-  //     },
-  //   ];
-  // }
-
-  // deleteEvent(eventToDelete: CalendarEvent) {
-  //   this.events = this.events.filter((event) => event !== eventToDelete);
-  // }
+    private http: HttpClient) {}  
 
   setView(view: CalendarView) {
     this.view = view;
@@ -232,6 +124,18 @@ export class ScheduleComponent implements OnInit {
 
   fetchEmpEvents()
   {
+    const getStart: any = {
+      month: startOfMonth,
+      week: startOfWeek,
+      day: startOfDay,
+    }[this.view];
+
+    const getEnd: any = {
+      month: endOfMonth,
+      week: endOfWeek,
+      day: endOfDay,
+    }[this.view];
+    
     const params = new HttpParams()
     .set(
       'SessionID', this.api.SessionID)
@@ -239,8 +143,8 @@ export class ScheduleComponent implements OnInit {
     this.events$ = this.http
       .get('https://localhost:44380/api/Employees/RetrieveEmployeeBooking', {params})
       .pipe(
-        map(( res :  Schedule[] ) => {
-          return res.map((Schedules: Schedule) => {
+        map(( res :  Schedules[] ) => {
+          return res.map((Schedules: Schedules) => {
             return {
               title: Schedules.Client + "'s Booking",
               start: new Date(
@@ -273,8 +177,8 @@ export class ScheduleComponent implements OnInit {
     this.events$ = this.http
       .get('https://localhost:44380/api/Clients/RetrieveBookings')
       .pipe(
-        map(( res :  Schedule[] ) => {
-          return res.map((Schedules: Schedule) => {
+        map(( res :  Schedules[] ) => {
+          return res.map((Schedules: Schedules) => {
             if(Schedules.BookingStatus == "Requested"){
             return {
               title: Schedules.Client + "'s Requested Booking",
@@ -323,7 +227,7 @@ export class ScheduleComponent implements OnInit {
     events,
   }: {
     date: Date;
-    events: CalendarEvent<{ Schedge: Schedule }>[];
+    events: CalendarEvent<{ Schedge: Schedules }>[];
   }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -408,7 +312,7 @@ export class ScheduleComponent implements OnInit {
 export class BookingDialog implements OnInit
 {
   constructor(public dialogRef: MatDialogRef<BookingDialog>, private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: Schedule) {}
+    @Inject(MAT_DIALOG_DATA) public data: Schedules) {}
 
   title: string;
   ngOnInit()

@@ -25,7 +25,7 @@ export class ConfirmComponent implements OnInit {
     public service: ReportingService
   ) {}
 
-  List: Observable<Process[]>
+  //List: Observable<Process[]>
   confirmForm: FormGroup;
   submitted = false;
   public ConfirmFormGroup: FormGroup;
@@ -47,7 +47,7 @@ ngOnInit() {
   
   
 loadList(){
-    this.List = this.service.getPaymentType()
+    //this.List = this.service.getPaymentType()
     this.clientObject = this.service.formData;
   }
   hide = true;
@@ -68,12 +68,12 @@ forgotPassword(form: NgForm){
  
  Activate(form: NgForm){
    
-    this.service.activateSerPackage(form.value).subscribe(ref => {this.loadList()});
+    //this.service.activateSerPackage(form.value).subscribe(ref => {this.loadList()});
  }
 
  user:Process;
  SPackage(){
-   this.service.activateSerPackage(this.user).subscribe(ref => {this.loadList()});
+   //this.service.activateSerPackage(this.user).subscribe(ref => {this.loadList()});
  }
 
 

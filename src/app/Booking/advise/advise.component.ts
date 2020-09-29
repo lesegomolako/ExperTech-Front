@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ServicesService } from 'src/app/API Services/for Service/services.service';
 import { HttpClient } from '@angular/common/http';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
-import { Schedule } from '../schedule/schedule.component';
+import { Schedules } from '../schedule/schedule.component';
 import { Router} from '@angular/router'
 
 @Component({
@@ -19,7 +19,7 @@ export class AdviseComponent implements OnInit {
   EmployeeList: []
   Times: [];
   chosenDate: any;
-  Booking: Schedule;
+  Booking: Schedules;
   
   AdviseForm: FormGroup;
 

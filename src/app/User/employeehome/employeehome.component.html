@@ -15,11 +15,11 @@
       <mat-card-subtitle>Welcome to your profile</mat-card-subtitle>
     </mat-card>
 
-    <mat-card>
+    <mat-card *ngIf="RoleID == '2'">
       <div class="site-section">
         <div class="container">
           <div class="row"> 
-            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5" >
               <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
                 <div class="h-50">
                   <span class="icon flaticon-razor display-3 text-primary mb-4 d-block"></span>
@@ -31,17 +31,17 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5" >
               <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
                 <div class="h-50">
-                  <span class="icon flaticon-location-pin display-3 text-primary mb-4 d-block"></span>
-                  <h3 class="text-black h4">Availability</h3>          
-                  <p>Setup employee availablity schedule</p>
+                  <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
+                  <h3 class="text-black h4">Manage staff</h3>
+                  <p>Add or remove staff from system</p>
                 </div>
-                <a href="./available"><button class="btn btn-success">Availability</button></a>
+                <p><strong class="font-weight-bold text-primary"><a href="./staff"><button class="btn btn-success">Staff</button></a></strong></p>
               </div>
             </div>
-            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5" >
               <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
                 <div class="h-50">
                   <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
@@ -51,7 +51,7 @@
                 <p><strong class="font-weight-bold text-primary"><a routerLink="/AdminProduct"><button class="btn btn-success">Products</button></a></strong></p>
               </div>
             </div>
-            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5" >
               <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
                 <div class="h-50">
                   <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
@@ -64,7 +64,7 @@
           </div>
       
           <div class="row"> 
-            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5" >
               <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
                 <div class="h-50">
                   <span class="icon flaticon-razor display-3 text-primary mb-4 d-block"></span>
@@ -74,7 +74,7 @@
                 <p><strong class="font-weight-bold text-primary"> <a routerLink="/stock"><button  class="btn btn-success">Stock</button></a></strong></p>
               </div>
             </div>
-            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5" >
               <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
                 <div class="h-50">
                   <span class="icon flaticon-location-pin display-3 text-primary mb-4 d-block"></span>
@@ -84,7 +84,7 @@
                 <a href="./payment"><button class="btn btn-success">Payments</button></a>
               </div>
             </div>
-            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5" >
               <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
                 <div class="h-50">
                   <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
@@ -93,21 +93,8 @@
                 </div>
                 <p><strong class="font-weight-bold text-primary"><a href="./sale"><button class="btn btn-success">Sales</button></a></strong></p>
               </div>
-            </div>
-            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
-              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
-                <div class="h-50">
-                  <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
-                  <h3 class="text-black h4">Manage staff</h3>
-                  <p>Add or remove staff from system</p>
-                </div>
-                <p><strong class="font-weight-bold text-primary"><a href="./staff"><button class="btn btn-success">Staff</button></a></strong></p>
-              </div>
-            </div>
-          </div>
-      
-          <div class="row"> 
-            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+            </div> 
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5" >
               <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
                 <div class="h-50">
                   <span class="icon flaticon-razor display-3 text-primary mb-4 d-block"></span>
@@ -116,8 +103,11 @@
                 </div>
                 <p><strong class="font-weight-bold text-primary"> <a routerLink="/reports"><button  class="btn btn-success">Reports</button></a></strong></p>
               </div>
-            </div>
-            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+            </div>           
+          </div>
+      
+          <div class="row"> 
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5" >
               <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
                 <div class="h-50">
                   <span class="icon flaticon-location-pin display-3 text-primary mb-4 d-block"></span>
@@ -127,7 +117,7 @@
                 <a href="./supplier"><button class="btn btn-success">Supplier</button></a>
               </div>
             </div>
-            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5" >
               <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
                 <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
                 <h3 class="text-black h4">Service Packages</h3>
@@ -135,7 +125,7 @@
                 <p><strong class="font-weight-bold text-primary"><a href="./spackage"><button class="btn btn-success">Activate Package</button></a></strong></p>
               </div>
             </div>
-            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5">
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5" >
               <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
                 <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
                 <h3 class="text-black h4">Settings</h3>
@@ -148,6 +138,37 @@
       </div>
     </mat-card>
      
+    <mat-card *ngIf="RoleID == '3'">
+      <div class="site-section">
+        <div class="container">
+          <div class="row"> 
+            <div class="col-md-6 col-lg-6 text-center mb-5 mb-lg-5" >
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <div class="h-50">
+                  <span class="icon flaticon-razor display-3 text-primary mb-4 d-block"></span>
+                  <h3 class="text-black h4">Bookings</h3>
+                  <p>View booking calendar</p>
+                </div>
+                <div>
+                  <p><strong class="font-weight-bold text-primary"> <a href="./schedule"><button class="btn btn-success">Bookings</button></a></strong></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-6 text-center mb-5 mb-lg-5" >
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <div class="h-50">
+                  <span class="icon flaticon-location-pin display-3 text-primary mb-4 d-block"></span>
+                  <h3 class="text-black h4">Availability</h3>          
+                  <p>Setup employee availablity schedule</p>
+                </div>
+                <a href="./available"><button class="btn btn-success">Availability</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
     
 
     <mat-card>

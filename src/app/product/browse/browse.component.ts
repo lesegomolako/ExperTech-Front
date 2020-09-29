@@ -25,6 +25,7 @@ export class BrowseComponent implements OnInit {
   name: string;
   submitted = false;
   productForm: FormGroup;
+  RoleID = this.api.RoleID;
 
   myImages;
 
