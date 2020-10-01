@@ -6,6 +6,7 @@ export class SaleData
   Payment: any;
   ClientID: any;
   ClientName: string;
+  ClientSurname:string;
   ClientEmail: string;
   ClientContact: string;
   Date: string;

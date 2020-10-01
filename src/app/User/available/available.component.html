@@ -4,8 +4,11 @@
     class="card_hover"
   >
     <form [formGroup]="AvailabilityForm" (ngSubmit)="addAvailability()">
-      <h1 style="text-align: center">Schedule</h1>
+      <h1 style="text-align: center">Schedule <button mat-raised-button style="float: right;" routerLink="/employeehome" style="background-color:forestgreen" >
+        <mat-icon style="color:white">keyboard_return</mat-icon> Back
+    </button></h1>
       <br />
+     
 
       <mat-form-field>
         <input
@@ -75,26 +78,8 @@
       </button>
     </form>
   </div>
-</div>
 
-<!-- <div class = "row">
-  <div class="text-center col-md-9">
-     <h2>Bookings Schedule</h2>
-  </div>
-  <div class="col-md-3" >
-     <div  class="example-button-container" style="float: right;">
-       <button (click)="cancel()" mat-raised-button style="background-color: green;" >
-         <mat-icon> keyboard_return</mat-icon>
-         Back
-     </button>
- 
-   
-       <a routerLink='/Booking'><button mat-raised-button style="background-color: green;" >       
-         Add booking
-     </button></a>
- </div>
-</div> 
-</div>
+  <br>
 
 <ng-template #loading>
 <div class="text-center"> 
@@ -203,8 +188,6 @@
 
 </div>
 
+<br>
 
- 
-
-
-  -->
+</div>

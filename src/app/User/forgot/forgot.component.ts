@@ -43,14 +43,14 @@ export class ForgotComponent implements OnInit {
   //convenienve getter for easy access to form fields
   get f() {return this.email; }
 
-  onSubmit() {
+  onSubmit(username) {
     this.submitted = true;
 
     //stop here if form is invalid
     
     
 
-    this.service.forgotPassword(this.email.value).subscribe(res =>
+    this.service.forgotPassword(username).subscribe(res =>
       {
         if(res == "success")
         {
@@ -79,17 +79,7 @@ export class ForgotComponent implements OnInit {
   }
   List: Observable<Process[]>
 
-      omit_special_char(event) {
-      var k;
-      k = event.charCode;
-      return (
-        (k > 64 && k < 91) ||
-        (k > 96 && k < 123) ||
-        k == 8 ||
-        k == 32 ||
-        (k >= 48 && k <= 57)
-      );
-    }
+
 
     resetForm(form?: NgForm) {
       if (form != null) form.reset();

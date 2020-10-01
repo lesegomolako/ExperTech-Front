@@ -24,7 +24,9 @@ li
     display: flex;
     border-bottom: 1px solid grey;
     padding-top: 10px;
+    padding-bottom: 10px;
     width: 80%;
+
 
 }
 
@@ -52,6 +54,7 @@ li
 .name
 {
     font-size: 20pt;
+    padding-bottom: 5px;
     letter-spacing: 0.5pt;
 }
 
@@ -83,7 +86,7 @@ li
 .buttons button
 {
     cursor: pointer;
-    size: 30px 30px;
+    size: 35px 35px;
     
     
     
@@ -92,7 +95,9 @@ li
 .buttons a
 {
     cursor: pointer;
-    size: 30px 30px;
+    height: 50;
+    width: 50;
+    
     margin: 2px;
     
 }

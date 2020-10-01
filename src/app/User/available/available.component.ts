@@ -31,6 +31,7 @@ export class AvailData {
   EndDate: any;
   StartTime: any;
   EndTime: any;
+  StatusID: any;
   Avail: any;
 }
 
@@ -121,8 +122,13 @@ export class AvailableComponent implements OnInit {
   addAvailability() {
     this.Schedge = this.AvailabilityForm.value;
     console.log(this.Schedge);
-    this.service.Schedule(this.Schedge).subscribe((ref) => {
-      if (ref == 'success') alert('hello');
+    this.service.Schedule(this.Schedge, this.api.SessionID).subscribe((ref) => {
+
+      if (ref == 'success') 
+      {
+        alert("Availibility successfully updated");
+        this.fetchEvents();
+      }
     });
   }
 
@@ -194,7 +200,7 @@ export class AvailableComponent implements OnInit {
       'SessionID', this.api.SessionID)
 
     this.events$ = this.http
-      .get('https://localhost:44380/api/Employees/RetrieveEmployeeBooking', {params})
+      .get('https://localhost:44380/api/Employees/DisplayEmployeeSchedule', {params})
       .pipe(
         map(( res :  Schedules[] ) => {
           return res.map((Schedules: Schedules) => {

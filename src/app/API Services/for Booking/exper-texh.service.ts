@@ -4,6 +4,7 @@ import{Client, User, BasketLine,ClientPackage, Product, Booking} from './client'
 //import 'rxjs/add/operator/map';
 import { HttpHeaders, HttpParams } from '@angular/common/http';  
 import { HttpClient } from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 
 
@@ -57,7 +58,7 @@ export class ExperTexhService {
 
   getProfile(): Observable<User> { 
     const params = new HttpParams().set("SessionID", this.SessionID)
-    return this.http.get<User>(this.url + 'User/getProfile', {params});  
+    return this.http.get<User>(this.url + 'User/getProfile', {params})
   }  
 
   getClientById(cleintId: any): Observable<Client> {  

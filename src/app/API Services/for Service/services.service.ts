@@ -38,9 +38,9 @@ ViewServices(): Observable<ServiceTypeData[]>
     return this.http.post(this.url + 'Services/AddServiceType' , form)
   }
 
-  DeleteServiceType(TypeID: any)
+  DeleteServiceType(TypeID: any, SessionID)
   {    
-    const params = new HttpParams().set('TypeID', TypeID );
+    const params = new HttpParams().set('TypeID', TypeID ).set('SessionID', SessionID );
     return this.http.delete(this.url + 'Services/DeleteServiceType', {
       headers: {'Content-Type': 'application/json'},
       params: params

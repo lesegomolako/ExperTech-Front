@@ -1,19 +1,40 @@
 <h1 mat-dialog-title>Search Client</h1>
   <div mat-dialog-content>
-    <mat-form-field class="example-full-width">
-      <input type="text"
-             placeholder="Pick one"
-             aria-label="Number"
-             matInput
-             [formControl]="myControl"
-             [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+      
+    <div class="topnav" style="float: right;">
+      <input
+        type="text"
+        id="myInput"
+        (keyup)="myFunction($event)"
+        placeholder="Search..."
+      />
+    </div>
+    <br>
+    <table id="myTable" class="table table_hover">
+      <tr class="header">
+        <th style="width: 60; display: none;" name="ClientID">ClientID</th>
+        <th style="width: 60;" name="Name">Name</th>
+        <th style="width: 60;" name="Surname">Surname</th>
+        <th style="width: 60;" name="ContactNo">Contact Number</th>
+        <th style="width: 60;" name="Email">Email Address</th>
+        <th style="width: 60;"></th>
+      </tr>
+
+      
+      <tr *ngFor="let item of ClientList | async">
+        <td name="ClientID" style="display: none;">{{item.ClientID}}</td>
+        <td name="Name">{{ item.Name }}</td>
+        <td name="Surname">{{ item.Surname }}</td>
+        <td name="ContactNo">{{ item.ContactNo }}</td>
+        <td name="Email">{{ item.Email }}</td>
+        <td>
+          <button class="btn btn-warning" (click)="SelectClient(item)">Select Client</button>
+        </td>
+        </tr>            
+    </table> 
+  </div>
+
+<br>
 <div mat-dialog-actions>
-    <button mat-button type="button" mat-dialog-close>Cancel</button>
-    <button mat-button type="submit" cdkFocusInitial>Save</button>
+    <button mat-button  style="background-color: gray;" type="button" mat-dialog-close>Cancel</button>
 </div>

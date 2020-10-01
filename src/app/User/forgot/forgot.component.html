@@ -4,26 +4,21 @@
       <div class="col-md-6 offset-md-3">
         <h3 style="text-align: center;">Forgot Password</h3>
         
+          <p><small>Reset password by entering your username. A reset link will be sent to your email address</small></p>
+          <br>
           <div class="form-group">
-            <label>Email Address</label>
+            <label>Enter username</label>
             <input
-              (keypress)="omit_special_char($event)"
               type="text"
-              formControl="email"
               class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && email.errors }"
+              #username
             />
-            <!-- <div *ngIf="submitted && email.errors" class="invalid-feedback">
-              <div *ngIf="email.errors.required">
-                Email Address is required
-              </div>
-            </div>
-          </div> -->
-
+          </div>
+          <br>
           <div style="text-align: center;">
             <div class="form-group">
               <button
-                (submit)="onSubmit()"
+                (click)="onSubmit(username.value)"
                 class="btn btn-primary"
                 style="color: white; background-color: green;">
                 Submit

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '../../API Services/for Service/services.service';
 import { Router } from '@angular/router';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 
 @Component({
@@ -10,16 +11,24 @@ import { Router } from '@angular/router';
 })
 export class DeleteServiceTypeComponent implements OnInit {
 
-  constructor(private service: ServicesService, private router: Router) { }
+  constructor(private service: ServicesService, private router: Router, private api:ExperTexhService) { }
 
   ngOnInit(): void 
   {
-    this.formData = JSON.parse(localStorage.getItem('stDelete'))
-    if (!this.formData)
+    if(this.api.RoleID == "2")
     {
-      alert("Invalid details. Redirecting to Service Types screen")
-      this.router.navigateByUrl("services/ServiceTypes")
+      this.formData = JSON.parse(localStorage.getItem('stDelete'))
+      if (!this.formData)
+      {
+        alert("Invalid details. Redirecting to Service Types screen")
+        this.router.navigateByUrl("services/ServiceTypes")
+      }
     }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
+   
     
   }
 
@@ -36,7 +45,7 @@ export class DeleteServiceTypeComponent implements OnInit {
     var ID = this.formData.TypeID
     if(confirm("Are you sure you want to delete this?"))
     {
-      this.service.DeleteServiceType(ID).subscribe(res =>
+      this.service.DeleteServiceType(ID, this.api.SessionID).subscribe((res:any) =>
         {
           if (res == "success")
           {
@@ -44,10 +53,15 @@ export class DeleteServiceTypeComponent implements OnInit {
             alert("Successfully deleted");
             this.router.navigateByUrl("services/ServiceTypes");
           }
+          else if(res.Error == "dependencies")
+          {
+            alert(res.Message)
+          }
           else
           {
             localStorage.removeItem("stDelete")
-            alert("Error deleting Service Type. Redirecting to Service Type screen");
+            alert("Error deleting Service Type");
+            console.log(res)
             this.router.navigateByUrl("services/ServiceTypes");
           }
 

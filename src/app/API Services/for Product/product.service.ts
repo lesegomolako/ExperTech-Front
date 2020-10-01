@@ -25,7 +25,7 @@ export class ProductService {
     return this.http.post(this.url + "Products/UpdateProduct" , form)
   }
 
-  AddProduct(form: ProductData,UploadFile: File)
+  AddProduct(form: ProductData,UploadFile: File, SessionID)
   {
    // alert(form.Name)
     const formData: FormData = new FormData();
@@ -36,14 +36,15 @@ export class ProductService {
     formData.append('QuantityOnHand', form.QuantityOnHand)
     formData.append('Photos', JSON.stringify(form.Photos))
     formData.append('SupplierID', form.SupplierID)
+    formData.append('SessionID', SessionID)
     formData.append('Image', UploadFile, UploadFile.name)
     console.log(formData)
     return this.http.post(this.url + 'Products/AddProduct' , formData)
   }
 
-  DeleteProduct(TypeID: any)
+  DeleteProduct(TypeID: any, SessionID)
   {    
-    const params = new HttpParams().set('TypeID', TypeID );
+    const params = new HttpParams().set('TypeID', TypeID ).set('SessionID', SessionID );
     return this.http.delete(this.url + 'Products/DeleteProduct', {params})
   }
 }

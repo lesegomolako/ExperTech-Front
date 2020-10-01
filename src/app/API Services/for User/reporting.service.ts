@@ -142,16 +142,11 @@ export class ReportingService {
     }
   }
   ///***********************************************User**************************************************
-  forgotPassword(email) {
+  forgotPassword(username) {
 
-    const params = new HttpParams().set('Email', email );
-
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-      params: params,
-    };
+    const params = new HttpParams().set('Username', username );
     
-    return this.http.post(this.url + 'User/ForgotPassword', httpOptions);
+    return this.http.get(this.url + 'User/ForgotPassword',{params});
     
   }
   //use this one refiloe
@@ -226,15 +221,16 @@ export class ReportingService {
   }
 
    //set the schedule
-   Schedule(form: AvailData) {
+   Schedule(form: AvailData, SessionID) {
     const formData: FormData = new FormData();
     formData.append("StartDate", form.StartDate)
     formData.append("EndDate", form.EndDate)
     formData.append("EndTime", form.EndTime)
     formData.append("StartTime", form.StartTime)
     formData.append("Availbilness", form.Avail)
-
-    return this.http.post(this.url + 'Employee/EmployeeAvailability', formData);
+    
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post(this.url + 'Employee/EmployeeAvailability', form, {params});
   }
   //***********************************************Service Package ******************************************
 

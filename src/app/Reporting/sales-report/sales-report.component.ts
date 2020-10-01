@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup,FormBuilder, FormControl, Validators } from '@angular/forms';
 import {Chart} from 'chart.js';
 import {HttpClient} from '@angular/common/http';
 import {ReportsService, Criteria} from '../../API Services/for Reports/reports.service';
@@ -8,6 +8,7 @@ import { of} from 'rxjs';
 import { stringify } from 'querystring';
 import {jsPDF} from 'jspdf';
 import {autoTable} from 'jspdf-autotable';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 @Component({
   selector: 'app-sales-report',
@@ -16,17 +17,27 @@ import {autoTable} from 'jspdf-autotable';
 })
 export class SalesReportComponent implements OnInit {
 
-  range = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl()
+  trange = new FormGroup({
+    start: new FormControl('', Validators.required),
+    end: new FormControl('',Validators.required),
   });
 
+  ReportForm: FormGroup;
+
   today = new Date();
-  maxDate = new Date(new Date().setDate(this.today.getDay()))
+  maxDate = new Date(new Date().setDate(new Date().getDate()));
   displayed = true;
+  generated = true;
 
   ngOnInit(): void {
 
+    console.log(this.maxDate)
+
+    this.ReportForm = new FormGroup({
+      start: new FormControl('', Validators.required),
+      end: new FormControl('',Validators.required),
+      criteria: new FormControl('', Validators.required)
+    })
   
     console.log(this.maxDate)
   }
@@ -36,13 +47,13 @@ export class SalesReportComponent implements OnInit {
   chart=[];
   products: Object;
 
-  constructor(private service: ReportsService){}
+  constructor(private service: ReportsService, private api: ExperTexhService, private fb: FormBuilder){}
 
   DownloadPDF()
   {
     this.Criteria = ({
-      StartDate: this.range.value.start,
-      EndDate: this.range.value.end
+      StartDate: this.trange.value.start,
+      EndDate: this.trange.value.end
     })
 
     // this.service.GetSaleReportingData(this.Criteria).subscribe(res => {
@@ -85,27 +96,35 @@ export class SalesReportComponent implements OnInit {
     return 'rgba(' + o(r()*s) + ',' + + o(r()*s) + ',' + o(r()*s) + ', 0.7)';
   }
 
+  
+
 
   SubmitRequest(){
+
+    if(this.ReportForm.invalid)
+    {
+      this.ReportForm.markAllAsTouched();
+      return;
+    }
     this.displayed = false;
+    this.generated = false;
     var tTitle = "Product Sales per category";
   
     this.Criteria = ({
-      StartDate: this.range.value.start,
-      EndDate: this.range.value.end
+      StartDate: this.ReportForm.value.start,
+      EndDate: this.ReportForm.value.end,
+      Option: this.ReportForm.value.criteria
     })
 
     //console.log(this.Criteria)
 
-    this.service.GetSaleReportingData(this.Criteria).subscribe(response => {
+    this.service.GetSaleReportingData(this.Criteria, this.api.SessionID).subscribe(response => {
 
       let keys = response['Category'].map(d=> d.Name);
       let values = response['Category'].map(d=> d.Total);
 
       this.products = response['Category'];
-      
-     
-
+    
       this.chart = new Chart('canvas',{
         type:'pie',
         data:{

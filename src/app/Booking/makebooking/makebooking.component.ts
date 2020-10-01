@@ -9,6 +9,7 @@ import{ Client, Schedule, Booking} from '../../API Services/for Booking/client';
 import { ExperTexhService } from '../../API Services/for Booking/exper-texh.service';
 import { HttpClient } from '@angular/common/http';
 import {map, startWith} from 'rxjs/operators';
+import { ReportingService } from 'src/app/API Services/for User/reporting.service';
 
 
 
@@ -53,6 +54,8 @@ export class MakebookingComponent implements OnInit {
       }
     )
   }
+
+ 
 
 
   setStep(index: number) {
@@ -164,7 +167,8 @@ openSearchDialog(): void {
 
   const dialogConfig = new MatDialogConfig();
 
-  dialogConfig.width = '500px';
+  dialogConfig.width = '700px';
+  dialogConfig.height = '500px';
   dialogConfig.disableClose = true;
   dialogConfig.autoFocus = true;
 
@@ -340,13 +344,15 @@ export class SearchClientDialog implements OnInit
 {
   constructor(
     public dialogRef: MatDialogRef<SearchClientDialog>, private api:ExperTexhService,
-    private fb: FormBuilder, private http:HttpClient) {}
+    private fb: FormBuilder, private http:HttpClient, private service: ReportingService) {}
 
     myControl = new FormControl();
     options: any[] 
     filteredOptions: Observable<string[]>;
   
     ngOnInit() {
+
+      this.ClientList = this.service.readClient();
 
       this.http.get<[]>(this.api.url + 'Client/getClient')
       .subscribe(res => {this.options = res});
@@ -358,7 +364,56 @@ export class SearchClientDialog implements OnInit
           map(value => this._filter(value))
         );
 
-      
+      this.setDefault();
+    }
+
+    setDefault()
+    {
+      var tr, table, r
+      tr = table.getElementsByTagName('tr');
+      tr.style.display = 'none';
+
+      for (r = 1; r < tr.length; r++) {
+        tr[r].style.display = '';}
+    }
+
+    SelectClient(Client: Client)
+    {
+      this.dialogRef.close(Client);
+    }
+
+    ClientList: Observable<Client[]>;
+    SelectedClient: Client;
+
+    myFunction(event: any) {
+      //declare variables
+  
+      var input, filter, table, tr, td, r, txtValue, th;
+      input = document.getElementById('myInput');
+      filter = input.value.toUpperCase();
+      table = document.getElementById('myTable');
+      tr = table.getElementsByTagName('tr');
+      th = table.getElementsByTagName('th');
+  
+      //loop through all table rows and hide those who dont match search query
+      for (r = 1; r < tr.length; r++) {
+        tr[r].style.display = 'none';
+  
+        for (var k = 0; k < tr.length; k++) {
+          td = tr[r].getElementsByTagName('td')[k];
+  
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (
+              txtValue.toLocaleUpperCase().indexOf(filter.toLocaleUpperCase()) >
+              -1
+            ) {
+              tr[r].style.display = '';
+              break;
+            }
+          }
+        }
+      }
     }
   
     private _filter(value: string): string[] {

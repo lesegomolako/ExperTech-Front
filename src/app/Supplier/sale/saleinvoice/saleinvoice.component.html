@@ -14,7 +14,7 @@
                             </div>    
                             <div class="form-group">    
                                 <strong>Name: </strong>
-                                <label name= "ClientName">{{clientObject.ClientName}}</label>
+                                <label name= "ClientName">{{clientObject.ClientName}} {{clientObject.ClientSurname}}</label>
                             </div>  
                         </div>    
                         <div class="col-md-4">    
@@ -46,7 +46,7 @@
                             <tbody>    
                                 <tr *ngFor="let item of clientObject.Products">    
                                     <td scope="row">
-                                    {{item.ProductName}}</td>    
+                                    {{item.Name}}</td>    
                                     <td>R{{item.Price}}</td>    
                                     <td>{{item.Quantity}}</td>    
                                     <td>R{{clientObject.Payment}}</td>    

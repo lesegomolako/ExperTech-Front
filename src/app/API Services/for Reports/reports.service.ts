@@ -26,9 +26,10 @@ export class ReportsService {
     return this.http.post("https://localhost:44380/api/Reports/GetSupplierData", form).pipe(map(result => result))
   }
 
-  GetSaleReportingData(form: Criteria){
+  GetSaleReportingData(form: Criteria, SessionID){
+    const params = new HttpParams().set("SessionID", SessionID)
     let body = JSON.stringify(form)
-    return this.http.post("https://localhost:44380/api/Reports/GetSaleReportData", form).pipe(map(result => result))
+    return this.http.post("https://localhost:44380/api/Reports/GetSaleReportData", form, {params}).pipe(map(result => result))
   }
 
   GetBookingReportingData(form: Criteria){
@@ -43,4 +44,5 @@ export class ReportsService {
 export class Criteria{
   StartDate: any;
   EndDate: any;
+  Option?: any;
 }

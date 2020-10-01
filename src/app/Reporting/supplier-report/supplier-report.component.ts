@@ -91,7 +91,7 @@ export class SupplierReportComponent implements OnInit {
 
     //console.log(this.Criteria)
 
-    this.service.GetSaleReportingData(this.Criteria).subscribe(response => {
+    this.service.GetSuppReportingData(this.Criteria).subscribe(response => {
 
       let keys = response['Category'].map(d=> d.Name);
       let values = response['Category'].map(d=> d.Total);

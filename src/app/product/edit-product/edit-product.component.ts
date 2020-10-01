@@ -5,6 +5,7 @@ import { ProductService } from 'src/app/API Services/for Product/product.service
 import { NgForm, FormGroup,FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ProductData } from 'src/app/API Services/for Product/product';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-edit-product',
@@ -21,7 +22,7 @@ export class EditProductComponent implements OnInit {
     ) { }
 
     ProductForm: FormGroup;
-    ProdFormData = JSON.parse(localStorage.getItem('prodEdit'))
+    ProdFormData;
     categoryList: [];
     SupplierList: [];
     title: string;
@@ -50,29 +51,30 @@ export class EditProductComponent implements OnInit {
 
     if(this.api.RoleID == "2")
     {
-    this.http.get<[]>("https://localhost:44380/api/Products/getSuppliers")
-    .subscribe(res => {
-      this.SupplierList = res;
-    })
+      this.ProdFormData  = JSON.parse(localStorage.getItem('prodEdit'));
+      this.http.get<[]>("https://localhost:44380/api/Products/getSuppliers")
+      .subscribe(res => {
+        this.SupplierList = res;
+      })
 
-    this.http.get<[]>("https://localhost:44380/api/Products/getCategories")
-    .subscribe( res => {
-      this.categoryList = res;
-    })
+      this.http.get<[]>("https://localhost:44380/api/Products/getCategories")
+      .subscribe( res => {
+        this.categoryList = res;
+      })
 
-    this.CreateForm();
-    this.CheckForm();
+      this.CreateForm();
+      this.CheckForm();
 
 
-   this.ProductForm.valueChanges.subscribe(res => 
+      this.ProductForm.valueChanges.subscribe(res => 
+        {
+          this.logValidationErrors(this.ProductForm)
+        })
+    }
+    else
     {
-      this.logValidationErrors(this.ProductForm)
-    })
-  }
-  else
-  {
-    this.router.navigate(["403Forbidden"])
-  }
+      this.router.navigate(["403Forbidden"])
+    }
 }
 
   validationMessages = 
@@ -174,7 +176,6 @@ export class EditProductComponent implements OnInit {
     {
       this.title = "Edit Product";
       this.setProduct();
-      this.imageURL = this.ProdFormData.Photos[0].Photo;
     }
   }
 
@@ -257,8 +258,8 @@ export class EditProductComponent implements OnInit {
       return;
     }
     this.mapValues();
-    this.service.AddProduct(this.ProdFormData,this.UploadFile)
-    .subscribe(res => 
+    this.service.AddProduct(this.ProdFormData,this.UploadFile, this.api.SessionID)
+    .subscribe((res:any) => 
       {
         if(res == "success")
         {
@@ -266,37 +267,46 @@ export class EditProductComponent implements OnInit {
           this.router.navigateByUrl("AdminProduct")
           
         }
-        else if(res == "duplicate")
+        else if(res.Error == "duplicate")
         {
-        if (confirm("Product already exists. Would you like to update instead?"))
-        {
-          this.service.ProductForm = this.ProdFormData;
-          window.location.reload();
+          if (confirm("Product already exists. Would you like to update instead?"))
+          {
+            this.service.ProductForm = this.ProdFormData;
+            window.location.reload();
+          }
+          else
+          {
+            this.router.navigateByUrl("AdminProduct")
+          }
         }
-        else
+        else if(res.Error == "session")
         {
-          this.router.navigateByUrl("AdminProduct")
+          alert(res.Message)
+          
         }
-      }
-      else
-      {
-        return res
-      }
       })
   }
 
   EditProduct()
   {
-    
-    this.service.UpdateProduct(this.ProdFormData).subscribe(res =>
-      {
-        if(res == "success")
-        {
-          alert("Successfully updated");
-          this.router.navigateByUrl("AdminProduct")
-          localStorage.removeItem('prodEdit')
-        }
-    })
+    if(this.ProductForm.invalid)
+    {
+      this.validateAllFormFields(this.ProductForm)
+      return;
+    }
+
+    console.log(this.UploadFile)
+    console.log(this.imageURL)
+    console.log(this.ProdFormData)
+    // this.service.UpdateProduct(this.ProdFormData).subscribe(res =>
+    //   {
+    //     if(res == "success")
+    //     {
+    //       alert("Successfully updated");
+    //       this.router.navigateByUrl("AdminProduct")
+    //       localStorage.removeItem('prodEdit')
+    //     }
+    // })
   }
 
 
