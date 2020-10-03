@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '../../API Services/for Service/services.service';
 import { Router } from '@angular/router';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 @Component({
   selector: 'app-delete-so',
@@ -9,14 +10,22 @@ import { Router } from '@angular/router';
 })
 export class DeleteSOComponent implements OnInit {
 
-  constructor(private service: ServicesService, private router: Router) { }
+  constructor(private service: ServicesService, private router: Router, private api: ExperTexhService) { }
 
   ngOnInit(): void {
-    this.formData = JSON.parse(localStorage.getItem('soDelete'))
-    if(!this.formData)
+    if(this.api.RoleID == "2")
     {
-      this.router.navigateByUrl('services/ServiceOptions')
+      this.formData = JSON.parse(localStorage.getItem('soDelete'))
+      if(!this.formData)
+      {
+        this.router.navigateByUrl('services/ServiceOptions')
+      }
     }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
+   
   }
 
   Cancel()
@@ -32,7 +41,7 @@ export class DeleteSOComponent implements OnInit {
 
     if(confirm("Are you sure you want to delete this?"))
     {
-      this.service.DeleteServiceOption(OptionID).subscribe(res =>
+      this.service.DeleteServiceOption(OptionID, this.api.SessionID).subscribe(res =>
         {
           if(res = "success")
           {

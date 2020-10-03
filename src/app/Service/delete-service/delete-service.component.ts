@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicesService } from 'src/app/API Services/for Service/services.service';
 import { Router } from '@angular/router';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 @Component({
   selector: 'app-delete-service',
@@ -9,15 +10,21 @@ import { Router } from '@angular/router';
 })
 export class DeleteServiceComponent implements OnInit {
 
-  constructor(private service: ServicesService, private router: Router) { }
+  constructor(private service: ServicesService, private router: Router, private api: ExperTexhService) { }
 
   ngOnInit(): void {
 
-    this.formData = JSON.parse(localStorage.getItem('sDelete'))
-    if(!this.formData)
+    if(this.api.RoleID == "2")
     {
-      this.router.navigateByUrl("services/Services")
-      
+      this.formData = JSON.parse(localStorage.getItem('sDelete'))
+      if(!this.formData)
+      {
+        this.router.navigateByUrl("services/Services")      
+      }
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
     }
   }
 
@@ -34,7 +41,7 @@ export class DeleteServiceComponent implements OnInit {
     var ID = this.formData.ServiceID;
     if(confirm("Are you sure you want to delete this?"))
     {
-      this.service.DeleteService(ID).subscribe(res =>
+      this.service.DeleteService(ID, this.api.SessionID).subscribe(res =>
         {
           if(res == "success")
           {

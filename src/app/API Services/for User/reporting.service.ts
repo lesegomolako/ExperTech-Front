@@ -253,10 +253,8 @@ export class ReportingService {
   }
   
   bookingPayment(formData) 
-  { 
-    const httpOptions = {headers: new HttpHeaders({ 'Content-Type': 'application/json' }),body: formData};
-    
-    return this.http.post(this.url + "User/bookingPayment", httpOptions);   
+  {   
+    return this.http.post(this.url + "User/bookingPayment", formData);   
   }
     ///********************************************************Payments Types**************************************************************
     getPaymentType(): Observable<PaymentType[]>{

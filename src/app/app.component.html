@@ -42,7 +42,7 @@
             <button mat-icon-button class="example-icon"(click)="drawer.toggle()">
               <mat-icon style="color:white">menu</mat-icon>
             </button>
-            <img src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;"/>
+            <img  (click)="goHome()"  id="img" src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;"/>
           </div>
         </div>
     
@@ -53,7 +53,7 @@
               </button></a> -->
               
 
-              <button (click)="login()" mat-icon-button *ngIf="RoleID== null"><mat-icon style="color: white; font-size: 30px;">account_circle</mat-icon></button>
+              <button routerLink="/login" mat-icon-button *ngIf="RoleID== null"><mat-icon style="color: white; font-size: 30px;">account_circle</mat-icon></button>
               <span ngbDropdown *ngIf="RoleID != null">
                 <a routerLink='/basket' *ngIf="RoleID == '1'"><button style="color: white;" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"  >
                   <mat-icon *ngIf="showBadges" [matBadge]="api.badgeCount" [matBadgeHidden]="api.badgeCount == 0">shopping_cart</mat-icon>               

@@ -57,51 +57,20 @@ export class AppComponent implements OnInit {
       }
     }))
 
-    // {   
-    //     this.User ={
-    //     Name: res.Clients[0].Name,
-    //     Surname: res.Clients[0].Surname,
-    //     Email: res.Clients[0].Email}
-      
-    // } 
-    // ))
-    // this.api.getProfile().subscribe(data => {
-    //   //console.log("User Details",data.ContactNo)
-    //   //this.User = data;
-    //   this.mapValues(data)
-    // })
+  
   }
 
-// mapValues(data:User)
-// {
-//   if(this.api.RoleID == "1" )
-//   {
-//     this.User =
-//     {
-//       Name: data.Clients[0].Name,
-//       Surname: data.Clients[0].Surname,
-//       Email: data.Clients[0].Email,
-//     }
-//   }
-//   else if(this.api.RoleID == "2" )
-//   {
-//     this.User =
-//     {
-//       Name: data.Admins[0].Name,
-//       Surname: data.Admins[0].Surname,
-//       Email: data.Admins[0].Email,
-//     }
-//   }
-//   else if(this.api.RoleID == "3" )
-//   {
-//     this.User =
-//     {
-//       Name: data.Employees[0].Name,
-//       Surname: data.Employees[0].Surname,
-//       Email: data.Employees[0].Email,
-//     }
-//   }
-// }
+  goHome()
+  {
+    if(!this.RoleID || this.RoleID == "1")
+    {
+      this.router.navigate(["home"])
+    }
+    else
+    {
+      this.router.navigate(["employeehome"])
+    }
+  }
 
   login()
   {

@@ -3,8 +3,8 @@
 <h1 class="md-display-3">Supplier Management</h1>
 </div>
 <div class="col-1 nopadding">
-<button mat-raised-button style="float: right;" routerLink="/employeehome" style="background-color:forestgreen" >
-    <mat-icon style="color:white">keyboard_return</mat-icon> Back
+  <button mat-raised-button style="float: right;" routerLink="/employeehome" style="background-color:forestgreen" >
+    <mat-icon style="color:white">home</mat-icon> Home
 </button>
 </div>
 </div>
@@ -85,8 +85,15 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-
-  <router-outlet></router-outlet>
+  <mat-paginator #paginator
+  *ngIf="dataSource?.data.length>10"
+  [length]="dataSource?.data.length"
+  [pageIndex]=""
+  [pageSize]="10"
+  [pageSizeOptions]="[10, 25, 50]"
+  showFirstLastButtons>
+</mat-paginator>
+  
 
 
     <a [routerLink] = "['/placeorder']">

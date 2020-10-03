@@ -67,9 +67,9 @@ ViewServices(): Observable<ServiceTypeData[]>
     return this.http.post(this.url + 'Services/AddService' , form)
   }
 
-  DeleteService(ServiceID: any)
+  DeleteService(ServiceID: any, SessionID)
   {    
-    const params = new HttpParams().set('ServiceID', ServiceID );
+    const params = new HttpParams().set('ServiceID', ServiceID ).set('SessionID', SessionID );
     return this.http.delete(this.url + 'Services/DeleteService',
     {
       headers: {'Content-Type': 'application/json'},
@@ -97,9 +97,9 @@ ViewServices(): Observable<ServiceTypeData[]>
     return this.http.post(this.url + 'Services/AddServiceOption' , form)
   }
 
-  DeleteServiceOption(OptionID: any)
+  DeleteServiceOption(OptionID: any, SessionID)
   {    
-    const params = new HttpParams().set('OptionID', OptionID );
+    const params = new HttpParams().set('OptionID', OptionID ).set('SessionID', SessionID );
     return this.http.delete(this.url + 'Services/DeleteServiceOption', {
       headers: {'Content-Type': 'application/json'},
       params: params})

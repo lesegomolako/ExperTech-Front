@@ -79,8 +79,15 @@ export class SpackageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.TypeControl = this.fb.control('', Validators.required)
-    this.loadList();
+    if(this.clientService.RoleID == "2")
+    {
+      this.TypeControl = this.fb.control('', Validators.required)
+      this.loadList();
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
   }
 
   Activate()

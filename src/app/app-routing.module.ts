@@ -71,6 +71,9 @@ import { GetBookingsComponent } from './Staff/get-bookings/get-bookings.componen
 import { EditCompanyComponent } from './User/edit-company/edit-company.component';
 import { StaffComponent } from './Staff/staff/staff.component';
 import { SaleinvoiceComponent } from './Supplier/sale/saleinvoice/saleinvoice.component';
+import { SalePaymentComponent } from './User/sale-payment/sale-payment.component';
+import { CompanySettingsComponent } from './User/company-settings/company-settings.component';
+
 //import {MatDialogModule} from '@angular/material/dialog';
 
 const routes: Routes = [
@@ -150,6 +153,8 @@ const routes: Routes = [
   {path: 'getbookings', component: GetBookingsComponent},
   {path: 'staff', component: StaffComponent },
   {path: 'editcompany', component: EditCompanyComponent},
+  {path: 'salepayment', component: SalePaymentComponent},
+  {path: 'settings', component: CompanySettingsComponent},
   
   {path: '**', redirectTo: '/404Page'},
   {path: '404Page', component: ErrorPageComponent},

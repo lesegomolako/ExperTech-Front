@@ -74,7 +74,7 @@ addproduct(BasketProduct:Product){
 
       if(BasketProduct.SelectedQuantity > BasketProduct.QuantityOnHand)
       {
-        alert("You've selected too much")
+        alert("You've selected too many")
         return;
       }
 
@@ -86,7 +86,7 @@ addproduct(BasketProduct:Product){
     this.api.Addproduct(_basketLine).subscribe(data => {
       this.basket = data;
     }, error => console.log("error edit component",error));
-    this.api.getBadgeCount()
+    window.location.reload();
   }
   else
   {

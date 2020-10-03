@@ -42,27 +42,45 @@ export class ViewbookingComponent implements OnInit {
     this.router.navigate(['Booking']);
   }
 
-  reject(){
-    this.api.RejectBooking(this.id).subscribe(data=>{
-      alert("Booking successfully rejected,Booking will be deleted. Please make another booking with a different time")
+  reject(BookingID){
+    this.api.RejectBooking(BookingID).subscribe(res=>
+      {
+        if(res == "success")
+        {
+          alert("Booking successfully rejected,Booking will be deleted. Please make another booking with a different time")
+          window.location.reload();
+        }
+        else
+        {
+          alert(res)
+        }
+     
      });
     
   }
+
   cancel(BookingID){
-    this.api.CancelBooking(BookingID).subscribe(data=>{
-      alert("Booking successfully rejected,Booking will be deleted. Please make another booking with a different time")
+    this.api.CancelBooking(BookingID).subscribe(res=> 
+      {
+        if(res == "success")
+        {
+          alert("Booking successfully cancel,Booking will be deleted.") ;
+          window.location.reload();
+        }  
      });
     
   }
 
-  // click(form: Booking)
-  // {
-  //   alert(JSON.stringify(form))
-  // }
+  
 
-  Accept(){
-    this.api.AcceptBooking(this.id).subscribe(data=>{
-      alert("Booking successfully accepted")
+  Accept(BookingID){
+    this.api.AcceptBooking(BookingID).subscribe((res:any)=>{
+      if(res == "success")
+      {
+        alert("Booking successfully accepted")
+        window.location.reload();
+      }
+      
      });
     
   }

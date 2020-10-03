@@ -7,7 +7,10 @@ import {mergeMap, groupBy, map, reduce} from 'rxjs/operators';
 import { of} from 'rxjs';
 import { stringify } from 'querystring';
 import {jsPDF} from 'jspdf';
+import html2canvas from 'html2canvas';
 import {autoTable} from 'jspdf-autotable';
+import { Router } from '@angular/router';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 @Component({
   selector: 'app-booking-report',
@@ -21,9 +24,25 @@ export class BookingReportComponent implements OnInit {
     end: new FormControl()
   });
 
-  maxDate = new Date();
+  ReportForm: FormGroup;
+  maxDate = new Date(new Date().setDate(new Date().getDate()));
+  displayed = true;
+  generated = true;
 
   ngOnInit(): void {
+
+    if(this.api.RoleID == "2")
+    {     
+      this.ReportForm = new FormGroup({
+        start: new FormControl('', Validators.required),
+        end: new FormControl('',Validators.required),
+        criteria: new FormControl('', Validators.required)
+      })
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
   }
 
   title = 'hw4-frontend';
@@ -31,7 +50,8 @@ export class BookingReportComponent implements OnInit {
   chart=[];
   bookings: Object;
 
-  constructor(private service: ReportsService){}
+  constructor(private service: ReportsService, private router: Router,
+    private api: ExperTexhService ){}
 
   DownloadPDF()
   {
@@ -74,6 +94,25 @@ export class BookingReportComponent implements OnInit {
  
   Criteria: Criteria;
   
+convetToPDF()
+{
+  var data = document.getElementById('sale');
+  html2canvas(data).then(canvas => {
+  // Few necessary setting options
+  var imgWidth = 208;
+  var pageHeight = 295;
+  var imgHeight = canvas.height * imgWidth / canvas.width;
+  var heightLeft = imgHeight;
+   
+  var today = this.maxDate.toLocaleDateString()
+  var name = "Sales Report-" + today;
+  const contentDataURL = canvas.toDataURL('image/png')
+  let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+  var position = 0;
+  pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+  pdf.save(name); // Generated PDF
+  });
+}
 
   random_rgba(){
     var o = Math.round, r = Math.random, s = 255;

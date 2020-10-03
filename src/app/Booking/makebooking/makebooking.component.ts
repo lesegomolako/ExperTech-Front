@@ -13,11 +13,29 @@ import { ReportingService } from 'src/app/API Services/for User/reporting.servic
 
 
 
-export class Employee
+export class EmployeeInfo
 {
   EmployeeID:any;
   Name:string;
   TypeID:any;
+
+  EmployeeServiceTypes:
+  [
+    {
+      EmployeeID: any;
+      DateID: any;
+      TimeID: any;
+    }
+  ]
+
+  EmployeeSchedules:
+  [
+    {
+      EmployeeID: any;
+      TypeID: any;
+    }
+  ]
+  
 }
 
 @Component({
@@ -207,6 +225,7 @@ onSubmit(form)
   // stop here if form is invalid
   if (this.BookingForm.invalid) {
       alert("form invalid");
+      this.BookingForm.markAllAsTouched();
       return;
   }
 
@@ -229,7 +248,8 @@ onSubmit(form)
     {
       if(res == "success")
       {
-        alert("Booking successfully requested")
+        alert("Booking successfully made")
+        this.router.navigate(["schedule"])
         
       }
       else
@@ -253,11 +273,11 @@ LoadList()
 {
   this.http.get<[]>(this.api.url + "Booking/getALLemployees")
   .subscribe(res => {this.Employee = res})
-  this.http.get<[]>(this.api.url + "Booking/getALLservices")
+  this.http.get<[]>(this.api.url + "Services/GetService")
   .subscribe(res => {this.Service = res})
-  this.http.get<[]>(this.api.url + "Booking/getALLservicesoption")
+  this.http.get<[]>(this.api.url + "Services/GetServiceOption")
   .subscribe(res => {this.ServiceOptions = res})
-  this.http.get<[]>(this.api.url + "Booking/getALLservicestype")
+  this.http.get<[]>(this.api.url + "Services/GetServiceType")
   .subscribe(res => {this.ServiceType = res})
   this.http.get<[]>(this.api.url + "Booking/getTimes")
   .subscribe(res => {this.Times = res})
@@ -354,9 +374,9 @@ export class SearchClientDialog implements OnInit
 
       this.ClientList = this.service.readClient();
 
-      this.http.get<[]>(this.api.url + 'Client/getClient')
-      .subscribe(res => {this.options = res});
-      console.log(this.options)
+      this.http.get<[]>(this.api.url + 'Clients/getClient')
+      .subscribe(res => {this.options = res;});
+      
 
       this.filteredOptions = this.myControl.valueChanges
         .pipe(
@@ -364,19 +384,10 @@ export class SearchClientDialog implements OnInit
           map(value => this._filter(value))
         );
 
-      this.setDefault();
+      
     }
 
-    setDefault()
-    {
-      var tr, table, r
-      tr = table.getElementsByTagName('tr');
-      tr.style.display = 'none';
-
-      for (r = 1; r < tr.length; r++) {
-        tr[r].style.display = '';}
-    }
-
+    
     SelectClient(Client: Client)
     {
       this.dialogRef.close(Client);

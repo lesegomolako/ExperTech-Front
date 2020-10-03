@@ -14,6 +14,10 @@
     background-color: #F0F0F0;
 }
 
+#img:hover
+{
+    cursor: pointer;
+}
 
 #sidebar ul li
 {     
@@ -39,7 +43,10 @@
     flex: 1 1 auto;
   }
 
-
+li
+{
+    list-style: none;
+}
 
 .mat-icon {
     vertical-align: middle;

@@ -1,7 +1,13 @@
 <div class="heading">
-    <h1>Service Types</h1>
+    <h1 class="col-10">Service Types
     <button class="btn btn-success" title="Add Service Type" style="width: 35px; height: 35px; margin-left: 10px;" (click)="AddServiceType()">+</button>
+    </h1>   
+    <div class="col-2">
+        <button mat-raised-button style="float: right;" routerLink="/employeehome" style="background-color:forestgreen" >
+            <mat-icon style="color:white">home</mat-icon> Home
+        </button>
     </div>
+</div>
     
     <ng-template #loading>
         <div class="text-center"> 

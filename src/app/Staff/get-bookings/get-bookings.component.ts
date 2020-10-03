@@ -64,9 +64,9 @@ export class GetBookingsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.table.dataSource = this.dataSource;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator= this.paginator;
-    this.table.dataSource = this.dataSource;
   }
 
   onCreate(){
@@ -173,10 +173,14 @@ onSubmit()
 
   this.service.bookingPayment(payDetails).subscribe((res:any) =>
     {
-      if(res.Message == "success")
+      if(res == "success")
       {
         alert("Booking successfully paid")
         this.dialogRef.close();
+      }
+      else if(res.Error == "session")
+      {
+        alert("res.Message")
       }
       else
       {

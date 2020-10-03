@@ -1,15 +1,15 @@
-/* .sale
+ .sale
 {
   size: A4;
-} */
-/* 
+  padding: 10px;
+} 
+
 .preview
 {
-  /* height: 100%;
-  width: 297mm; 
-  size:A4;
-  border-style: solid;
-} */
+  height: 100%;
+  width: 210mm; 
+  border: 1px groove gray;
+} 
 
 
 h1 {

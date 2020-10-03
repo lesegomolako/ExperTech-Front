@@ -31,7 +31,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatStepperModule} from '@angular/material/stepper';
-
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 //******************************* Components *************************************/
@@ -127,6 +127,7 @@ import { GetBookingsComponent, CbookingDialog } from './Staff/get-bookings/get-b
 import { StaffComponent } from './Staff/staff/staff.component';
 import { EditCompanyComponent } from './User/edit-company/edit-company.component';
 import { CompanySettingsComponent } from './User/company-settings/company-settings.component';
+import { SalePaymentComponent } from './User/sale-payment/sale-payment.component';
 
 
 @NgModule({
@@ -144,7 +145,7 @@ import { CompanySettingsComponent } from './User/company-settings/company-settin
     RequestbComponent,BrowseComponent,BookingConfirmComponent, OptionsFilterPipe, AddClientDialog, SearchClientDialog,
     customFilter,SupplierComponent,orderform,PlaceorderComponent,EditsupplierComponent,AddsupplierComponent,
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
-    ViewdetailComponent,SaleinvoiceComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent, ReportsComponent, ErrorPageComponent, EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, EditCompanyComponent, CompanySettingsComponent
+    ViewdetailComponent,SaleinvoiceComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent, ReportsComponent, ErrorPageComponent, EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, EditCompanyComponent, CompanySettingsComponent, SalePaymentComponent
 
   ],
   imports: [
@@ -153,7 +154,7 @@ import { CompanySettingsComponent } from './User/company-settings/company-settin
     BrowserAnimationsModule, MatInputModule,MatExpansionModule,
     MatIconModule, FormsModule, ReactiveFormsModule, MatGridListModule,
     MatToolbarModule, MatMenuModule , MatFormFieldModule, MatSidenavModule,
-    HttpClientModule, MatDialogModule, PortalModule,
+    HttpClientModule, MatDialogModule, PortalModule, MatPaginatorModule,
     FormsModule,MatBadgeModule, MatRadioModule,MatButtonToggleModule,MatCardModule,
     ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule, CommonModule, CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }), NgbModule
   ],

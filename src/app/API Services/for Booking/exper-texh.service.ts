@@ -164,26 +164,14 @@ export class ExperTexhService {
     });   
   }
 
-  RejectBooking(BookingID:Booking): Observable<Booking> {  
-    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.delete<Booking>(this.url + 'Clients/DeleteClientBooking' ,{
-      headers:{ 'Content-Type': 'application/json'},
-      params:{
-        'id':BookingID.toString(),
-
-      }
-    });   
+  RejectBooking(BookingID){  
+    const params = new HttpParams().set("bookingID", BookingID).set("SessionID", this.SessionID);  
+    return this.http.delete(this.url + 'Clients/DeleteClientBooking',{params});    
   }
 
-  AcceptBooking(BookingID:Booking) {  
-    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.post(this.url + 'Clients/AcceptClientsBooking?bookingID=' + BookingID ,{
-      headers:{ 'Content-Type': 'application/json'},
-      params:{
-        'bookingID':BookingID.toString(),
-
-      }
-    });   
+  AcceptBooking(BookingID) {  
+    const params = new HttpParams().set("bookingID", BookingID).set("SessionID", this.SessionID);  
+    return this.http.get(this.url + 'Clients/AcceptClientsBooking',{params});   
   }
 
   CancelBooking(BookingID)

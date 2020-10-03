@@ -6,9 +6,12 @@ import {ReportsService, Criteria} from '../../API Services/for Reports/reports.s
 import {mergeMap, groupBy, map, reduce} from 'rxjs/operators';
 import { of} from 'rxjs';
 import { stringify } from 'querystring';
+//import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 import {jsPDF} from 'jspdf';
 import {autoTable} from 'jspdf-autotable';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sales-report',
@@ -31,15 +34,19 @@ export class SalesReportComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.maxDate)
-
-    this.ReportForm = new FormGroup({
-      start: new FormControl('', Validators.required),
-      end: new FormControl('',Validators.required),
-      criteria: new FormControl('', Validators.required)
-    })
-  
-    console.log(this.maxDate)
+    if(this.api.RoleID == "2")
+    {     
+      this.ReportForm = new FormGroup({
+        start: new FormControl('', Validators.required),
+        end: new FormControl('',Validators.required),
+        criteria: new FormControl('', Validators.required)
+      })
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
+    
   }
 
   title = 'hw4-frontend';
@@ -47,7 +54,27 @@ export class SalesReportComponent implements OnInit {
   chart=[];
   products: Object;
 
-  constructor(private service: ReportsService, private api: ExperTexhService, private fb: FormBuilder){}
+  constructor(private service: ReportsService,private router: Router, private api: ExperTexhService, private fb: FormBuilder){}
+
+  public convetToPDF()
+{
+var data = document.getElementById('sale');
+html2canvas(data).then(canvas => {
+// Few necessary setting options
+var imgWidth = 208;
+var pageHeight = 295;
+var imgHeight = canvas.height * imgWidth / canvas.width;
+var heightLeft = imgHeight;
+ 
+var today = this.maxDate.toLocaleDateString()
+var name = "Sales Report-" + today;
+const contentDataURL = canvas.toDataURL('image/png')
+let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+var position = 0;
+pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+pdf.save(name); // Generated PDF
+});
+}
 
   DownloadPDF()
   {

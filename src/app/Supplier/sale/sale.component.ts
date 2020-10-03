@@ -6,6 +6,7 @@ import { SaleService } from '../../API Services/for Supplier/sale.service';
 import { SaleData } from '../../API Services/for Supplier/sales';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 //import { ReportingService } from '../../API Services/for User/reporting.service';
 //import {Process} from '../../API Services/for User/process';
 
@@ -31,7 +32,8 @@ export class SaleComponent implements AfterViewInit, OnInit {
   SaleData: any;
   
 
-  constructor(public service: SaleService, private router: Router){}
+  constructor(public service: SaleService, private router: Router,
+    private api: ExperTexhService){}
 
   SaleList: SaleData[];
  dataSource;
@@ -39,20 +41,30 @@ export class SaleComponent implements AfterViewInit, OnInit {
   
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.SaleList)
-    this.service.getSaleList().subscribe(res => 
-      {
-        this.SaleList = res;
-        this.dataSource.data = this.SaleList;
-      })
 
-      console.log(this.SaleList)
+    if(this.api.RoleID == "2")
+    {
+      this.dataSource = new MatTableDataSource(this.SaleList)
+      this.service.getSaleList().subscribe(res => 
+        {
+          this.SaleList = res;
+          this.dataSource.data = this.SaleList;
+        })
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
+    
+
+      
   }
 
   ngAfterViewInit() {
+    this.table.dataSource = this.dataSource;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator= this.paginator;
-    this.table.dataSource = this.dataSource;
+    
   }
 
   onCreate(){

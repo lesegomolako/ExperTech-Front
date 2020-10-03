@@ -1,95 +1,126 @@
 <div>
-    <mat-form-field appearance="fill">
-      <mat-label>Enter a date range</mat-label>
-      <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-        <input matStartDate formControlName="start" placeholder="Start date">
-        <input matEndDate formControlName="end" placeholder="End date">
-      </mat-date-range-input>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
-    
-      <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-      <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
-    </mat-form-field>
-    <div>
-      <button mat-raised-button color="primary" [disabled]="!range.valid" (click)="SubmitRequest()">Generate Report</button>
-      <button mat-raised-button (click)="DownloadPDF()">Download PDF</button>
-    </div>
-  </div>
-  
-  <div class="sale">
-    <div class="row" >   
-      <div class="col-8">     
-        Company: Exhilaration hair & beauty salon
+  <h1 style="text-align: center">Employee Booking Report <button mat-raised-button style="float: right;" routerLink="/reports" style="background-color:forestgreen" >
+    <mat-icon style="color:white">keyboard_return</mat-icon> Back
+</button></h1>
+</div>
+
+<div class="row">
+  <div class="col-4">
+    <div class="forms">
+      <form [formGroup]="ReportForm">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [max]="maxDate"  [rangePicker]="picker">
+            <input matStartDate  formControlName="start" placeholder="Start date">
+            <input matEndDate  formControlName="end" placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        
+          <mat-error *ngIf="ReportForm.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+          <mat-error *ngIf="ReportForm.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+          <mat-error *ngIf="(ReportForm.controls.start.errors?.required && 
+          (ReportForm.controls.start.touched || ReportForm.controls.start.dirty))"></mat-error>
+        </mat-form-field>
         <br>
-        Contact Details:0785109494
-        <br>
-        Address:Clifton Avenue Lyttleton Centurion
-        <br>
-        Date:2020/07/14
-        <br>
-        Prepared for: Manager
-        <br>
-      </div>
-      <div class="col-4" >
-        <img 
-        src="assets/images/logo.png"
-        alt="logo.png"
-        style="width: 150px; height: 150px;"/>
-      </div>
-    </div>
-      <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-      <h3 style="text-align: center;"> EMPLOYEE BOOKING REPORT</h3>
-      <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-      <strong>PROJECT SUMMARY</strong>
-      <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-  
-    <div class="bottom">
-      <strong>DESCRIPTION</strong>
-      <p>The purpose of this report is to show the trend so far in the company.
-        This will show how often individual employees are being booked.</p>
-      <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-      <b>SALE CHART</b>
-      <p *ngIf="chart==null" class="content">******CHART DATA******</p>
-      <div *ngIf="chart" class="reportChart">
-        <canvas id="canvas">{{chart}}</canvas>
-      </div>
-      <br><br>
-  
-      <b>SALE CHART</b>
-      <p *ngIf="bookings==null" class="content">******TABLE DATA******</p>
-      <div *ngIf="bookings">
-        <div class="productsTable">
-           <div  let i = "index">
-            
-              <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Employee Name</th>
-                  <th>Number Of Bookings</th>
-                  <th>% of total</th>
-                </tr>
-              </thead> 
-              <tbody>
-                <tr *ngFor="let y of bookings" >
-                  <td>{{y.Name}}</td>
-                  <td>{{y.Total}}</td>
-                  <td>{{y.Price}}</td>
-                </tr>
-                <tr>
-                  <td><strong>Total</strong></td>
-                  <td></td>
-                  <td>100%</td>
-                </tr>
-              </tbody>  
-              </table>
-              <br>
-           </div>
+        <mat-form-field width="100%">
+          <mat-label>Select Report Criteria</mat-label>
+          <mat-select formControlName="criteria" >
+            <mat-option value="4">All Sales</mat-option>
+            <mat-option value="1">Product Purchases</mat-option>
+            <mat-option value="2">Booking Payments</mat-option>
+            <mat-option value="3">Activate Services</mat-option>
+          </mat-select>
+          <mat-error *ngIf="(ReportForm.controls.criteria.errors?.required && 
+          (ReportForm.controls.criteria.touched || ReportForm.controls.criteria.dirty))">
+          Select a criteria</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-raised-button color="primary" (click)="SubmitRequest()">Generate Report</button>
+          <button mat-raised-button (click)="convetToPDF()" [hidden]="generated">Download PDF</button>
         </div>
-  
-      <strong>CONCLUSION</strong>
-      <p>This gives a broad overview of the supplier orders, quantity of the items ordered and items orderd</p>
+      </form>
     </div>
   </div>
+  
+  <div class="col-8">
+    <div class="preview">
+     <div class="sale" id="sale" >
+       <div class="row" >   
+         <div class="col-8">     
+          Company: Exhilaration hair & beauty salon
+          <br>
+          Contact Details:0785109494
+          <br>
+          Address:Clifton Avenue Lyttleton Centurion
+          <br>
+          Date:2020/07/14
+          <br>
+          Prepared for: Manager
+          <br>
+        </div>
+        <div class="col-4" >
+          <img 
+          src="assets/images/logo.png"
+          alt="logo.png"
+          style="width: 150px; height: 150px;"/>
+        </div>
+      </div>
+      <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+      <h3 style="text-align: center;"> EMPLOYEE BOOKING REPORT</h3>
+      <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+      <strong>PROJECT SUMMARY</strong>
+      <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+  
+      <div class="bottom">
+        <strong>DESCRIPTION</strong>
+        <p>The purpose of this report is to show the trend so far in the company.
+          This will show how often individual employees are being booked.</p>
+        <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+        <b>SALE CHART</b>
+        <p *ngIf="chart==null" class="content">******CHART DATA******</p>
+        <div *ngIf="chart" class="reportChart">
+          <canvas id="canvas">{{chart}}</canvas>
+        </div>
+        <br><br>
+    
+        <b>SALE CHART</b>
+        <p *ngIf="bookings==null" class="content">******TABLE DATA******</p>
+        <div *ngIf="bookings">
+          <div class="productsTable">
+             <div let i = "index">         
+                <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Employee Name</th>
+                    <th>Number Of Bookings</th>
+                    <th>% of total</th>
+                  </tr>
+                </thead> 
+                <tbody>
+                  <tr *ngFor="let y of bookings" >
+                    <td>{{y.Name}}</td>
+                    <td>{{y.Total}}</td>
+                    <td>{{y.Price}}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Total</strong></td>
+                    <td></td>
+                    <td>100%</td>
+                  </tr>
+                </tbody>  
+                </table>
+                <br>
+             </div>
+          </div>
+        </div>
+    
+        <strong>CONCLUSION</strong>
+        <p>This gives a broad overview of the supplier orders, quantity of the items ordered and items orderd</p>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
     
     

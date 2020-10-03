@@ -71,7 +71,7 @@ export class orderform implements OnInit {
         this.SupplierList = this.suppService.getSupplierList();
         
         this.orderForm = this.formBuilder.group({
-          supplierid: [this.Supp.SupplierID, Validators.required],
+          supplierid: ['', Validators.required],
           description: ['', Validators.required],
         // price: [''],
           stockitemlines: this.formBuilder.array(

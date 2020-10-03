@@ -1,0 +1,155 @@
+<div class="row">
+    <div class="col-12">
+  
+    <h1 class="text-center">Product Payment
+    <button mat-raised-button style="float: right;" routerLink="/payment" style="background-color:forestgreen" >
+      <mat-icon style="color:white">keyboard_return</mat-icon> Back
+    </button>
+  </h1>
+    </div>
+  </div>
+
+<mat-horizontal-stepper style="width: 90%; margin:auto" linear #stepper>
+    <mat-step label="Select service package" [completed]="false">
+      <form class="justify-content-center">
+        <div style="width: 80%; height: 100%; margin:auto">
+          <div style="background-color: white;" class="card_hover">
+            <h2 style="text-align: center;">
+              Service Packages
+            </h2> 
+            <div class="mat-elevation-z8 app-supplier">
+                <mat-form-field style="float: right">
+                  <mat-label>Search</mat-label>
+                  <input matInput (keyup)="myFunction($event)" #input>
+                </mat-form-field>
+              <table mat-table class="dataSource?" matSort aria-label="Elements">
+            
+                <!-- SaleId Column -->
+                <ng-container matColumnDef="saleid" >
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>SaleID</th>
+                  <td mat-cell *matCellDef="let row">{{row.SaleID}}</td>
+                </ng-container>
+            
+                <!-- PaymentTypeID Column -->
+                <ng-container matColumnDef="client">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
+                  <td mat-cell *matCellDef="let row">{{row.ClientName}}</td>
+                </ng-container>
+            
+                <!-- StatusID Column -->
+                <ng-container matColumnDef="saletype">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Sale Type</th>
+                  <td mat-cell *matCellDef="let row">{{row.SaleType}}</td>
+                </ng-container>
+            
+                <!--OrderDetails Column -->
+                <ng-container matColumnDef="items">
+                    <th mat-header-cell *matHeaderCellDef> Total items</th>
+                    <td mat-cell  *matCellDef="let row"> {{row.Products.length}} </td>
+                </ng-container>
+            
+               
+                <!-- SaleTypeID Column -->
+                <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+                  <td mat-cell *matCellDef="let row">{{row.Date | date:"dd/MM/yy"}}</td>
+                </ng-container>
+
+                <!-- SaleTypeID Column -->
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                    <td mat-cell *matCellDef="let row"><button class="btn btn-warning" (click)="SelectedSale(row, stepper)">Select Sale</button></td>
+                </ng-container> 
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+              </table>
+              <mat-paginator #paginator
+                *ngIf="dataSource?.data.length>10"
+                [length]="dataSource?.data.length"
+                [pageIndex]=""
+                [pageSize]="10"
+                [pageSizeOptions]="[10, 25, 50]"
+                showFirstLastButtons>
+              </mat-paginator>
+            </div>
+        </div>
+        </div>
+    </form>
+  </mat-step>
+  <mat-step label="Confirm Sale" >  
+    <div *ngIf="selectedSale" class="row justify-content-center" >
+        <div class="col-12">
+        <form>
+            <h3 style="text-align: center;">View Details</h3>
+    
+            <div class="form-group">
+              <strong>SaleID: </strong>
+              <label name="SaleID">{{selectedSale.SaleID}}</label>
+            </div>
+            <div class="form-group">
+              <strong>Name: </strong>
+              <label name="Name">{{selectedSale.ClientName}}</label>
+            </div>
+            <div class="form-group">
+              <strong>Email: </strong>
+              <label name="Email">{{selectedSale.ClientEmail}}</label>
+            </div>
+            <div class="form-group">
+              <strong>Contact: </strong>
+              <label name="Address">{{selectedSale.ClientContact}}</label>
+            </div>
+            
+            <div class="form-group">
+              <strong>SaleStatus: </strong>
+              <label name="Status">{{selectedSale.Status}}</label>
+            </div>
+            <div class="form-group">
+              <strong>SaleType: </strong>
+              <label name="SaleType">{{selectedSale.SaleType}}</label>
+            </div>
+            <div class="form-group">
+              <strong>Products: </strong>
+              <!-- <label name="Products">{{clientObject.SaleType}}</label> -->
+              <ul>
+                <li *ngFor="let x of selectedSale.Products" >{{x.Name}}</li>
+              </ul>
+            </div>
+    
+            <div class="side-div">
+                <button mat-raised-button (click)="cancel(stepper)" style="background-color:red" ><mat-icon style="color:white">cancel</mat-icon>Cancel
+                </button>  
+                <button matStepperNext mat-raised-button style="background-color:forestgreen;">
+                    <mat-icon style="color:white">receipt</mat-icon> Confirm Details
+                </button>
+            </div>
+          </form>
+        </div>
+    </div>  
+  </mat-step>
+  <mat-step label="Make Payment">
+    <div *ngIf="selectedSale">
+        <h3 style="text-align: center;">View Details</h3>
+        
+        <div class="form-group">
+            <strong>Sale: </strong>
+            <label name="SaleID">{{selectedSale.SaleType}}</label>
+        </div>
+        <div class="form-group">
+            <strong>For: </strong>
+            <label name="Name">{{selectedSale.ClientName}} {{selectedSale.ClientSurname}}</label>
+        </div> 
+        <div class="form-group">
+            <strong>No. Of Items: </strong>
+            <label name="Name">{{selectedSale.Products.length}} items(s)</label>
+        </div> 
+        <div class="form-group">
+            <strong>Total: </strong>
+            <label name="Name">R{{selectedSale.Products.length}} items(s)</label>
+        </div> 
+         
+       
+    </div>
+</mat-step>
+</mat-horizontal-stepper>

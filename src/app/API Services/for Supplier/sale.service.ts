@@ -21,4 +21,9 @@ export class SaleService {
   {
     return this.http.get<SaleData[]>(this.url + "Sale/GetSaleList")
   }
+
+  getProdSaleList(): Observable<SaleData[]>
+  {
+    return this.http.get<SaleData[]>(this.url + "Sale/GetProductSales")
+  }
 }

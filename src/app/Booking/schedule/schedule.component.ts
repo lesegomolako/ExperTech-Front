@@ -327,7 +327,7 @@ export class BookingDialog implements OnInit
     }
     else if(this.data.BookingStatus == "Advised")
     {
-      this.title = this.data.Client + "'s Confirmed Booking"
+      this.title = this.data.Client + "'s Advised Booking"
     }
   }
 
