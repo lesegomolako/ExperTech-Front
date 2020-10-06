@@ -67,7 +67,7 @@ export class EditServiceComponent implements OnInit {
       duration: ['', Validators.required],
       typeid: ['', Validators.required],
       sprice: this.fb.array([this.fb.group({price: new FormControl()})]),
-      photos: this.fb.array([this.fb.group({photo: ['', Validators.required]})]),
+      //photos: this.fb.array([this.fb.group({photo: ['', Validators.required]})]),
       options: this.fb.array(
         [
           
@@ -259,7 +259,7 @@ export class EditServiceComponent implements OnInit {
     this.serviceObject.TypeID = this.serviceForm.value.typeid;
     this.serviceObject.ServicePrices = this.serviceForm.value.sprice
     this.serviceObject.ServiceTypeOptions = this.serviceForm.value.options;
-    this.serviceObject.ServiceImage = this.serviceForm.value.photos;
+    //this.serviceObject.ServiceImage = this.serviceForm.value.photos;
     
 
     if(this.serviceObject.ServiceTypeOptions.length>0)

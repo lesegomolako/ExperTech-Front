@@ -84,6 +84,12 @@ export class LoginComponent implements OnInit {
 
   Login(){
 
+    if(this.loginForm.invalid)
+    {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
+
     let params = this.route.snapshot.queryParams;
     if (params['redirectURL']) {
         this.redirectURL = params['redirectURL'];

@@ -13,7 +13,7 @@ import { User } from 'src/app/Staff/admin-register/admin-register.component';
 import { AvailData } from 'src/app/User/available/available.component';
 import { UserData } from 'src/app/Staff/setup/setup.component';
 import { Client } from '../for Booking/client';
-import { CompanyInfo, Timeslots } from 'src/app/User/company-settings/company-settings.component';
+import { CompanyInfo, SocialMedia, Timeslots } from 'src/app/User/company-settings/company-settings.component';
 
 //import 'rxjs/add/operator/map'
 
@@ -221,6 +221,11 @@ export class ReportingService {
     }
   }
 
+  updateTimes(times)
+  {
+    return this.http.post(this.url + 'Admin/updateTimes', times)
+  }
+
   GetTimes()
   {
     const params = new HttpParams();
@@ -230,6 +235,11 @@ export class ReportingService {
   GetCompanyInfo()
   {
     return this.http.get<CompanyInfo>(this.url + "Admin/GetCompanyInfo")
+  }
+
+  GetSocials()
+  {
+    return this.http.get<SocialMedia[]>(this.url + "Admin/GetSocials")
   }
 
    //set the schedule

@@ -1,72 +1,36 @@
-<div class="jumbotron" style="background-color: white;">
-    <div class="container">
-        <div class="row">
-          <div class="col-md-6 offset-md-3">
-            <h3 style="text-align: center;">Login</h3>
-            <form [formGroup]="loginForm" (submit)="Login()">
-                <div class="form-group">
-                    <label>Username</label>
-                    <input (keypress)="omit_special_char($event)"
-                    type="text"
-                    formControlName="username"
-                    class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
-                    <div
-                    *ngIf="submitted && f.username.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.username.errors.required">Username is required</div>
-                  </div>
-                    
-                </div>
-                <div class="form-group">
-                    <label>Passwords</label>
-                    <input
-                    type="password"
-                    formControlName="password"
-                    class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
-                    />
-                    <div
-                     *ngIf="submitted && f.password.errors"
-                   class="invalid-feedback"
-            >
-              <div *ngIf="f.password.errors.required">Password is required</div>
-            </div>
-                    
-                </div>
-                <div style="text-align: center;">
-                    <div class="form-group">
-                      <button
-                        class="btn btn-primary"
-                        style="color: white; background-color: green;"
-                        type="submit"
-                      >
-                        Login
-                      </button>
-                      <a routerLink="/forgot">
-                        <button
-                          class="btn btn-primary"
-                          style="color: white; background-color: green;"
-                          type="button"
-                        >
-                          Forgot Password
-                        </button>
-                      </a>
-                      <a routerLink="/clientregister">
-                      <button
-                        class="btn btn-primary"
-                        style="color: white; background-color: green;"
-                        type="button"
-                      >
-                        Register
-                      </button>
-                    </a>
-                    </div>
-                  </div>
-
-            </form>
+<div class="container">
+  <div class="card card-container">
+      <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+      <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+      <p id="profile-name" class="profile-name-card"></p>
+      <form class="form-signin"  [formGroup]="loginForm" (submit)="Login()">
+          <span id="reauth-email" class="reauth-email"></span>
+          <input type="text" id="inputEmail"  placeholder="Username" (keypress)="omit_special_char($event)"
+          type="text"
+          formControlName="username"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': f.username.errors && (f.username.touched || f.username.dirty)}">
+          <div *ngIf="f.username.errors && (f.username.touched || f.username.dirty)" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Username is required</div>
           </div>
-        </div>
-    </div>
-</div>
+                  
+          <input type="password" id="inputPassword" class="form-control" placeholder="Password"
+          formControlName="password"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': f.password.errors && (f.password.touched || f.password.dirty)}">
+          <div *ngIf="f.password.errors && (f.password.touched || f.password.dirty)" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+          </div>
+    
+          <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+      </form><!-- /form -->
+      <a href="/forgot" class="forgot-password">
+          Forgot the password?
+      </a>
+      <br>
+      <div style="display: inline-table;">
+        New user? <a href="/clientregister" class="forgot-password">Register here</a>
+      </div>
+
+  </div><!-- /card-container -->
+</div><!-- /container -->
