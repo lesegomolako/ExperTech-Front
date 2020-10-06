@@ -71,10 +71,10 @@
                                   </p>
                               </div>
                               <div class="col-lg-8">
-                                  <p class="text-left"><strong>{{(User |async).Name}} {{(User | async).Surname}}</strong></p>
-                                  <p class="text-left small">{{(User|async).Email}}</p>
+                                  <p class="text-left"><strong>{{(User |async)?.Name}} {{(User | async)?.Surname}}</strong></p>
+                                  <p class="text-left small">{{(User|async)?.Email}}</p>
                                   <p class="text-left">
-                                      <a (click)="logout()" style="text-decoration: none;" class="btn btn-primary btn-block btn-sm">Logout</a>
+                                      <a (click)="logout()" style="text-decoration: none; text-decoration-color: white;" class="btn btn-primary btn-block btn-sm">Logout</a>
                                   </p>
                               </div>
                           </div>

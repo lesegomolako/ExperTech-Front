@@ -7,6 +7,9 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatStepper } from '@angular/material/stepper';
+import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
+import { PaymentType } from 'src/app/API Services/for User/process';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-sale-payment',
@@ -22,6 +25,8 @@ export class SalePaymentComponent implements OnInit {
   SaleList: SaleData[];
 
   selectedSale: SaleData;
+  TypeControl= new FormControl('',Validators.required )
+  PaymentType: Observable<PaymentType[]>;
 
   displayedColumns = ['saleid', 'client', 'saletype', 'items' , 'date', 'select'];
 
@@ -37,12 +42,52 @@ export class SalePaymentComponent implements OnInit {
           this.SaleList = res;
           this.dataSource.data = this.SaleList;
         })
+       // this.PaymentType = this.service.getPaymentType();
     }
     else
     {
       this.router.navigate(["403Forbidden"])
     }
   }
+
+  onSubmit()
+{
+  // const payDetails =
+  // {
+  //   BookingID: this.SelectedBooking.BookingID,
+  //   PaymentTypeID: this.TypeControl.value,
+  //   Price: this.SelectedBooking.Price  ,
+  //   SessionID: this.api.SessionID 
+  // }
+
+  
+
+  // this.service.bookingPayment(payDetails).subscribe((res:any) =>
+  //   {
+  //     if(res == "success")
+  //     {
+  //       alert("Booking successfully paid")
+  //       //this.dialogRef.close();
+  //     }
+  //     else if(res.Error == "session")
+  //     {
+  //       alert("res.Message")
+  //     }
+  //     else
+  //     {
+  //       alert("Session is no longer valid. User needs to login")
+  //       this.router.navigate(["login"],{queryParams:{'redirectURL':this.state.url}})
+  //     }
+  //   }
+  // );
+  // console.log(payDetails)
+}
+
+reset(stepper: MatStepper) {
+  this.selectedSale = null;
+  stepper.reset();
+  //window.history.back();
+}
 
   ngAfterViewInit() {
     this.table.dataSource = this.dataSource;

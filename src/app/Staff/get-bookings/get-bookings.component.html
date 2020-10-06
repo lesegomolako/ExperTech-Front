@@ -1,54 +1,62 @@
-<h1 class="md-display-3">Bookings</h1>
+<div class="row">
+  <div class="col-12">
 
+  <h1 class="text-center">Booking Payment
+  <button mat-raised-button style="float: right;" routerLink="/payment" style="background-color:forestgreen" >
+    <mat-icon style="color:white">keyboard_return</mat-icon> Back
+  </button>
+</h1>
+  </div>
+</div>
 
-<div class="mat-elevation-z8 app-placeorder">
+<!-- <div class="mat-elevation-z8 app-placeorder">
     <mat-form-field>
      <mat-label>Search</mat-label>
      <input matInput (keyup)="applyFilter($event)" #input>
    </mat-form-field>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    
+     -->
       <!-- OrderID Column -->
-      <ng-container matColumnDef="BookingID">
+      <!-- <ng-container matColumnDef="BookingID">
         <th mat-header-cell *matHeaderCellDef> BookingID </th>
         <td mat-cell *matCellDef="let row"> {{row.BookingID}} </td>
       </ng-container>
-  
+   -->
       <!-- SupplierID Column -->
-      <ng-container matColumnDef="Client">
+      <!-- <ng-container matColumnDef="Client">
          <th mat-header-cell *matHeaderCellDef> Client </th>
          <td mat-cell *matCellDef="let row"> {{row.Client}} </td>
-      </ng-container>
+      </ng-container> -->
 
        <!--Description Column -->
-       <ng-container matColumnDef="Service">
+       <!-- <ng-container matColumnDef="Service">
         <th mat-header-cell *matHeaderCellDef> Service </th>
         <td mat-cell *matCellDef="let row"> {{row.Service}} </td>
-     </ng-container>
+     </ng-container> -->
   
   
       <!--Description Column -->
-      <ng-container matColumnDef="Status">
+      <!-- <ng-container matColumnDef="Status">
         <th mat-header-cell *matHeaderCellDef> Status </th>
         <td mat-cell *matCellDef="let row"> {{row.Status}} </td>
-     </ng-container>
+     </ng-container> -->
 
       <!--OrderDetails Column -->
-      <ng-container matColumnDef="Price">
+      <!-- <ng-container matColumnDef="Price">
         <th mat-header-cell *matHeaderCellDef> Price</th>
         <td mat-cell *matCellDef="let row">R {{row.Price}} </td>
-     </ng-container>
+     </ng-container> -->
 
       <!-- Price Column -->
-      <ng-container matColumnDef="Date">
+      <!-- <ng-container matColumnDef="Date">
         <th mat-header-cell *matHeaderCellDef> Date </th>
         <td mat-cell *matCellDef="let row"> {{row.Date | date:"dd/MM/yy"}} </td>
      </ng-container>
     
-   
+    -->
  
 
-     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+     <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
      <tr (click)="makePayment(row)" id="tablerow" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
    </table>
       
@@ -58,4 +66,116 @@
       <a [routerLink] = "['/payment']">
         <button mat-raised-button style="background-color:red" ><mat-icon style="color:white">undo</mat-icon>Return
        </button></a>
-</div>
+</div> -->
+
+
+<mat-horizontal-stepper style="width: 90%; margin:auto" linear #stepper>
+  <mat-step label="Select Booking" [completed]="false">
+    <form class="justify-content-center">
+      <div style="width: 80%; height: 100%; margin:auto">
+        <div style="background-color: white;" class="card_hover">
+          <h2 style="text-align: center;">
+            Bookings
+          </h2> 
+          <div style="text-align: center;">
+            <body>
+              <div class="topnav" style="float: right;">
+                <input
+                  type="text"
+                  id="myInput"
+                  (keyup)="myFunction($event)"
+                  placeholder="Search..."
+                />
+              </div>
+              <table id="myTable" class="table table_hover">
+                <tr class="header">
+                  <th style="width: 60; display: none;" >BookingID</th>
+                  <th style="width: 60;" >Client</th>
+                  <th style="width: 60;" >Service</th>
+                  <th style="width: 60;" >Status</th>
+                  <th style="width: 60;" >Price (R)</th>
+                  <th style="width: 60;" >Date</th>
+                  <th style="width: 60;"></th>
+                </tr>
+    
+                
+                <tr *ngFor="let item of BookingsList">
+                  <td style="display: none;">{{item.BookingID}}</td>
+                  <td>{{ item.Client }}</td>
+                  <td>{{ item.Service }}</td>
+                  <td>{{ item.Status }}</td>
+                  <td >R {{ item.Price }}</td>
+                  <td >{{item.Date | date:"dd/MM/yy"}}</td>
+                  <td>
+                    <button class="btn btn-warning" (click)="SelectBooking(item, stepper)">Select Booking</button>
+                  </td>
+                  </tr>       
+              </table>
+              <br />
+            </body>
+            
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step label="Confirm payment">  
+    <h2 style="text-align: center">Confirm Payment</h2>
+    <div class="row justify-content-center">
+      <form #Payment>
+        <div class="col-12" *ngIf="SelectedBooking">
+          <h4>Booking Details</h4>
+            <div>
+              <strong>BookingID:</strong
+              ><label name="Name">{{ SelectedBooking.BookingID }}</label>
+            </div>
+            <div>
+              <strong>Client Details:</strong
+              ><label name="Surname">{{ SelectedBooking.Client }}</label>
+            </div>
+            <div>
+              <strong>Service Details:</strong
+              ><label name="ContactNo">{{ SelectedBooking.Service }}</label>
+            </div>
+            <div>
+              <strong>Status:</strong
+              ><label name="Email">{{ SelectedBooking.Status }}</label>
+            </div>           
+        </div>
+      
+        <br>
+        <div style="text-align: center;">
+          <mat-radio-group aria-label="Select an option">
+            <div class="example-radio-group">
+              <mat-radio-button value="1" [checked]='true' (click)="enable()">Select Payment Type</mat-radio-button>
+              <mat-form-field appearance="fill">
+                <mat-label>Payment Type</mat-label>
+                <mat-select [formControl]="TypeControl" #type required>
+                  <mat-option
+                    *ngFor="let option of PaymentType | async"
+                    value="{{option.PaymentTypeID}}">
+                    {{option.Type}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="TypeControl.errors?.required && (TypeControl.touched ||TypeControl.dirty)">Select Payment Type</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="example-radio-group">
+              <mat-radio-button value="2" (click)="disable()" class="disabled" [disabled]="!SelectedBooking?.HasPackage">Use Service Package: {{SelectedBooking?.PackageDetails?.Name || "No Service Packages Available"}}</mat-radio-button>
+            </div>
+          </mat-radio-group>
+          
+        </div>
+      </form>
+    </div>
+    <div>
+      
+    </div>
+    <br>
+    <div style="text-align: center;">
+      <button mat-raised-button class="btn btn-success" (click)="onSubmit()">Make Payment</button>
+      <button mat-raised-button="btn btn-success" (click)="reset(stepper)">Reset</button>
+    </div>
+
+  </mat-step>
+</mat-horizontal-stepper>

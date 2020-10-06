@@ -32,6 +32,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 //******************************* Components *************************************/
@@ -151,7 +152,7 @@ import { SalePaymentComponent } from './User/sale-payment/sale-payment.component
   imports: [
     BrowserModule, MatTableModule, MatSelectModule,
     AppRoutingModule, MatButtonModule, MatAutocompleteModule, MatStepperModule,
-    BrowserAnimationsModule, MatInputModule,MatExpansionModule,
+    BrowserAnimationsModule, MatInputModule,MatExpansionModule, MatCheckboxModule,
     MatIconModule, FormsModule, ReactiveFormsModule, MatGridListModule,
     MatToolbarModule, MatMenuModule , MatFormFieldModule, MatSidenavModule,
     HttpClientModule, MatDialogModule, PortalModule, MatPaginatorModule,

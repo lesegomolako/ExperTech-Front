@@ -37,12 +37,13 @@
           [for]="picker1"
         ></mat-datepicker-toggle>
         <mat-datepicker #picker1>End Date</mat-datepicker>
+        
       </mat-form-field>
       <br />
 
       <mat-form-field appearance="fill">
         <mat-label>Start Time</mat-label>
-        <mat-select formControlName="StartTime">
+        <mat-select formControlName="StartTimeID">
           <mat-option
             *ngFor="let times of List | async"
             value="{{ times.TimeID }}"
@@ -53,7 +54,7 @@
 
       <mat-form-field appearance="fill">
         <mat-label>End Time</mat-label>
-        <mat-select formControlName="EndTime">
+        <mat-select formControlName="EndTimeID">
           <mat-option
             *ngFor="let times of List | async"
             value="{{ times.TimeID }}"
@@ -64,7 +65,7 @@
 
       <br />
       <mat-radio-group aria-label="Select an option" formControlName="Avail">
-        <mat-radio-button value="1">Available</mat-radio-button>
+        <mat-radio-button value="1" checked>Available</mat-radio-button>
         <mat-radio-button value="2">Not Available</mat-radio-button>
       </mat-radio-group>
 
@@ -89,10 +90,25 @@
 </div> 
 </ng-template>
 
-<div style="width:80%; margin: auto;">
+<div style="width:90%; margin: auto;">
  
 <div class="row text-center">
- <div class="col-md-4">
+  <div class="col-md-3">
+    <div class="card">
+      <div class="card-body">   
+        <div>   
+          <input type="color" style="left: 0;" value="#32CD32" disabled> Available  
+        </div>  
+        <div>   
+          <input type="color" value="#e3bc08" disabled> Not Available 
+        </div>   
+        <div>
+          <input type="color" value="#ad2121" disabled> Already Booked 
+        </div>         
+      </div>
+    </div>
+  </div>
+ <div class="col-md-1">
    <div class="btn-group">
      <div
        class="btn btn-primary btn-lg"

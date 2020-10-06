@@ -30,8 +30,16 @@ export class ServicepComponent implements OnInit {
   constructor(private service:ExperTexhService,private router:Router, private formbulider: FormBuilder) { }
 
   ngOnInit(): void {
-    this.packageForm = this.formbulider.group;
-    this.loadservicepackage();  
+    if(this.service.RoleID == "1")
+    {
+      this.packageForm = this.formbulider.group;
+      this.loadservicepackage(); 
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
+     
 
 }
 

@@ -151,7 +151,7 @@ export class ScheduleComponent implements OnInit {
                 Schedules.BookingSchedule[0].DateTime
               ),
               color: colors.green,
-              allDay: true,
+              //allDay: true,
               draggable: false,
               meta: Schedules,
             }
@@ -199,7 +199,7 @@ export class ScheduleComponent implements OnInit {
                 Schedules.BookingSchedule[0].DateTime
               ),
               color: colors.green,
-              allDay: true,
+              //allDay: true,
               draggable: false,
               meta: Schedules,
             }
@@ -212,7 +212,7 @@ export class ScheduleComponent implements OnInit {
                 Schedules.BookingSchedule[0].DateTime
               ),
               color: colors.yellow,
-              allDay: true,
+              //allDay: true,
               draggable: false,
               meta: Schedules,
             }
@@ -264,12 +264,19 @@ export class ScheduleComponent implements OnInit {
     // this.modalData = { event, action };
     // this.modal.open(this.modalContent, { size: 'lg' });
     // this.refresh.next();
-    if(confirm("Would you like to advise for this booking?"))
-    {     
-      localStorage.setItem("DateChosen", newStart.toDateString())
-      localStorage.setItem("BookingDetails", JSON.stringify(event.meta))
-      this.router.navigateByUrl("advise")
+
+    if(newStart < new Date())
+    {
+      alert("You may not drag event to a date that has already passed")
+      return;
     }
+
+    // if(confirm("Would you like to advise for this booking?"))
+    // {     
+    //   localStorage.setItem("DateChosen", newStart.toDateString())
+    //   localStorage.setItem("BookingDetails", JSON.stringify(event.meta))
+    //   this.router.navigateByUrl("advise")
+    // }
   }
 
   cancel()

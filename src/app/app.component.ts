@@ -13,6 +13,7 @@ export interface ProfileData<MetaType=any>
   Name: string;
   Surname: string;
   Email:string;
+  ContactNo?: string;
 }
 
 @Component({
@@ -57,7 +58,7 @@ export class AppComponent implements OnInit {
       }
     }))
 
-  
+    
   }
 
   goHome()

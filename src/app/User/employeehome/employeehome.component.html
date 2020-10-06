@@ -8,10 +8,9 @@
     </mat-card>
 
     <mat-card style="height: 100%; background-color: whitesmoke">
-      <mat-card-title>Refiloe</mat-card-title>
-      <mat-card-title>Manyaapelo</mat-card-title>
-      <mat-card-title>r.manyaapelo@gmail.com</mat-card-title>
-      <mat-card-title>079 253 4891</mat-card-title>
+      <mat-card-title>{{(User | async)?.Name}} {{(User | async)?.Surname}}</mat-card-title>
+      <mat-card-title>{{(User | async)?.Email}}</mat-card-title>
+      <mat-card-title>{{(User | async)?.ContactNo}}</mat-card-title>
       <mat-card-subtitle>Welcome to your profile</mat-card-subtitle>
     </mat-card>
 
@@ -123,6 +122,14 @@
                 <h3 class="text-black h4">Service Packages</h3>
                 <p>Activate service packages</p>
                 <p><strong class="font-weight-bold text-primary"><a href="./spackage"><button class="btn btn-success">Activate Package</button></a></strong></p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5" >
+              <div class="h-100 p-4 p-lg-5 bg-light site-block-feature-7">
+                <span class="icon flaticon-shave display-3 text-primary mb-4 d-block"></span>
+                <h3 class="text-black h4">Audit Trails</h3>
+                <p>Monitor user activity</p>
+                <p><strong class="font-weight-bold text-primary"><a href="./settings"><button class="btn btn-success">Settings</button></a></strong></p>
               </div>
             </div>
             <div class="col-md-6 col-lg-3 text-center mb-5 mb-lg-5" >

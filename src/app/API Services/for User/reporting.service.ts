@@ -13,6 +13,7 @@ import { User } from 'src/app/Staff/admin-register/admin-register.component';
 import { AvailData } from 'src/app/User/available/available.component';
 import { UserData } from 'src/app/Staff/setup/setup.component';
 import { Client } from '../for Booking/client';
+import { CompanyInfo, Timeslots } from 'src/app/User/company-settings/company-settings.component';
 
 //import 'rxjs/add/operator/map'
 
@@ -220,13 +221,24 @@ export class ReportingService {
     }
   }
 
+  GetTimes()
+  {
+    const params = new HttpParams();
+    return this.http.get<Timeslots[]>(this.url + 'Admin/GetAllTimes')
+  }
+
+  GetCompanyInfo()
+  {
+    return this.http.get<CompanyInfo>(this.url + "Admin/GetCompanyInfo")
+  }
+
    //set the schedule
    Schedule(form: AvailData, SessionID) {
     const formData: FormData = new FormData();
     formData.append("StartDate", form.StartDate)
     formData.append("EndDate", form.EndDate)
-    formData.append("EndTime", form.EndTime)
-    formData.append("StartTime", form.StartTime)
+    formData.append("EndTime", form.EndTimeID)
+    formData.append("StartTime", form.StartTimeID)
     formData.append("Availbilness", form.Avail)
     
     const params = new HttpParams().set("SessionID", SessionID)

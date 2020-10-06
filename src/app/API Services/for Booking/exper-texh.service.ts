@@ -30,6 +30,16 @@ export class ExperTexhService {
     return this.http.get(this.url + 'User/Logout', {params})
   }
 
+  checkHasPackage(ServiceID, ClientID)
+  {
+    const formData: FormData = new FormData();
+    formData.append('ServiceID', ServiceID)
+    formData.append('SessionID', this.SessionID)
+    formData.append('ClientID', ClientID)
+    //const params = new HttpParams().set("SessionID", this.SessionID).set("ServiceID", ServiceID).set("ClientID")
+    return this.http.post(this.url + "Booking/CheckHasPackage", formData)
+  }
+
   SubmitBasket()
   {
     const params = new HttpParams().set("SessionID", this.SessionID)

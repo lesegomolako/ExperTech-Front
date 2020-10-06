@@ -271,19 +271,29 @@ onReset() {
 
 LoadList()
 {
+  // this.http.get<[]>(this.api.url + "Booking/getALLemployees")
+  // .subscribe(res => {this.Employee = res})
+  // this.http.get<[]>(this.api.url + "Services/GetService")
+  // .subscribe(res => {this.Service = res})
+  // this.http.get<[]>(this.api.url + "Services/GetServiceOption")
+  // .subscribe(res => {this.ServiceOptions = res})
+  // this.http.get<[]>(this.api.url + "Services/GetServiceType")
+  // .subscribe(res => {this.ServiceType = res})
+  // this.http.get<[]>(this.api.url + "Booking/getTimes")
+  // .subscribe(res => {this.Times = res})
+  // this.Schedge = this.http.get<Schedule[]>(this.api.url + "Booking/getSchedge")
+ 
   this.http.get<[]>(this.api.url + "Booking/getALLemployees")
   .subscribe(res => {this.Employee = res})
-  this.http.get<[]>(this.api.url + "Services/GetService")
+  this.http.get<[]>(this.api.url + "Booking/getALLservices")
   .subscribe(res => {this.Service = res})
-  this.http.get<[]>(this.api.url + "Services/GetServiceOption")
+  this.http.get<[]>(this.api.url + "Booking/getALLservicesoption")
   .subscribe(res => {this.ServiceOptions = res})
-  this.http.get<[]>(this.api.url + "Services/GetServiceType")
+  this.http.get<[]>(this.api.url + "Booking/getALLservicestype")
   .subscribe(res => {this.ServiceType = res})
   this.http.get<[]>(this.api.url + "Booking/getTimes")
   .subscribe(res => {this.Times = res})
-  this.Schedge = this.http.get<Schedule[]>(this.api.url + "Booking/getSchedge")
- 
- 
+  this.Schedge = this.http.get<Schedule[]>(this.api.url + "Booking/getSchedge") 
   
 }
 
@@ -331,6 +341,13 @@ export class AddClientDialog implements OnInit
 }
  
   onSubmit(form): void {
+
+    if(this.ClientForm.invalid)
+    {
+      alert("Enter all client details")
+      this.ClientForm.markAllAsTouched();
+      return;
+    }
     console.log(form.value);
     this.http.post(this.api.url + "Clients/AddClient", form.value).subscribe((res:any) => {
       if(res.Message == "success")

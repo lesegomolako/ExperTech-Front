@@ -29,10 +29,20 @@ import {Schedules} from '../../Booking/schedule/schedule.component'
 export class AvailData {
   StartDate: any;
   EndDate: any;
-  StartTime: any;
-  EndTime: any;
+  StartTimeID: any;
+  EndTimeID: any;
   StatusID: any;
   Avail: any;
+}
+
+export class CalData
+{
+  DateID: any;
+  Dates:Date;
+  TimeID:any;
+  StartTime:any;
+  EndTime:any;
+  StatusID:any
 }
 
 const colors: any = {
@@ -100,8 +110,8 @@ export class AvailableComponent implements OnInit {
       this.AvailabilityForm = this.formBuilder.group({
         StartDate: ['', Validators.required],
         EndDate: ['', Validators.required],
-        StartTime: ['', Validators.required],
-        EndTime: ['', Validators.required],
+        StartTimeID: ['', Validators.required],
+        EndTimeID: ['', Validators.required],
         Avail: [],
       });
     }
@@ -120,6 +130,12 @@ export class AvailableComponent implements OnInit {
   Schedge: AvailData;
   user: any;
   addAvailability() {
+
+    if(this.AvailabilityForm.invalid)
+    {
+      this.AvailabilityForm.markAllAsTouched();
+      return;
+    }
     this.Schedge = this.AvailabilityForm.value;
     console.log(this.Schedge);
     this.service.Schedule(this.Schedge, this.api.SessionID).subscribe((ref) => {
@@ -127,6 +143,7 @@ export class AvailableComponent implements OnInit {
       if (ref == 'success') 
       {
         alert("Availibility successfully updated");
+        this.AvailabilityForm.reset();
         this.fetchEvents();
       }
     });
@@ -154,7 +171,7 @@ export class AvailableComponent implements OnInit {
 
   CalendarView = CalendarView;
 
-  events$: Observable<CalendarEvent<Schedules>[]>;
+  events$: Observable<CalendarEvent<CalData>[]>;
   
 
   events:CalendarEvent<{ Schedge: Schedules }>[];
@@ -197,24 +214,64 @@ export class AvailableComponent implements OnInit {
 
     const params = new HttpParams()
     .set(
-      'SessionID', this.api.SessionID)
+      'SessionID', this.api.SessionID);
+
+    
+
 
     this.events$ = this.http
       .get('https://localhost:44380/api/Employees/DisplayEmployeeSchedule', {params})
       .pipe(
-        map(( res :  Schedules[] ) => {
-          return res.map((Schedules: Schedules) => {
-            return {
-              title: Schedules.Client + "'s Booking",
-              start: new Date(
-                Schedules.BookingSchedule[0].DateTime
-              ),
-              color: colors.green,
-              allDay: true,
-              draggable: false,
-              meta: Schedules,
+        map(( res :  CalData[] ) => {
+          return res.map((Avail: CalData) => {
+            if(Avail.StatusID == 1)
+            {
+              return {
+                title: Avail.StartTime + "-" + Avail.EndTime,
+                start: new Date(
+                  Avail.Dates
+                ),
+                color: colors.green,
+                allDay: true,
+                draggable: false
+              }
             }
-          });
+            else if(Avail.StatusID == 2)
+            {
+              return {
+                title: Avail.StartTime + "-" + Avail.EndTime,
+                start: new Date(
+                  Avail.Dates
+                ),
+                color: colors.yellow,
+                allDay: true,
+                draggable: false
+              }
+            }
+            else
+            {
+              return {
+                title: Avail.StartTime + "-" + Avail.EndTime,
+                start: new Date(
+                  Avail.Dates
+                ),
+                color: colors.red,
+                allDay: true,
+                draggable: false
+              }
+            }
+           
+                 
+                    // return {
+                    //   title: res.StartTime + "-" + res.EndTime,
+                    //   start: new Date(
+                    //     Avail.Dates
+                    //   ),
+                    //   color: colors.yelloq,
+                    //   allDay: true,
+                    //   draggable: false
+                    // }
+                  })                 
         })
       );
   }
