@@ -9,10 +9,12 @@ import {
   FormBuilder,
   FormGroup,
 } from '@angular/forms';
+import { MustMatch } from 'src/app/components/must-match.validator';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process} from '../../API Services/for User/process';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password',
@@ -22,17 +24,26 @@ import {Process} from '../../API Services/for User/process';
 export class ResetPasswordComponent implements OnInit {
   resetForm: FormGroup;
   submitted = false;
+
   public FpasswordFormGroup: FormGroup;
+
   constructor(
-    public dialog: MatDialog,
     private formBoilder: FormBuilder,
-    public service: ReportingService
+    private service: ReportingService,
+    private router: Router,
+    private ActRoute: ActivatedRoute
   ) {}
 
+  SessionID;
   ngOnInit(): void {
+
+    this.SessionID = this.ActRoute.snapshot.queryParams['SessionID'];
+
     this.resetForm = this.formBoilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       cpassword: ['', [Validators.required, Validators.minLength(6)]],
+    }, {
+      validator: MustMatch('password', 'cpassword')
     });
   }
   //convenienve getter for easy access to form fields
@@ -40,15 +51,38 @@ export class ResetPasswordComponent implements OnInit {
     return this.resetForm.controls;
   }
 
-  toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('active');
-  }
+  
 
   onSubmit() {
     //stop here if form is invalid
     if (this.resetForm.invalid) {
+      this.resetForm.markAllAsTouched();
       return;
     }
+
+    let newPassword = 
+    {
+      SessionID: this.SessionID,
+      Password: this.resetForm.value.password
+    }
+
+    console.log(newPassword.Password)
+
+    this.service.restPassword(newPassword).subscribe((res:any) => {
+      if(res = "success")
+      {
+        alert("Password successfully reset")
+        this.router.navigate(["login"])
+      }
+      else if(res.Error = "session")
+      {
+        alert(res.Message)
+      }
+      else
+      {
+        console.log(res)
+      }
+    })
   }
   List: Observable<Process[]>
 }

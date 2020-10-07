@@ -18,4 +18,11 @@ svg
     
 }
 
+.help
+{
+    float: right; 
+    font-size: 30px; 
+    cursor: pointer;
+}
+
 

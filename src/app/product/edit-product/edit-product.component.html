@@ -28,7 +28,7 @@
         <br>
                 <div class="form-group" [ngClass]="{'has-error': formErrors.quantity}">
                     <label for="QuantityOnHand">Quantity</label>    
-                    <input type="number" (blur)="logValidationErrors()"  name="QuantityOnHand" class="form-control" placeholder="Enter quantity" 
+                    <input type="number" (blur)="logValidationErrors()" min=0 name="QuantityOnHand" class="form-control" placeholder="Enter quantity" 
                         formControlName="quantity">
                         <span class="help-block" *ngIf="formErrors.quantity">
                             {{formErrors.quantity}}

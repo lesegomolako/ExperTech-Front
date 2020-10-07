@@ -55,6 +55,10 @@ export class CompanySettingsComponent implements OnInit {
     if(this.api.RoleID == "2")
     {
       this.loadList();
+      this.editTimes = this.fb.group({
+        times: this.fb.array([])  
+      })
+      this.CreateForms();
      
     }
     else
@@ -62,6 +66,17 @@ export class CompanySettingsComponent implements OnInit {
       this.router.navigate(["403Forbidden"])
     }
 
+  }
+
+  CreateForms()
+  {
+    this.editSocials = this.fb.group(
+      {
+        socialid: [null],
+        name: ['', [Validators.required, Validators.maxLength(50)]],
+        link: ['', [Validators.required, Validators.maxLength(150)]]
+      }
+    )
   }
 
   loadList()
@@ -79,59 +94,123 @@ export class CompanySettingsComponent implements OnInit {
   }
 
   AddSocialMedia()
-  {
-    this.editSocials = this.fb.group(
-      {
-        links: this.fb.array([
-          this.AddLinksControls()
-        ])
-      }
-    )
+  { 
+    this.editSocials.reset()
     this.editSocial = true;
   }
 
-  AddForm()
+  EditSocialMedia(SocialMedia: SocialMedia)
   {
-    (<FormArray>this.editSocials.get('links')).push(this.AddLinksControls())
-  }
-
-  AddLinksControls():FormGroup
-  {
-    return this.fb.group({
-      socialid: [''],
-      name: ['', [Validators.required, Validators.maxLength(50)]],
-      link: ['', [Validators.required, Validators.maxLength(150)]]
+    this.editSocials.patchValue({
+      socialid: SocialMedia.SocialID,
+      name: SocialMedia.Name,
+      link: SocialMedia.Link
     })
+    this.editSocial = true;
   }
 
-  setLinkControls(data: SocialMedia[]):FormArray
+  DeleteSocialMedia(InfoID)
   {
-    const formArray = new FormArray([]);
-
-    data.forEach(s => {formArray.push(
-      this.fb.group({
-        socialid: s.SocialID,
-        name: s.Name,
-        link: s.Link,
-      })
-    )})
- 
-    return formArray;
+    if(confirm("Are you sure you want to delete this link?"))
+    {
+      this.service.DeleteSocials(InfoID, this.api.SessionID).subscribe((res:any) => 
+        {
+          if(res == "success")
+          {
+            alert("Social media link successfully deleted")
+            this.loadList();
+          }
+          else if(res.Error == "session")
+          {
+            alert(res.Message)
+          }
+          else
+          {
+            console.log(res)
+          }
+        })
+    }
   }
+
+  get company() {
+    return this.editCompanyData.controls;
+  }
+
+ 
 
   linksObject;
   saveLinks()
   {
-    this.linksObject = this.editSocials.value.links
+    if(this.editSocials.invalid)
+    {
+      this.editSocials.markAllAsTouched();
+      return;
+    }
+    let id = this.editSocials.value.socialid;
+
+    if(id == null)
+    {
+      this.service.AddSocials(this.editSocials.value, this.api.SessionID).subscribe((res:any) =>
+        {
+          if(res == "success")
+          {
+            alert("Successfully added social media link")
+            this.loadList();
+            this.editSocial = false;
+          }
+          else if(res.Error == "session")
+          {
+            alert(res.Message)
+          }
+          else
+          {
+            console.log(res)
+          }
+        })
+    }
+    else
+    {
+      this.service.EditSocials(this.editSocials.value, this.api.SessionID).subscribe((res:any) =>
+        {
+          if(res == "success")
+          {
+            alert("Successfully updated social media link")
+            this.loadList();
+            this.editSocial = false;
+          }
+          else if(res.Error == "session")
+          {
+            alert(res.Message)
+          }
+          else
+          {
+            console.log(res)
+          }
+        })
+    }
+    
   }
+
+  get social()
+  {
+    return this.editSocials.controls;
+  }
+
+  DeleteForm(linkID: any): void
+  {
+    (<FormArray>this.editSocials.get('links')).removeAt(linkID);
+  }
+
+
 
   //************************Company Info ******************/
   EditCompanyInfo(Data: CompanyInfo)
   {
     this.editCompanyData = this.fb.group({
-      Name: [Data.Name, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+      infoid: [Data.InfoID],
+      Name: [Data.Name, [Validators.required, Validators.maxLength(150)]],
       ContactNo: [Data.ContactNo, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-      Address: [Data.Address, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      Address: [Data.Address, [Validators.required,  Validators.maxLength(250)]],
     })
     this.editCompany = true;
     
@@ -139,30 +218,62 @@ export class CompanySettingsComponent implements OnInit {
 
   SaveCompanyInfo()
   {
-    this.editCompany = false;
+    if(this.editCompanyData.invalid)
+    {
+      this.editCompanyData.markAllAsTouched();
+      return;
+    }
+
+    this.service.updateCompany(this.editCompanyData.value, this.api.SessionID).subscribe((res:any) =>
+      {
+        if(res == "success")
+        {
+          alert("Company Info successfully updated");
+          this.editCompany = false;
+          this.loadList();
+        }
+        else if(res.Error == "session")
+        {
+          alert(res.Message);
+        }
+        else
+        {
+          console.log(res)
+        }
+      }
+    )
+    
   }
 
    //************************Timeslots ******************/
   EditTimeSlots()
   {
-    this.editTimes = this.fb.group({
-      times: this.fb.array([])  
-    })
+    
     this.editTimes.setControl('times', this.setTimes(this.TimesList));
     this.editTime = true;
   }
 
-  timesObject;
+  timesObject: Timeslots[];
   SaveTimeslot()
   {
-    this.timesObject = this.editTimes.value.times;
-
-    this.service.updateTimes(this.timesObject).subscribe(res =>
+   
+    this.service.updateTimes(this.editTimes.value.times, this.api.SessionID).subscribe((res:any) =>
       {
         if(res =="success")
         {
-
+          alert("Times successfully updated");
+          this.loadList();
+          this.editTime = false;
         }
+        else if(res.Error = "session")
+        {
+          alert(res.Message);
+        }
+        else
+        {
+          console.log(res);
+        }
+
       })
   }
 
@@ -176,11 +287,38 @@ export class CompanySettingsComponent implements OnInit {
         timeid: s.TimeID,
         startTime: s.StartTime,
         endTime: s.EndTime,
-        available: {checked: s.Available}
+        available: s.Available
       })
     )})
 
-    
+    console.log(formArray)
     return formArray;
+  }
+
+  omit_special_num_char(event) {
+    var theEvent = event || window.event;
+
+    // Handle paste
+    if (theEvent.type === 'paste') {
+        key = event.clipboardData.getData('text/plain');
+    } else {
+    // Handle key press
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+    }
+    var regex = /[0-9]|\./;
+    if( !regex.test(key) ) {
+      theEvent.returnValue = false;
+      if(theEvent.preventDefault) theEvent.preventDefault();
+    }
+    var k;
+    k = event.charCode;
+    return (
+      (k > 64 && k < 91) ||
+      (k > 96 && k < 123) ||
+      k == 8 ||
+      k == 32 ||
+      (k >= 48 && k <= 57)
+    );
   }
 }

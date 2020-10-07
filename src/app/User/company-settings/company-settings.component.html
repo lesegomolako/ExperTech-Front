@@ -21,18 +21,30 @@
           <mat-form-field class="w-100">
             <mat-label>Name</mat-label>
             <input matInput formControlName="Name">
+            <mat-error *ngIf="company.Name.errors">
+              <mat-error *ngIf="company.Name.errors.required">Name is required</mat-error>
+              <mat-error *ngIf="company.Name.errors.maxlenth">Name may not be longer than 150 characters</mat-error>
+            </mat-error>
           </mat-form-field>
         </div>
         <div class="form-group">
           <mat-form-field class="w-100">
             <mat-label>Contact</mat-label>
-            <input matInput  formControlName="ContactNo">
+            <input matInput (keypress)="omit_special_num_char($event)" formControlName="ContactNo">
+            <mat-error *ngIf="company.ContactNo.errors">
+              <mat-error *ngIf="company.ContactNo.errors.required">Contact Number is required</mat-error>
+              <mat-error *ngIf="company.ContactNo.errors.maxlength || company.ContactNo.errors.minlength">Contact number must be 10 digits long</mat-error>
+            </mat-error>
           </mat-form-field>
         </div>
         <div class="form-group">
           <mat-form-field class="w-100">
             <mat-label>Address</mat-label>
             <input matInput formControlName="Address">
+            <mat-error *ngIf="company.Address.errors">
+              <mat-error *ngIf="company.Address.errors.required">Address is required</mat-error>
+              <mat-error *ngIf="company.Address.errors.maxlength">Address can only contain a maximum of 250 characters</mat-error>
+            </mat-error>
           </mat-form-field>
         </div>
   
@@ -51,12 +63,11 @@
 
   <div class="settings-form-flex" >
     <mat-card  style="width: 100%" *ngIf="editTime; else editTimeSlots">
-      <form>
+      <form [formGroup]="editTimes" (ngSubmit)="SaveTimeslot()">
         <mat-card-title>
           Time Slots 
         </mat-card-title>
         <mat-card-content>
-          <form [formGroup]="editTimes" (ngSubmit)="SaveTimeslot()">
             <ng-container formArrayName="times">
               <div *ngFor="let x of editTimes.get('times')['controls']; let j = index" >
                 <div [formGroupName]="j">
@@ -86,12 +97,11 @@
                   </div>
                   </div>
               </ng-container>
-          </form>
         </mat-card-content>
         <mat-card-actions>
           <div class="button-flex-container" style="float: right;">
             <button mat-raised-button color="light" type="button" (click)="cancel()">Cancel</button>
-            <button mat-raised-button style="background-color:forestgreen; color:white"  type="submit">Save</button>
+            <button mat-raised-button style="background-color:forestgreen; color:white" type="submit">Save</button>
           </div>
         </mat-card-actions>
       </form>
@@ -102,37 +112,30 @@
   <br>
   <div class="settings-form-flex" > 
     <mat-card  style="width: 100%" *ngIf="editSocial; else SocialsEdit">
+      <form [formGroup]="editSocials" (ngSubmit)="saveLinks()">
       <mat-card-title>
         Social Media Links
       </mat-card-title>
       <mat-card-content>
-        <button mat-button color="primary" (click)="AddForm()">Add Link</button>
-        <br>
-        <form [formGroup]="editSocials" (ngSubmit)="saveLinks()">
-          <ng-container formArrayName="links">
-            <div *ngFor="let x of editSocials.get('links')['controls']; let j = index" >
-              <div [formGroupName]="j">
-                <table class="example-full-width">
-                  <tr>
-                    <input hidden  matInput formControlName="socialid">
-                    <td>
-                      <mat-form-field class="w-100">
-                        <mat-label>Social Media Name</mat-label>
-                        <input placeholder="example: Facebook"  matInput formControlName="name">
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <mat-form-field class=" w-100">
-                      <mat-label>Link</mat-label>
-                      <input matInput placeholder="provide link to your social media" formControlName="link">
-                      </mat-form-field>
-                    </td>
-                    </tr>
-                  </table>
-                </div>
-                </div>
-            </ng-container>
-        </form>
+        <br>   
+        <table class="example-full-width">
+          <tr>
+            <input hidden  matInput formControlName="socialid">
+            <td>
+              <mat-form-field class="w-100">
+                <mat-label>Social Media Name</mat-label>
+                <input placeholder="example: Facebook"  matInput formControlName="name">
+              </mat-form-field>
+              <mat-error ></mat-error>
+            </td>
+            <td>
+              <mat-form-field class=" w-100">
+              <mat-label>Link</mat-label>
+              <input matInput placeholder="provide link to your social media" formControlName="link">
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>                    
       </mat-card-content>
       <mat-card-actions>
         <div class="button-flex-container">
@@ -140,6 +143,7 @@
           <button mat-raised-button style="background-color:forestgreen; color:white"  type="submit">Save</button>
         </div>
       </mat-card-actions>
+    </form>
     </mat-card>
   </div>
 
@@ -219,29 +223,26 @@
       Social Media Links
     </mat-card-title>
     <mat-card-content>
-      <div class="row" *ngFor="let x of Links">
-        <div class="col-1 form-group">
-          <p></p>
-        </div>
-        <div class="col-3 form-group">
+      <div class="row content" *ngFor="let x of Links">
+        <div class="col-2 form-group">
           <label name="Name"><strong>Name: </strong>
             {{x.Name}}
           </label>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-7 form-group">
           <label name="Name"><strong>Link: </strong>
             {{x.Link}}
           </label>
         </div>
-      </div>
-      <div *ngIf="Links?.length == 0">
-        <br>
-        <button mat-raised-button (click)="AddSocialMedia()">Add Social Media Link</button>
+        <div class="col-3 form-group buttons">       
+          <a  class="btn btn-success" (click)="EditSocialMedia(x)"><mat-icon inline=true>edit</mat-icon></a>
+          <a  class="btn btn-danger" (click)="DeleteSocialMedia(x.SocialID)"><mat-icon inline=true>delete</mat-icon></a>    
+        </div>
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <div class="button-flex-container" *ngIf="Links?.length>0">
-        <button mat-raised-button style="background-color:forestgreen; color:white" (click)="EditTimeSlots()">Edit</button>
+      <div class="button-flex-container">
+        <button mat-raised-button style="background-color:forestgreen; color:white" (click)="AddSocialMedia()">Add Link</button>
       </div>
     </mat-card-actions>
   </mat-card>

@@ -2,3 +2,10 @@ td
 {
     padding-right: 3px;
 }
+
+.contents
+{
+    padding:10px;
+    border-bottom: 1px solid grey ;
+    width: 90%;
+}

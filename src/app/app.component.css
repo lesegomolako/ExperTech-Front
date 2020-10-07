@@ -14,6 +14,15 @@
     background-color: #F0F0F0;
 }
 
+.help
+{
+    float: right; 
+    margin: 10px; 
+    font-size: 30px; 
+    color: white;
+    cursor: pointer;
+}
+
 #img:hover
 {
     cursor: pointer;

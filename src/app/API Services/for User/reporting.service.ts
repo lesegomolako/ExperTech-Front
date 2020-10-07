@@ -221,9 +221,12 @@ export class ReportingService {
     }
   }
 
-  updateTimes(times)
+  //**********************Timeslots **********************/
+
+  updateTimes(times, SessionID)
   {
-    return this.http.post(this.url + 'Admin/updateTimes', times)
+    const params = new HttpParams().set("SessionID", SessionID);
+    return this.http.post(this.url + 'Admin/updateTimes', times, {params});
   }
 
   GetTimes()
@@ -232,14 +235,41 @@ export class ReportingService {
     return this.http.get<Timeslots[]>(this.url + 'Admin/GetAllTimes')
   }
 
+  //******************Company Info *****************/
   GetCompanyInfo()
   {
     return this.http.get<CompanyInfo>(this.url + "Admin/GetCompanyInfo")
   }
 
+  updateCompany(formData: CompanyInfo, SessionID) {
+    const params = new HttpParams().set("SessionID", SessionID)
+  
+    return this.http.put(this.url + 'Admin/updateCompany', formData, {params});
+    
+  }
+
+  //***********************Social Media **********************/
   GetSocials()
   {
     return this.http.get<SocialMedia[]>(this.url + "Admin/GetSocials")
+  }
+
+  AddSocials(Socials: SocialMedia, SessionID)
+  {
+    const params = new HttpParams().set("SessionID", SessionID);
+    return this.http.post(this.url + "Admin/AddSocials", Socials, {params})
+  }
+
+  EditSocials(Socials: SocialMedia, SessionID)
+  {
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.put(this.url + "Admin/UpdateSocials", Socials, {params})
+  }
+
+  DeleteSocials(SocialID, SessionID)
+  {
+    const params = new HttpParams().set("SessionID", SessionID).set("SocialID", SocialID);
+    return this.http.delete(this.url + "Admin/DeleteSocials", {params})
   }
 
    //set the schedule
@@ -283,6 +313,11 @@ export class ReportingService {
       return this.http.get<PaymentType[]>(this.url + 'User/getPaymentType');
     }
 
+    restPassword(Password)
+    {
+      return this.http.post(this.url + "User/ResetPassword", Password)
+    }
+
   GetReportingData(selected) {
     return this.http
       .get(
@@ -291,35 +326,7 @@ export class ReportingService {
       .pipe(map((result) => result));
   }
     //***************************Company Information*********************************** */
-    readCompany(): Observable<Process[]> {
-      return this.http.get<Process[]>(this.url + 'Admin/getCompany');
-    }
-    createCompany(formData: Process) {
-      let body = JSON.stringify(formData);
-      if (confirm(body)) {
-        return this.http.post<Process>(this.url + 'Admin/addCompany', formData);
-      }
-    }
-    updateCompany(formData: Process) {
-      let body = JSON.stringify(formData);
-      if (confirm(body)) {
-        return this.http.put<Process>(this.url + 'Admin/updateCompany', formData);
-      }
-    }
-    deleteCompany(formData: Process) {
-      let body = JSON.stringify(formData);
-      if (confirm(body)) {
-        const httpOptions = {
-          headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-          body: body,
-        };
-  
-        return this.http.delete<Process>(
-          this.url + 'Admin/deleteCompany',
-          httpOptions
-        );
-      } else {
-        return null;
-      }
-    }
+
+   
+    
 }

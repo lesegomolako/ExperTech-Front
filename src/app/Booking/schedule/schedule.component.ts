@@ -297,12 +297,31 @@ export class ScheduleComponent implements OnInit {
   </div>
   <div class="modal-body" mat-dialog-content>
     <div>
-    <div>
-      Status:{{ data.BookingStatus }}
-    </div>
-      Details:
-      <p>Service: {{ data.BookingLines[0].Service}}</p>
-      <p *ngIf="data.BookingLines[0].Option">Option: {{data.BookingLines[0].Option}}</p>
+      <div>
+        Status:{{ data.BookingStatus }}
+      </div>
+      <div>
+        <strong>Details:</strong>
+        <ul>
+          <li>Employee assigned: </li>
+          <li>Service: {{ data.BookingLines[0].Service}}</li>
+          <li *ngIf="data.BookingLines[0].Option">Option: {{data.BookingLines[0].Option}}</li>
+        </ul>
+      </div>
+      <div *ngIf="data.BookingRequest">
+        <strong>Date & Time Requested:</strong>
+        <ul>
+          <li>Date: {{ data.BookingRequest.Dates | date:"dd/MM/yy"}}</li>
+          <li>Time: {{data.BookingRequest.Time}}</li>
+        </ul>
+      </div>
+      <div *ngIf="data.BookingSchedule">
+        <strong>Appointment Date & Time:</strong>
+        <ul>
+          <li>Date: {{ data.BookingSchedule[0].Dates | date:"dd/MM/yy"}}</li>
+          <li>Time: {{data.BookingSchedule[0].StartTime}}</li>
+        </ul>
+      </div>
     </div>
     
   </div>
