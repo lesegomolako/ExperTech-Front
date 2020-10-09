@@ -24,6 +24,35 @@ export class TServicesComponent implements OnInit {
   loadList()
   {
     this.ServicesList = this.service.getServices();
+    
+  }
+
+  closeModal()
+  {
+    var modal = document.getElementById("myModal");
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+  
+    // When the user clicks on <span> (x), close the modal
+    modal.style.display = "none";
+  }
+
+  ViewImage(data: ServiceData)
+  {
+    // Get the modal
+    var modal = document.getElementById("myModal");
+          
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var modalImg = <HTMLImageElement>document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    
+    modal.style.display = "block";
+    modalImg.src = data.Image
+    captionText.innerHTML = data.Name
+    
+    
+    
+    
   }
 
   EditService(form: ServiceData)

@@ -58,12 +58,12 @@ import { SetupComponent} from './Staff/setup/setup.component';
 import {AdminComponent} from './User/admin/admin.component';
 import {AvailableComponent} from './User/available/available.component';
 import {ClientComponent} from './User/client/client.component';
-import {CompanyinfoComponent} from './User/companyinfo/companyinfo.component';
+
 import {EmployeeComponent} from './Staff/employee/employee.component';
 import {EmployeeSTComponent} from './User/employee-st/employee-st.component';
 import {PaymentComponent} from './User/payment/payment.component';
 import {PickupComponent} from './User/pickup/pickup.component';
-import {ConfirmComponent} from './User/confirm/confirm.component';
+
 import {SpackageComponent} from './User/spackage/spackage.component';
 import { SalesReportComponent } from './Reporting/sales-report/sales-report.component';
 import { ReportsService } from './API Services/for Reports/reports.service';
@@ -126,7 +126,7 @@ import { EmployeePipe } from './API Services/for Booking/Pipes/employee.pipe';
 import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
 import { GetBookingsComponent, CbookingDialog } from './Staff/get-bookings/get-bookings.component';
 import { StaffComponent } from './Staff/staff/staff.component';
-import { EditCompanyComponent } from './User/edit-company/edit-company.component';
+
 import { CompanySettingsComponent } from './User/company-settings/company-settings.component';
 import { SalePaymentComponent } from './User/sale-payment/sale-payment.component';
 
@@ -138,15 +138,17 @@ import { SalePaymentComponent } from './User/sale-payment/sale-payment.component
     EditSOComponent, EditSPComponent, EditProductComponent, ProductComponent, DeleteProductComponent,
     DeleteServiceComponent,DeleteServiceTypeComponent,DeleteSOComponent,LoginComponent,ForgotComponent,
     AdminRegisterComponent,SetupComponent,ResetPasswordComponent,ClickSpinDirective,PickupComponent,PaymentComponent,
-    EmployeeSTComponent,EmployeeComponent,CompanyinfoComponent,ClientComponent,CbookingDialog,
-    AvailableComponent,AdminComponent,ConfirmComponent,SpackageComponent,SalesReportComponent,
+    EmployeeSTComponent,EmployeeComponent,ClientComponent,CbookingDialog,
+    AvailableComponent,AdminComponent,SpackageComponent,SalesReportComponent,
     FinancialReportComponent,ProductReportComponent,SupplierReportComponent, EmployeeRegisterComponent,
     BookingReportComponent,ValidateComponent,EditComponent,BellComponent,ClientprofileComponent,
     MakebookingComponent,ViewbookingComponent,ServicepComponent,BasketComponent, BookingDialog,OrderDialog,
     RequestbComponent,BrowseComponent,BookingConfirmComponent, OptionsFilterPipe, AddClientDialog, SearchClientDialog,
     customFilter,SupplierComponent,orderform,PlaceorderComponent,EditsupplierComponent,AddsupplierComponent,
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
-    ViewdetailComponent,SaleinvoiceComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent, ReportsComponent, ErrorPageComponent, EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, EditCompanyComponent, CompanySettingsComponent, SalePaymentComponent
+    ViewdetailComponent,SaleinvoiceComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent,
+    ReportsComponent, ErrorPageComponent, 
+    EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, CompanySettingsComponent, SalePaymentComponent
 
   ],
   imports: [

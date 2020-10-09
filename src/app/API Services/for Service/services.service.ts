@@ -56,15 +56,36 @@ ViewServices(): Observable<ServiceTypeData[]>
     return this.http.get<ServiceData[]>(this.url+"Services/GetService")
   }
 
-  UpdateService(form: ServiceData)
-  {
+  // UpdateService(form: ServiceData)
+  // {
     
-    return this.http.post(this.url + "Services/UpdateService" , form)
+  //   return this.http.post(this.url + "Services/UpdateService" , form)
+  // }
+
+  AddService(form: ServiceData, UploadFile: File, SessionID)
+  {
+    const formData: FormData = new FormData();
+    formData.append('Service', JSON.stringify(form))
+    formData.append('SessionID', SessionID)
+    if(UploadFile)
+    {
+      formData.append('Image', UploadFile, UploadFile.name)
+    }
+    
+    return this.http.post(this.url + 'Services/AddService' , formData)
   }
 
-  AddService(form: ServiceTypeData)
+  UpdateService(form: ServiceData, UploadFile: File, SessionID)
   {
-    return this.http.post(this.url + 'Services/AddService' , form)
+    const formData: FormData = new FormData();
+    formData.append('Service', JSON.stringify(form))
+    formData.append('SessionID', SessionID)
+    if(UploadFile)
+    {
+      formData.append('Image', UploadFile, UploadFile.name)
+    }
+    
+    return this.http.post(this.url + 'Services/UpdateService' , formData)
   }
 
   DeleteService(ServiceID: any, SessionID)
@@ -128,15 +149,7 @@ ViewServices(): Observable<ServiceTypeData[]>
       params: params})
   }
 
-  AddServicePhoto(ServiceID: any, UploadFile:File )
-  {
-    const formData: FormData = new FormData();
-    formData.append('ServiceID', ServiceID)
-    formData.append('Image', UploadFile, UploadFile.name)
-    console.log(formData)
-    console.log(UploadFile)
-    return this.http.post(this.url+'Services/AddServicePhoto', formData )
-  }
+  
 
   
 }

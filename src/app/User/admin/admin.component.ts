@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process} from '../../API Services/for User/process';
 import { Router } from '@angular/router';
+import { Admin } from 'src/app/API Services/for Booking/client';
 
 @Component({
   selector: 'app-admin',
@@ -29,7 +30,7 @@ export class AdminComponent implements OnInit {
     public service: ReportingService,
     private router: Router) { }
 
-  List: Observable<Process[]>;
+  List: Observable<Admin[]>;
 
   ngOnInit(): void {
     this.loadList();

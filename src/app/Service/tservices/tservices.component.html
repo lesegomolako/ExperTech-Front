@@ -14,7 +14,8 @@
             <li *ngFor = "let x of ServicesList | async">
                 <div class="icon"><mat-icon>face</mat-icon></div>
                 <div class="typeinfo">
-                    <div class="name">{{x.Name}}</div>
+                    <div class="name">{{x.Name}} <span title="view service photo" (click)="ViewImage(x)" style="cursor: pointer;"
+                        class="material-icons" *ngIf="x.Image">camera_alt</span></div>
                     <div class="sub-text">
                         <div>Service Type: {{x.ServiceType}}</div>
                         <div *ngFor = "let y of x.ServicePrices">Price: R{{y.Price}}</div>
@@ -31,4 +32,11 @@
         </ul>
     </div>
     
+    <div id="myModal" class="modal">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+      
+     
     

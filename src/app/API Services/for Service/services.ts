@@ -1,32 +1,33 @@
 export class ServiceTypeData {
     TypeID: any;
     Name: string;
-    Description: string;
     Services: ServiceData[];
 }
 
 export class ServiceData
 {
-    ServiceID: any;
+    ServiceID?: any;
     Name: string;
-    ServiceType: string;
+    ServiceType?: string;
     TypeID: any;
-    Description: string;
+    Description?: string;
     Duration: any;
+    Image?: any;
 
-    ServiceImage:
+    ServicePhotoes?:
     {
+        PhotoID: any;
         Photo: ImageBitmap;
     }
 
-    ServicePrices:  
+    ServicePrices?:  
     [   
         {
             Price: number;
         }
     ]
     
-    ServiceTypeOptions:
+    ServiceTypeOptions?:
     [   
       {
         Option: string;

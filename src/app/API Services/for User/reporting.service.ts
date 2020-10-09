@@ -9,10 +9,10 @@ import {
   switchMap,
 } from 'rxjs/operators';
 import { Process, Schedule, Package, PaymentType, Sale } from './process';
-import { User } from 'src/app/Staff/admin-register/admin-register.component';
+import { User } from 'src/app/API Services/for Booking/client';
 import { AvailData } from 'src/app/User/available/available.component';
 import { UserData } from 'src/app/Staff/setup/setup.component';
-import { Client } from '../for Booking/client';
+import { Admin, Client } from '../for Booking/client';
 import { CompanyInfo, SocialMedia, Timeslots } from 'src/app/User/company-settings/company-settings.component';
 
 //import 'rxjs/add/operator/map'
@@ -30,8 +30,8 @@ export class ReportingService {
   
   
   ///********************************************************Admin CRUD*********************************************************************
-  readAdmin(): Observable<Process[]> {
-    return this.http.get<Process[]>(this.url + 'Admin/getAdmin');
+  readAdmin(): Observable<Admin[]> {
+    return this.http.get<Admin[]>(this.url + 'Admin/getAdmin');
   }
   createAdmin(formData: Process) {
     let body = JSON.stringify(formData);

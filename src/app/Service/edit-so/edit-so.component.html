@@ -10,14 +10,18 @@
         <div class="form-group" [ngClass]="{'has-error': name.errors && (name.touched || name.dirty)}">
             <label for="name">Name</label>    
             <input type="text" required minlength="2" #name="ngModel" class="form-control" name="Name" [(ngModel)] ="service.OptionData.Name" placeholder="Example: Long or Short">
-            <span class="help-block" *ngIf="name.errors.required && (name.touched || name.dirty)">Name is required</span>
-            <span class="help-block" *ngIf="name.errors.minlength && (name.touched || name.dirty)">Minimum name length should be 2</span>
+            <span *ngIf="name.errors">
+                <span class="help-block" *ngIf="name.errors.required && (name.touched || name.dirty)">Name is required</span>
+                <span class="help-block" *ngIf="name.errors.minlength && (name.touched || name.dirty)">Minimum name length should be 2</span>
+            </span>
         </div>
         <div class="form-group"  [ngClass]="{'has-error': duration.errors && (duration.touched || duration.dirty)}">
             <label for="duration">Duration</label>    
-            <input type="number" required #duration="ngModel" max=120 class="form-control" name="Duration" [(ngModel)] ="service.OptionData.Duration" placeholder="Example: +5min">
-            <mat-error class="help-block" *ngIf="duration.errors.required && (duration.touched || duration.dirty)">Duration is required</mat-error>
-            <span class="help-block" *ngIf="duration.errors?.max && (duration.touched || duration.dirty)">Duration can't be longer than 120 mins</span>
+            <input type="number" (keypress)="omit_special_char($event)" min=0 required #duration="ngModel" max=120 class="form-control" name="Duration" [(ngModel)] ="service.OptionData.Duration" placeholder="Example: +5min">
+            <span *ngIf="duration.errors">
+                <mat-error class="help-block" *ngIf="duration.errors.required && (duration.touched || duration.dirty)">Duration is required</mat-error>
+                <span class="help-block" *ngIf="duration.errors?.max && (duration.touched || duration.dirty)">Duration can't be longer than 120 mins</span>
+            </span>
         </div>
     </div>
 </div>

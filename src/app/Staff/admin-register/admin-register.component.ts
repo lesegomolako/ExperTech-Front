@@ -13,26 +13,12 @@ import { ReportingService } from '../../API Services/for User/reporting.service'
 import {Process} from '../../API Services/for User/process';
 import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { User } from 'src/app/API Services/for Booking/client';
 //import { sha256, sha224 } from 'js-sha256';
 
 
 
-export class User
-{
-  RoleID: any;
-  SessionID: string;
-  Username: string;
-  Password: string;
-  Admins:
-  [
-    {
-      Name: string;
-      Surname: string;
-      ContactNo: string;
-      Email: string;
-    }
-  ];
-}
+
 
 @Component({
   selector: 'app-admin-register',

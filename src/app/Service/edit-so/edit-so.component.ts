@@ -77,6 +77,18 @@ AddOption(form: NgForm)
     })
 }
 
+omit_special_char(event) {
+  var k;
+  k = event.charCode;
+  return (
+    (k > 64 && k < 91) ||
+    (k > 96 && k < 123) ||
+    k == 8 ||
+    k == 32 ||
+    (k >= 48 && k <= 57)
+  );
+}
+
 UpdateOption(form: NgForm)
 {
   if(form.value == this.service.OptionData)

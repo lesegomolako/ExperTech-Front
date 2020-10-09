@@ -18,22 +18,24 @@ export class Employee {
 }
 
 export class Admin {
-  AdminID: any;
-  Name: string;
-  Surname:string;
-  ContactNo: string;
-  Email: string;
+    AdminID?: any;
+    Name: string;
+    Surname: string;
+    ContactNo: string;
+    Email:string;
+    Owner?: boolean;
+    Deleted?: boolean;
 }
 
 export class User {
-    UserID: any;
+    UserID?: any;
     RoleID: any;
-    Username: string;
-    Password: string;
-    SessionID: string;
-    Clients: Client[];
-    Employees: Employee[];
-    Admins: Admin[];
+    Username?: string;
+    Password?: string;
+    SessionID?: string;
+    Clients?: Client[];
+    Employees?: Employee[];
+    Admins?: Admin[];
 }
 
 export class BasketLine {

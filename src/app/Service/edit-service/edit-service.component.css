@@ -5,6 +5,11 @@
 
 }
 
+.close span
+{
+    color: red;
+}
+
 .contents
 {
     padding:10px;

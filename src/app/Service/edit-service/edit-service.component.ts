@@ -6,6 +6,7 @@ import { ServiceData } from '../../API Services/for Service/services';
 import {Observable} from 'rxjs';
 import { formatCurrency, FormatWidth } from '@angular/common';
 import { timestamp } from 'rxjs/operators';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 export class IOption
 {
@@ -26,9 +27,10 @@ export class IPrice
 })
 export class EditServiceComponent implements OnInit {
   
-  constructor(public service: ServicesService, private router: Router, private fb: FormBuilder ) { }
+  constructor(public service: ServicesService, private router: Router, 
+    private fb: FormBuilder, private api:ExperTexhService ) { }
   serviceForm: FormGroup;
-  serviceObject;
+  serviceObject: ServiceData;
   //options = this.service.getServiceOptions('options') as FormArray
  
 
@@ -59,15 +61,18 @@ export class EditServiceComponent implements OnInit {
 
   ngOnInit(): void {
 
+    if(this.api.RoleID == "2")
+    {
     this.serviceObject = JSON.parse(localStorage.getItem('sEdit'))
 
     this.serviceForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
+      serviceid:[null],
+      name: ['', [Validators.required]],
       description:[''],
       duration: ['', Validators.required],
       typeid: ['', Validators.required],
-      sprice: this.fb.array([this.fb.group({price: new FormControl()})]),
-      //photos: this.fb.array([this.fb.group({photo: ['', Validators.required]})]),
+      sprice: this.fb.array([]),
+      photos: this.fb.array([this.fb.group({photo: [null]})]),
       options: this.fb.array(
         [
           
@@ -77,18 +82,32 @@ export class EditServiceComponent implements OnInit {
       {this.logValidationErrors(this.serviceForm)});
     this.checkForm();
   }
+  else
+  {
+    this.router.navigate(["403Forbidden"])
+  }
+  }
+
+  AddPrice()
+  {
+    (<FormArray>this.serviceForm.get('sprice')).push(this.setPrice());
+  }
+
+  setPrice():FormGroup
+  {
+    return this.fb.group({Price: new FormControl(null, Validators.required)})
+  }
 
   validationMessages = 
   {
     'name' :
     {
-      'required': 'Service name is required',
-      'minlength': 'Name must be greater than 2 characters'
+      'required': 'Service name is required'
     },
     'duration': {'required':'Duration is required'},
     'typeid': {'required': 'Service type must be selected'},
-    'price': {'required': 'Price is required'},
-    'optionid': {'required': 'Service Option must be selected'}
+    'Price': {'required': 'Price is required'},
+    'OptionID': {'required': 'Service Option must be selected'}
   }
 
   formErrors =
@@ -96,8 +115,8 @@ export class EditServiceComponent implements OnInit {
     'name':'',
     'duration':'',
     'typeid':'',
-    'price':'',
-    'optionid':''
+    'Price':'',
+    'OptionID':''
   }
 
   logValidationErrors(group: FormGroup = this.serviceForm)
@@ -126,12 +145,25 @@ export class EditServiceComponent implements OnInit {
       })
   }
 
+  omit_special_char(event) {
+    var k;
+    k = event.charCode;
+    return (
+      (k > 64 && k < 91) ||
+      (k > 96 && k < 123) ||
+      k == 8 ||
+      k == 32 ||
+      (k >= 48 && k <= 57)
+    );
+  }
+
   checkForm()
   {
     if(this.serviceObject == null)
     {
       this.title = "Add Service";
-      this.resetForm();
+      this.AddPrice()
+      //this.resetForm();
     }
     else
     {
@@ -140,16 +172,28 @@ export class EditServiceComponent implements OnInit {
     }
   }
 
+  removeImage()
+    {
+      this.imageURL = null;
+      this.UploadFile = null;
+    }
+
   editService() //code to populate formGroup
   {
     this.serviceForm.patchValue(
       {
+        serviceid: this.serviceObject.ServiceID,
         name: this.serviceObject.Name,
         description:this.serviceObject.Description,
         duration: this.serviceObject.Duration,
         typeid: this.serviceObject.TypeID,
       }
     );
+
+    if(this.serviceObject.Image != null)
+    {
+      this.imageURL = this.serviceObject.Image;
+    }
  
     if(this.serviceObject.ServicePrices == null)
     {
@@ -158,7 +202,7 @@ export class EditServiceComponent implements OnInit {
     else
     this.serviceForm.setControl('sprice', this.fb.array([this.fb.group(
       {
-        price: this.serviceObject.ServicePrices[0].Price
+        Price: this.serviceObject.ServicePrices[0].Price
       })] ))
   }
 
@@ -167,10 +211,10 @@ export class EditServiceComponent implements OnInit {
     const formArray = new FormArray([]); //formArray Object to return
 
     optionsList.forEach(s => {formArray.push(this.fb.group({
-      optionid: s.OptionID,
-      serviceprices: this.fb.array([this.fb.group(
+      OptionID: s.OptionID,
+      ServicePrices: this.fb.array([this.fb.group(
       {
-        price: s.ServicePrices[0].Price
+        Price: s.ServicePrices[0].Price
       })])
     }))}); //code to create form Array with data
 
@@ -181,8 +225,20 @@ export class EditServiceComponent implements OnInit {
   AddForm(): void
   {
     //this.service.ServicesData.ServicePrices = [{"sPrice": ""}];
+    if((<FormArray>this.serviceForm.get('sprice')).at(0).value.Price != null)
+    {
+      if(confirm("Adding a service option would remove the price entered. Would you like to continue"))
+      {
+        (<FormArray>this.serviceForm.get('sprice')).removeAt(0);
+        (<FormArray>this.serviceForm.get('options')).push(this.AddOptionGroup());
+      }
+    }
+    else
+    {
+      (<FormArray>this.serviceForm.get('sprice')).removeAt(0);
+      (<FormArray>this.serviceForm.get('options')).push(this.AddOptionGroup());
+    }
     
-    (<FormArray>this.serviceForm.get('options')).push(this.AddOptionGroup());
     
   }
 
@@ -190,9 +246,9 @@ export class EditServiceComponent implements OnInit {
   {
     return this.fb.group(
       {
-        optionid: new FormControl(), serviceprices: this.fb.array([this.fb.group(
+        OptionID: new FormControl(null, Validators.required), ServicePrices: this.fb.array([this.fb.group(
           {
-            price: new FormControl()
+            Price: new FormControl(null, Validators.required)
           })])
       })
   }
@@ -200,20 +256,16 @@ export class EditServiceComponent implements OnInit {
   onSubmit(): void
   {
     //this.serviceForm.getError('name').value
-    if(this.serviceObject.ServiceID == null)
+    if(this.serviceForm.value.serviceid == null)
     {
        this.mapValues();
        var ServiceID;
-       this.service.AddService(this.serviceObject).subscribe((res:any) => {
+       this.service.AddService(this.serviceObject, this.UploadFile, this.api.SessionID).subscribe((res:any) => {
 
         if(res.Message == "success")
         {
           alert("Successfully saved")
-          this.router.navigateByUrl("/services/Services")
-          ServiceID = res.ServiceID
-          this.service.AddServicePhoto(ServiceID, this.UploadFile).subscribe(
-          res => 
-          {})         
+          this.router.navigateByUrl("/services/Services")      
         }
         else if(res == "duplicate")
         {
@@ -229,7 +281,7 @@ export class EditServiceComponent implements OnInit {
     else
     {
       this.mapValues();
-       this.service.UpdateService(this.serviceObject).subscribe(res => {
+       this.service.UpdateService(this.serviceObject, this.UploadFile, this.api.SessionID).subscribe(res => {
 
         if(res == "success")
         {
@@ -253,19 +305,31 @@ export class EditServiceComponent implements OnInit {
 
   mapValues()
   {
-    this.serviceObject.Name = this.serviceForm.value.name;
-    this.serviceObject.Description = this.serviceForm.value.description;
-    this.serviceObject.Duration = this.serviceForm.value.duration;
-    this.serviceObject.TypeID = this.serviceForm.value.typeid;
-    this.serviceObject.ServicePrices = this.serviceForm.value.sprice
-    this.serviceObject.ServiceTypeOptions = this.serviceForm.value.options;
-    //this.serviceObject.ServiceImage = this.serviceForm.value.photos;
+    this.serviceObject = 
+    {
+      ServiceID: this.serviceForm.value.serviceid,
+      Name: this.serviceForm.value.name,
+      Description: this.serviceForm.value.description,
+      Duration: this.serviceForm.value.duration,
+      TypeID: this.serviceForm.value.typeid,
+      ServicePrices: this.serviceForm.value.sprice,
+      ServiceTypeOptions: this.serviceForm.value.options,
+      ServicePhotoes: this.serviceForm.value.photos
+      
+    }
+    // this.serviceObject.Name = this.serviceForm.value.name;
+    // this.serviceObject.Description = this.serviceForm.value.description;
+    // this.serviceObject.Duration = this.serviceForm.value.duration;
+    // this.serviceObject.TypeID = this.serviceForm.value.typeid;
+    // this.serviceObject.ServicePrices = this.serviceForm.value.sprice
+    // this.serviceObject.ServiceTypeOptions = this.serviceForm.value.options;
+    // //this.serviceObject.ServiceImage = this.serviceForm.value.photos;
     
 
-    if(this.serviceObject.ServiceTypeOptions.length>0)
-    {
-      this.serviceObject.ServicePrices = null
-    }
+    // if(this.serviceObject.ServiceTypeOptions.length>0)
+    // {
+    //   this.serviceObject.ServicePrices = null
+    // }
   }
 
   removeOption(item: number): void
@@ -273,36 +337,39 @@ export class EditServiceComponent implements OnInit {
   
     (<FormArray>this.serviceForm.get('options')).removeAt(item);
 
-  
-  }
-  
-
-  resetForm(form?: NgForm)
-  {
-    if (form != null)
-    form.reset();
-
-    
-    this.serviceObject = 
+    if((<FormArray>this.serviceForm.get('options'))?.length == 0)
     {
-      ServiceID: null,
-      Name: "",
-      ServiceType: "",
-      TypeID: null,
-      Description: "",
-      Duration: null,
-
-      ServiceImage:
-      {
-        Photo: null,
-      },
-
-      ServicePrices:  null,
-      
-    
-      ServiceTypeOptions: null
+      this.AddPrice();
     }
   }
+  
+
+  // resetForm(form?: NgForm)
+  // {
+  //   if (form != null)
+  //   form.reset();
+
+    
+  //   this.serviceObject = 
+  //   {
+  //     ServiceID: null,
+  //     Name: "",
+  //     ServiceType: "",
+  //     TypeID: null,
+  //     Description: "",
+  //     Duration: null,
+
+  //     ServiceImage:
+  //     {
+  //       Photo: null,
+  //     },
+
+  //     ServicePrices:  null,
+      
+    
+  //     ServiceTypeOptions: null
+  //   }
+  // }
 
 
 }

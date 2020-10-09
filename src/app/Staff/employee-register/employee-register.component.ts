@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process} from '../../API Services/for User/process';
 import { Router } from '@angular/router';
-import { User } from 'src/app/Staff/admin-register/admin-register.component';
+import { User } from '../../API Services/for Booking/client';
 //import { sha256, sha224 } from 'js-sha256';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServicesService } from 'src/app/API Services/for Service/services.service';

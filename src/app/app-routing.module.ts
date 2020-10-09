@@ -25,12 +25,12 @@ import { ResetPasswordComponent } from './User/reset-password/reset-password.com
 import { AdminComponent } from './User/admin/admin.component';
 import { AvailableComponent } from './User/available/available.component';
 import { ClientComponent } from './User/client/client.component';
-import { CompanyinfoComponent } from './User/companyinfo/companyinfo.component';
+
 import { EmployeeComponent } from './Staff/employee/employee.component';
 import { EmployeeSTComponent } from './User/employee-st/employee-st.component';
 import { PaymentComponent } from './User/payment/payment.component';
 import { PickupComponent } from './User/pickup/pickup.component';
-import { ConfirmComponent } from './User/confirm/confirm.component';
+
 import { SpackageComponent } from './User/spackage/spackage.component';
 import { SalesReportComponent } from './Reporting/sales-report/sales-report.component';
 import { ValidateComponent } from './components/TextBoxValidator/validate/validate.component';
@@ -68,7 +68,7 @@ import { ReportsComponent } from './User/reports/reports.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
 import { GetBookingsComponent } from './Staff/get-bookings/get-bookings.component';
-import { EditCompanyComponent } from './User/edit-company/edit-company.component';
+
 import { StaffComponent } from './Staff/staff/staff.component';
 import { SaleinvoiceComponent } from './Supplier/sale/saleinvoice/saleinvoice.component';
 import { SalePaymentComponent } from './User/sale-payment/sale-payment.component';
@@ -109,12 +109,12 @@ const routes: Routes = [
   {path:'admin', component: AdminComponent},
   {path:'available', component: AvailableComponent},
   {path:'client', component: ClientComponent},
-  {path:'companyinfo', component: CompanyinfoComponent},
+  
   {path:'employee', component: EmployeeComponent},
   {path:'employeeST', component: EmployeeSTComponent},
   {path:'payment', component: PaymentComponent},
   {path:'pickup', component: PickupComponent},
-  {path:'confirm', component: ConfirmComponent},
+
   {path: 'spackage', component: SpackageComponent},
   {path: 'ViewServices', component: ViewServicesComponent},
   {path: 'salereport', component: SalesReportComponent},
@@ -152,7 +152,7 @@ const routes: Routes = [
   {path: '403Forbidden', component: ForbiddenPageComponent},
   {path: 'getbookings', component: GetBookingsComponent},
   {path: 'staff', component: StaffComponent },
-  {path: 'editcompany', component: EditCompanyComponent},
+  
   {path: 'salepayment', component: SalePaymentComponent},
   {path: 'settings', component: CompanySettingsComponent},
   

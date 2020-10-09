@@ -23,7 +23,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { Observable } from 'rxjs';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process, Schedule} from '../../API Services/for User/process';
-import { User } from '../../Staff/admin-register/admin-register.component';
+
 import {Schedules} from '../../Booking/schedule/schedule.component'
 
 export class AvailData {

@@ -22,6 +22,7 @@
     <div class="row">
         <div class="col-7">
         <div class="details">
+            <input formControlName="serviceid" hidden>
             <div class="form-group" [ngClass]="{'has-error': formErrors.name}">
                 <label for="name">Name</label>    
                 <input type="text" (blur)="logValidationErrors()" class="form-control" name="Name" formControlName="name" placeholder="Enter Service Name">
@@ -38,19 +39,19 @@
             <div class="form-group" [ngClass]="{'has-error': formErrors.duration}">
                 <label for="Duration">Duration (in minutes)</label>    
                 <input type="number" (blur)="logValidationErrors()" class="form-control" name="Duration" formControlName="duration"
-                        placeholder="Example: 15" max="120">
+                        placeholder="Example: 15" (keypress)=" omit_special_char($event)" min=0 max=120>
                 <span class="help-block" *ngIf="formErrors.duration" >
                     {{formErrors.duration}}
                 </span>
             </div>
         <ng-container formArrayName="sprice">
-            <div *ngFor="let x of serviceForm.get('sprice')['controls']; let j = index" [hidden]="serviceForm.get('options')['controls'].length>0">
+            <div *ngFor="let x of serviceForm.get('sprice')['controls']; let j = index">
                 <div [formGroupName]="j">
-                    <div class="form-group" [ngClass]="{'has-error': formErrors.price}">
+                    <div class="form-group" [ngClass]="{'has-error': formErrors.Price}">
                     <label for="price">Price (R)</label> 
-                    <input type="number" (blur)="logValidationErrors()" class="form-control" name="price" formControlName="price" placeholder="Enter Price">
-                    <span class="help-block" *ngIf="formErrors.price" >
-                        {{formErrors.price}}
+                    <input type="number" (blur)="logValidationErrors()" (keypress)="omit_special_char($event)" class="form-control" name="price" formControlName="Price" placeholder="Enter Price">
+                    <span class="help-block" *ngIf="formErrors.Price" >
+                        {{formErrors.Price}}
                      </span>
                     </div>
                 </div>
@@ -58,20 +59,23 @@
         </ng-container>
         </div>
         </div>
-        <!-- <div class="col-4">
+        <div class="col-3 border">
             <div formArrayName="photos">
                 <div  class="form-group"  *ngFor="let x of serviceForm.get('photos')['controls']; let j = index">
                     <div [formGroupName]="j">
                         <div >
+                            <button *ngIf="imageURL" type="button" class="close" (click)="removeImage()">
+                                <span >&times;</span>
+                            </button>
                             <img [src]="imageURL" alt="choose an image" style="height: 200px; width: 200px;">
                             <input type="file" (change)="onFileChanged($event)" accept="Image/*" hidden  #fileInput formControlName="photo">
                         <br>    
-                            <button class="btn btn-success" type="button" (click)="fileInput.click()"><mat-icon>add_a_photo</mat-icon>Add Photo</button>
+                            <button *ngIf="imageURL == null" class="btn btn-success" type="button" (click)="fileInput.click()"><mat-icon>add_a_photo</mat-icon>Add Photo</button>
                         </div> 
                     </div>
             </div>
         </div>
-        </div> -->
+        </div>
     </div>
 </div>
 
@@ -88,22 +92,22 @@
     <ng-container formArrayName="options" >
     <div  *ngFor="let opps of serviceForm.get('options')['controls']; let j=index">
     <div [formGroupName]="j" class="details">
-        <div class="form-group" [ngClass]="{'has-error': formErrors.optionid}" >
+        <div class="form-group" [ngClass]="{'has-error': formErrors.OptionID}" >
             <label [attr.for]="'option'">Select Service Option</label>    
-            <select formControlName="optionid" class="form-control" name= "option">
+            <select formControlName="OptionID" class="form-control" name= "option">
                 <option value="" disabled>- Select Service Option -</option>
                 <option *ngFor="let x of OptionsList | async" value="{{x.OptionID}}">{{x.Name}}</option>
             </select>
-            <span class="help-block" *ngIf="formErrors.optionid" >
-                {{formErrors.optionid}}
+            <span class="help-block" *ngIf="formErrors.OptionID" >
+                {{formErrors.OptionID}}
              </span>
         </div>
-        <ng-container formArrayName="serviceprices">
-            <div  *ngFor="let x of opps.get('serviceprices')['controls']; let k = index">
+        <ng-container formArrayName="ServicePrices">
+            <div  *ngFor="let x of opps.get('ServicePrices')['controls']; let k = index">
                 <div [formGroupName]="k">
-                <div class="form-group" [ngClass]="{'has-error': formErrors.price}">
+                <div class="form-group" [ngClass]="{'has-error': formErrors.Price}">
                 <label for="price">Price (R)</label> 
-                <input type="number" class="form-control" name="price" formControlName="price" placeholder="Enter Price">
+                <input type="number" class="form-control" name="price" formControlName="Price" placeholder="Enter Price">
                 </div>
                 </div>
             </div>
