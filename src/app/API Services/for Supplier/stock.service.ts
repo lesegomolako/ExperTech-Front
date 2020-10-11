@@ -25,15 +25,13 @@ export class StockService {
   DeleteStockItem(ItemID:any, SessionID) 
   {
     const params = new HttpParams().set('ItemID', ItemID).set("SessionID", SessionID)
-    return this.http.delete(this.url + 'StockItem/DeleteStockItem', {headers: {'Content-Type': 'application/json'}, 
-    params: params} )
+    return this.http.delete(this.url + 'StockItem/DeleteStockItem', {params} )
   }
 
   AddStockItem(formData: StockData, SessionID)
    {
     const params = new HttpParams().set("SessionID", SessionID)
     return this.http.post(this.url + "StockItem/AddStockItem", formData, {params});
-
    } 
 
    EditStock(formData: StockData, SessionID)

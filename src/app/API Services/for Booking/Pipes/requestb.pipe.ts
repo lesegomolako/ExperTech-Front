@@ -1,5 +1,6 @@
 import {PipeTransform, Pipe} from '@angular/core'
-import { Service } from '../../../Booking/requestb/requestb.component';
+import { ServiceData } from '../../for Service/services'
+
 
 
 @Pipe({
@@ -7,7 +8,7 @@ import { Service } from '../../../Booking/requestb/requestb.component';
 })
 export class customFilter implements PipeTransform
 {
-    transform(type: Service[], typeid: any)
+    transform(type: ServiceData[], typeid: any)
     {
         return  type.filter(type => type.TypeID == typeid )
     }

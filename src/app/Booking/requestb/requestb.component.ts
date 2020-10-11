@@ -8,13 +8,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import{ BasketLine, Schedule, Booking} from '../../API Services/for Booking/client';
 import { ExperTexhService } from '../../API Services/for Booking/exper-texh.service';
 import { HttpClient } from '@angular/common/http';
-
-export class Service
-{
-  TypeID: any;
-  Name: any;
-  ServiceID: any;
-}
+import { ServiceData } from 'src/app/API Services/for Service/services';
 
 export class ServiceOption
 {
@@ -50,7 +44,7 @@ export class RequestbComponent implements OnInit {
      private router: Router,private route: ActivatedRoute) { }
 
   Employee = [];
-  Service : Service[];
+  Service : ServiceData[];
   ServiceType= [];
   ServicePhotos = [];
   ServiceOptions : ServiceOption[];

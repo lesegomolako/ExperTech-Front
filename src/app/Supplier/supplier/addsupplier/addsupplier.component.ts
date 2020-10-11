@@ -43,10 +43,10 @@ export class AddsupplierComponent implements OnInit {
     if(this.api.RoleID == "2")
     {
       this.AddForm = this.formBuilder.group({
-        name: ['', Validators.required, Validators.maxLength(20)],
+        name: ['', [Validators.required, Validators.maxLength(100)]],
         contactno: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
         email:  new FormControl('', [Validators.required, Validators.email]),
-        address: ['', Validators.required]
+        address: ['', [Validators.required, Validators.maxLength(100)]]
       })
     }
     else
@@ -57,14 +57,7 @@ export class AddsupplierComponent implements OnInit {
 
   get f() { return this.AddForm.controls; }
 
-  onSubmit() {
-    this.submitted = true;
-
-    // stop here if form is invalid
-    if (this.AddForm.invalid) {
-        return;
-    }
-  }
+  
 
     public hasError = (controlName: string, errorName: string) =>{
       return this.AddForm.controls[controlName].hasError(errorName);
@@ -85,6 +78,12 @@ export class AddsupplierComponent implements OnInit {
 
 AddSupp(supplier)
 {
+  if (this.AddForm.invalid) 
+  {
+      this.AddForm.markAllAsTouched();
+      return;
+  }
+  
   this.service.AddSupplier(supplier.value, this.api.SessionID)
   .subscribe(res => {
     if (res =="success")

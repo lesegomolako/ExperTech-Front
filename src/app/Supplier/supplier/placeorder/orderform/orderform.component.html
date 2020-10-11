@@ -16,12 +16,12 @@
       
         <table class="example-full-width" cellspacing="0">
           <tr>
-            <td>
+            <!-- <td>
               <mat-form-field class="example-full-width">
               <mat-label>Description</mat-label>
               <input matInput formControlName="description">
               </mat-form-field>
-            </td>
+            </td> -->
             <!-- <td>
               <mat-form-field class="example-full-width" disabled>
               <mat-label>Price (R)</mat-label>
@@ -45,18 +45,18 @@
                     <mat-form-field class="example-full-width">
                     <mat-label> Select Stock Item</mat-label>
                     <mat-select formControlName="itemid">
-                      <mat-option *ngFor="let x of StockList" (click)="countTotal(x.Price)" value="{{x.ItemID}}">{{x.Name}}</mat-option>
+                      <mat-option *ngFor="let x of StockList" (click)="setPrice(x.Price)" value="{{x.ItemID}}">{{x.Name}}</mat-option>
                     </mat-select>
                     </mat-form-field>
                   </td>
                   <td>
                     <mat-form-field class="example-full-width">
                     <mat-label>Quantity</mat-label>
-                    <input matInput min=0 type="number" formControlName="quantity">
+                    <input matInput min=0 type="number" (keypress)="countTotal(j)" formControlName="quantity">
                     </mat-form-field></td>
                     <button type="button" *ngIf="orderForm.get('stockitemlines')['controls'].length>1" class="btn btn-danger" (click)="DeleteForm(j)"><span class="glyphicon glyphicon-trash"></span></button>
-                  </tr>
-                </table>
+                </tr>
+              </table>
               </div>
               </div>
           </ng-container>
@@ -70,6 +70,13 @@
             <button type="submit" mat-raised-button style="background-color:forestgreen;">
               <mat-icon style="color:white">done</mat-icon> Save
             </button>
+
+            <div style="float:right">
+              <mat-form-field class="example-full-width">
+                <mat-label>Total Price (R):</mat-label>
+                <input matInput readonly type="number" [value]="Total">
+              </mat-form-field>
+            </div>
           </div>
     </form>      
   </div>

@@ -26,9 +26,9 @@ export class ReportingService {
   url = 'https://localhost:44380/api/';
   user: any;
 
-  constructor(private http: HttpClient) {}
-  
-  
+  constructor(private http: HttpClient) { }
+
+
   ///********************************************************Admin CRUD*********************************************************************
   readAdmin(): Observable<Admin[]> {
     return this.http.get<Admin[]>(this.url + 'Admin/getAdmin');
@@ -61,9 +61,9 @@ export class ReportingService {
     }
   }
   ///********************************************************Client CRUD*********************************************************************
-  readClient(): Observable<Client[]>{
+  readClient(): Observable<Client[]> {
     return this.http.get<Client[]>(this.url + 'Clients/getClient');
-    }
+  }
   walkinClient(formData: Process) {
     let body = JSON.stringify(formData);
     if (confirm(body)) {
@@ -79,7 +79,7 @@ export class ReportingService {
     if (confirm(body)) {
       return this.http.put<Process>(this.url + 'Clients/updateClient', formData);
     }
-  } 
+  }
   deleteClient(formData: Process) {
     let body = JSON.stringify(formData);
     if (confirm(body)) {
@@ -105,24 +105,28 @@ export class ReportingService {
       return this.http.post<Process>(
         this.url + 'Employees/addEmployee',
         formData
-      );} }
+      );
+    }
+  }
   updateEmployee(formData: Process) {
     let body = JSON.stringify(formData);
     if (confirm(body)) {
       return this.http.put<Process>(
         this.url + 'Employees/updateEmployee',
         formData
-      ); }}
-  employeeServiceType(): Observable<Process[]>{
-      return this.http.get<Process[]>(
-        this.url + 'Employees/getEmployeeType'
       );
+    }
   }
-  updateEmployeeST(formData: Process){
+  employeeServiceType(): Observable<Process[]> {
+    return this.http.get<Process[]>(
+      this.url + 'Employees/getEmployeeType'
+    );
+  }
+  updateEmployeeST(formData: Process) {
     let body = JSON.stringify(formData);
     if (confirm(body)) {
       return this.http.put<Process>(
-        this.url + 'Employees/updateEST', 
+        this.url + 'Employees/updateEST',
         formData
       );
     }
@@ -145,10 +149,10 @@ export class ReportingService {
   ///***********************************************User**************************************************
   forgotPassword(username) {
 
-    const params = new HttpParams().set('Username', username );
-    
-    return this.http.get(this.url + 'User/ForgotPassword',{params});
-    
+    const params = new HttpParams().set('Username', username);
+
+    return this.http.get(this.url + 'User/ForgotPassword', { params });
+
   }
   //use this one refiloe
   FORGOTPASSWORD(formData: Process) {
@@ -158,33 +162,45 @@ export class ReportingService {
     }
   }
   Login(formData: Process) {
-    
+
     let body = JSON.stringify(formData);
-  
+
     return this.http.post(this.url + 'User/Login', formData);
-    
-  }  
-  userSetup(formData: UserData){
-   
-      return this.http.put(
-        this.url + 'User/userSetup', formData)
-    
+
   }
-  RegisterAdmin(formData: User){ 
-    
-      return this.http.post<Process>(
-        this.url + 'User/RegisterAdmin', formData
-      );
-    
+  userSetup(formData: UserData) {
+
+    return this.http.put(
+      this.url + 'User/userSetup', formData)
+
+  }
+  RegisterAdmin(formData: User) {
+
+    return this.http.post<Process>(
+      this.url + 'User/RegisterAdmin', formData
+    );
+
   }
 
-  RegisterEmployee(formData){ 
-    
+  RegisterEmployee(formData) {
+
     return this.http.post(
       this.url + 'User/RegisterEmployee', formData
     );
+  }
+  //******************Admin Booking Tings ******************/
+
+  Authorize(form, SessionID)
+  {
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post(this.url +"Admin/Authorize", form, {params})
+  }
   
-}
+  NoShow(BookingID, SessionID)
+  {
+    const params = new HttpParams().set("SessionID", SessionID).set("BookingID", BookingID)
+    return this.http.get(this.url + "Bookings/NoShow", {params})
+  }
   ///***********************************************Availability*********************************************
   getTime(): Observable<Schedule[]> {
     return this.http.get<Schedule[]>(this.url + 'Employees/getTime');
@@ -223,66 +239,59 @@ export class ReportingService {
 
   //**********************Timeslots **********************/
 
-  updateTimes(times, SessionID)
-  {
+  updateTimes(times, SessionID) {
     const params = new HttpParams().set("SessionID", SessionID);
-    return this.http.post(this.url + 'Admin/updateTimes', times, {params});
+    return this.http.post(this.url + 'Admin/updateTimes', times, { params });
   }
 
-  GetTimes()
-  {
+  GetTimes() {
     const params = new HttpParams();
     return this.http.get<Timeslots[]>(this.url + 'Admin/GetAllTimes')
   }
 
   //******************Company Info *****************/
-  GetCompanyInfo()
-  {
+  GetCompanyInfo() {
     return this.http.get<CompanyInfo>(this.url + "Admin/GetCompanyInfo")
   }
 
   updateCompany(formData: CompanyInfo, SessionID) {
     const params = new HttpParams().set("SessionID", SessionID)
-  
-    return this.http.put(this.url + 'Admin/updateCompany', formData, {params});
-    
+
+    return this.http.put(this.url + 'Admin/updateCompany', formData, { params });
+
   }
 
   //***********************Social Media **********************/
-  GetSocials()
-  {
+  GetSocials() {
     return this.http.get<SocialMedia[]>(this.url + "Admin/GetSocials")
   }
 
-  AddSocials(Socials: SocialMedia, SessionID)
-  {
+  AddSocials(Socials: SocialMedia, SessionID) {
     const params = new HttpParams().set("SessionID", SessionID);
-    return this.http.post(this.url + "Admin/AddSocials", Socials, {params})
+    return this.http.post(this.url + "Admin/AddSocials", Socials, { params })
   }
 
-  EditSocials(Socials: SocialMedia, SessionID)
-  {
+  EditSocials(Socials: SocialMedia, SessionID) {
     const params = new HttpParams().set("SessionID", SessionID)
-    return this.http.put(this.url + "Admin/UpdateSocials", Socials, {params})
+    return this.http.put(this.url + "Admin/UpdateSocials", Socials, { params })
   }
 
-  DeleteSocials(SocialID, SessionID)
-  {
+  DeleteSocials(SocialID, SessionID) {
     const params = new HttpParams().set("SessionID", SessionID).set("SocialID", SocialID);
-    return this.http.delete(this.url + "Admin/DeleteSocials", {params})
+    return this.http.delete(this.url + "Admin/DeleteSocials", { params })
   }
 
-   //set the schedule
-   Schedule(form: AvailData, SessionID) {
+  //set the schedule
+  Schedule(form: AvailData, SessionID) {
     const formData: FormData = new FormData();
     formData.append("StartDate", form.StartDate)
     formData.append("EndDate", form.EndDate)
     formData.append("EndTime", form.EndTimeID)
     formData.append("StartTime", form.StartTimeID)
     formData.append("Availbilness", form.Avail)
-    
+
     const params = new HttpParams().set("SessionID", SessionID)
-    return this.http.post(this.url + 'Employee/EmployeeAvailability', form, {params});
+    return this.http.post(this.url + 'Employee/EmployeeAvailability', form, { params });
   }
   //***********************************************Service Package ******************************************
 
@@ -290,11 +299,10 @@ export class ReportingService {
     return this.http.get<Package[]>(this.url + 'Services/RetrieveServicePackage');
   }
 
-  activateSerPackage(formData, SessionID)
-  {
+  activateSerPackage(formData, SessionID) {
     const params = new HttpParams().set("SessionID", SessionID)
-    return this.http.post(this.url + 'User/activeSP', formData, {params})
-    
+    return this.http.post(this.url + 'User/activeSP', formData, { params })
+
   }
   ///**********************************************Payments**************************************************
   salePayment(formData: Process) {
@@ -303,20 +311,18 @@ export class ReportingService {
       return this.http.post<Process>(this.url + 'User/salePayment', formData);
     }
   }
-  
-  bookingPayment(formData) 
-  {   
-    return this.http.post(this.url + "User/bookingPayment", formData);   
-  }
-    ///********************************************************Payments Types**************************************************************
-    getPaymentType(): Observable<PaymentType[]>{
-      return this.http.get<PaymentType[]>(this.url + 'User/getPaymentType');
-    }
 
-    restPassword(Password)
-    {
-      return this.http.post(this.url + "User/ResetPassword", Password)
-    }
+  bookingPayment(formData) {
+    return this.http.post(this.url + "User/bookingPayment", formData);
+  }
+  ///********************************************************Payments Types**************************************************************
+  getPaymentType(): Observable<PaymentType[]> {
+    return this.http.get<PaymentType[]>(this.url + 'User/getPaymentType');
+  }
+
+  restPassword(Password) {
+    return this.http.post(this.url + "User/ResetPassword", Password)
+  }
 
   GetReportingData(selected) {
     return this.http
@@ -325,8 +331,8 @@ export class ReportingService {
       )
       .pipe(map((result) => result));
   }
-    //***************************Company Information*********************************** */
+  //***************************Company Information*********************************** */
 
-   
-    
+
+
 }

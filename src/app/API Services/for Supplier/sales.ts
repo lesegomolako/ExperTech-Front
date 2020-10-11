@@ -83,6 +83,7 @@ export class SupplierOrderData
   StockItemLines:
   [
     {
+      LineID: any;
       Items: string;
       Quantity: any;
       StockItemID: any;

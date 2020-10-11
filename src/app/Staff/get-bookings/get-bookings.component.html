@@ -92,22 +92,23 @@
                   <th style="width: 60; display: none;" >BookingID</th>
                   <th style="width: 60;" >Client</th>
                   <th style="width: 60;" >Service</th>
-                  <th style="width: 60;" >Status</th>
-                  <th style="width: 60;" >Price (R)</th>
+                  <th style="width: 45;" >Status</th>
+                  <th style="width: 40;" >Price (R)</th>
                   <th style="width: 60;" >Date</th>
                   <th style="width: 60;"></th>
                 </tr>
     
                 
-                <tr *ngFor="let item of BookingsList">
+                <tr *ngFor="let item of BookingsList" [ngClass]="{'overdue': item.OverDue}">
                   <td style="display: none;">{{item.BookingID}}</td>
                   <td>{{ item.Client }}</td>
                   <td>{{ item.Service }}</td>
                   <td>{{ item.Status }}</td>
                   <td >R {{ item.Price }}</td>
-                  <td >{{item.Date | date:"dd/MM/yy"}}</td>
+                  <td >{{item.DateTime | date:"MMM d, y, h:mm:ss a"}} <span style="color:red" *ngIf="item.OverDue"> (Overdue)</span></td>
                   <td>
                     <button class="btn btn-warning" (click)="SelectBooking(item, stepper)">Select Booking</button>
+                    <button class="btn btn-danger" *ngIf="item.OverDue" (click)="NoShow(item)">Mark as no show</button>
                   </td>
                   </tr>       
               </table>

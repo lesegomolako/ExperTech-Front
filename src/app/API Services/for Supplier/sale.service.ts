@@ -26,4 +26,9 @@ export class SaleService {
   {
     return this.http.get<SaleData[]>(this.url + "Sale/GetProductSales")
   }
+
+  SalePayment(form)
+  {
+    return this.http.post(this.url + "Sale/SalePayment", form)
+  }
 }

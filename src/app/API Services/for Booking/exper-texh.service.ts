@@ -48,7 +48,6 @@ export class ExperTexhService {
 
   AdviseBooking(Booking)
   {
-    console.log(Booking)
     return this.http.post(this.url + "Booking/AdviseBooking", Booking)
   }
 

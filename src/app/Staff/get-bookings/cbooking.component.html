@@ -29,24 +29,35 @@
       </div>
     </div>
 </div> -->
-
-<h4 mat-dialog-title>Booking Payment</h4>
+<form [formGroup]="authorizeForm" (ngSubmit)="onSubmit(authorizeForm)">
+<h4 mat-dialog-title><strong>Authorization required</strong></h4>
 <div mat-dialog-content>
-  <strong>Client:</strong><label name="Payment" style="padding-right: 10px;">{{ data.Client }}</label>
+  <mat-label><strong>Enter login details:</strong></mat-label>
   <br>
-  <strong>Service:</strong><label name="Payment">{{ data.Service }}</label>
+  <div *ngIf="Invalid" class="alert alert-danger" role="alert">
+    Authorization details are invalid
+  </div>
+  <!-- <div *ngIf="Invalid" class="alert alert-danger alert-dismissible fade show" role="alert">
+    Authorization details are invalid
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <mat-form-field class="w-100" appearance="fill">
+    <mat-label>Username</mat-label>
+    <input matInput formControlName="username">
+    <mat-error *ngIf="f.username.errors">Name is required</mat-error>
+  </mat-form-field>
   <br>
-  <strong>Price:</strong><label name="Payment"> R {{ data.Price }}</label>
-  <br>
-  <mat-form-field appearance="fill">
-    <mat-label>Payment Type</mat-label>
-    <mat-select [(ngModel)]="type">
-      <mat-option *ngFor="let option of List | async" value="{{ option.PaymentTypeID}}">{{option.Type}}</mat-option>
-    </mat-select>
+  <mat-form-field class="w-100">
+    <mat-label>Password</mat-label>
+    <input matInput type="password" formControlName="password">
+    <mat-error *ngIf="f.password.errors">Name is required</mat-error>
   </mat-form-field>
 </div>
 
 <div mat-dialog-actions>
-  <button (click)="onSubmit()" class="btn btn-success">Make payment</button>
+  <button type="submit" class="btn btn-success">Authorize</button>
   <button mat-dialog-close class="btn btn-light">Cancel</button>
 </div>
+</form>

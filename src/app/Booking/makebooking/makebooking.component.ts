@@ -10,6 +10,8 @@ import { ExperTexhService } from '../../API Services/for Booking/exper-texh.serv
 import { HttpClient } from '@angular/common/http';
 import {map, startWith} from 'rxjs/operators';
 import { ReportingService } from 'src/app/API Services/for User/reporting.service';
+import { ServiceData, ServiceTypeData } from 'src/app/API Services/for Service/services';
+import { ServicesService } from 'src/app/API Services/for Service/services.service';
 
 
 
@@ -60,6 +62,8 @@ export class MakebookingComponent implements OnInit {
   TypesID: number;
   ServicesID: number;
 
+  imageURL = null;
+
   clear()
   {
     this.BookingForm.patchValue(
@@ -89,15 +93,17 @@ export class MakebookingComponent implements OnInit {
   }
   public MakeFormGroup: FormGroup;
   constructor(public dialog: MatDialog,private http: HttpClient,private api: ExperTexhService, private fb: FormBuilder,
-     private router: Router,private route: ActivatedRoute) { }
+     private router: Router,private route: ActivatedRoute, private service: ServicesService) { }
 
   Employee = [];
-  Service = [];
-  ServiceType= [];
+  Service : ServiceData[];
+  ServiceType: ServiceTypeData[];
   ServicePhotos = [];
   ServiceOptions = [];
   Schedge: Observable<Schedule[]>;
   Times =[];
+  
+  today = new Date();
   
   servControl = true;
   optControl = true;
@@ -105,15 +111,17 @@ export class MakebookingComponent implements OnInit {
   
  // BookingData: Booking;
 
-  EnableForm()
+  EnableForm(Type: ServiceTypeData)
   {
+    this.Service = this.Service.filter(res => res.TypeID == Type.TypeID)
     this.BookingForm.get("ServiceControl").enable();
     this.BookingForm.get("employeeControl").enable();  
     this.ServicesID = this.BookingForm.value.ServiceControl
   }
 
-  EnableOptForm()
+  EnableOptForm(Service: ServiceData)
   {
+    
     this.BookingForm.get("OptionControl").enable();
     this.ServicesID = this.BookingForm.value.ServiceControl
 
@@ -224,7 +232,6 @@ onSubmit(form)
 
   // stop here if form is invalid
   if (this.BookingForm.invalid) {
-      alert("form invalid");
       this.BookingForm.markAllAsTouched();
       return;
   }
@@ -242,7 +249,6 @@ onSubmit(form)
     SessionID: this.api.SessionID  
   }
   
-
   this.api.Makebooking(BookingData)
   .subscribe(res =>
     {
@@ -258,7 +264,7 @@ onSubmit(form)
       }
     })
 
-  console.log(this.BookingForm.value)
+  
 }
 public checkError = (controlName: string, errorName: string) => {
   return this.MakeFormGroup.controls[controlName].hasError(errorName);
@@ -273,24 +279,24 @@ LoadList()
 {
   // this.http.get<[]>(this.api.url + "Booking/getALLemployees")
   // .subscribe(res => {this.Employee = res})
-  // this.http.get<[]>(this.api.url + "Services/GetService")
-  // .subscribe(res => {this.Service = res})
+  this.service.getServices()
+  .subscribe(res => {this.Service = res; console.log(res)})
   // this.http.get<[]>(this.api.url + "Services/GetServiceOption")
   // .subscribe(res => {this.ServiceOptions = res})
-  // this.http.get<[]>(this.api.url + "Services/GetServiceType")
-  // .subscribe(res => {this.ServiceType = res})
+  this.service.getServiceTypes()
+  .subscribe(res => {this.ServiceType = res})
   // this.http.get<[]>(this.api.url + "Booking/getTimes")
   // .subscribe(res => {this.Times = res})
   // this.Schedge = this.http.get<Schedule[]>(this.api.url + "Booking/getSchedge")
  
   this.http.get<[]>(this.api.url + "Booking/getALLemployees")
   .subscribe(res => {this.Employee = res})
-  this.http.get<[]>(this.api.url + "Booking/getALLservices")
-  .subscribe(res => {this.Service = res})
+  //this.http.get<[]>(this.api.url + "Booking/getALLservices")
+  //.subscribe(res => {this.Service = res})
   this.http.get<[]>(this.api.url + "Booking/getALLservicesoption")
   .subscribe(res => {this.ServiceOptions = res})
-  this.http.get<[]>(this.api.url + "Booking/getALLservicestype")
-  .subscribe(res => {this.ServiceType = res})
+  // this.http.get<[]>(this.api.url + "Booking/getALLservicestype")
+  // .subscribe(res => {this.ServiceType = res})
   this.http.get<[]>(this.api.url + "Booking/getTimes")
   .subscribe(res => {this.Times = res})
   this.Schedge = this.http.get<Schedule[]>(this.api.url + "Booking/getSchedge") 

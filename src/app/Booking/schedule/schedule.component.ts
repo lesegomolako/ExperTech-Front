@@ -271,12 +271,12 @@ export class ScheduleComponent implements OnInit {
       return;
     }
 
-    // if(confirm("Would you like to advise for this booking?"))
-    // {     
-    //   localStorage.setItem("DateChosen", newStart.toDateString())
-    //   localStorage.setItem("BookingDetails", JSON.stringify(event.meta))
-    //   this.router.navigateByUrl("advise")
-    // }
+    if(confirm("Would you like to advise for this booking?"))
+    {     
+      localStorage.setItem("DateChosen", newStart.toDateString())
+      localStorage.setItem("BookingDetails", JSON.stringify(event.meta))
+      this.router.navigateByUrl("advise")
+    }
   }
 
   cancel()
@@ -303,7 +303,7 @@ export class ScheduleComponent implements OnInit {
       <div>
         <strong>Details:</strong>
         <ul>
-          <li>Employee assigned: </li>
+          <li *ngIf="data.BookingSchedule">Employee assigned: {{data.BookingSchedule[0].Employee}}</li>
           <li>Service: {{ data.BookingLines[0].Service}}</li>
           <li *ngIf="data.BookingLines[0].Option">Option: {{data.BookingLines[0].Option}}</li>
         </ul>

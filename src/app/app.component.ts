@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  Router,
+  Event as RouterEvent,
+  NavigationStart,
+  NavigationEnd,
+  NavigationCancel,
+  NavigationError
+} from '@angular/router'
+
 import { Observable } from 'rxjs';
 import { Employee, User } from './API Services/for Booking/client';
 import {map} from 'rxjs/operators';
@@ -34,7 +42,11 @@ export class AppComponent implements OnInit {
   }
 
   constructor(private router: Router, private http: HttpClient,
-    private rService: ReportingService, public api: ExperTexhService){}
+    private rService: ReportingService, public api: ExperTexhService)
+    { 
+      router.events.subscribe((event: RouterEvent) => {
+      this.navigationInterceptor(event)
+    })}
    
   ngOnInit()
   {
@@ -104,6 +116,25 @@ export class AppComponent implements OnInit {
     
       })
     
+  }
+
+  showOverlay = false;
+
+  navigationInterceptor(event: RouterEvent): void {
+    if (event instanceof NavigationStart) {
+      this.showOverlay = true;
+    }
+    if (event instanceof NavigationEnd) {
+      this.showOverlay = false;
+    }
+
+    // Set loading state to false in both of the below events to hide the spinner in case a request fails
+    if (event instanceof NavigationCancel) {
+      this.showOverlay = false;
+    }
+    if (event instanceof NavigationError) {
+      this.showOverlay = false;
+    }
   }
   
 }

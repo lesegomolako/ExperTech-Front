@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { SaleService } from 'src/app/API Services/for Supplier/sale.service';
@@ -10,6 +10,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { PaymentType } from 'src/app/API Services/for User/process';
 import { Observable } from 'rxjs';
+import { ReportingService } from 'src/app/API Services/for User/reporting.service';
 
 @Component({
   selector: 'app-sale-payment',
@@ -25,79 +26,82 @@ export class SalePaymentComponent implements OnInit {
   SaleList: SaleData[];
 
   selectedSale: SaleData;
-  TypeControl= new FormControl('',Validators.required )
+  TypeControl = new FormControl('', Validators.required)
   PaymentType: Observable<PaymentType[]>;
+  Total = 0;
 
-  displayedColumns = ['saleid', 'client', 'saletype', 'items' , 'date', 'select'];
+  displayedColumns = ['saleid', 'client', 'saletype', 'items', 'date', 'select'];
 
-  constructor(private api:ExperTexhService, private service: SaleService, 
+  constructor(private api: ExperTexhService, private service: SaleService, private rservice: ReportingService,
     private router: Router) { }
 
   ngOnInit(): void {
-    if(this.api.RoleID == "2")
-    {
+    if (this.api.RoleID == "2") {
       this.dataSource = new MatTableDataSource(this.SaleList)
-      this.service.getProdSaleList().subscribe(res => 
-        {
-          this.SaleList = res;
-          this.dataSource.data = this.SaleList;
-        })
-       // this.PaymentType = this.service.getPaymentType();
+      this.service.getProdSaleList().subscribe(res => {
+        this.SaleList = res;
+        this.dataSource.data = this.SaleList;
+      })
+      this.PaymentType = this.rservice.getPaymentType();
     }
-    else
-    {
+    else {
       this.router.navigate(["403Forbidden"])
     }
   }
 
-  onSubmit()
-{
-  // const payDetails =
-  // {
-  //   BookingID: this.SelectedBooking.BookingID,
-  //   PaymentTypeID: this.TypeControl.value,
-  //   Price: this.SelectedBooking.Price  ,
-  //   SessionID: this.api.SessionID 
-  // }
 
-  
+  CalcTotal(Sale: SaleData, stepper: MatStepper) {
+    Sale.Products.forEach(s => {
+      this.Total += (s.Price * s.Quantity);
+    })
 
-  // this.service.bookingPayment(payDetails).subscribe((res:any) =>
-  //   {
-  //     if(res == "success")
-  //     {
-  //       alert("Booking successfully paid")
-  //       //this.dialogRef.close();
-  //     }
-  //     else if(res.Error == "session")
-  //     {
-  //       alert("res.Message")
-  //     }
-  //     else
-  //     {
-  //       alert("Session is no longer valid. User needs to login")
-  //       this.router.navigate(["login"],{queryParams:{'redirectURL':this.state.url}})
-  //     }
-  //   }
-  // );
-  // console.log(payDetails)
-}
+    stepper.next();
+  }
 
-reset(stepper: MatStepper) {
-  this.selectedSale = null;
-  stepper.reset();
-  //window.history.back();
-}
+  onSubmit() {
+    const payDetails =
+    {
+      SaleID: this.selectedSale.SaleID,
+      PaymentTypeID: this.TypeControl.value,
+      Price: this.Total,
+      SessionID: this.api.SessionID 
+    }
+
+    this.service.SalePayment(payDetails).subscribe((res:any) =>
+      {
+        if(res == "success")
+        {
+          alert("Products successfully paid")
+          this.router.navigate(["payment"])
+        }
+        else if(res.Error == "session")
+        {
+          alert("res.Message")
+        }
+        else
+        {
+          alert("Session is no longer valid. User needs to login")
+          //this.router.navigate(["login"],{queryParams:{'redirectURL':this.state.url}})
+        }
+      }
+    );
+    
+  }
+
+  reset(stepper: MatStepper) {
+    this.selectedSale = null;
+    stepper.reset();
+    //window.history.back();
+  }
 
   ngAfterViewInit() {
     this.table.dataSource = this.dataSource;
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator= this.paginator;
-    
+    this.dataSource.paginator = this.paginator;
+
   }
 
-  SelectedSale(Sale: SaleData,  stepper: MatStepper)
-  {
+  SelectedSale(Sale: SaleData, stepper: MatStepper) {
     this.selectedSale = Sale;
     stepper.selected.completed = true;
     stepper.selected.editable = false;
@@ -105,8 +109,7 @@ reset(stepper: MatStepper) {
     //this.router.navigateByUrl("/confirm")
   }
 
-  cancel(stepper:MatStepper)
-  {
+  cancel(stepper: MatStepper) {
     this.selectedSale = null;
     stepper.reset();
   }

@@ -13,14 +13,17 @@ import { ProfileData } from 'src/app/app.component';
 })
 export class EmployeehomeComponent implements OnInit {
 
-  constructor(private api: ExperTexhService, private router: Router) { }
+  constructor(private api: ExperTexhService, private router: Router) 
+  { 
+    this.RoleID = this.api.RoleID;
+  }
 
   RoleID;
   User: Observable<ProfileData<User>>
 
   ngOnInit(): void {
     
-    if(this.api.RoleID == "2" || this.api.RoleID == "3")
+    if(this.RoleID == "2" || this.RoleID == "3")
     {
       this.RoleID = this.api.RoleID;
       this.User = this.api.getProfile()

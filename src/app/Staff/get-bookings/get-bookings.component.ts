@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild , Inject} from '@angular/core';
-import {MatTableDataSource, MatTable} from '@angular/material/table';
-import {MatDialog,MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
@@ -13,24 +13,26 @@ import { MatStepper } from '@angular/material/stepper';
 import { PaymentType } from 'src/app/API Services/for User/process';
 import { Observable } from 'rxjs';
 import { PackageData } from 'src/app/API Services/for Service/services';
+import { map } from 'rxjs/operators';
+import { User } from 'src/app/API Services/for Booking/client';
 
-export class BookingData
-{
+export class BookingData {
   BookingID: any;
   ClientID: any;
   Client: string;
   Status: string;
-  Date: any;
+  DateTime: any;
   Service: string;
   Price: any;
   ServiceID: any;
-  HasPackage:boolean;
+  HasPackage: boolean;
+  OverDue: boolean;
   PackageDetails?:
-  {
-    PackageID: any;
-    Name: string;
-  }
-  
+    {
+      PackageID: any;
+      Name: string;
+    }
+
 }
 
 @Component({
@@ -40,65 +42,68 @@ export class BookingData
 })
 export class GetBookingsComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<BookingData>;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatSort) sort: MatSort;
+  // @ViewChild(MatTable) table: MatTable<BookingData>;
 
-  
-  TypeControl= new FormControl({value: '', disabled: false, checked:true},Validators.required )
+
+  TypeControl = new FormControl({ value: '', disabled: false, checked: true }, Validators.required)
   PaymentType: Observable<PaymentType[]>;
   foundPackage = false;
   ServicePackage: PackageData;
 
-  value = 'Clear me'; 
+  value = 'Clear me';
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['BookingID', 'Client', 'Service', 'Status', 'Price', 'Date'];
-  
+
   searchKey: string;
 
 
-  constructor(public api: ExperTexhService, public service: ReportingService,
-    public dialog: MatDialog, private http: HttpClient, private router: Router){}
+  constructor(public api: ExperTexhService, public service: ReportingService, 
+    public dialog: MatDialog, private http: HttpClient, private router: Router) { }
 
   BookingsList: BookingData[];
 
   SelectedBooking: BookingData;
   state: RouterStateSnapshot;
   dataSource;
+  isOwner = false;
 
-  disable()
-  {
+  disable() {
     this.TypeControl.disable();
   }
-  
-  enable()
-  {
+
+  enable() {
     this.TypeControl.enable();
   }
 
+  
+
   ngOnInit() {
-    if(this.api.RoleID == "2")
-    {
-      this.dataSource = new MatTableDataSource()
-      this.http.get<BookingData[]>(this.api.url + "Admin/GetBookings").subscribe((res:BookingData[]) => 
-      {this.dataSource.data = res;
-        this.BookingsList = res;
-       
-      });
+    
+    if (this.api.RoleID == "2") {
+      //this.dataSource = new MatTableDataSource()
+     this.api.getProfile().subscribe((res:User)=> {this.isOwner = res.Admins[0].Owner})
+        
+     this.loadlist();
+      
       this.PaymentType = this.service.getPaymentType();
     }
-    else
-    {
+    else {
       this.router.navigate(["403Forbidden"])
     }
-    //console.log(this.BookingsList)
-    
+   
+
   }
 
-  openDialog(): void {
-
-    
+  loadlist()
+  {
+    var today = new Date();
+    this.http.get<BookingData[]>(this.api.url + "Admin/GetBookings").subscribe((res: BookingData[]) => {
+      this.BookingsList = res.filter(zz => new Date(zz.DateTime)<today)
+      .sort((a,b) => 0 - (a['DateTime'] > b['DateTime'] ? 1 : -1))
+    });
   }
 
   myFunction(event: any) {
@@ -138,41 +143,34 @@ export class GetBookingsComponent implements OnInit {
     //window.history.back();
   }
 
-  onSubmit()
-{
-  const payDetails =
-  {
-    BookingID: this.SelectedBooking.BookingID,
-    PaymentTypeID: this.TypeControl.value,
-    Price: this.SelectedBooking.Price  ,
-    SessionID: this.api.SessionID 
-  }
-
-  
-
-  this.service.bookingPayment(payDetails).subscribe((res:any) =>
+  onSubmit() {
+    const payDetails =
     {
-      if(res == "success")
-      {
+      BookingID: this.SelectedBooking.BookingID,
+      PaymentTypeID: this.TypeControl.value,
+      Price: this.SelectedBooking.Price,
+      SessionID: this.api.SessionID
+    }
+
+
+
+    this.service.bookingPayment(payDetails).subscribe((res: any) => {
+      if (res == "success") {
         alert("Booking successfully paid")
-        //this.dialogRef.close();
+        this.router.navigate(["payment"])
       }
-      else if(res.Error == "session")
-      {
+      else if (res.Error == "session") {
         alert("res.Message")
       }
-      else
-      {
+      else {
         alert("Session is no longer valid. User needs to login")
-        this.router.navigate(["login"],{queryParams:{'redirectURL':this.state.url}})
+        this.router.navigate(["login"], { queryParams: { 'redirectURL': this.state.url } })
       }
     }
-  );
-  console.log(payDetails)
-}
+    );
+  }
 
-  SelectBooking(Booking: BookingData,  stepper: MatStepper)
-  {
+  SelectBooking(Booking: BookingData, stepper: MatStepper) {
 
     this.SelectedBooking = Booking;
     stepper.selected.completed = true;
@@ -182,16 +180,16 @@ export class GetBookingsComponent implements OnInit {
     //this.router.navigateByUrl("/confirm")
   }
 
-  ngAfterViewInit() {
-    this.table.dataSource = this.dataSource;
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator= this.paginator;
+  // ngAfterViewInit() {
+  //   this.table.dataSource = this.dataSource;
+  //   this.dataSource.sort = this.sort;
+  //   this.dataSource.paginator= this.paginator;
+  // }
+
+  onCreate() {
+    // this.dialog.open(SupplierComponent)
   }
 
-  onCreate(){
-   // this.dialog.open(SupplierComponent)
-  }
-  
   onSearchClear() {
     this.searchKey = "";
     //this.applyFilter();
@@ -202,30 +200,55 @@ export class GetBookingsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  makePayment(form: BookingData)
-  {
-    const dialogConfig = new MatDialogConfig();
-  
-    dialogConfig.width = '500px';
-    dialogConfig.height = '300px';
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = 
-    { 
-      BookingID: form.BookingID,
-      Client: form.Client,
-      Status: form.Status,
-      Date: form.Date,
-      Service: form.Service,
-      Price: form.Price
+  NoShow(form: BookingData) {
+
+    if(this.isOwner)
+    {
+      this.service.NoShow(form.BookingID, this.api.SessionID).subscribe((res: any) =>
+        {
+          if(res == "success")
+          {
+            alert("Booking status successfully changed")
+            this.loadlist();
+          }
+          else if(res.Error == "session")
+          {
+            alert(res.Message)
+          }
+          else
+          {
+            console.log(res)
+          }
+        })
     }
+    else
+    {
+      const dialogConfig = new MatDialogConfig();
+
+      dialogConfig.width = '400px';
+      dialogConfig.height = '300px';
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.data =
+      {
+        BookingID: form.BookingID,
+        Client: form.Client,
+        Status: form.Status,
+        DateTime: form.DateTime,
+        Service: form.Service,
+        Price: form.Price
+      }
   
-    const dialogRef = this.dialog.open(CbookingDialog, dialogConfig);
-  
-    // dialogRef.afterClosed().subscribe((res:any) => {
-    //   console.log('The dialog was closed');
+      const dialogRef = this.dialog.open(CbookingDialog, dialogConfig);
       
-    // });
+      dialogRef.afterClosed().subscribe((res:any) => {
+        this.loadlist()});
+    }
+    
+
+   
+
+    
     //localStorage.setItem("bookingPayment", JSON.stringify(form))
     //this.router.navigate(["cbooking"])
   }
@@ -255,58 +278,74 @@ export class CbookingDialog implements OnInit {
     public dialogRef: MatDialogRef<CbookingDialog>,
     private router: Router,
     public service: ReportingService,
+    private fb: FormBuilder,
     private http: HttpClient,
     private api: ExperTexhService,
     @Inject(MAT_DIALOG_DATA) public data: BookingData
   ) { }
 
   List: any;
-  cbookingForm: FormGroup;
+  authorizeForm: FormGroup;
   submitted = false;
-  bookingObject : BookingData;
+  bookingObject: BookingData;
   type: any;
   state: RouterStateSnapshot;
 
-  ngOnInit() 
-  {
+  Invalid= false;
+
+  ngOnInit() {
+    this.authorizeForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    })
     this.List = this.service.getPaymentType();
     this.bookingObject = this.data;
   }
 
-
-onSubmit()
-{
-  const payDetails =
-  {
-    BookingID: this.bookingObject.BookingID,
-    PaymentTypeID: this.type,
-    Price: this.bookingObject.Price  ,
-    SessionID: this.api.SessionID 
+  get f() {
+    return this.authorizeForm.controls;
   }
 
-  
+  onSubmit(form) {
 
-  this.service.bookingPayment(payDetails).subscribe((res:any) =>
+    this.Invalid = false;
+    if(this.authorizeForm.invalid)
     {
-      if(res == "success")
-      {
-        alert("Booking successfully paid")
-        this.dialogRef.close();
+      this.authorizeForm.markAllAsTouched();
+      return;
+    }
+
+    this.service.Authorize(form.value, this.api.SessionID).subscribe((res: any) => {
+      if (res == "success") {
+        this.service.NoShow(this.data.BookingID, this.api.SessionID).subscribe((res: any) =>
+        {
+          if(res == "success")
+          {
+            alert("Booking status successfully changed")
+            this.dialogRef.close();
+          }
+          else if(res.Error == "session")
+          {
+            alert(res.Message)
+          }
+          else
+          {
+            console.log(res)
+          }
+        })
       }
-      else if(res.Error == "session")
-      {
-        alert("res.Message")
+      else if (res == "denied") {
+        this.Invalid = true;
       }
-      else
-      {
+      else if (res.Error == "session"){
         alert("Session is no longer valid. User needs to login")
-        this.router.navigate(["login"],{queryParams:{'redirectURL':this.state.url}})
+        this.router.navigate(["login"], { queryParams: { 'redirectURL': this.state.url } })
       }
     }
-  );
-  console.log(payDetails)
-}
-  
+    );
+    //console.log(payDetails)
+  }
+
 
 
 }

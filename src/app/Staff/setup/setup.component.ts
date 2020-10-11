@@ -105,10 +105,8 @@ export class SetupComponent implements OnInit {
     this.service.userSetup(this.user).subscribe((res: any) => {
         if(res.Message == "success")
         {
-          alert("Profile successfully set up. Redirecting to homepage")
-          sessionStorage.setItem("accessToken", res.SessionID);
-          sessionStorage.setItem("RoleID", res.RoleID)
-          this.router.navigateByUrl("/employeehome")
+          alert("Profile successfully set up. Redirecting to log in")
+          this.router.navigateByUrl("/login")
         }
         else if(res.Error)
         {

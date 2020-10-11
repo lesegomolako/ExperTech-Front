@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
     this.user = this.loginForm.value;
     this.service.Login(this.user).subscribe((res : any) =>
     {
-      console.log(res);
+      
       if(res.Error) {   //lol
         this.errorMessage = res.Error;
         this.showError = true;

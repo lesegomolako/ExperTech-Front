@@ -56,8 +56,8 @@ export class SupplierService {
 
   AddSupplier(formData: SupplierData, SessionID)
   {
-    const paramas = new HttpParams().set("SessionID", SessionID)
-    return this.http.post(this.url + "Supplier/AddSupplier", formData);
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post(this.url + "Supplier/AddSupplier", formData, {params});
   }
 
   EditSupplier(formData: SupplierData, SessionID)

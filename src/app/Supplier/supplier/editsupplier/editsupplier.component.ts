@@ -44,7 +44,6 @@ export class EditsupplierComponent implements OnInit {
   }
   EditSupp(supplier)
   {
-    console.log(supplier.value)
     this.service.EditSupplier(supplier.value, this.api.SessionID)
     .subscribe(res => {
       if (res == "success")

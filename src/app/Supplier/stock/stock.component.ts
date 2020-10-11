@@ -77,18 +77,21 @@ export class StockComponent implements AfterViewInit, OnInit {
 
   onDelete(ItemID: any): void
   {
-    this.service.DeleteStockItem(ItemID, this.api.SessionID).subscribe(res =>
-      {
-        if(res =="success")
+    if(confirm("Are you sure you want to delete this item"))
+    {
+      this.service.DeleteStockItem(ItemID, this.api.SessionID).subscribe(res =>
         {
-          alert("Successfully deleted")
-          this.service.getStockList().subscribe(res => 
-            {
-              this.StockList = res;
-              this.dataSource.data = this.StockList;
-            })
-        }
-      })
+          if(res =="success")
+          {
+            alert("Successfully deleted")
+            this.service.getStockList().subscribe(res => 
+              {
+                this.StockList = res;
+                this.dataSource.data = this.StockList;
+              })
+          }
+        })
+    }
   }
 
   EditStock(StockData)

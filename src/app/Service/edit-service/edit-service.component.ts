@@ -225,7 +225,8 @@ export class EditServiceComponent implements OnInit {
   AddForm(): void
   {
     //this.service.ServicesData.ServicePrices = [{"sPrice": ""}];
-    if((<FormArray>this.serviceForm.get('sprice')).at(0).value.Price != null)
+
+    if((<FormArray>this.serviceForm.get('sprice'))?.at(0)?.value?.Price != null)
     {
       if(confirm("Adding a service option would remove the price entered. Would you like to continue"))
       {
@@ -258,6 +259,7 @@ export class EditServiceComponent implements OnInit {
     //this.serviceForm.getError('name').value
     if(this.serviceForm.value.serviceid == null)
     {
+        
        this.mapValues();
        var ServiceID;
        this.service.AddService(this.serviceObject, this.UploadFile, this.api.SessionID).subscribe((res:any) => {
@@ -274,6 +276,10 @@ export class EditServiceComponent implements OnInit {
             
           }
         }
+        else
+        {
+          console.log(res)
+        }
        })
 
        
@@ -281,24 +287,25 @@ export class EditServiceComponent implements OnInit {
     else
     {
       this.mapValues();
-       this.service.UpdateService(this.serviceObject, this.UploadFile, this.api.SessionID).subscribe(res => {
+       this.service.UpdateService(this.serviceObject, this.UploadFile, this.api.SessionID).subscribe((res:any) => {
 
         if(res == "success")
         {
           alert("Successfully saved")
+          this.router.navigateByUrl("/services/Services")  
         }
-        else if(res == "duplicate")
-        {
-          if(confirm("Service already exists. Would you like to update instead?"))
-          {
-            
-          }
-        }
+       else if(res.Error == "session")
+       {
+          alert(res.Message)
+
+       }
+       else
+       {
+         console.log(res)
+       }
        })
     }
-    // this.mapValues();
-    // console.log(this.serviceObject.ServiceTypeOptions)
-    // console.log(this.serviceForm.value.sprice)
+   
    }
 
    
@@ -317,19 +324,7 @@ export class EditServiceComponent implements OnInit {
       ServicePhotoes: this.serviceForm.value.photos
       
     }
-    // this.serviceObject.Name = this.serviceForm.value.name;
-    // this.serviceObject.Description = this.serviceForm.value.description;
-    // this.serviceObject.Duration = this.serviceForm.value.duration;
-    // this.serviceObject.TypeID = this.serviceForm.value.typeid;
-    // this.serviceObject.ServicePrices = this.serviceForm.value.sprice
-    // this.serviceObject.ServiceTypeOptions = this.serviceForm.value.options;
-    // //this.serviceObject.ServiceImage = this.serviceForm.value.photos;
     
-
-    // if(this.serviceObject.ServiceTypeOptions.length>0)
-    // {
-    //   this.serviceObject.ServicePrices = null
-    // }
   }
 
   removeOption(item: number): void

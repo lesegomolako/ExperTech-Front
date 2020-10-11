@@ -1,160 +1,168 @@
+<form [formGroup]="BookingForm" (submit)="onSubmit(BookingForm)">
 
-<form [formGroup]="BookingForm" (submit)="onSubmit(BookingForm)" style="background-color: green;">
-
-  <div style="float: right;">  
-    <div  class="example-button-container">
-      <a routerLink='/schedule'><button mat-raised-button style="background-color: gray; " >
+  <div style="float: right;">
+    <div class="example-button-container">
+      <button routerLink='/schedule' mat-raised-button style="background-color: gray; align-items: center; width:80% ">
         <mat-icon> keyboard_return</mat-icon>
-          Back
-      </button></a>
+        Back
+      </button>
       <br>
       <br>
-      <button mat-raised-button type="submit" [disabled]="!BookingForm.valid" style="background-color: gray; align-items: center; width:99% "  >
-        Submit 
+      <button mat-raised-button type="submit" [disabled]="!BookingForm.valid"
+        style="background-color: gray; align-items: center; width:80% ">
+        Submit
       </button>
-      <button mat-raised-button type="button" (click)="openAddDialog()" style="background-color: gray; align-items: center; width:99% "  >
-        Add Client 
+      <button mat-raised-button type="button" (click)="openAddDialog()"
+        style="background-color: gray; align-items: center; width:80% ">
+        Add Client
       </button>
-      <button mat-raised-button type="button" (click)="openSearchDialog()" style="background-color: gray; align-items: center; width:99% "  >
-        Search Client 
+      <button mat-raised-button type="button" (click)="openSearchDialog()"
+        style="background-color: gray; align-items: center; width:80% ">
+        Search Client
       </button>
     </div>
   </div>
 
   <div class="jumbotron" style="background-color: white;">
-    <div class="row"> 
-      <div class="col-md-6 offset-md-3" >
+    <div class="row">
+      <div class="col-md-6 offset-md-4">
         <h1>All fields need to be filled in</h1>
-          <div class="form-group">
-            <input formControlName="clientid" hidden>
-            <label> Name</label>
-            <input formControlName="firstName" readonly class="form-control" />
-          </div>
-          <div class="form-group">
-            <label>Surname</label>
-            <input formControlName="lastName" readonly class="form-control" />
-          </div>
-          <div class="form-group">
-            <label>Contact number</label>
-            <input formControlName="contact" readonly class="form-control"/>
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input formControlName="email" readonly class="form-control"/>
-          </div>
-          <div class="form-group">
-            <button type="button" (click)="clear()" class="btn btn-primary" >clear</button>
-          </div>
+        <div class="form-group">
+          <input formControlName="clientid" hidden>
+          <label> Name</label>
+          <input formControlName="firstName" readonly class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Surname</label>
+          <input formControlName="lastName" readonly class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Contact number</label>
+          <input formControlName="contact" readonly class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input formControlName="email" readonly class="form-control" />
+        </div>
+        <div class="form-group">
+          <button type="button" (click)="clear()" class="btn btn-primary">clear</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <div>
-    <div  class="card_hover"  >
-      <div class="col-12">
+  <div class="jumbotron" style="background-color: white;">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
         <h1 style="text-align: center;">Please fill in all the booking details</h1>
         <div style="text-align: center; color: black; " class="card-hover">
           <h4>Select Service type</h4>
 
-          <mat-form-field  appearance="fill" >
+          <mat-form-field appearance="fill">
             <mat-label style="color: black;">Hair, Nails,Massage</mat-label>
             <mat-select #typeid required>
               <mat-option disabled>--</mat-option>
-              <mat-option (click)="EnableForm()" *ngFor="let x of ServiceType" value ={{x.TypeID}}>
+              <mat-option (click)="EnableForm(x)" *ngFor="let x of ServiceType" value={{x.TypeID}}>
                 {{x.Name}}
               </mat-option>
             </mat-select>
-            <mat-error >Please choose service</mat-error>
+            <mat-error>Please choose service</mat-error>
             <mat-hint></mat-hint>
           </mat-form-field>
 
-        <div class="col-12">
-          <img src="[your hosted image URL]" alt="No service photo available" class="thumbnail" height="30" width="30" style="float:right" /> 
-        </div>
+          <div class="col-12">
+            <img [src]="imageURL" alt="No service photo available" class="thumbnail" height="30" width="30"
+              style="float:right" />
+          </div>
 
           <h4>Select Service </h4>
 
-          <mat-form-field style="margin-left: 5%;" appearance="fill">
+          <mat-form-field appearance="fill">
             <mat-label style="color: black;">service for booking</mat-label>
-            <mat-select  name="ServiceID" formControlName="ServiceControl" required>
+            <mat-select name="ServiceID" formControlName="ServiceControl" required>
               <mat-option disabled>--</mat-option>
-              <mat-option (click)="EnableOptForm()" *ngFor="let x of Service | customFilter:typeid.value" value ={{x.ServiceID}}>
+              <mat-option (click)="EnableOptForm()" *ngFor="let x of Service"
+                value={{x.ServiceID}}>
                 {{x.Name}}
               </mat-option>
             </mat-select>
-
-<!-- <mat-error *ngIf="ServiceControl.hasError('required')">Please choose service</mat-error>
+            <!-- | customFilter:typeid.value -->
+            <!-- <mat-error *ngIf="ServiceControl.hasError('required')">Please choose service</mat-error>
 <mat-hint>{{ServiceControl.value?.sound}}</mat-hint> -->
           </mat-form-field>
 
           <p></p>
 
-          
+
           <h4>Select Service option</h4>
-        <mat-form-field appearance="fill">
-          <mat-label style="color: black;">Long, short, Medium</mat-label>
-          <mat-select formControlName="OptionControl" name="OptionID">
-            <mat-option disabled>--</mat-option>
-            <mat-option  (click)="EnableTimeForm()"  *ngFor="let x of ServiceOptions | optionsFilter:ServicesID" value ={{x.OptionID}} >
-              {{x.Name}}
-            </mat-option>
-          </mat-select>
-          <!-- <mat-error *ngIf="OptionControl.hasError('required')">Please choose the length of your hair</mat-error>
+          <mat-form-field appearance="fill">
+            <mat-label style="color: black;">Long, short, Medium</mat-label>
+            <mat-select formControlName="OptionControl" name="OptionID">
+              <mat-option disabled>--</mat-option>
+              <mat-option (click)="EnableTimeForm()" *ngFor="let x of ServiceOptions"
+                value={{x.OptionID}}>
+                {{x.Name}}
+              </mat-option>
+            </mat-select>
+            <!-- | optionsFilter:ServicesID -->
+            <!-- <mat-error *ngIf="OptionControl.hasError('required')">Please choose the length of your hair</mat-error>
           <mat-hint>{{OptionControl.value?.sound}}</mat-hint> -->
-        </mat-form-field>
-        
+          </mat-form-field>
+
 
           <h4>Select Employee for service type</h4>
           <mat-form-field appearance="fill">
             <mat-label style="color: black;">Employee Name</mat-label>
             <mat-select formControlName="employeeControl" required>
               <mat-option>--</mat-option>
-              <mat-option (click)="EnableTimeForm()" *ngFor="let x of Employee " value ={{x.EmployeeID}}>
+              <mat-option (click)="EnableTimeForm()" *ngFor="let x of Employee " value={{x.EmployeeID}}>
                 {{x.Name}}
               </mat-option>
             </mat-select>
-<!-- <mat-error *ngIf="employeeControl.hasError('required')">Please choose an employee</mat-error>
+            <!-- <mat-error *ngIf="employeeControl.hasError('required')">Please choose an employee</mat-error>
 <mat-hint>{{employeeControl.value?.sound}}</mat-hint> -->
           </mat-form-field>
-<br>
+          <br>
 
 
           <h4>Pick date and time for Appointment</h4>
           <mat-form-field color="accent">
             <mat-label style="color: black;">Appointment date</mat-label>
-            <input matInput [matDatepicker]="picker1" name="Date" formControlName="DateControl" >
-            <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
-            <mat-datepicker #picker1 ></mat-datepicker>
+            <input matInput [min]="today" [matDatepicker]="picker1" name="Date" formControlName="DateControl">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker  #picker1></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field appearance="fill">
-            <mat-label style="color: black;" >Appointment time  </mat-label>
-            <mat-select required name="StartTime" formControlName="TimeControl" >
+            <mat-label style="color: black;">Appointment time </mat-label>
+            <mat-select required name="StartTime" formControlName="TimeControl">
               <mat-option disabled>--</mat-option>
-              <mat-option *ngFor="let x of Times " value ={{x.TimeID}} >
+              <mat-option *ngFor="let x of Times " value={{x.TimeID}}>
                 {{x.StartTime}}
               </mat-option>
             </mat-select>
- <!-- <mat-error *ngIf="TimeControl.hasError('required')">Please choose Appointment time</mat-error>
+            <!-- <mat-error *ngIf="TimeControl.hasError('required')">Please choose Appointment time</mat-error>
  <mat-hint>{{TimeControl.value?.sound}}</mat-hint> -->
           </mat-form-field>
 
 
-          <mat-accordion  class="example-headers-align" style="background-color: white;">
-            <mat-expansion-panel style="background-color: grey;" [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+          <mat-accordion class="example-headers-align" style="background-color: white;">
+            <mat-expansion-panel style="background-color: whitesmoke;" [expanded]="step === 1" (opened)="setStep(1)"
+              hideToggle>
               <mat-expansion-panel-header>
-              <mat-panel-title style="color: black;">
-                Notes
-              </mat-panel-title>
-              <mat-panel-description style="color: black;">
-                Type notes that the empoyee needs to know
-              <mat-icon>map</mat-icon>
-              </mat-panel-description>
+                <mat-panel-title style="color: black;">
+                  Notes
+                </mat-panel-title>
+                <mat-panel-description style="color: black;">
+                  Type notes that the empoyee needs to know
+                  <mat-icon>map</mat-icon>
+                </mat-panel-description>
               </mat-expansion-panel-header>
 
               <mat-form-field class="example-full-width">
                 <mat-label style="color: black;">Importent things the employee should to know</mat-label>
-                <textarea formControlName="NotesControl" matInput placeholder="Ex. It makes me feel..." name="Notes"></textarea>
+                <textarea formControlName="NotesControl" matInput placeholder="Ex. It makes me feel..."
+                  name="Notes"></textarea>
               </mat-form-field>
 
               <mat-action-row>
@@ -164,12 +172,18 @@
           </mat-accordion>
         </div>
       </div>
-    </div> 
+    </div>
+    <div class="buttons">
+      <div style="float: right;">
+        <button routerLink='/schedule' mat-raised-button style="background-color: gray; align-items: center;">
+          <mat-icon> keyboard_return</mat-icon>
+          Back
+        </button>
+        <button mat-raised-button type="submit" [disabled]="!BookingForm.valid"
+          style="background-color: gray; align-items: center;">
+          Submit
+        </button>
+      </div>
+    </div>
   </div>
 </form>
-
-
-
-
-
-

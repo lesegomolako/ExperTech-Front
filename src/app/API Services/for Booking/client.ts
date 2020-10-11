@@ -1,5 +1,6 @@
 import { DayTemplateContext } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-day-template-context';
 import { Time } from '@angular/common';
+import { ServiceTypeData } from '../for Service/services';
 
 export class Client {
     ClientID: any;
@@ -142,5 +143,14 @@ export class Booking
   
 }
 
-
+export class EmployeeSchedule
+{
+  EmployeeID: any;
+  EmployeeName: string;
+  DateID: any;
+  Date: Date;
+  TimeID: any;
+  Time:Time;
+  ServiceTypes: ServiceTypeData[]
+}
 

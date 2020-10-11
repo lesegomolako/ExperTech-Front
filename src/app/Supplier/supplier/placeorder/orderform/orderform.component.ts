@@ -49,10 +49,23 @@ export class orderform implements OnInit {
   StockList: StockData[];
   SupplierList : Observable<SupplierData[]>;
   Total = 0;
+  Price = 0;
 
   countTotal(value)
   {
-    this.Total += value
+    let g = (<FormArray>this.orderForm.get('stockitemlines'))
+    this.Total = 0;
+  
+    for(var j =0; j<g.length; j++)
+    {
+      let q = g.at(j)
+      this.Total += (q.value.quantity )
+    }
+  }
+
+  setPrice(price)
+  {
+    this.Price = price;
   }
 
   ngOnInit(): void 
@@ -72,7 +85,7 @@ export class orderform implements OnInit {
         
         this.orderForm = this.formBuilder.group({
           supplierid: ['', Validators.required],
-          description: ['', Validators.required],
+          //description: ['', Validators.required],
         // price: [''],
           stockitemlines: this.formBuilder.array(
             [
@@ -108,7 +121,7 @@ export class orderform implements OnInit {
   AddStockItems(): FormGroup
     {
       return this.formBuilder.group({
-        quantity: ['', Validators.required],
+        quantity: ['', [Validators.required, Validators.min(0)]],
         itemid: ['', Validators.required]
       })
     }

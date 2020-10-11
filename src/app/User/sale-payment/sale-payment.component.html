@@ -15,7 +15,7 @@
         <div style="width: 80%; height: 100%; margin:auto">
           <div style="background-color: white;" class="card_hover">
             <h2 style="text-align: center;">
-              Service Packages
+              Select Sale
             </h2> 
             <div class="mat-elevation-z8 app-supplier">
                 <mat-form-field style="float: right">
@@ -120,7 +120,7 @@
             <div class="side-div">
                 <button mat-raised-button (click)="cancel(stepper)" style="background-color:red" ><mat-icon style="color:white">cancel</mat-icon>Cancel
                 </button>  
-                <button matStepperNext mat-raised-button style="background-color:forestgreen;">
+                <button (click)="CalcTotal(selectedSale, stepper)" mat-raised-button style="background-color:forestgreen;">
                     <mat-icon style="color:white">receipt</mat-icon> Confirm Details
                 </button>
             </div>
@@ -132,21 +132,21 @@
     <h3 style="text-align: center;">View Details</h3>
     <div class="row justify-content-center" *ngIf="selectedSale">
       <div class="col-6">      
-        <div class="form-group">
+        <div >
           <strong>Sale: </strong>
           <label name="SaleID">{{selectedSale.SaleType}}</label>
         </div>
-        <div class="form-group">
+        <div >
           <strong>For: </strong>
           <label name="Name">{{selectedSale.ClientName}} {{selectedSale.ClientSurname}}</label>
         </div> 
-        <div class="form-group">
+        <div>
           <strong>No. Of Items: </strong>
           <label name="Name">{{selectedSale.Products.length}} items(s)</label>
         </div> 
-        <div class="form-group">
+        <div>
           <strong>Total: </strong>
-          <label name="Name">R{{selectedSale.Products.length}} items(s)</label>
+          <label name="Name">{{Total | currency:'ZAR':'symbol-narrow'}}</label>
         </div> 
        
         <div style="text-align: center;">

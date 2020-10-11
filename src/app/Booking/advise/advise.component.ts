@@ -5,7 +5,7 @@ import { ServicesService } from 'src/app/API Services/for Service/services.servi
 import { HttpClient } from '@angular/common/http';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { Schedules } from '../schedule/schedule.component';
-import { Router} from '@angular/router'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-advise',
@@ -15,44 +15,41 @@ import { Router} from '@angular/router'
 export class AdviseComponent implements OnInit {
 
   constructor(private service: ReportingService, private router: Router,
-    private api:ExperTexhService, private http:HttpClient, private fb: FormBuilder) { }
+    private api: ExperTexhService, private http: HttpClient, private fb: FormBuilder) { }
+    
   EmployeeList: []
   Times: [];
   chosenDate: any;
   Booking: Schedules;
-  
+
   AdviseForm: FormGroup;
 
   ngOnInit(): void {
-    if(this.api.RoleID == "2")
-    {
-    this.chosenDate = localStorage.getItem("DateChosen")
-    this.http.get<[]>(this.api.url + "Employees/getEmployee").subscribe(res =>
-      {
+    if (this.api.RoleID == "2") {
+      this.chosenDate = localStorage.getItem("DateChosen")
+      this.http.get<[]>(this.api.url + "Employees/getEmployee").subscribe(res => {
         this.EmployeeList = res;
       })
 
-    this.http.get<[]>(this.api.url + "Booking/getTimes")
-    .subscribe(res => {this.Times = res})
-    
-    this.Booking = JSON.parse(localStorage.getItem("BookingDetails"))
+      this.http.get<[]>(this.api.url + "Booking/getTimes")
+        .subscribe(res => { this.Times = res })
 
-    console.log(this.Booking)
+      this.Booking = JSON.parse(localStorage.getItem("BookingDetails"))
 
-    this.AdviseForm = this.fb.group({
-      employeeid: [''],
-      timesid: ['']
-    })
+      console.log(this.Booking)
+
+      this.AdviseForm = this.fb.group({
+        employeeid: [''],
+        timesid: ['']
+      })
     }
-    else
-    {
+    else {
       this.router.navigate(["403Forbidden"])
     }
   }
 
 
-  AdviseBooking(form)
-  {
+  AdviseBooking(form) {
     const BookingData =
     {
       SessionID: this.api.SessionID,
@@ -63,23 +60,19 @@ export class AdviseComponent implements OnInit {
       TimeID: form.value.timesid
     }
 
-    console.log(BookingData)
-    this.api.AdviseBooking(BookingData).subscribe(res => 
-      {
-        if (res = "success")
-        {
-          alert("Booking advise successfully sent to client")
-          this.router.navigateByUrl("/schedule")
-        }
-      })
+    this.api.AdviseBooking(BookingData).subscribe(res => {
+      if (res = "success") {
+        alert("Booking advise successfully sent to client")
+        this.router.navigateByUrl("/schedule")
+      }
+    })
 
   }
 
-  cancel()
-  {
+  cancel() {
     localStorage.removeItem("DateChosen");
     localStorage.removeItem("BookingDetails");
-    
+
     window.history.back();
   }
 

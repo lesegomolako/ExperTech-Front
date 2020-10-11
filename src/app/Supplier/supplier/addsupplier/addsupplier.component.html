@@ -9,8 +9,10 @@
       <td><mat-form-field class="example-full-width">
         <mat-label>Name</mat-label>
         <input matInput type="text"  (keypress)="omit_special_char($event)" formControlName='name'>
+       
         <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
-        <mat-error *ngIf="hasError('name', 'maxlength')">You have more than 20 characters</mat-error>
+        <mat-error *ngIf="hasError('name', 'maxlength')">Name is limited to 100 characters</mat-error>
+       
       </mat-form-field></td>
     </tr></table>
   
@@ -18,7 +20,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>Contact Number</mat-label>
         <input matInput type="text"  maxlength="10" minlength="10" (keypress)="omit_special_char($event)" matInput formControlName='contactno'>
-      
+        <mat-error *ngIf="hasError('contactno', 'required')">Contact Number is required</mat-error>
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
@@ -35,6 +37,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>Address</mat-label>
         <input matInput  (keypress)="omit_special_char($event)" formControlName='address'>
+        <mat-error *ngIf="hasError('address', 'required')">Suppliers address is required</mat-error>
       </mat-form-field>
     </p>
     <div class="side-div">
@@ -42,7 +45,7 @@
         <button mat-raised-button style="background-color:red" ><mat-icon style="color:white">cancel</mat-icon>Cancel
        </button></a>
       
-      <button mat-raised-button type="submit" style="background-color:forestgreen;" type="submit">
+      <button mat-raised-button style="background-color:forestgreen;" type="submit">
         <mat-icon style="color:white">done</mat-icon> Save
       </button>
     </div>
