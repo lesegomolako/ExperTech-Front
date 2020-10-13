@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^10.0.14",
+    "@angular/animations": "^10.1.5",
     "@angular/cdk": "^10.2.3",
     "@angular/common": "^10.0.14",
     "@angular/compiler": "^10.0.14",
@@ -31,6 +31,7 @@
     "js-sha256": "^0.9.0",
     "jspdf": "^2.1.1",
     "jspdf-autotable": "^3.5.13",
+    "ngx-toastr": "^13.1.0",
     "pdfmake": "^0.1.68",
     "rxjs": "~6.5.5",
     "sha.js": "^2.4.11",

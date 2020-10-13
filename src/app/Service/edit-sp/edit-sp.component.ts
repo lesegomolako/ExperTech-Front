@@ -22,9 +22,9 @@ export class EditSPComponent implements OnInit {
     this.PackageForm = this.fb.group({
       serviceid: new FormControl(Validators.required),
       description: ['', Validators.required],
-      price: ['', Validators.required],
-      quantity: ['', Validators.required],
-      duration: ['', Validators.required]
+      price: ['', [Validators.required, Validators.min(0)]],
+      quantity: ['', [Validators.required, Validators.min(0)]],
+      duration: ['', [Validators.required, Validators.min(0)]]
     })
 
    this.PackageForm.valueChanges.subscribe(res =>

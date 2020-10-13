@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component,ChangeDetectorRef , OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 //import { StockDataSource, StockItem } from './stock-datasource';
@@ -37,17 +37,22 @@ export class StockComponent implements AfterViewInit, OnInit {
     if(this.api.RoleID == "2")
     {
       this.dataSource = new MatTableDataSource(this.StockList)
-
-      this.service.getStockList().subscribe(res => 
-        {
-          this.StockList = res;
-          this.dataSource.data = this.StockList;
-        })
+      this.loadList()
+      
     }
     else
     {
       this.router.navigate(["403Forbidden"])
     }
+  }
+
+  loadList()
+  {
+    this.service.getStockList().subscribe(res => 
+      {
+        this.StockList = res;
+        this.dataSource.data = this.StockList;
+      })
   }
 
   ngAfterViewInit() {
@@ -84,11 +89,7 @@ export class StockComponent implements AfterViewInit, OnInit {
           if(res =="success")
           {
             alert("Successfully deleted")
-            this.service.getStockList().subscribe(res => 
-              {
-                this.StockList = res;
-                this.dataSource.data = this.StockList;
-              })
+            window.location.reload();
           }
         })
     }

@@ -26,7 +26,7 @@ export class SaleComponent implements AfterViewInit, OnInit {
   value = 'Clear me';
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['saleid', 'client', 'saletype' ,'status' , 'payment' ,'paymenttype', 'date', 'reminder', 'viewdetail'];
+  displayedColumns = ['saleid', 'client', 'saletype' ,'status' , 'payment' ,'paymenttype', 'date', 'reminder', 'viewdetail', 'pickup', 'cancel'];
   dialog: any;
   searchKey: string;
   SaleData: any;
@@ -36,7 +36,7 @@ export class SaleComponent implements AfterViewInit, OnInit {
     private api: ExperTexhService){}
 
   SaleList: SaleData[];
- dataSource;
+  dataSource;
   sale;
   
 

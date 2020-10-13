@@ -1,16 +1,16 @@
 import { ThemePalette } from '@angular/material/core';
-import { Component,ChangeDetectionStrategy,ViewChild,TemplateRef,OnInit, Inject} from '@angular/core';
-import {startOfDay,endOfDay, subDays,addDays,endOfMonth,isSameDay,isSameMonth,addHours,} from 'date-fns';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit, Inject } from '@angular/core';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { Subject } from 'rxjs';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {CalendarEvent,CalendarEventAction,CalendarEventTimesChangedEvent,CalendarView,} from 'angular-calendar';
-import {Router } from '@angular/router';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
+import { Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {startOfMonth,startOfWeek,endOfWeek,format,getDate} from 'date-fns';
-
+import { startOfMonth, startOfWeek, endOfWeek, format, getDate } from 'date-fns';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
-import {MatDialog,MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   FormControl,
   FormGroupDirective,
@@ -22,9 +22,11 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Observable } from 'rxjs';
 import { ReportingService } from '../../API Services/for User/reporting.service';
-import {Process, Schedule} from '../../API Services/for User/process';
+import { Process, Schedule } from '../../API Services/for User/process';
 
-import {Schedules} from '../../Booking/schedule/schedule.component'
+import { Schedules } from '../../Booking/schedule/schedule.component'
+import { CalData } from 'src/app/Booking/advise/advise.component';
+import { ToastrService } from 'ngx-toastr';
 
 export class AvailData {
   StartDate: any;
@@ -35,15 +37,15 @@ export class AvailData {
   Avail: any;
 }
 
-export class CalData
-{
-  DateID: any;
-  Dates:Date;
-  TimeID:any;
-  StartTime:any;
-  EndTime:any;
-  StatusID:any
-}
+// export class CalData
+// {
+//   DateID: any;
+//   Dates:Date;
+//   TimeID:any;
+//   StartTime:any;
+//   EndTime:any;
+//   StatusID:any
+// }
 
 const colors: any = {
   red: {
@@ -66,10 +68,13 @@ const colors: any = {
   styleUrls: ['./available.component.sass'],
 })
 export class AvailableComponent implements OnInit {
+
+  @ViewChild(FormGroupDirective) formDirective: FormGroupDirective;
+
   minDate = new Date(new Date().setDate(new Date().getDate() + 1));
   minEndDate: Date;
-  maxDate = new Date(new Date().setDate(new Date().getDate() + 2));
-  
+  maxDate = new Date(new Date().setDate(new Date().getDate() + 1));
+
 
   //create variable  1minDate = new Date(new Date().setDate(new Date().getDate()+1))
   List: Observable<Schedule[]>;
@@ -95,14 +100,13 @@ export class AvailableComponent implements OnInit {
     private formBuilder: FormBuilder,
     private api: ExperTexhService,
     private router: Router,
-    private http: HttpClient
-  ) {}
+    private http: HttpClient,
+    private snack: MatSnackBar
+  ) { }
 
-  ngOnInit() 
-  {
+  ngOnInit() {
 
-    if(this.api.RoleID == "3")
-    {
+    if (this.api.RoleID == "3") {
       this.fetchEvents();
 
       this.loadList();
@@ -112,16 +116,20 @@ export class AvailableComponent implements OnInit {
         EndDate: ['', Validators.required],
         StartTimeID: ['', Validators.required],
         EndTimeID: ['', Validators.required],
-        Avail: [],
+        Avail: ["1", Validators.required],
       });
     }
-    else
-    {
+    else {
       this.router.navigate(["403Forbidden"])
     }
-   
+
   }
 
+  get f()
+  {
+    return this.AvailabilityForm.controls;
+  }
+  
   loadList() {
     this.List = this.service.getTime();
     this.List = this.service.getTime()
@@ -131,8 +139,7 @@ export class AvailableComponent implements OnInit {
   user: any;
   addAvailability() {
 
-    if(this.AvailabilityForm.invalid)
-    {
+    if (this.AvailabilityForm.invalid) {
       this.AvailabilityForm.markAllAsTouched();
       return;
     }
@@ -140,10 +147,10 @@ export class AvailableComponent implements OnInit {
     console.log(this.Schedge);
     this.service.Schedule(this.Schedge, this.api.SessionID).subscribe((ref) => {
 
-      if (ref == 'success') 
-      {
-        alert("Availibility successfully updated");
-        this.AvailabilityForm.reset();
+      if (ref == 'success') {
+        //alert("Availibility successfully updated");
+        this.snack.open("Schedule succssfully updated", "OK", {duration: 2000,});
+        this.formDirective.resetForm();
         this.fetchEvents();
       }
     });
@@ -172,9 +179,9 @@ export class AvailableComponent implements OnInit {
   CalendarView = CalendarView;
 
   events$: Observable<CalendarEvent<CalData>[]>;
-  
 
-  events:CalendarEvent<{ Schedge: Schedules }>[];
+
+  events: CalendarEvent<{ Schedge: Schedules }>[];
 
   activeDayIsOpen: boolean = false;
 
@@ -185,7 +192,7 @@ export class AvailableComponent implements OnInit {
     event: CalendarEvent;
   };
 
- 
+
 
   refresh: Subject<any> = new Subject();
 
@@ -196,9 +203,9 @@ export class AvailableComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
-  
 
-  fetchEvents()
+
+  fetchEvents() 
   {
     const getStart: any = {
       month: startOfMonth,
@@ -213,75 +220,58 @@ export class AvailableComponent implements OnInit {
     }[this.view];
 
     const params = new HttpParams()
-    .set(
-      'SessionID', this.api.SessionID);
-
-    
-
+      .set(
+        'SessionID', this.api.SessionID);
 
     this.events$ = this.http
-      .get('https://localhost:44380/api/Employees/DisplayEmployeeSchedule', {params})
+      .get('https://localhost:44380/api/Employees/DisplayEmployeeSchedule', { params })
       .pipe(
-        map(( res :  CalData[] ) => {
+        map((res: CalData[]) => {
           return res.map((Avail: CalData) => {
-            if(Avail.StatusID == 1)
-            {
+            if (Avail.StatusID == 1) {
               return {
                 title: Avail.StartTime + "-" + Avail.EndTime,
                 start: new Date(
-                  Avail.Dates
+                  Avail.StartDateTime
                 ),
+                end: new Date(Avail.EndDateTime), 
                 color: colors.green,
-                allDay: true,
+                allDay: false,
                 draggable: false
               }
             }
-            else if(Avail.StatusID == 2)
-            {
+            else if (Avail.StatusID == 2) {
               return {
                 title: Avail.StartTime + "-" + Avail.EndTime,
                 start: new Date(
-                  Avail.Dates
+                  Avail.StartDateTime
                 ),
+                end: new Date(Avail.EndDateTime),
                 color: colors.yellow,
-                allDay: true,
+                allDay: false,
                 draggable: false
               }
             }
-            else
-            {
+            else {
               return {
                 title: Avail.StartTime + "-" + Avail.EndTime,
                 start: new Date(
-                  Avail.Dates
+                  Avail.StartDateTime
                 ),
+                end: new Date(Avail.EndDateTime),
                 color: colors.red,
-                allDay: true,
+                allDay: false,
                 draggable: false
               }
             }
-           
-                 
-                    // return {
-                    //   title: res.StartTime + "-" + res.EndTime,
-                    //   start: new Date(
-                    //     Avail.Dates
-                    //   ),
-                    //   color: colors.yelloq,
-                    //   allDay: true,
-                    //   draggable: false
-                    // }
-                  })                 
+          })
         })
       );
   }
 
- 
 
-  dayClicked({
-    date,
-    events,
-  }: {
+
+  dayClicked({date, events}: {
     date: Date;
     events: CalendarEvent<{ Schedge: Schedules }>[];
   }): void {
@@ -298,33 +288,10 @@ export class AvailableComponent implements OnInit {
     }
   }
 
-  
-
-  
-
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent, action: string): void {
-    // event.start = newStart;
-    // event.end = newEnd;
-    // this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
-    // this.refresh.next();
-    if(confirm("Would you like to advise for this booking?"))
-    {     
-      localStorage.setItem("DateChosen", newStart.toDateString())
-      localStorage.setItem("BookingDetails", JSON.stringify(event.meta))
-      this.router.navigateByUrl("advise")
-    }
-  }
-
-  cancel()
-  {
+  cancel() {
     window.history.back();
   }
-  
 
- 
+
+
 }

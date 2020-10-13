@@ -23,14 +23,14 @@
     <div class="details">
         <div class="form-group" [ngClass]="{'has-error': formErrors.description}">
             <label for="description">Description</label>    
-            <input type="text" (blur)="logValidationErrors()" class="form-control" formControlName="description" id="description" placeholder="Example: Hair">
+            <input type="text"  (blur)="logValidationErrors()" class="form-control" formControlName="description" id="description" placeholder="Example: Hair">
             <span class="help-block" *ngIf="formErrors.description">
                 {{formErrors.description}}
             </span>
         </div>
         <div class="form-group" [ngClass]="{'has-error': formErrors.price}">
             <label for="Price">Price (R)</label>    
-            <input type="number" (blur)="logValidationErrors()" class="form-control" formControlName="price" id="Price"  placeholder="Enter service package price">
+            <input type="number" min=0 (blur)="logValidationErrors()" class="form-control" formControlName="price" id="Price"  placeholder="Enter service package price">
             <span class="help-block" *ngIf="formErrors.price">
                 {{formErrors.price}}
             </span>
@@ -39,14 +39,14 @@
     <div class="details">
         <div class="form-group" [ngClass]="{'has-error': formErrors.quantity}">
             <label for="quantity">Quantity</label>    
-            <input type="number" (blur)="logValidationErrors()" class="form-control" formControlName="quantity" id="quantity" placeholder="Example: 5 uses">
+            <input type="number" min=0 (blur)="logValidationErrors()" class="form-control" formControlName="quantity" id="quantity" placeholder="Example: 5 uses">
             <span class="help-block" *ngIf="formErrors.quantity">
                 {{formErrors.quantity}}
             </span>
         </div>
         <div class="form-group" [ngClass]="{'has-error': formErrors.duration}">
             <label for="duration">Duration (in Months)</label>    
-            <input type="number" (blur)="logValidationErrors()" class="form-control" formControlName="duration" id="duration" placeholder="Enter service package duration">
+            <input type="number" min=0 (blur)="logValidationErrors()" class="form-control" formControlName="duration" id="duration" placeholder="Enter service package duration">
             <span class="help-block" *ngIf="formErrors.duration">
                 {{formErrors.duration}}
             </span>

@@ -19,3 +19,43 @@ table {
   right: unset;
   position: relative;
 }
+
+.mat-column-saleid
+{
+  max-width: 40px;
+}
+
+.mat-column-client
+{
+  max-width: 100px;
+}
+
+.mat-column-saletype
+{
+  max-width: 70px;
+}
+
+.mat-column-paymenttype
+{
+  max-width:80px;
+}
+
+.mat-column-reminder
+{
+  max-width: 60px;
+}
+
+.mat-column-pickup
+{
+  max-width: 50px;
+}
+
+.mat-column-viewdetail
+{
+  max-width: 50px;
+}
+
+.mat-column-cancel
+{
+  max-width: 50px;
+}

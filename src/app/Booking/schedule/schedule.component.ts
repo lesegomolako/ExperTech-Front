@@ -1,48 +1,47 @@
-import { Component,ChangeDetectionStrategy,ViewChild,TemplateRef,OnInit, Inject} from '@angular/core';
-import {startOfDay,endOfDay, subDays,addDays,endOfMonth,isSameDay,isSameMonth,addHours,} from 'date-fns';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit, Inject } from '@angular/core';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { Subject } from 'rxjs';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {CalendarEvent,CalendarEventAction,CalendarEventTimesChangedEvent,CalendarView,} from 'angular-calendar';
-import {Router } from '@angular/router';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
+import { Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {startOfMonth,startOfWeek,endOfWeek,format,getDate} from 'date-fns';
+import { startOfMonth, startOfWeek, endOfWeek, format, getDate } from 'date-fns';
 import { Observable } from 'rxjs';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
-import {MatDialog,MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class Schedules
-{
+export class Schedules {
   BookingID: any;
   BookingStatusID: any;
   BookingStatus: string;
   Client: string;
-  BookingRequest: 
+  BookingRequest:
     {
       RequestedID: any
       Dates: string;
       Time: string;
-      DateTime:string;
+      DateTime: string;
     }
-  ;
+    ;
   BookingLines:
-  [
-    {
-      Service: string;
-      Option: string;
-    }
-  ];
+    [
+      {
+        Service: string;
+        Option: string;
+      }
+    ];
   BookingSchedule:
-  [
-    {
-      Employee: string;
-      Dates: Date;
-      StartTime: any;
-      EndTime: any;
-      Status: string;
-      DateTime:any
-    }
-  ]
+    [
+      {
+        Employee: string;
+        Dates: Date;
+        StartTime: any;
+        EndTime: any;
+        Status: string;
+        DateTime: any
+      }
+    ]
 }
 
 
@@ -70,15 +69,15 @@ const colors: any = {
 })
 export class ScheduleComponent implements OnInit {
 
- 
+
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
 
   events$: Observable<CalendarEvent<Schedules>[]>;
-  
 
-  events:CalendarEvent<{ Schedge: Schedules }>[];
+
+  events: CalendarEvent<{ Schedge: Schedules }>[];
 
   activeDayIsOpen: boolean = false;
 
@@ -89,15 +88,15 @@ export class ScheduleComponent implements OnInit {
     event: CalendarEvent;
   };
 
- 
+
 
   refresh: Subject<any> = new Subject();
 
- 
+
 
   constructor(public dialog: MatDialog, private api: ExperTexhService,
     private router: Router,
-    private http: HttpClient) {}  
+    private http: HttpClient) { }
 
   setView(view: CalendarView) {
     this.view = view;
@@ -107,23 +106,19 @@ export class ScheduleComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
   ngOnInit(): void {
-    if(this.api.RoleID == "2")
-    {
+    if (this.api.RoleID == "2") {
       this.fetchEvents();
     }
-    else if(this.api.RoleID == "3")
-    {
+    else if (this.api.RoleID == "3") {
       this.fetchEmpEvents();
     }
-    else
-    {
+    else {
       this.router.navigate(["403Forbidden"])
     }
-    
+
   }
 
-  fetchEmpEvents()
-  {
+  fetchEmpEvents() {
     const getStart: any = {
       month: startOfMonth,
       week: startOfWeek,
@@ -135,15 +130,15 @@ export class ScheduleComponent implements OnInit {
       week: endOfWeek,
       day: endOfDay,
     }[this.view];
-    
+
     const params = new HttpParams()
-    .set(
-      'SessionID', this.api.SessionID)
+      .set(
+        'SessionID', this.api.SessionID)
 
     this.events$ = this.http
-      .get('https://localhost:44380/api/Employees/RetrieveEmployeeBooking', {params})
+      .get('https://localhost:44380/api/Employees/RetrieveEmployeeBooking', { params })
       .pipe(
-        map(( res :  Schedules[] ) => {
+        map((res: Schedules[]) => {
           return res.map((Schedules: Schedules) => {
             return {
               title: Schedules.Client + "'s Booking",
@@ -177,45 +172,44 @@ export class ScheduleComponent implements OnInit {
     this.events$ = this.http
       .get('https://localhost:44380/api/Clients/RetrieveBookings')
       .pipe(
-        map(( res :  Schedules[] ) => {
+        map((res: Schedules[]) => {
           return res.map((Schedules: Schedules) => {
-            if(Schedules.BookingStatus == "Requested"){
-            return {
-              title: Schedules.Client + "'s Requested Booking",
-              start: new Date(
-                Schedules.BookingRequest.DateTime
-              ),
-              color: colors.yellow,
-              id: Schedules.BookingID,
-              //allDay: true,
-              draggable: true,
-              meta: Schedules,
-            };}
-            else if(Schedules.BookingStatus == "Confirmed")
-            {
-            return {
-              title: Schedules.Client + "'s Confirmed Booking",
-              start: new Date(
-                Schedules.BookingSchedule[0].DateTime
-              ),
-              color: colors.green,
-              //allDay: true,
-              draggable: false,
-              meta: Schedules,
+            if (Schedules.BookingStatus == "Requested") {
+              return {
+                title: Schedules.Client + "'s Requested Booking",
+                start: new Date(
+                  Schedules.BookingRequest.DateTime
+                ),
+                color: colors.yellow,
+                id: Schedules.BookingID,
+                //allDay: true,
+                draggable: true,
+                meta: Schedules,
+              };
             }
+            else if (Schedules.BookingStatus == "Confirmed") {
+              return {
+                title: Schedules.Client + "'s Confirmed Booking",
+                start: new Date(
+                  Schedules.BookingSchedule[0].DateTime
+                ),
+                color: colors.green,
+                //allDay: true,
+                draggable: false,
+                meta: Schedules,
+              }
             }
-            else if(Schedules.BookingStatus == "Advised")
-            {
-            return {
-              title: Schedules.Client + "'s Advised Booking (Awaiting Confirmation)",
-              start: new Date(
-                Schedules.BookingSchedule[0].DateTime
-              ),
-              color: colors.yellow,
-              //allDay: true,
-              draggable: false,
-              meta: Schedules,
-            }
+            else if (Schedules.BookingStatus == "Advised") {
+              return {
+                title: Schedules.Client + "'s Advised Booking (Awaiting Confirmation)",
+                start: new Date(
+                  Schedules.BookingSchedule[0].DateTime
+                ),
+                color: colors.yellow,
+                //allDay: true,
+                draggable: false,
+                meta: Schedules,
+              }
             }
           });
         })
@@ -242,17 +236,16 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
-  eventClicked(event: CalendarEvent): void 
-  {
+  eventClicked(event: CalendarEvent): void {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.width = '500px';
     dialogConfig.data = event.meta;
 
-   const dialogRef = this.dialog.open(BookingDialog, dialogConfig)
+    const dialogRef = this.dialog.open(BookingDialog, dialogConfig)
   }
 
-  
+
 
   eventTimesChanged({
     event,
@@ -265,22 +258,19 @@ export class ScheduleComponent implements OnInit {
     // this.modal.open(this.modalContent, { size: 'lg' });
     // this.refresh.next();
 
-    if(newStart < new Date())
-    {
+    if (newStart < new Date()) {
       alert("You may not drag event to a date that has already passed")
       return;
     }
 
-    if(confirm("Would you like to advise for this booking?"))
-    {     
+    if (confirm("Would you like to advise for this booking?")) {
       localStorage.setItem("DateChosen", newStart.toDateString())
       localStorage.setItem("BookingDetails", JSON.stringify(event.meta))
       this.router.navigateByUrl("advise")
     }
   }
 
-  cancel()
-  {
+  cancel() {
     window.history.back();
   }
 
@@ -333,34 +323,27 @@ export class ScheduleComponent implements OnInit {
       Advise
     </button>
   </div> `,
-  
+
 })
-export class BookingDialog implements OnInit
-{
+export class BookingDialog implements OnInit {
   constructor(public dialogRef: MatDialogRef<BookingDialog>, private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: Schedules) {}
+    @Inject(MAT_DIALOG_DATA) public data: Schedules) { }
 
   title: string;
-  ngOnInit()
-  {
-    if(this.data.BookingStatus == "Requested")
-    {
+  ngOnInit() {
+    if (this.data.BookingStatus == "Requested") {
       this.title = this.data.Client + "'s Requested Booking"
     }
-    else if(this.data.BookingStatus == "Confirmed")
-    {
+    else if (this.data.BookingStatus == "Confirmed") {
       this.title = this.data.Client + "'s Confirmed Booking"
     }
-    else if(this.data.BookingStatus == "Advised")
-    {
+    else if (this.data.BookingStatus == "Advised") {
       this.title = this.data.Client + "'s Advised Booking"
     }
   }
 
-  Advise()
-  {
-    if(confirm("Would you like to advise for this booking?"))
-    {     
+  Advise() {
+    if (confirm("Would you like to advise for this booking?")) {
       localStorage.setItem("DateChosen", this.data.BookingRequest.Dates)
       localStorage.setItem("BookingDetails", JSON.stringify(this.data))
       this.router.navigateByUrl("advise")

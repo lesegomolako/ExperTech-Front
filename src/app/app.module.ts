@@ -32,8 +32,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-
+import {MatCheckboxModule} from '@angular/material/checkbox'; 
+import { ToastrModule } from 'ngx-toastr';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 //******************************* Components *************************************/
 import { TServicesComponent } from './Service/tservices/tservices.component';
@@ -156,8 +157,8 @@ import { SalePaymentComponent } from './User/sale-payment/sale-payment.component
     AppRoutingModule, MatButtonModule, MatAutocompleteModule, MatStepperModule,
     BrowserAnimationsModule, MatInputModule,MatExpansionModule, MatCheckboxModule,
     MatIconModule, FormsModule, ReactiveFormsModule, MatGridListModule,
-    MatToolbarModule, MatMenuModule , MatFormFieldModule, MatSidenavModule,
-    HttpClientModule, MatDialogModule, PortalModule, MatPaginatorModule,
+    MatToolbarModule, MatMenuModule , MatFormFieldModule, MatSidenavModule, ToastrModule.forRoot(),
+    HttpClientModule, MatDialogModule, PortalModule, MatPaginatorModule,MatSnackBarModule,
     FormsModule,MatBadgeModule, MatRadioModule,MatButtonToggleModule,MatCardModule,
     ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule, CommonModule, CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }), NgbModule
   ],

@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { from } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReportingService } from 'src/app/API Services/for User/reporting.service';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 //import {Service } from '../services.service';
 
 
@@ -33,8 +34,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     public service: ReportingService,
-    private route: ActivatedRoute
-
+    private route: ActivatedRoute,
+    private api: ExperTexhService
   ) { }
 
   ngOnInit() {
@@ -84,6 +85,7 @@ export class LoginComponent implements OnInit {
 
   Login(){
 
+    this.showError = false;
     if(this.loginForm.invalid)
     {
       this.loginForm.markAllAsTouched();
@@ -102,13 +104,13 @@ export class LoginComponent implements OnInit {
       if(res.Error) {   //lol
         this.errorMessage = res.Error;
         this.showError = true;
-        alert("Username or Password are invalid")
+        //alert("Username or Password are invalid")
       }
       else{
         sessionStorage.setItem("accessToken", res.SessionID);
         sessionStorage.setItem("RoleID", res.RoleID)
-        var RoleID = sessionStorage.getItem("RoleID")
-        if(RoleID == "1")
+        this.api.RoleID = sessionStorage.getItem("RoleID")
+        if(this.api.RoleID == "1")
         {
 
         //   if (this.redirectURL) {        

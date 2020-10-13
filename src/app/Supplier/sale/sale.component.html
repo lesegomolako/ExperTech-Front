@@ -9,7 +9,7 @@
   </div>
   </div>
 
-<div class="mat-elevation-z8 app-supplier">
+<div class="mat-elevation-z8 app-supplier" >
     <mat-form-field>
       <mat-label>Search</mat-label>
       <input matInput (keyup)="applyFilter($event)" #input>
@@ -62,18 +62,31 @@
 
     <!-- Payment Column -->
     <ng-container matColumnDef="reminder">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Days to reminder</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Days left to pickup</th>
       <td mat-cell *matCellDef="let row">{{row.Reminder || "N/A"}}</td>
     </ng-container>
 
     <ng-container matColumnDef="viewdetail">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>View Details</th>
       <td mat-cell *matCellDef="let row">
-      <button *ngIf="row.SaleType == 'Product Purchase'" style="background-color:teal" (click)="ViewDetails(row)"><mat-icon style="color:white">content_paste</mat-icon></button>
+      <button mat-raised-button *ngIf="row.SaleType == 'Product Purchase'" style="background-color:teal" title="View sale details" (click)="ViewDetails(row)"><mat-icon style="color:white;margin:5px">content_paste</mat-icon></button>
       </td >
     </ng-container>
 
+    <ng-container matColumnDef="pickup">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Pick-Up Sale</th>
+      <td mat-cell *matCellDef="let row">
+      <button mat-raised-button *ngIf="row.SaleType == 'Product Purchase'" style="background-color:forestgreen" title="Make sale payment" (click)="ViewDetails(row)"><mat-icon style="color:white;margin:5px">content_paste</mat-icon></button>
+      </td >
+    </ng-container>
 
+    
+    <ng-container matColumnDef="cancel">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Cancel Sale</th>
+      <td mat-cell *matCellDef="let row">
+      <button mat-raised-button *ngIf="row.SaleType == 'Product Purchase'" style="background-color:red" title="Cancel Sale" (click)="ViewDetails(row)"><mat-icon style="color:white; margin:5px">cancel</mat-icon></button>
+      </td >
+    </ng-container>
     
     
 
