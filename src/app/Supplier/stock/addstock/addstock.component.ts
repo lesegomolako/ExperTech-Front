@@ -30,9 +30,9 @@ export class AddstockComponent implements OnInit {
     if(this.api.RoleID == "2")
     {
       this.StockForm = this.formBuilder.group({
-        name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-        description: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
-        price: ['', Validators.required],
+        name: ['', [Validators.required, Validators.maxLength(50)]],
+        description: ['', [Validators.required, Validators.maxLength(150)]],
+        price: ['', [Validators.required, Validators.min(0)]],
         quantity: [0],
       })
     }
@@ -41,6 +41,11 @@ export class AddstockComponent implements OnInit {
       this.route.navigate(["403Forbidden"])
     }
     
+  }
+
+  get f()
+  {
+    return this.StockForm.controls;
   }
 
   // onSubmit()

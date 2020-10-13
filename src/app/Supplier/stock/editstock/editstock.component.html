@@ -12,10 +12,18 @@
         <td><mat-form-field class="example-full-width">
           <mat-label>Stock name</mat-label>
           <input matInput formControlName='name'>
+          <mat-error *ngIf="f.price.errors">
+            <mat-error *ngIf="f.price.errors.required">Price name is required</mat-error>
+            <mat-error *ngIf="f.price.errors.min">Price may not be less than 0</mat-error>
+          </mat-error>
         </mat-form-field></td>
         <td><mat-form-field class="example-full-width">
           <mat-label>Description</mat-label>
           <input matInput formControlName='description'>
+          <mat-error *ngIf="f.price.errors">
+            <mat-error *ngIf="f.price.errors.required">Price name is required</mat-error>
+            <mat-error *ngIf="f.price.errors.min">Price may not be less than 0</mat-error>
+          </mat-error>
         </mat-form-field></td>
       </tr></table>
     
@@ -23,11 +31,15 @@
         <mat-form-field class="example-full-width">
           <mat-label>Price</mat-label>
           <input matInput formControlName='price'>
+          <mat-error *ngIf="f.price.errors">
+            <mat-error *ngIf="f.price.errors.required">Price name is required</mat-error>
+            <mat-error *ngIf="f.price.errors.min">Price may not be less than 0</mat-error>
+          </mat-error>
         </mat-form-field>
-        <!-- <mat-form-field appearance="fill">
+        <mat-form-field hidden appearance="fill">
           <mat-label>Quantity</mat-label>
           <input matInput formControlName='quantityinstock'>
-        </mat-form-field> -->
+        </mat-form-field>
       </p>
       <div class="side-div">
         <a [routerLink] = "['/stock']">

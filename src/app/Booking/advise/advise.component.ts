@@ -14,6 +14,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { startOfMonth, startOfWeek, endOfWeek, format, getDate } from 'date-fns';
 import { Observable } from 'rxjs';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class CalData {
   EmployeeID: any;
@@ -52,7 +53,7 @@ const colors: any = {
 })
 export class AdviseComponent implements OnInit {
 
-  constructor(private service: ReportingService, private router: Router,
+  constructor(private service: ReportingService, private router: Router, private snack: MatSnackBar,
     private api: ExperTexhService, private http: HttpClient, private fb: FormBuilder) { }
 
   EmployeeList: []
@@ -66,12 +67,13 @@ export class AdviseComponent implements OnInit {
     if (this.api.RoleID == "2") 
     {
       this.chosenDate = localStorage.getItem("DateChosen")
+      
       this.http.get<[]>(this.api.url + "Employees/getEmployee").subscribe(res => {
         this.EmployeeList = res;
-      })
+      }, error => {console.log("Error",error), this.snack.open("Something went wrong")});
 
       this.http.get<[]>(this.api.url + "Booking/getTimes")
-        .subscribe(res => { this.Times = res })
+        .subscribe(res => { this.Times = res }, error => {console.log("Error",error), this.snack.open("Something went wrong")});
 
       this.Booking = JSON.parse(localStorage.getItem("BookingDetails"))
 
@@ -106,7 +108,7 @@ export class AdviseComponent implements OnInit {
         alert("Booking advise successfully sent to client")
         this.router.navigateByUrl("/schedule")
       }
-    })
+    }, error => {console.log("Error",error), this.snack.open("Something went wrong")})
 
   }
 
@@ -229,7 +231,7 @@ export class AdviseComponent implements OnInit {
               }
             }
           })
-        })
+        }, error => console.log("Error",error))
       );
   }
 

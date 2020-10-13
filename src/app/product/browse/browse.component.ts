@@ -10,6 +10,7 @@ import { ExperTexhService } from '../../API Services/for Booking/exper-texh.serv
 import {ProductService} from '../../API Services/for Product/product.service'
 import { ProductData } from 'src/app/API Services/for Product/product';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-browse',
@@ -32,7 +33,7 @@ export class BrowseComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private api: ExperTexhService,
      private router: Router,private route: ActivatedRoute,
-     private service: ProductService,
+     private service: ProductService, private snack: MatSnackBar,
      public domSanitizer: DomSanitizer) { }
   openDialog() {
     confirm("Successfully added to product")
@@ -58,12 +59,29 @@ list(){
 
 setQuantity(newValue,item:Product)
 {
-  console.log("SETTING",newValue.target.value)
+  var num = newValue.target.value;
+  if(num <= 0)
+  {
+    newValue.target.value = 1;
+    newValue.target.focus();
+    return;
+  }
+
+  if(num > item.QuantityOnHand)
+  {
+    newValue.target.value = item.QuantityOnHand;
+    newValue.target.focus();
+    return;
+  }
+ 
   item.SelectedQuantity = Number(newValue.target.value)
 }
 
 
 addproduct(BasketProduct:Product){
+
+
+
   if(this.api.SessionID != null)
   {
     //this.id = this.route.snapshot.params['id'];
@@ -74,8 +92,13 @@ addproduct(BasketProduct:Product){
 
       if(BasketProduct.SelectedQuantity > BasketProduct.QuantityOnHand)
       {
-        alert("You've selected too many")
+        this.snack.open("Quantity selected is more than quantity available", "OK", {duration: 3000})
         return;
+      }
+
+      if(BasketProduct.SelectedQuantity == null)
+      {
+        BasketProduct.SelectedQuantity = 1;
       }
 
       if(BasketProduct.SelectedQuantity <= 0)

@@ -12,10 +12,13 @@
         <td><mat-form-field class="example-full-width">
           <mat-label>Name</mat-label>
           <input matInput formControlName='name'>
+          <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
+          <mat-error *ngIf="hasError('name', 'maxlength')">Name is limited to 100 characters</mat-error>
         </mat-form-field></td>
         <td><mat-form-field class="example-full-width">
           <mat-label>Contact Number</mat-label>
           <input matInput formControlName='contactno'>
+
         </mat-form-field></td>
       </tr></table>
     
@@ -23,10 +26,17 @@
         <mat-form-field class="example-full-width">
           <mat-label>Email</mat-label>
           <input matInput formControlName='email'>
+          <mat-error *ngIf="hasError('email','email')">
+            Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="hasError('email','required')">
+             Email is <strong>required</strong>
+            </mat-error>      
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <mat-label>Address</mat-label>
           <input matInput formControlName='address'>
+          <mat-error *ngIf="hasError('address', 'required')">Suppliers address is required</mat-error>
         </mat-form-field>
       </p>
       <div class="side-div">

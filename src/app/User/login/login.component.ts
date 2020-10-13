@@ -13,6 +13,7 @@ import { from } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReportingService } from 'src/app/API Services/for User/reporting.service';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 //import {Service } from '../services.service';
 
 
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     public service: ReportingService,
     private route: ActivatedRoute,
-    private api: ExperTexhService
+    private api: ExperTexhService, private snack:MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -145,7 +146,7 @@ export class LoginComponent implements OnInit {
         
         this.showError = false;
       }
-    })
+    }, error => {console.log(error), this.snack.open("Something went wrong", "OK", {duration:3000})})
   }
 
   matcher = new ErrorStateMatcher();

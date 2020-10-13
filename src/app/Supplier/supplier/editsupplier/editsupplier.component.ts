@@ -42,6 +42,12 @@ export class EditsupplierComponent implements OnInit {
     }
 
   }
+
+
+  public hasError = (controlName: string, errorName: string) =>{
+    return this.EditForm.controls[controlName].hasError(errorName);
+  }
+
   EditSupp(supplier)
   {
     this.service.EditSupplier(supplier.value, this.api.SessionID)

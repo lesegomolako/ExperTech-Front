@@ -17,7 +17,7 @@ import { PackageData } from 'src/app/API Services/for Service/services';
 import { Client } from 'src/app/API Services/for Booking/client';
 import { MatStepper } from '@angular/material/stepper';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -39,7 +39,7 @@ export class SpackageComponent implements OnInit {
     );
   }
   constructor(
-    public dialog: MatDialog, 
+    public dialog: MatDialog, private snack: MatSnackBar,
     public service: ReportingService,
     private fb: FormBuilder,
     private router: Router,
@@ -90,7 +90,7 @@ export class SpackageComponent implements OnInit {
     }
   }
 
-  Activate()
+  Activate(stepper:MatStepper)
   {
     if(this.TypeControl.invalid)
     {
@@ -117,9 +117,19 @@ export class SpackageComponent implements OnInit {
       {
         if(res == "success")
         {
-
+          this.snack.open("Service Package successfully activated", "OK", {duration: 2000})
+          this.router.navigate(["employeehome"])
         }
-      });
+        else if(res == "duplicate")
+        {
+          alert("Client already has an active service package for the selected package")
+          stepper.reset();
+        }
+        else
+        {
+          console.log(res)
+        }
+      }, error => {console.log("Error",error), this.snack.open("Something went wrong", "OK", {duration: 2000})});
   }
 
   myFunction(event: any) {

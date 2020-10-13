@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 import { PackageData } from 'src/app/API Services/for Service/services';
 import { map } from 'rxjs/operators';
 import { User } from 'src/app/API Services/for Booking/client';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class BookingData {
   BookingID: any;
@@ -30,6 +31,7 @@ export class BookingData {
   PackageDetails?:
     {
       PackageID: any;
+      SaleID:any;
       Name: string;
     }
 
@@ -47,7 +49,8 @@ export class GetBookingsComponent implements OnInit {
   // @ViewChild(MatTable) table: MatTable<BookingData>;
 
 
-  TypeControl = new FormControl({ value: '', disabled: false, checked: true }, Validators.required)
+  TypeControl = new FormControl('',Validators.required)
+  RadioControl = new FormControl('1')
   PaymentType: Observable<PaymentType[]>;
   foundPackage = false;
   ServicePackage: PackageData;
@@ -60,7 +63,7 @@ export class GetBookingsComponent implements OnInit {
   searchKey: string;
 
 
-  constructor(public api: ExperTexhService, public service: ReportingService, 
+  constructor(public api: ExperTexhService, public service: ReportingService, private snack: MatSnackBar,
     public dialog: MatDialog, private http: HttpClient, private router: Router) { }
 
   BookingsList: BookingData[];
@@ -70,12 +73,21 @@ export class GetBookingsComponent implements OnInit {
   dataSource;
   isOwner = false;
 
-  disable() {
-    this.TypeControl.disable();
-  }
+  
 
-  enable() {
-    this.TypeControl.enable();
+  
+
+  enable(g) {
+    
+    if(g == "1")
+    {
+      this.TypeControl.enable()
+    }
+    else if(g == "2")
+    {
+      this.TypeControl.reset();
+      this.TypeControl.disable();
+    }
   }
 
   
@@ -87,6 +99,7 @@ export class GetBookingsComponent implements OnInit {
      this.api.getProfile().subscribe((res:User)=> {this.isOwner = res.Admins[0].Owner})
         
      this.loadlist();
+     
       
       this.PaymentType = this.service.getPaymentType();
     }
@@ -143,58 +156,68 @@ export class GetBookingsComponent implements OnInit {
     //window.history.back();
   }
 
+  payDetails;
   onSubmit() {
-    const payDetails =
+
+    if(this.TypeControl.invalid)
     {
-      BookingID: this.SelectedBooking.BookingID,
-      PaymentTypeID: this.TypeControl.value,
-      Price: this.SelectedBooking.Price,
-      SessionID: this.api.SessionID
+      this.TypeControl.markAsTouched();
+      return;
     }
+    
+
+    if(this.RadioControl.value == "1")
+    {
+       this.payDetails =
+      {
+        BookingID: this.SelectedBooking.BookingID,
+        PaymentTypeID: this.TypeControl.value,
+        Price: this.SelectedBooking.Price,
+        SessionID: this.api.SessionID,
+        
+      }
+    }
+    else if(this.RadioControl.value == "2")
+    {
+      this.payDetails =
+      {
+        BookingID: this.SelectedBooking.BookingID,
+        Price: this.SelectedBooking.Price,
+        SessionID: this.api.SessionID,
+        SaleID: this.SelectedBooking.PackageDetails.SaleID,
+        PackageID: this.SelectedBooking.PackageDetails.PackageID
+      }
+    }
+    
+    console.log(this.payDetails);
 
 
-
-    this.service.bookingPayment(payDetails).subscribe((res: any) => {
+    this.service.bookingPayment(this.payDetails).subscribe((res: any) => {
       if (res == "success") {
-        alert("Booking successfully paid")
+        this.snack.open("Booking successfully paid", "OK", {duration: 2000})
         this.router.navigate(["payment"])
       }
       else if (res.Error == "session") {
         alert("res.Message")
       }
-      else {
-        alert("Session is no longer valid. User needs to login")
-        this.router.navigate(["login"], { queryParams: { 'redirectURL': this.state.url } })
+      else
+      {
+        console.log(res), this.snack.open("something went wrong", "OK", {duration: 2000,})
       }
-    }
+    }, error =>  {console.log(error), this.snack.open("something went wrong", "OK", {duration: 2000})}
     );
   }
 
   SelectBooking(Booking: BookingData, stepper: MatStepper) {
-
     this.SelectedBooking = Booking;
     stepper.selected.completed = true;
     stepper.selected.editable = false;
     stepper.next();
-    //this.api.checkHasPackage(Booking.ServiceID)
-    //this.router.navigateByUrl("/confirm")
   }
 
-  // ngAfterViewInit() {
-  //   this.table.dataSource = this.dataSource;
-  //   this.dataSource.sort = this.sort;
-  //   this.dataSource.paginator= this.paginator;
-  // }
+ 
 
-  onCreate() {
-    // this.dialog.open(SupplierComponent)
-  }
-
-  onSearchClear() {
-    this.searchKey = "";
-    //this.applyFilter();
-  }
-
+ 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -245,23 +268,9 @@ export class GetBookingsComponent implements OnInit {
         this.loadlist()});
     }
     
-
-   
-
-    
-    //localStorage.setItem("bookingPayment", JSON.stringify(form))
-    //this.router.navigate(["cbooking"])
   }
 
-  // onDelete(OrderID: any)
-  // {
-  //   this.service.DeleteSupplierOrder(OrderID);
-  //   this.service.getSupplierOrderList().subscribe(res => 
-  //     {
-  //       this.SupplierOrderList = res;
-  //       this.dataSource.data = this.SupplierOrderList;
-  //     })
-  // }
+ 
 }
 
 

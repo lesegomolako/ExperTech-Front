@@ -71,7 +71,7 @@ export class AdminComponent implements OnInit {
     th = table.getElementsByTagName('th');
 
     //loop through all table rows and hide those who dont match search query
-    for (r = 0; r < tr.length; r++) {
+    for (r = 1; r < tr.length; r++) {
       tr[r].style.display = 'none';
 
       for (var k = 0; k < tr.length; k++) {

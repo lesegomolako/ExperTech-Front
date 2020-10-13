@@ -27,6 +27,11 @@ export class DeleteProductComponent implements OnInit {
     }
   }
 
+  Cancel()
+  {
+    window.history.back();
+  }
+
   Delete()
   {
     var ID = this.formData.ProductID;

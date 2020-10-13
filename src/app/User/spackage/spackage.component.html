@@ -40,12 +40,12 @@
 
 
 <mat-horizontal-stepper style="width: 90%; margin:auto" linear #stepper>
-  <mat-step label="Select service package" [completed]="false">
+  <mat-step label="Service Packages" [completed]="false">
     <form class="justify-content-center">
       <div style="width: 80%; height: 100%; margin:auto">
         <div style="background-color: white;" class="card_hover">
           <h2 style="text-align: center;">
-            Service Packages
+            Select service package
           </h2> 
           <div style="text-align: center;">
             <body>
@@ -87,12 +87,12 @@
       </div>
     </form>
   </mat-step>
-  <mat-step  label="Select Client" [completed]="false">
+  <mat-step  label="Clients" [completed]="false">
     <form class="justify-content-center">
       <div style="width: 80%; height: 100%; margin:auto">
         <div style="background-color: white;" class="card_hover">
           <h2 style="text-align: center;">
-            Clients
+            Select Client
           </h2> 
           <div style="text-align: center;">
             <body>
@@ -192,7 +192,7 @@
     </div>
     <br>
     <div style="text-align: center;">
-      <button mat-button class="btn btn-success" (click)="Activate()">Activate</button>
+      <button mat-button class="btn btn-success" (click)="Activate(stepper)">Activate</button>
       <button mat-button="btn btn-success" (click)="reset(stepper)">Reset</button>
     </div>
   </mat-step>

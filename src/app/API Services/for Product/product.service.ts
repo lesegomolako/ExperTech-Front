@@ -42,9 +42,9 @@ export class ProductService {
     return this.http.post(this.url + 'Products/AddProduct' , formData)
   }
 
-  DeleteProduct(TypeID: any, SessionID)
+  DeleteProduct(ProductID: any, SessionID)
   {    
-    const params = new HttpParams().set('TypeID', TypeID ).set('SessionID', SessionID );
+    const params = new HttpParams().set('ProductID', ProductID ).set('SessionID', SessionID );
     return this.http.delete(this.url + 'Products/DeleteProduct', {params})
   }
 }

@@ -39,7 +39,7 @@
                   <div class="form-group">
                     <label>Email</label>
                     <input type="text" formControlName="Email" class="form-control" [ngClass]="{ 'is-invalid': validateForm.get('Email').errors && (validateForm.get('Email').touched || validateForm.get('Email').dirty)}" />
-                    <div *ngIf="submitted && validateForm.get('Email').errors" class="invalid-feedback">
+                    <div *ngIf="validateForm.get('Email').errors" class="invalid-feedback">
                         <div *ngIf=" validateForm.get('Email').errors.required">Email is required</div>
                         <div *ngIf="validateForm.get('Email').errors.email">Email must be a valid email address</div>
                     </div>

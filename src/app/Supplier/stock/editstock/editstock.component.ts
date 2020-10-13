@@ -24,16 +24,21 @@ export class EditstockComponent implements OnInit {
       this.stock= JSON.parse(localStorage.getItem('stock'));
       this.EditForm = this.formBuilder.group({
         itemid: [this.stock.ItemID],
-        name: [this.stock.Name, Validators.required],
-        description: [this.stock.Description, Validators.required],
-        price: [this.stock.Price, Validators.required],
-        quantityinstock: [this.stock.QuantityInStock, Validators.required]
+        name: [this.stock.Name, [Validators.required, Validators.maxLength(50)]],
+        description: [this.stock.Description, [Validators.required, Validators.maxLength(50)]],
+        price: [this.stock.Price, Validators.required, Validators.min(0)],
+        quantityinstock: [this.stock.QuantityInStock]
       })
     }
     else
     {
       this.router.navigate(["403Forbidden"])
     }
+  }
+
+  get f()
+  {
+    return this.EditForm.controls;
   }
 
   EditStockItem(stock)

@@ -42,7 +42,7 @@
         </div>
         
         <footer class="c-card__footer">
-          <input value="{{line.Quantity}}" (change)='updateBasket($event,line)'>
+          <input value="{{line.Quantity}}" style="width:200px" (keypress)=" omit_special_num_char($event)" type="number" min=0 max="{{line.Product.QuantityOnHand}}" (change)='updateBasket($event,line)'>
           <button mat-raised-button style="background-color: green;" (click)="remove(line)" >
             <mat-icon> remove_circle</mat-icon>
               Remove
