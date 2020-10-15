@@ -23,8 +23,8 @@ export class EditSPComponent implements OnInit {
       serviceid: new FormControl(Validators.required),
       description: ['', Validators.required],
       price: ['', [Validators.required, Validators.min(0)]],
-      quantity: ['', [Validators.required, Validators.min(0)]],
-      duration: ['', [Validators.required, Validators.min(0)]]
+      quantity: ['', [Validators.required, Validators.min(0), Validators.max(15)]],
+      duration: ['', [Validators.required, Validators.min(0), Validators.max(3)]]
     })
 
    this.PackageForm.valueChanges.subscribe(res =>
@@ -40,8 +40,8 @@ export class EditSPComponent implements OnInit {
     {
       'required': 'Description field is required',
     },
-    'duration': {'required':'Duration field is required'},
-    'quantity': {'required': 'Quantity field must be selected'},
+    'duration': {'required':'Duration field is required', 'max':'A maximum of 3 months may be selected'},
+    'quantity': {'required': 'Quantity field must be selected', 'max': 'A maximum of 15 uses may be selected'},
     'price': {'required': 'Price field is required'},
   }
 

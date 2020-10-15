@@ -32,7 +32,7 @@
               <td name="ContactNo">{{ item.ContactNo }}</td>
               <td name="Email">{{ item.Email }}</td>
               <td>
-                <button class="btn btn-danger" (click)="DeleteEmployee()">
+                <button class="btn btn-danger" (click)="DeleteEmployee(item.EmployeeID)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </td>
@@ -40,7 +40,7 @@
           </table>
           <br />
         </body>
-        <button mat-raised-button color="green" (click)="previousForm()">
+        <button mat-raised-button color="green" routerLink="/staff">
           <mat-icon>keyboard_return</mat-icon>Back
         </button>
 

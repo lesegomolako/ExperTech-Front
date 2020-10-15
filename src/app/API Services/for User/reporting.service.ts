@@ -9,7 +9,7 @@ import {
   switchMap,
 } from 'rxjs/operators';
 import { Process, Schedule, Package, PaymentType, Sale } from './process';
-import { User } from 'src/app/API Services/for Booking/client';
+import { Employee, User } from 'src/app/API Services/for Booking/client';
 import { AvailData } from 'src/app/User/available/available.component';
 import { UserData } from 'src/app/Staff/setup/setup.component';
 import { Admin, Client } from '../for Booking/client';
@@ -30,8 +30,9 @@ export class ReportingService {
 
 
   ///********************************************************Admin CRUD*********************************************************************
-  readAdmin(): Observable<Admin[]> {
-    return this.http.get<Admin[]>(this.url + 'Admin/getAdmin');
+  readAdmin(SessionID): Observable<Admin[]> {
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.get<Admin[]>(this.url + 'Admin/getAdmin', {params});
   }
   createAdmin(formData: Process) {
     let body = JSON.stringify(formData);
@@ -45,25 +46,17 @@ export class ReportingService {
       return this.http.post<Process>(this.url + 'Admin/updateAdmin', formData);
     }
   }
-  deleteAdmin(formData: Process) {
-    let body = JSON.stringify(formData);
-    if (confirm(body)) {
-      const httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-        body: body,
-      };
-      return this.http.delete<Process>(
-        this.url + 'Admin/deleteAdmin',
-        httpOptions
-      );
-    } else {
-      return null;
-    }
+  deleteAdmin(AdminID, SessionID) {
+    const params = new HttpParams().set("SessionID", SessionID).set("AdminID", AdminID)
+    return this.http.delete(this.url + 'Admin/deleteAdmin',{params}
+    );
+
   }
   ///********************************************************Client CRUD*********************************************************************
   readClient(): Observable<Client[]> {
     return this.http.get<Client[]>(this.url + 'Clients/getClient');
   }
+  
   walkinClient(formData: Process) {
     let body = JSON.stringify(formData);
     if (confirm(body)) {
@@ -80,24 +73,20 @@ export class ReportingService {
       return this.http.put<Process>(this.url + 'Clients/updateClient', formData);
     }
   }
-  deleteClient(formData: Process) {
-    let body = JSON.stringify(formData);
-    if (confirm(body)) {
-      const httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-        body: body,
-      };
-      return this.http.delete<Process>(
+
+  deleteClient(ClientID, SessionID) {
+    
+    const params = new HttpParams().set("ClientID",ClientID).set("SessionID", SessionID)
+    return this.http.delete<Process>(
         this.url + 'Clients/deleteClient',
-        httpOptions
+        {params}
       );
-    } else {
-      return null;
-    }
+  
   }
   ///*********************************************************Employee CRUD*****************************************************************
-  readEmployee(): Observable<Process[]> {
-    return this.http.get<Process[]>(this.url + 'Employees/getEmployee');
+  readEmployee(SessionID): Observable<Employee[]> {
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.get<Employee[]>(this.url + 'Employees/getEmployee', {params});
   }
   createEmployee(formData: Process) {
     let body = JSON.stringify(formData);
@@ -131,20 +120,13 @@ export class ReportingService {
       );
     }
   }
-  deleteEmployee(formData: Process) {
-    let body = JSON.stringify(formData);
-    if (confirm(body)) {
-      const httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-        body: body,
-      };
-      return this.http.delete<Process>(
-        this.url + 'Employees/deleteEmployee',
-        httpOptions
+  deleteEmployee(EmployeeID, SessionID) {
+    
+    const params = new HttpParams().set("EmployeeID", EmployeeID).set("SessionID", SessionID)
+    return this.http.delete(this.url + 'Employees/deleteEmployee',
+        {params}
       );
-    } else {
-      return null;
-    }
+    
   }
   ///***********************************************User**************************************************
   forgotPassword(username) {
@@ -154,13 +136,15 @@ export class ReportingService {
     return this.http.get(this.url + 'User/ForgotPassword', { params });
 
   }
-  //use this one refiloe
-  FORGOTPASSWORD(formData: Process) {
-    let body = JSON.stringify(formData);
-    if (confirm(body)) {
-      return this.http.put<Process>(this.url + 'User/ForgotPassword', formData);
-    }
+ 
+  ChangePassword(Passwords, SessionID)
+  {
+    const params = new HttpParams().set("SessionID", SessionID);
+    return this.http.post(this.url + 'User/ChangePassword', Passwords, {params})
   }
+
+
+
   Login(formData: Process) {
 
     let body = JSON.stringify(formData);
@@ -190,16 +174,14 @@ export class ReportingService {
   }
   //******************Admin Booking Tings ******************/
 
-  Authorize(form, SessionID)
-  {
+  Authorize(form, SessionID) {
     const params = new HttpParams().set("SessionID", SessionID)
-    return this.http.post(this.url +"Admin/Authorize", form, {params})
+    return this.http.post(this.url + "Admin/Authorize", form, { params })
   }
-  
-  NoShow(BookingID, SessionID)
-  {
+
+  NoShow(BookingID, SessionID) {
     const params = new HttpParams().set("SessionID", SessionID).set("BookingID", BookingID)
-    return this.http.get(this.url + "Bookings/NoShow", {params})
+    return this.http.get(this.url + "Bookings/NoShow", { params })
   }
   ///***********************************************Availability*********************************************
   getTime(): Observable<Schedule[]> {

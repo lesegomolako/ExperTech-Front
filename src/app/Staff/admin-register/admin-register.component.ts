@@ -14,6 +14,7 @@ import {Process} from '../../API Services/for User/process';
 import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { User } from 'src/app/API Services/for Booking/client';
+import { MatSnackBar } from '@angular/material/snack-bar';
 //import { sha256, sha224 } from 'js-sha256';
 
 
@@ -32,7 +33,7 @@ export class AdminRegisterComponent implements OnInit {
 
   public RegisterFormGroup: FormGroup;
   constructor(
-    public dialog: MatDialog,
+    public dialog: MatDialog, private snack: MatSnackBar,
     private formBuilder: FormBuilder,
     public service: ReportingService,
     private router: Router,
@@ -43,8 +44,8 @@ export class AdminRegisterComponent implements OnInit {
     if(this.api.RoleID == "2")
     {
       this.registerForm = this.formBuilder.group({
-        firstName: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-        lastName: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+        firstName: ['', [Validators.required, Validators.maxLength(50)]],
+        lastName: ['', [Validators.required, Validators.maxLength(50)]],
         email: ['', [Validators.required, Validators.email]],
         contact: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
       });
@@ -93,6 +94,36 @@ export class AdminRegisterComponent implements OnInit {
       (k >= 48 && k <= 57)
     );
   }
+
+  omit_special_num_char(event) {
+    var theEvent = event || window.event;
+
+    // Handle paste
+    if (theEvent.type === 'paste') {
+        key = event.clipboardData.getData('text/plain');
+    } else {
+    // Handle key press
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+    }
+    var regex = /[0-9]|\./;
+    if( !regex.test(key) ) {
+      theEvent.returnValue = false;
+      if(theEvent.preventDefault) theEvent.preventDefault();
+    }
+    var k;
+    k = event.charCode;
+   
+    return (
+      (k > 64 && k < 91) ||
+      (k > 96 && k < 123) ||
+      k == 8 ||
+      k == 32 ||
+      (k >= 48 && k <= 57)
+    );
+
+   
+  }
   // RegisterEA(form: NgForm){
   //   this.service.RegisterEA(form.value).subscribe(ref => {this.loadList()});
   //   this.resetForm(form);
@@ -107,12 +138,13 @@ export class AdminRegisterComponent implements OnInit {
     {
     this.mapValues();
     this.service.RegisterAdmin(this.user).subscribe((res: any) =>{
-    if(res == "success")
-    {
+      if(res == "success")
+      {
+        this.snack.open("Admin successfully registered", "OK", {duration: 3000})
         this.router.navigate(["admin"]);
-    }
-    })
-    this.submitted = true;
+      }
+    }, error => {console.log(error), this.snack.open("Something went wrong", "OK", {duration: 3000})})
+    
   }
   else
   {

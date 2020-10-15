@@ -15,6 +15,7 @@ import { startOfMonth, startOfWeek, endOfWeek, format, getDate } from 'date-fns'
 import { Observable } from 'rxjs';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Employee } from 'src/app/API Services/for Booking/client';
 
 export class CalData {
   EmployeeID: any;
@@ -56,7 +57,7 @@ export class AdviseComponent implements OnInit {
   constructor(private service: ReportingService, private router: Router, private snack: MatSnackBar,
     private api: ExperTexhService, private http: HttpClient, private fb: FormBuilder) { }
 
-  EmployeeList: []
+  EmployeeList: Employee[]
   Times: [];
   chosenDate: any;
   Booking: Schedules;
@@ -68,9 +69,10 @@ export class AdviseComponent implements OnInit {
     {
       this.chosenDate = localStorage.getItem("DateChosen")
       
-      this.http.get<[]>(this.api.url + "Employees/getEmployee").subscribe(res => {
+      this.service.readEmployee(this.api.SessionID)
+      .subscribe(res => {
         this.EmployeeList = res;
-      }, error => {console.log("Error",error), this.snack.open("Something went wrong")});
+      }, error => {console.log("Error",error), this.snack.open("Something went wrong", "OK", {duration: 3000})});
 
       this.http.get<[]>(this.api.url + "Booking/getTimes")
         .subscribe(res => { this.Times = res }, error => {console.log("Error",error), this.snack.open("Something went wrong")});

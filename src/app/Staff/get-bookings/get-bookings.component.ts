@@ -31,7 +31,7 @@ export class BookingData {
   PackageDetails?:
     {
       PackageID: any;
-      SaleID:any;
+      SaleID: any;
       Name: string;
     }
 
@@ -49,7 +49,7 @@ export class GetBookingsComponent implements OnInit {
   // @ViewChild(MatTable) table: MatTable<BookingData>;
 
 
-  TypeControl = new FormControl('',Validators.required)
+  TypeControl = new FormControl('', Validators.required)
   RadioControl = new FormControl('1')
   PaymentType: Observable<PaymentType[]>;
   foundPackage = false;
@@ -73,49 +73,46 @@ export class GetBookingsComponent implements OnInit {
   dataSource;
   isOwner = false;
 
-  
 
-  
+
+
 
   enable(g) {
-    
-    if(g == "1")
-    {
+
+    if (g == "1") {
       this.TypeControl.enable()
     }
-    else if(g == "2")
-    {
+    else if (g == "2") {
       this.TypeControl.reset();
       this.TypeControl.disable();
     }
   }
 
-  
+
 
   ngOnInit() {
-    
+
     if (this.api.RoleID == "2") {
       //this.dataSource = new MatTableDataSource()
-     this.api.getProfile().subscribe((res:User)=> {this.isOwner = res.Admins[0].Owner})
-        
-     this.loadlist();
-     
-      
+      this.api.getProfile().subscribe((res: User) => { this.isOwner = res.Admins[0].Owner })
+
+      this.loadlist();
+
+
       this.PaymentType = this.service.getPaymentType();
     }
     else {
       this.router.navigate(["403Forbidden"])
     }
-   
+
 
   }
 
-  loadlist()
-  {
+  loadlist() {
     var today = new Date();
     this.http.get<BookingData[]>(this.api.url + "Admin/GetBookings").subscribe((res: BookingData[]) => {
-      this.BookingsList = res.filter(zz => new Date(zz.DateTime)<today)
-      .sort((a,b) => 0 - (a['DateTime'] > b['DateTime'] ? 1 : -1))
+      this.BookingsList = res.filter(zz => new Date(zz.DateTime) < today)
+        .sort((a, b) => 0 - (a['DateTime'] > b['DateTime'] ? 1 : -1))
     });
   }
 
@@ -159,26 +156,23 @@ export class GetBookingsComponent implements OnInit {
   payDetails;
   onSubmit() {
 
-    if(this.TypeControl.invalid)
-    {
+    if (this.TypeControl.invalid) {
       this.TypeControl.markAsTouched();
       return;
     }
-    
 
-    if(this.RadioControl.value == "1")
-    {
-       this.payDetails =
+
+    if (this.RadioControl.value == "1") {
+      this.payDetails =
       {
         BookingID: this.SelectedBooking.BookingID,
         PaymentTypeID: this.TypeControl.value,
         Price: this.SelectedBooking.Price,
         SessionID: this.api.SessionID,
-        
+
       }
     }
-    else if(this.RadioControl.value == "2")
-    {
+    else if (this.RadioControl.value == "2") {
       this.payDetails =
       {
         BookingID: this.SelectedBooking.BookingID,
@@ -188,23 +182,22 @@ export class GetBookingsComponent implements OnInit {
         PackageID: this.SelectedBooking.PackageDetails.PackageID
       }
     }
-    
+
     console.log(this.payDetails);
 
 
     this.service.bookingPayment(this.payDetails).subscribe((res: any) => {
       if (res == "success") {
-        this.snack.open("Booking successfully paid", "OK", {duration: 2000})
+        this.snack.open("Booking successfully paid", "OK", { duration: 2000 })
         this.router.navigate(["payment"])
       }
       else if (res.Error == "session") {
         alert("res.Message")
       }
-      else
-      {
-        console.log(res), this.snack.open("something went wrong", "OK", {duration: 2000,})
+      else {
+        console.log(res), this.snack.open("something went wrong", "OK", { duration: 2000, })
       }
-    }, error =>  {console.log(error), this.snack.open("something went wrong", "OK", {duration: 2000})}
+    }, error => { console.log(error), this.snack.open("something went wrong", "OK", { duration: 2000 }) }
     );
   }
 
@@ -215,9 +208,9 @@ export class GetBookingsComponent implements OnInit {
     stepper.next();
   }
 
- 
 
- 
+
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -225,52 +218,53 @@ export class GetBookingsComponent implements OnInit {
 
   NoShow(form: BookingData) {
 
-    if(this.isOwner)
-    {
-      this.service.NoShow(form.BookingID, this.api.SessionID).subscribe((res: any) =>
-        {
-          if(res == "success")
-          {
-            alert("Booking status successfully changed")
-            this.loadlist();
-          }
-          else if(res.Error == "session")
-          {
-            alert(res.Message)
-          }
-          else
-          {
-            console.log(res)
-          }
-        })
+    if (this.isOwner) {
+      this.service.NoShow(form.BookingID, this.api.SessionID).subscribe((res: any) => {
+        if (res == "success") {
+          alert("Booking status successfully changed")
+          this.loadlist();
+        }
+        else if (res.Error == "session") {
+          alert(res.Message)
+        }
+        else {
+          console.log(res)
+        }
+      })
     }
-    else
-    {
+    else {
       const dialogConfig = new MatDialogConfig();
 
       dialogConfig.width = '400px';
       dialogConfig.height = '300px';
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      dialogConfig.data =
-      {
-        BookingID: form.BookingID,
-        Client: form.Client,
-        Status: form.Status,
-        DateTime: form.DateTime,
-        Service: form.Service,
-        Price: form.Price
-      }
-  
-      const dialogRef = this.dialog.open(CbookingDialog, dialogConfig);
       
-      dialogRef.afterClosed().subscribe((res:any) => {
-        this.loadlist()});
+
+      const dialogRef = this.dialog.open(CbookingDialog, dialogConfig);
+
+      dialogRef.afterClosed().subscribe((res: any) => {
+        if (res == true) {
+          this.service.NoShow(form.BookingID, this.api.SessionID).subscribe((res: any) => {
+            if (res == "success") {
+              alert("Booking status successfully changed")
+              this.loadlist();
+            }
+            else if (res.Error == "session") {
+              alert(res.Message)
+            }
+            else {
+              console.log(res)
+            }
+          })
+          this.loadlist()
+        }
+      });
     }
-    
+
   }
 
- 
+
 }
 
 
@@ -285,12 +279,11 @@ export class CbookingDialog implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<CbookingDialog>,
-    private router: Router,
+    private router: Router,  private snack: MatSnackBar,
     public service: ReportingService,
     private fb: FormBuilder,
     private http: HttpClient,
-    private api: ExperTexhService,
-    @Inject(MAT_DIALOG_DATA) public data: BookingData
+    private api: ExperTexhService
   ) { }
 
   List: any;
@@ -300,7 +293,7 @@ export class CbookingDialog implements OnInit {
   type: any;
   state: RouterStateSnapshot;
 
-  Invalid= false;
+  Invalid = false;
 
   ngOnInit() {
     this.authorizeForm = this.fb.group({
@@ -308,51 +301,39 @@ export class CbookingDialog implements OnInit {
       password: ['', Validators.required]
     })
     this.List = this.service.getPaymentType();
-    this.bookingObject = this.data;
+    //this.bookingObject = this.data;
   }
 
   get f() {
     return this.authorizeForm.controls;
   }
 
-  onSubmit(form) {
+
+
+  onSubmit(form) 
+  {
 
     this.Invalid = false;
-    if(this.authorizeForm.invalid)
-    {
+    if (this.authorizeForm.invalid) {
       this.authorizeForm.markAllAsTouched();
       return;
     }
 
     this.service.Authorize(form.value, this.api.SessionID).subscribe((res: any) => {
-      if (res == "success") {
-        this.service.NoShow(this.data.BookingID, this.api.SessionID).subscribe((res: any) =>
-        {
-          if(res == "success")
-          {
-            alert("Booking status successfully changed")
-            this.dialogRef.close();
-          }
-          else if(res.Error == "session")
-          {
-            alert(res.Message)
-          }
-          else
-          {
-            console.log(res)
-          }
-        })
+      if (res == "success") 
+      {
+        this.snack.open("Authorization granted", "OK", {duration: 3000})
+        this.dialogRef.close(true);
       }
       else if (res == "denied") {
         this.Invalid = true;
       }
-      else if (res.Error == "session"){
+      else if (res.Error == "session") {
         alert("Session is no longer valid. User needs to login")
         this.router.navigate(["login"], { queryParams: { 'redirectURL': this.state.url } })
       }
     }
     );
-    //console.log(payDetails)
   }
 
 

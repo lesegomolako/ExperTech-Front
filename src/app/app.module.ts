@@ -130,6 +130,7 @@ import { StaffComponent } from './Staff/staff/staff.component';
 
 import { CompanySettingsComponent } from './User/company-settings/company-settings.component';
 import { SalePaymentComponent } from './User/sale-payment/sale-payment.component';
+import { ChangePasswordComponent } from './User/change-password/change-password.component';
 
 
 @NgModule({
@@ -149,7 +150,7 @@ import { SalePaymentComponent } from './User/sale-payment/sale-payment.component
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
     ViewdetailComponent,SaleinvoiceComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent,
     ReportsComponent, ErrorPageComponent, ReceiveDialog,
-    EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, CompanySettingsComponent, SalePaymentComponent
+    EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, CompanySettingsComponent, SalePaymentComponent, ChangePasswordComponent
 
   ],
   imports: [

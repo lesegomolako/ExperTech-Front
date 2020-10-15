@@ -95,6 +95,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     
   </table>
+  <mat-card *ngIf="dataSource?.data.length == 0" class="text-center">no sales available</mat-card>
   <mat-paginator #paginator
     *ngIf="dataSource?.data.length>10"
     [length]="dataSource?.data.length"

@@ -143,6 +143,7 @@ export class CompanySettingsComponent implements OnInit {
   {
     if(this.editSocials.invalid)
     {
+      
       this.editSocials.markAllAsTouched();
       return;
     }
@@ -221,6 +222,7 @@ export class CompanySettingsComponent implements OnInit {
     if(this.editCompanyData.invalid)
     {
       this.editCompanyData.markAllAsTouched();
+      alert("Fill in all required details")
       return;
     }
 
@@ -256,7 +258,23 @@ export class CompanySettingsComponent implements OnInit {
   timesObject: Timeslots[];
   SaveTimeslot()
   {
-   
+    var Total = 0;
+    this.timesObject = this.editTimes.value.times;
+    this.timesObject.forEach((s:any) => 
+      {
+        if(s.available == true)
+        {
+          Total++;
+        }
+      })
+
+    if(Total < 5)
+    {
+      alert("At least 5 timeslots have to be selected")
+      return;
+    }
+
+
     this.service.updateTimes(this.editTimes.value.times, this.api.SessionID).subscribe((res:any) =>
       {
         if(res =="success")

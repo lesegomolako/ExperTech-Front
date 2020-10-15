@@ -6,12 +6,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process} from '../../API Services/for User/process';
 import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CbookingDialog } from '../get-bookings/get-bookings.component';
+import { Employee } from 'src/app/API Services/for Booking/client';
 
 @Component({
   selector: 'app-employee',
@@ -31,18 +34,21 @@ export class EmployeeComponent implements OnInit {
     );
   }
   constructor(
-    public dialog: MatDialog,
+    public dialog: MatDialog, private snack: MatSnackBar,
     public service: ReportingService,
     private router: Router,
     private api: ExperTexhService
   ) {}
-  List: Observable<Process[]>;
+  List: Observable<Employee[]>;
+
+  isOwner = false;
 
   ngOnInit(): void {
     if(this.api.RoleID == "2")
     {
       this.loadList();
       this.resetForm();
+      this.api.getProfile().subscribe((res: any) => { this.isOwner = res.Admins[0].Owner })
     }
     else
     {
@@ -51,7 +57,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   loadList() {
-    this.List = this.service.readEmployee();
+    this.List = this.service.readEmployee(this.api.SessionID);
   }
 
   registerEmp()
@@ -90,7 +96,7 @@ export class EmployeeComponent implements OnInit {
     th = table.getElementsByTagName('th');
 
     //loop through all table rows and hide those who dont match search query
-    for (r = 0; r < tr.length; r++) {
+    for (r = 1; r < tr.length; r++) {
       tr[r].style.display = 'none';
 
       for (var k = 0; k < tr.length; k++) {
@@ -151,9 +157,54 @@ export class EmployeeComponent implements OnInit {
     });
   }
 
-  DeleteEmployee(form: Process) {
-    this.service.deleteEmployee(form).subscribe((ref) => {
-      this.loadList();
-    });
+  DeleteEmployee(EmployeeID) {
+
+    if (confirm("Are you sure you want to delete this Employee?")) {
+      if (this.isOwner == true) {
+        this.service.deleteEmployee(EmployeeID, this.api.SessionID)
+          .subscribe((ref: any) => {
+            if (ref == "success") {
+              this.snack.open("Employee successfully deleted", "OK", { duration: 3000 })
+              this.loadList();
+            }
+            else if (ref.Error == "session") {
+              alert(ref.Message);
+            }
+            else {
+              console.log(ref)
+            }
+          }, error => { console.log(error), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
+      }
+      else {
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.width = '400px';
+        dialogConfig.height = '300px';
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+
+
+        const dialogRef = this.dialog.open(CbookingDialog, dialogConfig);
+
+        dialogRef.afterClosed().subscribe((res: any) => {
+          if (res == true) 
+          {
+            this.service.deleteAdmin(EmployeeID, this.api.SessionID)
+            .subscribe((ref: any) => {
+              if (ref == "success") {
+                this.snack.open("Employee successfully deleted", "OK", { duration: 3000 })
+                this.loadList();
+              }
+              else if (ref.Error == "session") {
+                alert(ref.Message);
+              }
+              else {
+                console.log(ref)
+              }
+            }, error => { console.log(error), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
+          }
+        })
+      }
+    }
   }
 }

@@ -19,7 +19,7 @@
 
     <div class="contents">
         <ul>
-            <div *ngIf="ServicesList | async; else loading">
+            <div *ngIf="ServicesList | async">
             <li *ngFor = "let x of ServicesList | async;">
                 <div class="icon"><mat-icon>face</mat-icon></div>
                 <div class="typeinfo">
@@ -39,6 +39,9 @@
                 </div>
             </li>
             </div>
+            <li class="text-center" *ngIf="(ServicesList | async)?.length == 0">
+                <p>No services added</p>
+            </li>
         </ul>
     </div>
     

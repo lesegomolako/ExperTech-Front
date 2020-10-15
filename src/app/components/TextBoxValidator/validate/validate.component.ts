@@ -127,6 +127,11 @@ omit_special_char(event)
               window.location.reload();
             });
           }
+          else if(res.Message == "duplicate")
+          {
+            alert(res.Error)
+            this.validateForm.reset();
+          }
         })
  
         this.submitted = true;    

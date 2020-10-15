@@ -31,6 +31,9 @@
                 </div>
             </li>
             </div> 
+            <li class="text-center" *ngIf="(myServiceTypesList | async)?.length == 0">
+                <p>No services types added</p>
+            </li>
         </ul>
     </div>
     

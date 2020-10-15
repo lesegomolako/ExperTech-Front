@@ -7,7 +7,6 @@
         <input matInput formControlName="Name" (keypress)="omit_special_char($event)" >  
         <mat-error *ngIf="ClientForm.get('Name').errors && (ClientForm.get('Name').touched || ClientForm.get('Name').dirty)">    
           <mat-error *ngIf=" ClientForm.get('Name').errors.required">First Name is required</mat-error> 
-          <mat-error *ngIf=" ClientForm.get('Name').errors.minLength">Minimum of 2 characters required</mat-error>
           <mat-error *ngIf=" ClientForm.get('Name').errors.maxLength">Maximum of 50 characters required</mat-error>   
         </mat-error> 
       </mat-form-field>
@@ -16,7 +15,6 @@
         <input matInput formControlName="Surname" (keypress)="omit_special_char($event)" >
         <mat-error *ngIf="ClientForm.get('Surname').errors && (ClientForm.get('Surname').touched || ClientForm.get('Surname').dirty)">    
           <mat-error *ngIf=" ClientForm.get('Surname').errors.required">Surname is required</mat-error> 
-          <mat-error *ngIf=" ClientForm.get('Surname').errors.minLength">Minimum of 2 characters required</mat-error>
           <mat-error *ngIf=" ClientForm.get('Surname').errors.maxLength">Maximum of 100 characters required</mat-error>   
         </mat-error> 
       </mat-form-field>

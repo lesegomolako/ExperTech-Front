@@ -12,6 +12,7 @@ import { ReportingService } from '../../API Services/for User/reporting.service'
 import {Process} from '../../API Services/for User/process';
 import { Router } from '@angular/router';
 import { Client } from 'src/app/API Services/for Booking/client';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 @Component({
   selector: 'app-client',
@@ -31,7 +32,7 @@ export class ClientComponent implements OnInit {
     );
   }
   constructor(
-    public dialog: MatDialog, 
+    public dialog: MatDialog, private api: ExperTexhService,
     public service: ReportingService,
     private router: Router
   ) { }
@@ -41,6 +42,7 @@ export class ClientComponent implements OnInit {
     this.loadList();
     this.resetForm();
   }
+
   loadList() {
     this.List = this.service.readClient();
   }
@@ -71,7 +73,7 @@ export class ClientComponent implements OnInit {
     th = table.getElementsByTagName('th');
 
     //loop through all table rows and hide those who dont match search query
-    for (r = 0; r < tr.length; r++) {
+    for (r = 1; r < tr.length; r++) {
       tr[r].style.display = 'none';
 
       for (var k = 0; k < tr.length; k++) {
@@ -139,7 +141,7 @@ export class ClientComponent implements OnInit {
     this.service.updateClient(form.value).subscribe(ref =>{this.loadList()});
   }
 
-  DeleteClient(form: Process){
-    this.service.deleteClient(form).subscribe(ref => {this.loadList()});
+  DeleteClient(ClientID){
+    this.service.deleteClient(ClientID, this.api.SessionID).subscribe(ref => {this.loadList()});
   }
 }

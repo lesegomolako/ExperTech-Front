@@ -39,7 +39,7 @@
     <div class="details">
         <div class="form-group" [ngClass]="{'has-error': formErrors.quantity}">
             <label for="quantity">Quantity</label>    
-            <input type="number" min=0 (blur)="logValidationErrors()" class="form-control" formControlName="quantity" id="quantity" placeholder="Example: 5 uses">
+            <input type="number" min=0  (blur)="logValidationErrors()" class="form-control" formControlName="quantity" id="quantity" placeholder="Example: 5 uses">
             <span class="help-block" *ngIf="formErrors.quantity">
                 {{formErrors.quantity}}
             </span>

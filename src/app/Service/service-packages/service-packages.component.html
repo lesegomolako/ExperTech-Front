@@ -24,6 +24,9 @@
                 <button class="btn btn-danger" (click)="Delete(x.PackageID)"><mat-icon inline=true>delete</mat-icon></button>
                 </div>
             </li>
+            <li class="text-center" *ngIf="(myServicePackageList | async)?.length == 0">
+                <p>No services packages added</p>
+            </li>
         </ul>
     </div>
     

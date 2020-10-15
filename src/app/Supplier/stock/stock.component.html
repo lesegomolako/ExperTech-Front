@@ -74,8 +74,8 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-
-  <router-outlet></router-outlet>
+  <mat-card *ngIf="dataSource?.data.length == 0" class="text-center">no stock available</mat-card>
+  
 
   <mat-paginator #paginator
       [length]="dataSource?.data.length"

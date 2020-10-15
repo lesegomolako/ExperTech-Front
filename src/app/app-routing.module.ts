@@ -68,6 +68,7 @@ import { ReportsComponent } from './User/reports/reports.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
 import { GetBookingsComponent } from './Staff/get-bookings/get-bookings.component';
+import {ChangePasswordComponent} from './User/change-password/change-password.component'
 
 import { StaffComponent } from './Staff/staff/staff.component';
 import { SaleinvoiceComponent } from './Supplier/sale/saleinvoice/saleinvoice.component';
@@ -152,7 +153,7 @@ const routes: Routes = [
   {path: '403Forbidden', component: ForbiddenPageComponent},
   {path: 'getbookings', component: GetBookingsComponent},
   {path: 'staff', component: StaffComponent },
-  
+  {path: 'changepassword', component: ChangePasswordComponent},
   {path: 'salepayment', component: SalePaymentComponent},
   {path: 'settings', component: CompanySettingsComponent},
   

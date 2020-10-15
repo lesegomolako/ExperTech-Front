@@ -21,7 +21,7 @@
               <th style="width: 60;" name="Surname">Surname</th>
               <th style="width: 60;" name="ContactNo">Contact Number</th>
               <th style="width: 60;" name="Email">Email Address</th>
-              <th style="width: 60;"></th>
+              <!-- <th style="width: 60;"></th> -->
               <th style="width: 60;"></th>
             </tr>
 
@@ -32,11 +32,11 @@
               <td name="Surname">{{ item.Surname }}</td>
               <td name="ContactNo">{{ item.ContactNo }}</td>
               <td name="Email">{{ item.Email }}</td>
-              <td>
+              <!-- <td>
                 <button class="btn btn-warning" (click)="fillUP(item)">Selct Client</button>
-              </td>
+              </td> -->
               <td>
-                <button class="btn btn-danger" (click)="DeleteClient()">
+                <button class="btn btn-danger" (click)="DeleteClient(item.ClientID)">
                   <mat-icon>delete</mat-icon>
                 </button> 
               </td>
