@@ -3,7 +3,7 @@
 
 <div class="mat-elevation-z8 app-placeorder">
   <a [routerLink] = "['/orderform']">
-    <button mat-raised-button style="background-color:forestgreen" ><mat-icon style="color:white">add</mat-icon> Add  
+    <button mat-raised-button title="Make new supplier order" style="background-color:forestgreen" ><mat-icon style="color:white">add</mat-icon> Add  
     </button></a>
     <mat-form-field>
      <mat-label>Search</mat-label>
@@ -55,22 +55,22 @@
      <ng-container matColumnDef="viewdetail">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>View Details</th>
       <td mat-cell *matCellDef="let row">
-      <button style="background-color:teal" (click)="ViewOrder(row)"><mat-icon style="color:white">content_paste</mat-icon></button>
+      <button style="background-color:teal" title="View order details" (click)="ViewOrder(row)"><mat-icon style="color:white">content_paste</mat-icon></button>
       </td >
     </ng-container>
 
      <!-- Return Supplier Order -->
       <ng-container matColumnDef="ReturnOrder">
-       <th mat-header-cell *matHeaderCellDef> Return Order</th>
+       <th mat-header-cell *matHeaderCellDef></th>
        <td mat-cell *matCellDef="let row">
-        <button style="background-color:red" (click)="onDelete(row.OrderID)"><mat-icon style="color:white">delete_sweep</mat-icon></button>
+        <button style="background-color:red" title="Cancel supplier order" *ngIf="row.Received == false" (click)="onDelete(row.OrderID)"><mat-icon style="color:white">delete_sweep</mat-icon></button>
        </td >
      </ng-container>
    
      <ng-container matColumnDef="ReceiveStock">
-      <th mat-header-cell *matHeaderCellDef> Receive Stock</th>
+      <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
-       <button style="background-color:forestgreen" (click)="ReceiveStock(row)"><mat-icon style="color:white">receipt</mat-icon></button>
+       <button style="background-color:forestgreen" title="Recieve stock" *ngIf="row.Received == false" (click)="ReceiveStock(row)"><mat-icon style="color:white">receipt</mat-icon></button>
       </td >
     </ng-container>
      

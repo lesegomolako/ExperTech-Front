@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { SupplierData } from '../../../API Services/for Supplier/sales';
 import { Observable } from 'rxjs';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class AddsupplierComponent implements OnInit {
     private formBuilder: FormBuilder, 
     private service: SupplierService,
     private route: Router,
-    private api: ExperTexhService
+    private api: ExperTexhService,
+    private snack: MatSnackBar,
     ) {}
 
   suppliers: SupplierData;
@@ -88,7 +90,7 @@ AddSupp(supplier)
   .subscribe(res => {
     if (res =="success")
     {
-      alert("Successfully added")
+      this.snack.open("Supplier successfully added", "OK", {duration: 3000})
       this.route.navigateByUrl("/supplier")
     }
   })

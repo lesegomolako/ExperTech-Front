@@ -32,12 +32,10 @@ export class ProductComponent implements OnInit, AfterViewInit {
     {
       localStorage.clear();
       this.dataSource = new MatTableDataSource(this.ProductList)
-      this.service.getProducts().subscribe(res => 
+      this.service.getProducts().subscribe((res:any) => 
         {
-         
           this.ProductList = res;
-          this.dataSource.data = this.ProductList
-          
+          this.dataSource.data = this.ProductList          
         });
     }
     else

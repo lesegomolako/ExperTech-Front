@@ -24,6 +24,27 @@ export class ServiceTypeComponent implements OnInit {
     this.myServiceTypesList = this.service.getServiceTypes();
   }
 
+  // myFunction(event: any) {
+  //   //declare variables
+
+  //   var input, filter, table, tr, td, r, txtValue, th;
+  //   input = document.getElementById('myInput');
+  //   filter = input.value.toUpperCase();
+  //   table = document.getElementById('myTable');
+  //   tr = table.getElementsByTagName('tr');
+  //   th = table.getElementsByTagName('th');
+
+  //   //loop through all table rows and hide those who dont match search query
+  //   var lis = document.getElementsByTagName('li');
+  //   for (var i = 0; i < lis.length; i++) {
+  //       var name = lis[i].getElementsByClassName('name')[0].innerHTML;
+  //       if (name.toUpperCase().indexOf(filter) == 0) 
+  //           lis[i].style.display = 'list-item';
+  //       else
+  //           lis[i].style.display = 'none';
+  //   }
+  // }
+
   AddServiceType()
   {
     //this.service.TypeData = null;

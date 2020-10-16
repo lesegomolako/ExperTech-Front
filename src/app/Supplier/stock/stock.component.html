@@ -1,29 +1,32 @@
 <div class="row">
   <div class="col-11">
-  <h1 class="md-display-3">Stock Management</h1>
+    <h1 class="md-display-3">Stock Management</h1>
   </div>
   <div class="col-1 nopadding">
-   <button mat-raised-button style="float: right;" routerLink="/employeehome" style="background-color:forestgreen" >
+    <button title="go back to home page" mat-raised-button style="float: right;" routerLink="/employeehome" style="background-color:forestgreen">
       <mat-icon style="color:white">home</mat-icon> Home
-  </button>
+    </button>
   </div>
-  </div>
+</div>
 
 <div class="mat-elevation-z8 app-supplier">
-  <a [routerLink] = "['/addstock']">
-    <button mat-raised-button style="background-color:forestgreen" ><mat-icon style="color:white">add</mat-icon> Add  
+  <a [routerLink]="['/addstock']">
+    <button title="add new stock item" mat-raised-button style="background-color:forestgreen">
+      <mat-icon style="color:white">add</mat-icon> Add
     </button></a>
-    <mat-form-field>
-      <mat-label>Search</mat-label>
-      <input matInput (keyup)="applyFilter($event)" #input>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label>Search</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input>
+  </mat-form-field>
   <table mat-table class="dataSource?" matSort aria-label="Elements">
 
     <!-- Select Column -->
     <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef ><mat-checkbox></mat-checkbox>
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox></mat-checkbox>
       <td mat-cell *matCellDef="let row">
-        <mat-checkbox></mat-checkbox>{{row.select}}</td>
+        <mat-checkbox></mat-checkbox>{{row.select}}
+      </td>
     </ng-container>
 
     <!-- Id Column -->
@@ -35,13 +38,19 @@
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let row">{{row.Name}}</td>
+      <td mat-cell *matCellDef="let row">{{row.Name}} <span *ngIf="row.Color">({{row.Color}})</span></td>
     </ng-container>
 
     <!-- Description Number Column -->
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
       <td mat-cell *matCellDef="let row">{{row.Description}}</td>
+    </ng-container>
+
+    <!-- Description Number Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+      <td mat-cell *matCellDef="let row">{{row.Category}}</td>
     </ng-container>
 
     <!-- Quantity Column -->
@@ -56,42 +65,49 @@
       <td mat-cell *matCellDef="let row">{{row.QuantityInStock}}</td>
     </ng-container>
 
-    
+
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Edit</th>
       <td mat-cell *matCellDef="let row">
-      <button style="background-color:forestgreen" (click)="EditStock(row)"><mat-icon style="color:white">edit</mat-icon></button>
-      </td >
+        <button title="edit stock item" style="background-color:forestgreen" (click)="EditStock(row)">
+          <mat-icon style="color:white">edit</mat-icon>
+        </button>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Delete</th>
       <td mat-cell *matCellDef="let row">
-        <button style="background-color:red" (click)="onDelete(row.ItemID)"><mat-icon style="color:white">delete</mat-icon></button>
-      </td >
+        <button title="delete stock items" style="background-color:red" (click)="onDelete(row.ItemID)">
+          <mat-icon style="color:white">delete</mat-icon>
+        </button>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <mat-card *ngIf="dataSource?.data.length == 0" class="text-center">no stock available</mat-card>
-  
 
-  <mat-paginator #paginator
-      [length]="dataSource?.data.length"
-      [pageIndex]=""
-      [pageSize]=""
-      [pageSizeOptions]="[]">
+
+  <mat-paginator #paginator [length]="dataSource?.data.length" [pageIndex]="" [pageSize]="" [pageSizeOptions]="[]">
   </mat-paginator>
 
-  <a [routerLink] = "['/stocktake']">
-    <button mat-raised-button style="background-color:forestgreen" >
-      <mat-icon style="color:white">add_box</mat-icon> Stock Take 
+  <a [routerLink]="['/stocktake']">
+    <button title="take count of stock" mat-raised-button style="background-color:forestgreen">
+      <mat-icon style="color:white">add_box</mat-icon> Stock Take
     </button></a>
-    <a [routerLink] = "['/writeoff']">
-      <button mat-raised-button style="background-color:red" >
-        <mat-icon style="color:white">remove_circle_outline</mat-icon> Write Off 
-      </button></a>
-
+  <a [routerLink]="['/writeoff']">
+    <button title="write off damaged or broken stock" mat-raised-button style="background-color:red">
+      <mat-icon style="color:white">remove_circle_outline</mat-icon> Write Off
+    </button></a>
+  <a [routerLink]="['/stockcategory']">
+    <button title="add or remove stock categories" mat-raised-button style="background-color:forestgreen">
+      <mat-icon style="color:white">edit</mat-icon> Stock Categories
+    </button></a>
+  <a [routerLink]="['/placeorder']">
+    <button title="make a new supplier order" mat-raised-button style="background-color:forestgreen">
+      <mat-icon style="color:white">add_box</mat-icon> Place Order
+    </button></a>
 
 </div>

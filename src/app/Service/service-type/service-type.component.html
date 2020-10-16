@@ -19,9 +19,11 @@
         
     
     <div class="contents">
+        
         <ul>
            <div *ngIf="myServiceTypesList | async; else loading">
-            <li *ngFor ="let x of myServiceTypesList | async;">
+            <li class="list" *ngFor ="let x of myServiceTypesList | async;">
+                <p class="nil"></p>
                 <div class="icon"><mat-icon>face</mat-icon></div>
                 <span hidden>{{x.TypeID}}</span>
                 <div class="name">{{x.Name}}</div>

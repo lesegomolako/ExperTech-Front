@@ -31,6 +31,16 @@ export class StockData
   Description: string;
   Price: string;
   QuantityInStock: any;
+  Color?: string;
+  CategoryID: any;
+  Category: string;
+  Size: any;
+}
+
+export class StockCategory
+{
+  CategoryID: any;
+  Name: string;
 }
 
 export class StockTakeData
@@ -80,13 +90,17 @@ export class SupplierOrderData
   Description: string;
   Price: string;
   Date: string;
+  Received: boolean;
   StockItemLines:
   [
     {
       LineID: any;
       Items: string;
       Quantity: any;
-      StockItemID: any;
+      ItemID: any;
+      Size: any;
+      Received: boolean;
+      QuantityReceived: any;
     }
   ]
 }

@@ -60,6 +60,12 @@ export class SupplierService {
     return this.http.post(this.url + "Supplier/AddSupplier", formData, {params});
   }
 
+  ReceiveStock(StockItemLines, SessionID)
+  {
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post(this.url + "Supplier/ReceiveStock", StockItemLines , {params})
+  }
+
   EditSupplier(formData: SupplierData, SessionID)
   {
     const params = new HttpParams().set("SessionID", SessionID )

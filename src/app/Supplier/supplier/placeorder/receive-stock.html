@@ -1,0 +1,79 @@
+<style>
+    th {
+        padding: 2px;
+    }
+
+    td {
+        padding: 2px;
+    }
+</style>
+
+<div class="modal-header">
+    <h3 mat-dialog-title><strong>Receive Stock</strong></h3>
+    <button mat-dialog-close type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form [formGroup]="ReceiveForm" (submit)="ReceiveStock()">
+    <div class="modal-body" mat-dialog-content>
+        <div class="row">
+            <div class="col-5">
+                <strong>Supplier: </strong>{{ data.Supplier }}
+            </div>
+            <div class="col-6">
+                <strong>Date Ordered: </strong>{{ data.Date | date:"dd/MM/yy, hh:mm"}}
+            </div>
+        </div>
+        <br>
+        <input hidden formControlName="orderid">
+        <table formArrayName="stockitemlines">
+            <thead style="border-bottom-style: 1px solid grey;">
+                <tr>
+                    <th>Stock Items</th>
+                    <th>Size (ml)</th>
+                    <th>Quantity Ordered</th>
+                    <th>Quantity Received</th>
+                    <th>Mark As Received</th>
+                </tr>
+            </thead>
+            <tbody style="border-bottom-style: 1px solid grey;">
+                <ng-container *ngFor="let x of ReceiveForm.get('stockitemlines')['controls']; let j = index">
+                    <tr [formGroupName]="j">
+                        <input hidden formControlName="LineID">
+                        <td style="width: 200px;">
+                            <input class="form-control" readonly type="text" formControlName="Items">
+                        </td>
+                        <td style="width: 80px;">
+                            <input Class="form-control" readonly formControlName="Size">
+                        </td>
+                        <td style="width: 120px;">
+                            <input Class="form-control" readonly formControlName="Quantity">
+                        </td>
+                        <td style="width: 150px;">
+                            <input class="form-control" placeholder="Enter Quantity Received"
+                                formControlName="QuantityReceived">
+                        </td>
+                        <td style="width: 150px;">
+                            <section class="example-section">
+                                <mat-checkbox class="example-margin" formControlName="Received">Received
+                                </mat-checkbox>
+                            </section>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+
+        </table>
+        <p>
+            <strong>Price: </strong>R{{ data.Price }}
+        </p>
+    </div>
+    <div class="modal-footer" mat-dialog-actions>
+        <button type="button" class="btn btn-outline-secondary" mat-dialog-close>
+            Close
+        </button>
+        <button type="submit" class="btn btn-outline-secondary">
+            Receive Stock
+        </button>
+    </div>
+</form>

@@ -22,6 +22,8 @@ export class SalePaymentComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<SaleData>;
+  @ViewChild(MatStepper) steps: MatStepper;
+  
   dataSource;
   SaleList: SaleData[];
 
@@ -30,13 +32,18 @@ export class SalePaymentComponent implements OnInit {
   PaymentType: Observable<PaymentType[]>;
   Total = 0;
 
+  PickSale = null;
+
   displayedColumns = ['saleid', 'client', 'saletype', 'items', 'date', 'select'];
 
   constructor(private api: ExperTexhService, private service: SaleService, private rservice: ReportingService,
     private router: Router) { }
 
   ngOnInit(): void {
-    if (this.api.RoleID == "2") {
+    if (this.api.RoleID == "2") 
+    {
+      this.selectedSale = JSON.parse(localStorage.getItem("PickSale"));
+      
       this.dataSource = new MatTableDataSource(this.SaleList)
       this.service.getProdSaleList().subscribe(res => {
         this.SaleList = res;
@@ -48,6 +55,8 @@ export class SalePaymentComponent implements OnInit {
       this.router.navigate(["403Forbidden"])
     }
   }
+
+  
 
 
   CalcTotal(Sale: SaleData, stepper: MatStepper) {

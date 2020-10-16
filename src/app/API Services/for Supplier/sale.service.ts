@@ -31,4 +31,10 @@ export class SaleService {
   {
     return this.http.post(this.url + "Sale/SalePayment", form)
   }
+
+  CancelSale(SessionID, SaleID, AuthorizeID?)
+  {
+    const params = new HttpParams().set("SessionID", SessionID).set("SaleID", SaleID).set("AuthorizeID", AuthorizeID);
+    return this.http.delete(this.url + "Sale/CancelSale", {params});
+  }
 }

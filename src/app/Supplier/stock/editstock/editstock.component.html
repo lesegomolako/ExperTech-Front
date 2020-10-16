@@ -1,46 +1,85 @@
 
 
 <div class="main-div">
-  <form class="example-form" [formGroup] = "EditForm" (submit)="EditStockItem(EditForm)">
+  <form class="example-form" [formGroup]="EditForm" (submit)="EditStockItem(EditForm)">
     <mat-form-field class="example-full-width">
       <mat-label>Update Stock Details</mat-label>
       <input matInput value disabled="">
     </mat-form-field>
     
     <input formControlName = 'itemid' hidden>
-      <table class="example-full-width" cellspacing="0"><tr>
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Stock name</mat-label>
+            <input matInput formControlName="name">
+            <mat-error *ngIf="f.name.errors">
+              <mat-error *ngIf="f.name.errors.required">Stock name is required</mat-error>
+              <mat-error *ngIf="f.name.errors.maxlength">Name length may not exceed 50 characters</mat-error>
+            </mat-error>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+            <mat-error *ngIf="f.description.errors">
+              <mat-error *ngIf="f.description.errors.maxlength">Description length may not exceed 150 characters
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Price (R)</mat-label>
+            <input matInput type="number" formControlName="price">
+            <mat-error *ngIf="f.price.errors">
+              <mat-error *ngIf="f.price.errors.required">Price name is required</mat-error>
+              <mat-error *ngIf="f.price.errors.min">Price may not be less than 0</mat-error>
+            </mat-error>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Size (ml)</mat-label>
+            <input matInput type="number" formControlName="size">
+            <mat-error *ngIf="f.size.errors">
+              <mat-error *ngIf="f.size.errors.required">Size is required</mat-error>
+              <mat-error *ngIf="f.size.errors.min">Size may not be smaller than 0</mat-error>
+            </mat-error>
+          </mat-form-field>
+        </td>
+        <td hidden>
+          <mat-form-field class="example-full-width">
+            <mat-label>Quantity</mat-label>
+            <input matInput type="number" formControlName="quantityinstock">
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
         <td><mat-form-field class="example-full-width">
-          <mat-label>Stock name</mat-label>
-          <input matInput formControlName='name'>
-          <mat-error *ngIf="f.price.errors">
-            <mat-error *ngIf="f.price.errors.required">Price name is required</mat-error>
-            <mat-error *ngIf="f.price.errors.min">Price may not be less than 0</mat-error>
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="categoryid">
+            <mat-option disabled value="Select a category"></mat-option>
+            <mat-option *ngFor="let x of Categories" value="{{x.CategoryID}}">
+              {{x.Name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="f.categoryid.errors">
+            <mat-error *ngIf="f.categoryid.errors.required">Category is required</mat-error>
           </mat-error>
         </mat-form-field></td>
         <td><mat-form-field class="example-full-width">
-          <mat-label>Description</mat-label>
-          <input matInput formControlName='description'>
-          <mat-error *ngIf="f.price.errors">
-            <mat-error *ngIf="f.price.errors.required">Price name is required</mat-error>
-            <mat-error *ngIf="f.price.errors.min">Price may not be less than 0</mat-error>
-          </mat-error>
+          <mat-label>Color (optional)</mat-label>
+          <input matInput type="text" formControlName="color">
+          <mat-error *ngIf="f.color.errors?.maxlength">Color text may not exceed 50 characters</mat-error>
         </mat-form-field></td>
-      </tr></table>
-    
-      <p>
-        <mat-form-field class="example-full-width">
-          <mat-label>Price</mat-label>
-          <input matInput formControlName='price'>
-          <mat-error *ngIf="f.price.errors">
-            <mat-error *ngIf="f.price.errors.required">Price name is required</mat-error>
-            <mat-error *ngIf="f.price.errors.min">Price may not be less than 0</mat-error>
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field hidden appearance="fill">
-          <mat-label>Quantity</mat-label>
-          <input matInput formControlName='quantityinstock'>
-        </mat-form-field>
-      </p>
+      </tr>
+    </table>
+
       <div class="side-div">
         <a [routerLink] = "['/stock']">
           <button mat-raised-button style="background-color:red" ><mat-icon style="color:white">cancel</mat-icon>Cancel
@@ -53,4 +92,4 @@
     </form>
   </div>
   
-    <router-outlet></router-outlet>
+ 

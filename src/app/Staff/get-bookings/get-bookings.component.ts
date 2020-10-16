@@ -320,10 +320,11 @@ export class CbookingDialog implements OnInit {
     }
 
     this.service.Authorize(form.value, this.api.SessionID).subscribe((res: any) => {
-      if (res == "success") 
+      if (res.Message == "success") 
       {
         this.snack.open("Authorization granted", "OK", {duration: 3000})
-        this.dialogRef.close(true);
+        let result = {Status: true, OwnerID: res.AdminID}
+        this.dialogRef.close(result);
       }
       else if (res == "denied") {
         this.Invalid = true;

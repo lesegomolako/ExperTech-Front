@@ -11,6 +11,7 @@ import {ProductService} from '../../API Services/for Product/product.service'
 import { ProductData } from 'src/app/API Services/for Product/product';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoadingDialog } from 'src/app/app.component';
 
 @Component({
   selector: 'app-browse',
@@ -28,8 +29,11 @@ export class BrowseComponent implements OnInit {
   productForm: FormGroup;
   RoleID = this.api.RoleID;
 
+ 
+
   myImages;
 
+ 
 
   constructor(public dialog: MatDialog, private api: ExperTexhService,
      private router: Router,private route: ActivatedRoute,

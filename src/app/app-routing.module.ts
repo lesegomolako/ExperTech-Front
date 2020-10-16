@@ -74,6 +74,7 @@ import { StaffComponent } from './Staff/staff/staff.component';
 import { SaleinvoiceComponent } from './Supplier/sale/saleinvoice/saleinvoice.component';
 import { SalePaymentComponent } from './User/sale-payment/sale-payment.component';
 import { CompanySettingsComponent } from './User/company-settings/company-settings.component';
+import { StockCategoryComponent } from './Supplier/stock-category/stock-category.component';
 
 //import {MatDialogModule} from '@angular/material/dialog';
 
@@ -156,6 +157,7 @@ const routes: Routes = [
   {path: 'changepassword', component: ChangePasswordComponent},
   {path: 'salepayment', component: SalePaymentComponent},
   {path: 'settings', component: CompanySettingsComponent},
+  {path: 'stockcategory', component: StockCategoryComponent},
   
   {path: '**', redirectTo: '/404Page'},
   {path: '404Page', component: ErrorPageComponent},

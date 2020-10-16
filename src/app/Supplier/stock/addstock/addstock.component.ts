@@ -3,7 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { StockService } from '../../../API Services/for Supplier/stock.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { StockData } from '../../../API Services/for Supplier/sales';
+import { StockCategory, StockData } from '../../../API Services/for Supplier/sales';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 //import { ReportingService } from '../../API Services/for User/reporting.service';
 //import {Process} from '../../API Services/for User/process';
@@ -24,17 +24,24 @@ export class AddstockComponent implements OnInit {
   //StockData= this.service.stocksData;
 
   
-  
+  Categories: StockCategory[];
 
   ngOnInit(): void {
     if(this.api.RoleID == "2")
     {
       this.StockForm = this.formBuilder.group({
         name: ['', [Validators.required, Validators.maxLength(50)]],
-        description: ['', [Validators.required, Validators.maxLength(150)]],
+        description: ['', Validators.maxLength(150)],
         price: ['', [Validators.required, Validators.min(0)]],
         quantity: [0],
+        size :['', [Validators.required, Validators.min(0)]],
+        categoryid: ['', Validators.required],
+        color: [null, Validators.maxLength(50)]
       })
+      this.service.getStockCategory().subscribe(res =>
+        {
+          this.Categories = res;
+        })
     }
     else
     {

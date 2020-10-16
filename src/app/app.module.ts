@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import {PortalModule} from '@angular/cdk/portal';
-import { AppComponent } from './app.component';
+import { AppComponent, LoadingDialog } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceTypeComponent } from './Service/service-type/service-type.component';
 import { EditSTComponent } from './Service/edit-st/edit-st.component';
@@ -131,13 +131,15 @@ import { StaffComponent } from './Staff/staff/staff.component';
 import { CompanySettingsComponent } from './User/company-settings/company-settings.component';
 import { SalePaymentComponent } from './User/sale-payment/sale-payment.component';
 import { ChangePasswordComponent } from './User/change-password/change-password.component';
+import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-category/stock-category.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent, ServiceTypeComponent,EditSTComponent,ServicesComponent,TServicesComponent,
     ServiceOptionsComponent,ServicePackagesComponent,ClientMenuComponent,EditServiceComponent,
-    EditSOComponent, EditSPComponent, EditProductComponent, ProductComponent, DeleteProductComponent,
+    EditSOComponent, EditSPComponent, EditProductComponent, ProductComponent, DeleteProductComponent,StockCategoryDialog,
     DeleteServiceComponent,DeleteServiceTypeComponent,DeleteSOComponent,LoginComponent,ForgotComponent,
     AdminRegisterComponent,SetupComponent,ResetPasswordComponent,ClickSpinDirective,PickupComponent,PaymentComponent,
     EmployeeSTComponent,EmployeeComponent,ClientComponent,CbookingDialog,
@@ -150,7 +152,7 @@ import { ChangePasswordComponent } from './User/change-password/change-password.
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
     ViewdetailComponent,SaleinvoiceComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent,
     ReportsComponent, ErrorPageComponent, ReceiveDialog,
-    EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, CompanySettingsComponent, SalePaymentComponent, ChangePasswordComponent
+    EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, CompanySettingsComponent, SalePaymentComponent, ChangePasswordComponent, StockCategoryComponent
 
   ],
   imports: [
@@ -173,7 +175,7 @@ import { ChangePasswordComponent } from './User/change-password/change-password.
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   entryComponents: [
-    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog, OrderDialog, ReceiveDialog
+    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog, OrderDialog, ReceiveDialog, LoadingDialog, StockCategoryDialog
   ],
 })
 export class AppModule { }

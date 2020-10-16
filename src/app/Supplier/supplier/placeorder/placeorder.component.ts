@@ -1,17 +1,18 @@
-import {SelectionModel} from '@angular/cdk/collections';
-import {AfterViewInit, Component, OnInit, ViewChild, Inject} from '@angular/core';
-import {MatTableDataSource, MatTable} from '@angular/material/table';
-import {MatTableModule} from '@angular/material/table';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { SelectionModel } from '@angular/cdk/collections';
+import { AfterViewInit, Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SupplierOrderData } from '../../../API Services/for Supplier/sales';
-import {SupplierService} from '../../../API Services/for Supplier/supplier.service';
+import { SupplierService } from '../../../API Services/for Supplier/supplier.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SupplierComponent } from '../supplier.component';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { Router } from '@angular/router';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -25,69 +26,64 @@ export class PlaceorderComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<SupplierOrderData>;
 
-  
-  
-  value = 'Clear me'; 
+
+
+  value = 'Clear me';
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['OrderID', 'Supplier', 'Total items', 'Price', 'Date','viewdetail', 'ReturnOrder', 'ReceiveStock'];
+  displayedColumns = ['OrderID', 'Supplier', 'Total items', 'Price', 'Date', 'viewdetail', 'ReturnOrder', 'ReceiveStock'];
   searchKey: string;
 
 
-  constructor(public service: SupplierService, public dialog: MatDialog,
-    private api: ExperTexhService, private router: Router){}
+  constructor(public service: SupplierService, public dialog: MatDialog, private snack: MatSnackBar,
+    private api: ExperTexhService, private router: Router) { }
 
   SupplierOrderList: SupplierOrderData[];
-  dataSource ;
+  dataSource;
 
   ngOnInit() {
-    if(this.api.RoleID == "2")
-    {
+    if (this.api.RoleID == "2") {
       this.dataSource = new MatTableDataSource(this.SupplierOrderList)
-      this.service.getSupplierOrderList().subscribe(res => 
-        {
-          this.SupplierOrderList = res;
-          this.dataSource.data = this.SupplierOrderList;
-        })
+      this.service.getSupplierOrderList().subscribe(res => {
+        this.SupplierOrderList = res;
+        this.dataSource.data = this.SupplierOrderList;
+      })
     }
-    else
-    {
+    else {
       this.router.navigate(["403Forbidden"])
     }
   }
 
-  ReceiveStock(data: SupplierOrderData)
-  {
+  ReceiveStock(data: SupplierOrderData) {
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.width = '600px';
+    dialogConfig.width = '700px';
     dialogConfig.data = data;
 
     this.dialog.open(ReceiveDialog, dialogConfig);
   }
 
 
-  ViewOrder(data: SupplierOrderData)
-  {
+  ViewOrder(data: SupplierOrderData) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.width = '500px';
     dialogConfig.data = data;
 
     this.dialog.open(OrderDialog, dialogConfig);
-    
+
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator= this.paginator;
+    this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
   }
 
-  onCreate(){
+  onCreate() {
     this.dialog.open(SupplierComponent)
   }
-  
+
   onSearchClear() {
     this.searchKey = "";
     //this.applyFilter();
@@ -98,23 +94,26 @@ export class PlaceorderComponent implements AfterViewInit, OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  onDelete(OrderID: any)
-  {
-    // this.service.DeleteSupplierOrder(OrderID, this.api.SessionID).subscribe(res =>
-    //   {
-    //     if(res == "success")
-    //     {
-    //       alert("Order successfully removed")
-    //       this.service.getSupplierOrderList().subscribe(res => 
-    //         {
-    //           this.SupplierOrderList = res;
-    //           this.dataSource.data = this.SupplierOrderList;
-    //         })
-    //     }
-    //   });
-    
+  onDelete(OrderID: any) {
+    this.service.DeleteSupplierOrder(OrderID, this.api.SessionID).subscribe(res =>
+      {
+        if(res == "success")
+        {
+          this.snack.open("Ordder succesfully cancelled", "OK", {duration:3000})
+          this.service.getSupplierOrderList().subscribe(res => 
+            {
+              this.SupplierOrderList = res;
+              this.dataSource.data = this.SupplierOrderList;
+            })
+        }
+        else
+        {
+          
+        }
+      });
+
   }
-  
+
 }
 
 @Component({
@@ -128,11 +127,17 @@ export class PlaceorderComponent implements AfterViewInit, OnInit {
   </div>
   <div class="modal-body" mat-dialog-content>
     <div>
+      <div class="row">
+        <div class="col-5">
+          <strong>Supplier: </strong>{{ data.Supplier }}
+        </div>
+        <div class="col-6">
+          <strong>Date Ordered: </strong>{{ data.Date | date:"dd/MM/yy, hh:mm"}}
+        </div>
+      </div>
+      <br>           
       <p>
-      <strong>Supplier: </strong>{{ data.Supplier }}
-      </p>
-      <p>
-      <strong>Price: </strong>R{{ data.Price }}
+      <strong>Order Total: </strong>R{{ data.Price }}
       </p>
       <strong>Stock Items: </strong>
         <ul *ngFor="let x of data.StockItemLines">
@@ -147,95 +152,38 @@ export class PlaceorderComponent implements AfterViewInit, OnInit {
   </div>
   `
 })
-export class OrderDialog
-{
+export class OrderDialog {
   constructor(
     public dialogRef: MatDialogRef<OrderDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: SupplierOrderData) {}
+    @Inject(MAT_DIALOG_DATA) public data: SupplierOrderData) { }
 }
 
 @Component({
   selector: "receive-dialog",
-  template: `
-  <div class="modal-header" >
-    <h3 mat-dialog-title><strong>Receive Stock</strong></h3>
-    <button mat-dialog-close type="button" class="close" mat-dialog-close>
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body" mat-dialog-content>
-    <div>
-      <p>
-      <strong>Supplier: </strong>{{ data.Supplier }}
-      </p>
-      <form [formGroup]="ReceiveForm">
-      <div formArrayName="stockitemlines">
-        <div *ngFor="let x of ReceiveForm.get('stockitemlines')['controls']; let j = index" >
-          <div [formGroupName]="j">
-            <table class="example-full-width" cellspacing="0">
-              <tr>
-                <input hidden readonly  formControlName="LineID">
-                <td>
-                  <mat-form-field class="w-100">
-                    <mat-label>Item</mat-label>
-                    <input readonly matInput formControlName="Items">
-                  </mat-form-field>
-                </td>
-                <td>
-                  <mat-form-field class="example-full-width">
-                    <mat-label>Quantity</mat-label>
-                    <input matInput readonly formControlName="Quantity">
-                  </mat-form-field>
-                </td>
-                <td>                   
-                  <section class="example-section">
-                    <mat-checkbox class="example-margin" formControlName="available">Available</mat-checkbox>           
-                  </section>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </form>
-      <p>
-      <strong>Price: </strong>R{{ data.Price }}
-      </p>
-      <strong>Stock Items: </strong>
-        <ul *ngFor="let x of data.StockItemLines">
-          <li>{{ x.Items}} (Quantity: {{x.Quantity}})</li>
-        </ul>
-    </div> 
-  </div>
-  <div class="modal-footer" mat-dialog-actions>
-    <button type="button" class="btn btn-outline-secondary"mat-dialog-close>
-      Close
-    </button>
-  </div>
-  `
+  templateUrl: "receive-stock.html",
+  styles:   []
 })
-export class ReceiveDialog implements OnInit
-{
+export class ReceiveDialog implements OnInit {
   ReceiveForm: FormGroup;
 
   constructor(
-    public dialogRef: MatDialogRef<ReceiveDialog>, private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: SupplierOrderData) 
-    {
-     
-    }
+    public dialogRef: MatDialogRef<ReceiveDialog>, private fb: FormBuilder, private service: SupplierService,
+    @Inject(MAT_DIALOG_DATA) public data: SupplierOrderData, private api: ExperTexhService, private snack: MatSnackBar) {
 
-  ngOnInit()
-  {
-    this.ReceiveForm = this.fb.group({
-      stockitemlines: this.fb.array([])
-    })
-
-    this.ReceiveForm.setControl('times', this.setOrder(this.data));
   }
 
-  setOrder(res: SupplierOrderData): FormArray
-  {
+  ngOnInit() {
+    this.ReceiveForm = this.fb.group({
+      orderid:this.data.OrderID,
+      stockitemlines: this.fb.array([
+        
+      ])
+    })
+
+    this.ReceiveForm.setControl('stockitemlines', this.setOrder(this.data));
+  }
+
+  setOrder(res: SupplierOrderData): FormArray {
     const formArray = new FormArray([]);
 
     res.StockItemLines.forEach(s => {
@@ -243,13 +191,53 @@ export class ReceiveDialog implements OnInit
         this.fb.group({
           LineID: s.LineID,
           Quantity: s.Quantity,
+          Size: s.Size,
           Items: s.Items,
-          QuantityReceived: '',
+          QuantityReceived: null,
           Received: false,
         })
       )
-    })
+      console.log(s)
+      console.log(this.ReceiveForm.value)
+    }
+    )
 
     return formArray;
+  }
+
+  ReceiveStock()
+  {
+    if(this.ReceiveForm.invalid)
+    {
+      this.ReceiveForm.markAllAsTouched();
+      alert("Fill in all the required details")
+      return;
+    }
+
+    const Receive = 
+    {
+      OrderID: this.ReceiveForm.value.orderid,
+      StockItemLines: this.ReceiveForm.value.stockitemlines
+    }
+
+
+    this.service.ReceiveStock(Receive, this.api.SessionID).subscribe(res =>
+      {
+        if(res == "success")
+        {
+          this.snack.open("Stock successfully received", "OK", {duration: 3000})
+          this.dialogRef.close();
+        }
+        else if(res == "invalid")
+        {
+          this.snack.open("Save details invalid", "OK", {duration: 3000})
+          this.dialogRef.close();
+        }
+        else
+        {
+          alert(res)
+          this.dialogRef.close();
+        }
+      })
   }
 }

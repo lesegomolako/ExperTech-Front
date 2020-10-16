@@ -6,13 +6,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { ReportingService } from '../../API Services/for User/reporting.service';
 import {Process} from '../../API Services/for User/process';
 import { Router } from '@angular/router';
 import { Client } from 'src/app/API Services/for Booking/client';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CbookingDialog } from 'src/app/Staff/get-bookings/get-bookings.component';
 
 @Component({
   selector: 'app-client',
@@ -33,14 +35,26 @@ export class ClientComponent implements OnInit {
   }
   constructor(
     public dialog: MatDialog, private api: ExperTexhService,
-    public service: ReportingService,
+    public service: ReportingService, private snack: MatSnackBar,
     private router: Router
   ) { }
   List: Observable<Client[]>;
+  isOwner = false;
 
   ngOnInit(): void {
-    this.loadList();
-    this.resetForm();
+
+    if(this.api.RoleID == "2")
+    {
+      this.loadList();
+      this.resetForm();
+
+      this.api.getProfile().subscribe((res: any) => { this.isOwner = res.Admins[0]?.Owner })
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
+
   }
 
   loadList() {
@@ -143,5 +157,53 @@ export class ClientComponent implements OnInit {
 
   DeleteClient(ClientID){
     this.service.deleteClient(ClientID, this.api.SessionID).subscribe(ref => {this.loadList()});
+
+    if (confirm("Are you sure you want to delete this client?")) {
+      if (this.isOwner == true) {
+        this.service.deleteClient(ClientID, this.api.SessionID)
+          .subscribe((ref: any) => {
+            if (ref == "success") {
+              this.snack.open("Client successfully deleted", "OK", { duration: 3000 })
+              this.loadList();
+            }
+            else if (ref.Error == "session") {
+              alert(ref.Message);
+            }
+            else {
+              console.log(ref)
+            }
+          }, error => { console.log(error), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
+      }
+      else {
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.width = '400px';
+        dialogConfig.height = '300px';
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+
+
+        const dialogRef = this.dialog.open(CbookingDialog, dialogConfig);
+
+        dialogRef.afterClosed().subscribe((res: any) => {
+          if (res == true) 
+          {
+            this.service.deleteClient(ClientID, this.api.SessionID)
+            .subscribe((ref: any) => {
+              if (ref == "success") {
+                this.snack.open("Client successfully deleted", "OK", { duration: 3000 })
+                this.loadList();
+              }
+              else if (ref.Error == "session") {
+                alert(ref.Message);
+              }
+              else {
+                console.log(ref)
+              }
+            }, error => { console.log(error), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
+          }
+        })
+      }
+    }
   }
 }
