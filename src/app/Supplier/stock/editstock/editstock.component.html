@@ -61,18 +61,6 @@
       </tr>
       <tr>
         <td><mat-form-field class="example-full-width">
-          <mat-label>Category</mat-label>
-          <mat-select formControlName="categoryid">
-            <mat-option disabled value="Select a category"></mat-option>
-            <mat-option *ngFor="let x of Categories" value="{{x.CategoryID}}">
-              {{x.Name}}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="f.categoryid.errors">
-            <mat-error *ngIf="f.categoryid.errors.required">Category is required</mat-error>
-          </mat-error>
-        </mat-form-field></td>
-        <td><mat-form-field class="example-full-width">
           <mat-label>Color (optional)</mat-label>
           <input matInput type="text" formControlName="color">
           <mat-error *ngIf="f.color.errors?.maxlength">Color text may not exceed 50 characters</mat-error>

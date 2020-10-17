@@ -21,7 +21,11 @@ export class SupplierReportComponent implements OnInit {
     end: new FormControl()
   });
 
-  maxDate = new Date();
+  today = new Date();
+  maxDate = new Date(new Date().setDate(new Date().getDate()));
+  
+  displayed = true;
+  generated = true;
 
   ngOnInit(): void {
   }

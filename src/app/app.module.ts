@@ -131,7 +131,7 @@ import { StaffComponent } from './Staff/staff/staff.component';
 import { CompanySettingsComponent } from './User/company-settings/company-settings.component';
 import { SalePaymentComponent } from './User/sale-payment/sale-payment.component';
 import { ChangePasswordComponent } from './User/change-password/change-password.component';
-import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-category/stock-category.component';
+
 
 
 
@@ -139,7 +139,7 @@ import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-ca
   declarations: [
     AppComponent, ServiceTypeComponent,EditSTComponent,ServicesComponent,TServicesComponent,
     ServiceOptionsComponent,ServicePackagesComponent,ClientMenuComponent,EditServiceComponent,
-    EditSOComponent, EditSPComponent, EditProductComponent, ProductComponent, DeleteProductComponent,StockCategoryDialog,
+    EditSOComponent, EditSPComponent, EditProductComponent, ProductComponent, DeleteProductComponent,
     DeleteServiceComponent,DeleteServiceTypeComponent,DeleteSOComponent,LoginComponent,ForgotComponent,
     AdminRegisterComponent,SetupComponent,ResetPasswordComponent,ClickSpinDirective,PickupComponent,PaymentComponent,
     EmployeeSTComponent,EmployeeComponent,ClientComponent,CbookingDialog,
@@ -152,7 +152,7 @@ import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-ca
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
     ViewdetailComponent,SaleinvoiceComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent,
     ReportsComponent, ErrorPageComponent, ReceiveDialog,
-    EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, CompanySettingsComponent, SalePaymentComponent, ChangePasswordComponent, StockCategoryComponent
+    EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, CompanySettingsComponent, SalePaymentComponent, ChangePasswordComponent
 
   ],
   imports: [
@@ -175,7 +175,7 @@ import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-ca
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   entryComponents: [
-    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog, OrderDialog, ReceiveDialog, LoadingDialog, StockCategoryDialog
+    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog, OrderDialog, ReceiveDialog, LoadingDialog
   ],
 })
 export class AppModule { }

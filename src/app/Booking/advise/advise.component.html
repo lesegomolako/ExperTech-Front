@@ -1,4 +1,18 @@
 <div class="row">
+  <div class="col-12">
+
+  <h1 class="text-center">Advise Booking
+  <button mat-raised-button style="float: right;" routerLink="/schedule" style="background-color:forestgreen" >
+    <mat-icon style="color:white">keyboard_return</mat-icon> Back
+  </button>
+  <span routerLink="/#" class="material-icons help">
+    help_outline
+  </span>
+</h1>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-6">
     <form [formGroup]="AdviseForm" (submit)="AdviseBooking(AdviseForm)">
       <div style="text-align: center; color: black;" class="card-hover w-100">

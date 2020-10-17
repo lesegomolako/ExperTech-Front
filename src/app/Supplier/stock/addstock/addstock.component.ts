@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { StockCategory, StockData } from '../../../API Services/for Supplier/sales';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 //import { ReportingService } from '../../API Services/for User/reporting.service';
 //import {Process} from '../../API Services/for User/process';
 
@@ -17,7 +18,7 @@ import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.se
 })
 export class AddstockComponent implements OnInit {
 
-  constructor(private service: StockService, private route: Router,
+  constructor(private service: StockService, private route: Router, private snack:MatSnackBar,
      private formBuilder: FormBuilder, private api: ExperTexhService) { }
   StockForm: FormGroup;
   stocks: StockData;
@@ -35,13 +36,9 @@ export class AddstockComponent implements OnInit {
         price: ['', [Validators.required, Validators.min(0)]],
         quantity: [0],
         size :['', [Validators.required, Validators.min(0)]],
-        categoryid: ['', Validators.required],
         color: [null, Validators.maxLength(50)]
       })
-      this.service.getStockCategory().subscribe(res =>
-        {
-          this.Categories = res;
-        })
+      
     }
     else
     {
@@ -72,11 +69,17 @@ export class AddstockComponent implements OnInit {
 
   AddStock(stock)
   {
+    if(this.StockForm.invalid)
+    {
+      alert("Fill in all the required fields");
+      this.StockForm.markAllAsTouched();
+      return;
+    }
     this.service.AddStockItem(stock.value, this.api.SessionID)
     .subscribe(res => {
       if (res == "success")
       {
-        alert("Successfully added Stock Item")
+        this.snack.open("Successfully added stock item", "OK", {duration:3000})
         this.route.navigateByUrl("/stock")
       }
       else if(res == "duplicate")
@@ -84,7 +87,11 @@ export class AddstockComponent implements OnInit {
         alert("Stock item already exists")
         this.route.navigate(["stock"])
       }
-    })
+      else
+      {
+        console.log(res)
+      }
+    }, error => {console.log(error); this})
 
   }
 

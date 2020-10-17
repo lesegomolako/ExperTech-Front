@@ -32,9 +32,9 @@ export class EditstockComponent implements OnInit {
         price: [this.stock.Price, [Validators.required, Validators.min(0)]],
         quantityinstock: [this.stock.QuantityInStock], 
         size: [this.stock.Size, [Validators.required, Validators.min(0)]],
-        categoryid: [this.stock.CategoryID, Validators.required],
         color: [this.stock.Color, Validators.maxLength(50)]
       })
+      
     }
     else
     {

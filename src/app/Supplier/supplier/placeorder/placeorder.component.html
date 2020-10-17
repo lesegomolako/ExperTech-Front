@@ -61,16 +61,23 @@
 
      <!-- Return Supplier Order -->
       <ng-container matColumnDef="ReturnOrder">
-       <th mat-header-cell *matHeaderCellDef></th>
+       <th mat-header-cell *matHeaderCellDef>Return Order</th>
        <td mat-cell *matCellDef="let row">
         <button style="background-color:red" title="Cancel supplier order" *ngIf="row.Received == false" (click)="onDelete(row.OrderID)"><mat-icon style="color:white">delete_sweep</mat-icon></button>
        </td >
      </ng-container>
    
      <ng-container matColumnDef="ReceiveStock">
-      <th mat-header-cell *matHeaderCellDef></th>
+      <th mat-header-cell *matHeaderCellDef>Receive Stock</th>
       <td mat-cell *matCellDef="let row">
        <button style="background-color:forestgreen" title="Recieve stock" *ngIf="row.Received == false" (click)="ReceiveStock(row)"><mat-icon style="color:white">receipt</mat-icon></button>
+      </td >
+    </ng-container>
+
+    <ng-container matColumnDef="Regenerate">
+      <th mat-header-cell *matHeaderCellDef>Regenerate</th>
+      <td mat-cell *matCellDef="let row">
+       <button style="background-color:forestgreen" title="Regenerate Supplier Order" *ngIf="row.Received == true" (click)="RegenerateOrder(row)"><mat-icon style="color:white">autorenew</mat-icon></button>
       </td >
     </ng-container>
      

@@ -8,7 +8,7 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CbookingDialog } from 'src/app/Staff/get-bookings/get-bookings.component';
 import { MatStepper } from '@angular/material/stepper';
 //import { ReportingService } from '../../API Services/for User/reporting.service';
@@ -32,12 +32,12 @@ export class SaleComponent implements AfterViewInit, OnInit {
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['saleid', 'client', 'saletype', 'status', 'payment', 'paymenttype', 'date', 'reminder', 'viewdetail', 'pickup', 'cancel'];
-  dialog: any;
+  
   searchKey: string;
   SaleData: any;
 
 
-  constructor(public service: SaleService, private router: Router,
+  constructor(public service: SaleService, private router: Router, private dialog: MatDialog,
     private api: ExperTexhService, private snack: MatSnackBar) { }
 
   SaleList: SaleData[];
@@ -69,7 +69,9 @@ export class SaleComponent implements AfterViewInit, OnInit {
 
   isOwner = false;
   CancelSale(SaleID) {
-    if (confirm("Are you sure you want to cancel this sale?")) {
+
+    if (confirm("Are you sure you want to cancel this sale?")) 
+    {
       if (this.isOwner == true) {
         this.service.CancelSale(this.api.SessionID, SaleID)
           .subscribe((ref: any) => {
@@ -86,6 +88,7 @@ export class SaleComponent implements AfterViewInit, OnInit {
           }, error => { console.log(error), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
       }
       else {
+
         const dialogConfig = new MatDialogConfig();
 
         dialogConfig.width = '400px';
@@ -101,7 +104,7 @@ export class SaleComponent implements AfterViewInit, OnInit {
             this.service.CancelSale(this.api.SessionID, SaleID, res.OwnerID)
               .subscribe((ref: any) => {
                 if (ref == "success") {
-                  this.snack.open("Admin successfully deleted", "OK", { duration: 3000 })
+                  this.snack.open("Sale successfully cancelled", "OK", { duration: 3000 })
                   window.location.reload()
                 }
                 else if (ref.Error == "session") {

@@ -31,7 +31,7 @@ export class PlaceorderComponent implements AfterViewInit, OnInit {
   value = 'Clear me';
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['OrderID', 'Supplier', 'Total items', 'Price', 'Date', 'viewdetail', 'ReturnOrder', 'ReceiveStock'];
+  displayedColumns = ['OrderID', 'Supplier', 'Total items', 'Price', 'Date', 'viewdetail', 'ReturnOrder', 'ReceiveStock', 'Regenerate'];
   searchKey: string;
 
 
@@ -61,6 +61,19 @@ export class PlaceorderComponent implements AfterViewInit, OnInit {
     dialogConfig.data = data;
 
     this.dialog.open(ReceiveDialog, dialogConfig);
+
+  }
+
+  RegenerateOrder(data: SupplierOrderData) {
+    if (confirm("Would you like to re-generate this supplier order?")) {
+      this.service.RegenerateOrder(data, this.api.SessionID).subscribe((res: any) => {
+        if (res == "success") {
+          this.snack.open("Supplier order successfully regenerated", "OK", { duration: 3000 })
+          window.location.reload();
+        }
+
+      })
+    }
   }
 
 
@@ -95,22 +108,21 @@ export class PlaceorderComponent implements AfterViewInit, OnInit {
   }
 
   onDelete(OrderID: any) {
-    this.service.DeleteSupplierOrder(OrderID, this.api.SessionID).subscribe(res =>
-      {
-        if(res == "success")
-        {
-          this.snack.open("Ordder succesfully cancelled", "OK", {duration:3000})
-          this.service.getSupplierOrderList().subscribe(res => 
-            {
-              this.SupplierOrderList = res;
-              this.dataSource.data = this.SupplierOrderList;
-            })
+    if (confirm("Are you sure you want to return this order?")) {
+      this.service.DeleteSupplierOrder(OrderID, this.api.SessionID).subscribe(res => {
+        if (res == "success") {
+          this.snack.open("Order succesfully cancelled", "OK", { duration: 3000 })
+          this.service.getSupplierOrderList().subscribe(res => {
+            this.SupplierOrderList = res;
+            this.dataSource.data = this.SupplierOrderList;
+          })
+          window.location.reload();
         }
-        else
-        {
-          
+        else {
+
         }
       });
+    }
 
   }
 
@@ -161,7 +173,7 @@ export class OrderDialog {
 @Component({
   selector: "receive-dialog",
   templateUrl: "receive-stock.html",
-  styles:   []
+  styles: []
 })
 export class ReceiveDialog implements OnInit {
   ReceiveForm: FormGroup;
@@ -174,9 +186,9 @@ export class ReceiveDialog implements OnInit {
 
   ngOnInit() {
     this.ReceiveForm = this.fb.group({
-      orderid:this.data.OrderID,
+      orderid: this.data.OrderID,
       stockitemlines: this.fb.array([
-        
+
       ])
     })
 
@@ -205,39 +217,38 @@ export class ReceiveDialog implements OnInit {
     return formArray;
   }
 
-  ReceiveStock()
-  {
-    if(this.ReceiveForm.invalid)
-    {
+
+
+  ReceiveStock() {
+    if (this.ReceiveForm.invalid) {
       this.ReceiveForm.markAllAsTouched();
       alert("Fill in all the required details")
       return;
     }
 
-    const Receive = 
+    const Receive =
     {
       OrderID: this.ReceiveForm.value.orderid,
       StockItemLines: this.ReceiveForm.value.stockitemlines
     }
 
 
-    this.service.ReceiveStock(Receive, this.api.SessionID).subscribe(res =>
-      {
-        if(res == "success")
-        {
-          this.snack.open("Stock successfully received", "OK", {duration: 3000})
-          this.dialogRef.close();
-        }
-        else if(res == "invalid")
-        {
-          this.snack.open("Save details invalid", "OK", {duration: 3000})
-          this.dialogRef.close();
-        }
-        else
-        {
-          alert(res)
-          this.dialogRef.close();
-        }
-      })
+    this.service.ReceiveStock(Receive, this.api.SessionID).subscribe(res => {
+      if (res == "success") {
+        this.snack.open("Stock successfully received", "OK", { duration: 3000 })
+        this.dialogRef.close();
+        window.location.reload();
+      }
+      else if (res == "invalid") {
+        this.snack.open("Save details invalid", "OK", { duration: 3000 })
+        this.dialogRef.close();
+        window.location.reload();
+      }
+      else {
+        alert(res)
+        this.dialogRef.close();
+        window.location.reload();
+      }
+    })
   }
 }

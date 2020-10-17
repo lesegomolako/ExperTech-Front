@@ -123,6 +123,7 @@ export class MakebookingComponent implements OnInit{
     this.BookingForm.get("ServiceControl").enable();
     this.BookingForm.get("employeeControl").enable();  
     this.ServicesID = this.BookingForm.value.ServiceControl
+    console.log(this.Schedule)
   }
 
   EnableOptForm(Service: ServiceData)
@@ -133,10 +134,19 @@ export class MakebookingComponent implements OnInit{
 
   }
 
-  EnableTimeForm()
+  EnableDateForm(EmployeeID)
   {
-    this.BookingForm.get("TimeControl").enable();
+    this.Schedule = this.Schedule.filter(res => res.EmployeeID == EmployeeID);
     this.BookingForm.get("DateControl").enable();
+    console.log(this.Schedule)
+  }
+
+  EnableTimeForm(event)
+  {
+    var sDate: Date = event;
+    alert(sDate.toLocaleDateString())
+    //this.Schedule = this.Schedule.fore
+    // this.BookingForm.get("TimeControl").enable();
   }
 
  
@@ -187,7 +197,6 @@ openAddDialog(): void {
   const dialogRef = this.dialog.open(AddClientDialog, dialogConfig);
 
   dialogRef.afterClosed().subscribe((res:any) => {
-    console.log('The dialog was closed');
     this.BookingForm.patchValue(
       {
         clientid: res.ClientID,
@@ -212,7 +221,6 @@ openSearchDialog(): void {
   const dialogRef = this.dialog.open(SearchClientDialog, dialogConfig);
 
   dialogRef.afterClosed().subscribe((res:any) => {
-    console.log('The dialog was closed');
     this.BookingForm.patchValue(
       {
         clientid: res.ClientID,
@@ -238,7 +246,7 @@ omit_special_char(event)
 onSubmit(form)
 {
   this.BookingForm=form;
-  console.log(form)
+ 
   this.submitted = true;
 
   // stop here if form is invalid
@@ -299,13 +307,14 @@ LoadList()
     }
 
     this.Schedule = res
-    console.log(res)
+   
   }
     , error => {console.log(error), this.snack.open("Something went wrong. Try again later", "OK", {duration: 3000})})
-  // // this.http.get<[]>(this.api.url + "Booking/getALLemployees")
-  // // .subscribe(res => {this.Employee = res})
+
+  this.http.get<[]>(this.api.url + "Booking/getALLemployees")
+  .subscribe(res => {this.Employee = res})
   this.service.getServices()
-  .subscribe(res => {this.Service = res; console.log(res)})
+  .subscribe(res => {this.Service = res; })
   this.http.get<[]>(this.api.url + "Services/GetServiceOption")
   .subscribe(res => {this.ServiceOptions = res})
   this.service.getServiceTypes()
@@ -367,7 +376,7 @@ closeModal()
 export class AddClientDialog implements OnInit
 {
   constructor(
-    public dialogRef: MatDialogRef<AddClientDialog>, private api:ExperTexhService,
+    public dialogRef: MatDialogRef<AddClientDialog>, private api:ExperTexhService, private snack: MatSnackBar,
     private fb: FormBuilder, private http:HttpClient, private router: Router) {}
 
   ClientForm: FormGroup;
@@ -405,18 +414,17 @@ export class AddClientDialog implements OnInit
       this.ClientForm.markAllAsTouched();
       return;
     }
-    console.log(form.value);
+   
     this.http.post(this.api.url + "Clients/AddClient", form.value).subscribe((res:any) => {
       if(res.Message == "success")
       {
-        alert("Client successfully added")
+        this.snack.open("Client successfully added", "OK", {duration: 3000})
         this.dialogRef.close(res.Client);
       }
       else if(res.Message == "duplicate")
       {
         if(confirm("Client details already exist. Would you select this client?"))
         {
-          console.log(res.Client)
           this.dialogRef.close(res.Client)
         }
       }
@@ -437,7 +445,7 @@ export class AddClientDialog implements OnInit
 export class SearchClientDialog implements OnInit
 {
   constructor(
-    public dialogRef: MatDialogRef<SearchClientDialog>, private api:ExperTexhService,
+    public dialogRef: MatDialogRef<SearchClientDialog>, private api:ExperTexhService, private snack: MatSnackBar,
     private fb: FormBuilder, private http:HttpClient, private service: ReportingService) {}
 
     myControl = new FormControl();
@@ -464,6 +472,7 @@ export class SearchClientDialog implements OnInit
     
     SelectClient(Client: Client)
     {
+      this.snack.open("Client successfully selected")
       this.dialogRef.close(Client);
     }
 

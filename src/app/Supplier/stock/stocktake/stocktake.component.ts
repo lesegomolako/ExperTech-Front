@@ -86,6 +86,11 @@ export class StocktakeComponent implements OnInit {
 
 AddStockTake()
 {
+  if(this.stockTake.invalid)
+  {
+    alert("Fill in all the required details")
+    return;
+  }
   this.mapValues();
   this.takeService.CreateTake(this.Take, this.api.SessionID).subscribe(ref => {
     if(ref == "success")

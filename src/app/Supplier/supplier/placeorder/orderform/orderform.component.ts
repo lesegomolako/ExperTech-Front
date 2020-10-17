@@ -13,6 +13,7 @@ import { SupplierData } from '../../../../API Services/for Supplier/sales';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-orderform',
@@ -38,7 +39,7 @@ export class orderform implements OnInit {
     private formBuilder: FormBuilder,
     private suppService: SupplierService,
     private http: HttpClient,
-    private router: Router ,
+    private router: Router , private snack: MatSnackBar,
     private api:ExperTexhService ){}
 
   
@@ -139,7 +140,7 @@ AddOrder(form)
   {
     if(ref == "success")
       {
-        alert("Successfully saved")
+        this.snack.open("Order successfuly made", "OK", {duration:3000})
         this.router.navigateByUrl("placeorder")
       }
   });    

@@ -28,13 +28,14 @@
                     </div>
                     <div class="form-group">
                       <label>Contact number</label>
-                      <input type="tel" pattern='\d*'name="Contact" minlength='10'maxlength='10'
-                      required id="ContactNo" formControlName="ContactNo"  (keypress)="omit_special_char($event)" mdInput name="name"  class="form-control" [ngClass]="{ 'is-invalid': validateForm.get('ContactNo').errors && (validateForm.get('ContactNo').touched || validateForm.get('ContactNo').dirty)}"  />
+                      <input name="Contact" placeholder="Phone number format: 0713245678"
+                       id="ContactNo" formControlName="ContactNo"   mdInput name="name"  class="form-control" [ngClass]="{ 'is-invalid': validateForm.get('ContactNo').errors && (validateForm.get('ContactNo').touched || validateForm.get('ContactNo').dirty)}"  />
                       <div *ngIf="validateForm.get('ContactNo').errors" class="invalid-feedback">
                           <div *ngIf="validateForm.get('ContactNo').errors.required">Contact Number is required</div>
                           <div *ngIf="validateForm.get('ContactNo').errors.minlength">Contact must be 10 characters long </div>
                           <div *ngIf="validateForm.get('ContactNo').errors.maxlength">Contact must be 10 characters long </div>
-                      </div>z
+                          <div *ngIf="validateForm.get('ContactNo').errors.pattern">Enter a valid phone number</div>
+                      </div>
                   </div>
                   <div class="form-group">
                     <label>Email</label>
