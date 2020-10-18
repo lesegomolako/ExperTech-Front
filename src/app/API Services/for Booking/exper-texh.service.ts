@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import{Observable} from 'rxjs';
-import{Client, User, BasketLine,ClientPackage, Product, Booking} from './client';
+import{Client, User, BasketLine,ClientPackage, Product, Booking, AuditTrail} from './client';
 //import 'rxjs/add/operator/map';
 import { HttpHeaders, HttpParams } from '@angular/common/http';  
 import { HttpClient } from '@angular/common/http';
@@ -195,6 +195,24 @@ export class ExperTexhService {
     });   
   }
 
+
+  getAdminAudit()
+  {
+    const params = new HttpParams().set("SessionID", this.SessionID);
+    return this.http.get<AuditTrail[]>(this.url +"User/GetAdminAudit", {params})
+  }
+
+  getClientAudit()
+  {
+    const params = new HttpParams().set("SessionID", this.SessionID);
+    return this.http.get<AuditTrail[]>(this.url +"User/GetClientAudit", {params})
+  }
+
+  getEmpAudit()
+  {
+    const params = new HttpParams().set("SessionID", this.SessionID);
+    return this.http.get<AuditTrail[]>(this.url +"User/GetEmpAudit", {params})
+  }
   
   
   

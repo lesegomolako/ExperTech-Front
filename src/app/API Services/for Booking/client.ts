@@ -166,4 +166,14 @@ export class EmployeeSchedule {
       }
     ]
 }
+export class AuditTrail {
+  AuditID?: any;
+  Name: any
+  OldData: any;
+  NewData: any;
+  TablesAffected: string;
+  TransactionType: string;
+  Data: Date;
+  AuthorizedBy?: any;
+}
 

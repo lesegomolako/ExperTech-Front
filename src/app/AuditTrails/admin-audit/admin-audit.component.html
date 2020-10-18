@@ -1,1 +1,91 @@
-<p>admin-audit works!</p>
+<div class="row">
+    <div class="col-11">
+    <h1 class="md-display-3">Audit Trail Management</h1>
+    </div>
+    <div class="col-1.5 ">
+      <button mat-raised-button style="float: right;" routerLink="/employeehome" style="background-color:forestgreen" >
+        <mat-icon style="color:white">home</mat-icon> Home
+    </button>
+    </div>
+    </div>
+  
+  <div class="mat-elevation-z8 app-supplier" >
+      <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field>
+    <table mat-table class="dataSource?" matSort aria-label="Elements">
+  
+      <!-- AuditID Column -->
+      <ng-container matColumnDef="auditid" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>AuditID</th>
+        <td mat-cell *matCellDef="let row">{{row.AuditID}}</td>
+      </ng-container>
+  
+      <!-- AdminName Column -->
+      <ng-container matColumnDef="admin">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Admin</th>
+        <td mat-cell *matCellDef="let row">{{row.AdminName}}</td>
+      </ng-container>
+  
+      <!-- OldData Column -->
+      <ng-container matColumnDef="olddata">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>OLD Data</th>
+        <td mat-cell *matCellDef="let row">{{row.OldData}}</td>
+      </ng-container>
+  
+      <!-- NewData Column -->
+      <ng-container matColumnDef="newdata">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>New Data</th>
+        <td mat-cell *matCellDef="let row">{{row.NewData}}</td>
+      </ng-container>
+  
+      <!-- TablesAffected Column -->
+      <ng-container matColumnDef="tablesaffected">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>TablesAffected</th>
+        <td mat-cell *matCellDef="let row">{{row.TablesAffected}}</td>
+      </ng-container>
+  
+      <!-- come back to the N/A thing-->
+  
+      <!-- TransactionType Column -->
+      <ng-container matColumnDef="transactiontype">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction Type</th>
+        <td mat-cell *matCellDef="let row">{{row.TransactionType}}</td>
+      </ng-container>
+  
+      <!-- Date Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+        <td mat-cell *matCellDef="let row">{{row.Date | date:"dd/MM/yy"}}</td>
+      </ng-container>
+  
+      <!-- AuthorizedBy Column -->
+      <ng-container matColumnDef="authorizedby">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>AuthorizedBy</th>
+        <td mat-cell *matCellDef="let row">{{row.AuthorizedBy}}</td>
+      </ng-container>
+      
+      
+  
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+    </table>
+    <mat-card *ngIf="dataSource?.data.length == 0" class="text-center">no sales available</mat-card>
+    <mat-paginator #paginator
+      *ngIf="dataSource?.data.length>10"
+      [length]="dataSource?.data.length"
+      [pageIndex]=""
+      [pageSize]="10"
+      [pageSizeOptions]="[10, 25, 50]"
+      showFirstLastButtons>
+    </mat-paginator>
+    <a [routerLink] = "['/stocktake']">
+      <button mat-raised-button style="background-color:forestgreen" >
+        <mat-icon style="color:white">add_box</mat-icon> Stock Take 
+      </button></a>
+  
+  </div>
+  
