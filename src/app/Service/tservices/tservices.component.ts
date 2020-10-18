@@ -1,29 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ServicesService } from '../../API Services/for Service/services.service';
 import { Router } from '@angular/router';
 import {Observable} from 'rxjs';
 import {ServiceData} from '../../API Services/for Service/services';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-tservices',
   templateUrl: './tservices.component.html',
   styleUrls: ['./tservices.component.css']
 })
-export class TServicesComponent implements OnInit {
+export class TServicesComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable) table: MatTable<ServiceData>;
+
+  displayedColumns = ['ID', 'Name','Type', 'Description', 'Price','Options', 'Edit', 'Delete'];
 
   constructor(public service: ServicesService, private rouuter: Router) { }
  
-  ServicesList : Observable<ServiceData[]>;
+  ServicesList : ServiceData[];
 
+  dataSource;
   ngOnInit() 
   {
+    this.dataSource = new MatTableDataSource(this.ServicesList)
     this.loadList();
     localStorage.clear();
   }
 
+  ngAfterViewInit()
+  {
+    this.table.dataSource = this.dataSource;
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator= this.paginator;
+    
+  }
+
+  length = 0;
   loadList()
   {
-    this.ServicesList = this.service.getServices();
+    this.service.getServices().subscribe(res => 
+      {
+        this.dataSource.data = res;
+      });
     
   }
 

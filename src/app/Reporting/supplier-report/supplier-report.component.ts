@@ -8,6 +8,7 @@ import { of} from 'rxjs';
 import { stringify } from 'querystring';
 import {jsPDF} from 'jspdf';
 import {autoTable} from 'jspdf-autotable';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 @Component({
   selector: 'app-supplier-report',
@@ -35,7 +36,7 @@ export class SupplierReportComponent implements OnInit {
   chart=[];
   products: Object;
 
-  constructor(private service: ReportsService){}
+  constructor(private service: ReportsService, private api:ExperTexhService){}
 
   DownloadPDF()
   {
@@ -95,12 +96,12 @@ export class SupplierReportComponent implements OnInit {
 
     //console.log(this.Criteria)
 
-    this.service.GetSuppReportingData(this.Criteria).subscribe(response => {
+    this.service.GetSuppReportingData(this.Criteria, this.api.SessionID).subscribe(response => {
 
-      let keys = response['Category'].map(d=> d.Name);
-      let values = response['Category'].map(d=> d.Total);
+      let keys = response['Stock'].map(d=> d.Name);
+      let values = response['Stock'].map(d=> d.NumOrders);
 
-      this.products = response['Product'];
+      this.products = response['Totals'];
       
      
 

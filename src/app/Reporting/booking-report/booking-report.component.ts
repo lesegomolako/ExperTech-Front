@@ -130,10 +130,10 @@ convetToPDF()
 
     //console.log(this.Criteria)
 
-    this.service.GetBookingReportingData(this.Criteria).subscribe(response => {
+    this.service.GetBookingReportingData(this.Criteria, this.api.SessionID).subscribe(response => {
 
       let keys = response['Bookings'].map(d=> d.Name);
-      let values = response['Bookings'].map(d=> d.Total);
+      let values = response['Bookings'].map(d=> d.NumBookings);
 
       this.bookings = response['Bookings'];
       

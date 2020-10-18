@@ -22,19 +22,6 @@
           <mat-error *ngIf="(ReportForm.controls.start.errors?.required && 
           (ReportForm.controls.start.touched || ReportForm.controls.start.dirty))"></mat-error>
         </mat-form-field>
-        <br>
-        <mat-form-field width="100%">
-          <mat-label>Select Report Criteria</mat-label>
-          <mat-select formControlName="criteria" >
-            <mat-option value="4">All Sales</mat-option>
-            <mat-option value="1">Product Purchases</mat-option>
-            <mat-option value="2">Booking Payments</mat-option>
-            <mat-option value="3">Activate Services</mat-option>
-          </mat-select>
-          <mat-error *ngIf="(ReportForm.controls.criteria.errors?.required && 
-          (ReportForm.controls.criteria.touched || ReportForm.controls.criteria.dirty))">
-          Select a criteria</mat-error>
-        </mat-form-field>
         <div>
           <button mat-raised-button color="primary" (click)="SubmitRequest()">Generate Report</button>
           <button mat-raised-button (click)="convetToPDF()" [hidden]="generated">Download PDF</button>
@@ -94,19 +81,12 @@
                   <tr>
                     <th>Employee Name</th>
                     <th>Number Of Bookings</th>
-                    <th>% of total</th>
                   </tr>
                 </thead> 
                 <tbody>
                   <tr *ngFor="let y of bookings" >
                     <td>{{y.Name}}</td>
-                    <td>{{y.Total}}</td>
-                    <td>{{y.Price}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Total</strong></td>
-                    <td></td>
-                    <td>100%</td>
+                    <td>{{y.NumBookings}}</td>
                   </tr>
                 </tbody>  
                 </table>

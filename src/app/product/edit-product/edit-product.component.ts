@@ -199,7 +199,7 @@ export class EditProductComponent implements OnInit {
       productid: this.ProdFormData.ProductID,
     })
 
-
+    
     this.imageURL = this.ProdFormData.Image;
 
   }

@@ -144,9 +144,9 @@ export class MakebookingComponent implements OnInit{
   EnableTimeForm(event)
   {
     var sDate: Date = event;
-    alert(sDate.toLocaleDateString())
+    //alert(sDate.toLocaleDateString())
     //this.Schedule = this.Schedule.fore
-    // this.BookingForm.get("TimeControl").enable();
+   this.BookingForm.get("TimeControl").enable();
   }
 
  
@@ -415,7 +415,8 @@ export class AddClientDialog implements OnInit
       return;
     }
    
-    this.http.post(this.api.url + "Clients/AddClient", form.value).subscribe((res:any) => {
+    const params = new HttpParams().set("SessionID", this.api.SessionID)
+    this.http.post(this.api.url + "Clients/AddClient", form.value, {params}).subscribe((res:any) => {
       if(res.Message == "success")
       {
         this.snack.open("Client successfully added", "OK", {duration: 3000})
@@ -472,7 +473,7 @@ export class SearchClientDialog implements OnInit
     
     SelectClient(Client: Client)
     {
-      this.snack.open("Client successfully selected")
+      this.snack.open("Client details selected", "OK", {duration: 3000})
       this.dialogRef.close(Client);
     }
 

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 @Component({
   selector: 'app-services',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServicesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private api: ExperTexhService, private route: Router) { }
 
   ngOnInit(): void {
+    if(this.api.RoleID != "2")
+    {
+      this.route.navigate(["403Forbidden"])
+    }
+
   }
 
   

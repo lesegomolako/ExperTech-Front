@@ -50,11 +50,11 @@
         <div class="col-8">     
           Company: Exhilaration hair & beauty salon
           <br>
-          Contact Details:0785109494
+          Contact Details: 0785109494
           <br>
-          Address:Clifton Avenue Lyttleton Centurion
+          Address: Clifton Avenue Lyttleton Centurion
           <br>
-          Date:2020/07/14
+          For Date: {{today | date:"dd/MM/yy"}}
           <br>
           Prepared for: Manager
           <br>
@@ -76,7 +76,7 @@
         <strong>DESCRIPTION</strong>
         <p>The purpose of this report is to show the trend so far in the company, this will clearly show how well the business is doing so far and thus can decide going forward</p>
         <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-        <b>Income CHART</b>
+        <b>INCOME CHART</b>
         <p *ngIf="chart==null" class="content">******CHART DATA******</p>
       </div>
 
@@ -88,19 +88,68 @@
 
       <b>INCOME TABLE</b>
       <p *ngIf="products==null" class="content">******TABLE DATA******</p>
-      <div *ngIf="products">
+      <div *ngIf="AllIncome">
         <div class="productsTable">
           <div>     
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>Product Name</th>
-                  <th>Total Products Sold</th>
+                  <th>Sales Category</th>
+                  <th>No. Of Sales</th>
+                  <th>Total Income (R)</th>
                 </tr>
               </thead> 
               <tbody>
                 <tr *ngFor="let y of products" >
                   <td>{{y.Name}}</td>
+                  <td>{{y.NumSold}}</td>
+                  <td>{{y.Total}}</td>            
+                </tr>
+              </tbody>  
+            </table>
+            <br>
+          </div>
+        </div>
+      </div> 
+      <div *ngIf="ProductSales">
+        <div class="productsTable">
+          <div *ngFor="let x of products"> 
+            <p>Product Category: {{x.Name}}</p>    
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Quantity Sold</th>
+                  <th>Total Income (R)</th>
+                </tr>
+              </thead> 
+              <tbody>
+                <tr *ngFor="let y of x.StockCount" >
+                  <td>{{y.Name}}</td>
+                  <td>{{y.Total}}</td>
+                  <td>{{y.Price}}</td>            
+                </tr>
+              </tbody>  
+            </table>
+            <br>
+          </div>
+        </div>
+      </div>   
+      <div *ngIf="BookingPayment">
+        <div class="productsTable">
+          <div>     
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Service</th>
+                  <th>Total Bookings</th>
+                  <th>Total Income (R)</th>
+                </tr>
+              </thead> 
+              <tbody>
+                <tr *ngFor="let y of products" >
+                  <td>{{y.Service}}</td>
+                  <td>{{y.NumBookings}}</td>
                   <td>{{y.Total}}</td>            
                 </tr>
               </tbody>  
@@ -109,6 +158,29 @@
           </div>
         </div>
       </div>   
+      <div *ngIf="ActivatePackage">
+        <div class="productsTable">
+          <div>     
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Package Name</th>
+                  <th>Total Activated</th>
+                  <th>Total Income (R)</th>
+                </tr>
+              </thead> 
+              <tbody>
+                <tr *ngFor="let y of products" >
+                  <td>{{y.Name}}</td>
+                  <td>{{y.NumActivated}}</td>
+                  <td>{{y.Total}}</td>            
+                </tr>
+              </tbody>  
+            </table>
+            <br>
+          </div>
+        </div>
+      </div>  
       <strong>CONCLUSION</strong>
       <p>Therefore, based on the above report one will be able to see the trend so far.</p>
     </div>

@@ -45,7 +45,7 @@ import { BookingConfirmComponent } from './Booking/confirm/confirm.component';
 import { ClientprofileComponent } from './Client/clientprofile/clientprofile.component';
 import { BellComponent } from './Client/bell/bell.component';
 import { FinancialReportComponent } from './Reporting/financial-report/financial-report.component';
-import { ProductReportComponent } from './Reporting/product-report/product-report.component';
+import { AllBookingsComponent} from './Reporting/all-bookings/all-bookings.component'
 import { BookingReportComponent } from './Reporting/booking-report/booking-report.component';
 import { SupplierReportComponent } from './Reporting/supplier-report/supplier-report.component';
 import { ViewdetailComponent } from './Supplier/sale/viewdetail/viewdetail.component';
@@ -74,6 +74,10 @@ import { StaffComponent } from './Staff/staff/staff.component';
 import { SaleinvoiceComponent } from './Supplier/sale/saleinvoice/saleinvoice.component';
 import { SalePaymentComponent } from './User/sale-payment/sale-payment.component';
 import { CompanySettingsComponent } from './User/company-settings/company-settings.component';
+import { AdminAuditComponent } from './AuditTrails/admin-audit/admin-audit.component';
+import { ClientAuditComponent } from './AuditTrails/client-audit/client-audit.component';
+import { EmployeeAuditComponent } from './AuditTrails/employee-audit/employee-audit.component';
+import { AuditTrailComponent } from './AuditTrails/audit-trail/audit-trail.component';
 
 
 //import {MatDialogModule} from '@angular/material/dialog';
@@ -82,6 +86,15 @@ const routes: Routes = [
 
   {path: '', redirectTo: '/home',pathMatch: 'full'},
   {path: "advise", component: AdviseComponent},
+
+  {path:'audits', component: AuditTrailComponent,
+   children: [
+      {path:'', redirectTo: 'AdminAudit',pathMatch: 'full' },
+      {path:'AdminAudit', component: AdminAuditComponent},
+      {path:'ClientAudit', component: ClientAuditComponent},
+      {path:'EmployeeAudit', component: EmployeeAuditComponent}]
+   },
+
   {path:'services', component: ServicesComponent,
    children: [
       {path:'', redirectTo: 'ServiceTypes',pathMatch: 'full' },
@@ -121,7 +134,7 @@ const routes: Routes = [
   {path: 'ViewServices', component: ViewServicesComponent},
   {path: 'salereport', component: SalesReportComponent},
   {path: 'financialreport', component: FinancialReportComponent},
-  {path: 'productreport', component: ProductReportComponent},
+  {path: 'allbookingsreport', component: AllBookingsComponent},
   {path: 'bookingreport', component: BookingReportComponent},
   {path: 'supplierreport', component: SupplierReportComponent},
   {path: 'saleinvoice', component: SaleinvoiceComponent},

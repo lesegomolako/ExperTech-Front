@@ -9,25 +9,57 @@
     </div>
 </div>
 
-    <div class="contents">
-        <ul>
-            <li *ngFor="let x of myServicePackageList | async">
-                <div class="icon"><mat-icon>face</mat-icon></div>
-                <div class="typeinfo">
-                    <div class="name">{{x.Name}}</div>
-                    <div class="sub-text">
-                        <div>Price: {{x.Price | number:'1.2-2'}}</div>
-                        <div>Quantity: {{x.Quantity}} uses</div>
-                    </div>
-                </div>
-                <div class="buttons">
-                <button class="btn btn-danger" (click)="Delete(x.PackageID)"><mat-icon inline=true>delete</mat-icon></button>
-                </div>
-            </li>
-            <li class="text-center" *ngIf="(myServicePackageList | async)?.length == 0">
-                <p>No services packages added</p>
-            </li>
-        </ul>
-    </div>
+    <div class="mat-elevation-z8 app-supplier" >
+        <mat-form-field  >
+          <mat-label>Search</mat-label>
+          <input matInput #input>
+        </mat-form-field>
+      <table mat-table class="dataSource?"  matSort aria-label="Elements">
     
+        <!-- Id Column -->
+        <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let row; let i = index">{{i+1}}</td>
+        </ng-container>
+    
+        <!-- Name Column -->
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let row">{{row.Name}}</td>
+        </ng-container>
+
+         <!-- Name Column -->
+         <ng-container matColumnDef="Price">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Price (R)</th>
+            <td mat-cell *matCellDef="let row">R {{row.Price}}</td>
+          </ng-container>
+
+           <!-- Name Column -->
+         <ng-container matColumnDef="Quantity">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantity</th>
+            <td mat-cell *matCellDef="let row">{{row.Quantity}} uses</td>
+          </ng-container>
+    
+        
+        <ng-container matColumnDef="Delete">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let row">
+              <a class="btn btn-danger" (click)="Delete(row.PackageID)" ><mat-icon inline=true>delete</mat-icon></a>
+          </td >
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+      </table>
+      <mat-card *ngIf="dataSource?.data.length == 0" class="text-center">no service options added</mat-card>
+      <mat-paginator #paginator
+      *ngIf="dataSource?.data.length>10"
+      [length]="dataSource?.data.length"
+      [pageIndex]=""
+      [pageSize]="10"
+      [pageSizeOptions]="[10, 25, 50]"
+      showFirstLastButtons>
+    </mat-paginator>
+  </div> 
     

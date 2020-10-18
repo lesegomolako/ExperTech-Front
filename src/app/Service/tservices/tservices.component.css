@@ -186,3 +186,37 @@ svg
     }
     
 }
+
+table{
+  width:100%
+}
+
+.mat-column-Name
+{
+    max-width: 100px;
+}
+
+.mat-column-Description
+{
+    max-width: 80px;
+}
+
+.mat-column-ID
+{
+    max-width: 30px;
+}
+
+.mat-column-Edit
+{
+    max-width: 30px;
+}
+
+.mat-column-Delete
+{
+    max-width: 30px;
+}
+
+.mat-column-Options
+{
+    max-width: 100px;
+}

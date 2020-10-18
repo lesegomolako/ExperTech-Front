@@ -8,6 +8,7 @@ import { of} from 'rxjs';
 import { stringify } from 'querystring';
 import {jsPDF} from 'jspdf';
 import {autoTable} from 'jspdf-autotable';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class FinancialReportComponent implements OnInit {
   incomes: tabledata[];
   expenses:tabledata[];
 
-  constructor(private service: ReportsService){}
+  constructor(private service: ReportsService, private api: ExperTexhService){}
 
   DownloadPDF()
   {
@@ -98,7 +99,7 @@ export class FinancialReportComponent implements OnInit {
 
     //console.log(this.Criteria)
 
-    this.service.GetFinancialReportingData(this.Criteria).subscribe(response => {
+    this.service.GetFinancialReportingData(this.Criteria, this.api.SessionID).subscribe(response => {
 
       let ikeys = response['Income'].map(d=> d.Name);
       let ivalues = response['Income'].map(d=> d.Total);

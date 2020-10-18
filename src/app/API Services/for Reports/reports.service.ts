@@ -10,20 +10,20 @@ export class ReportsService {
 
   constructor(private http: HttpClient) { }
 
-  GetProdReportingData(form: Criteria)
+  GetProdReportingData(form: Criteria, SessionID)
   {
-    let body = JSON.stringify(form)
-    return this.http.post("https://localhost:44380/api/Reports/GetProductReportData", form).pipe(map(result => result))
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post("https://localhost:44380/api/Reports/GetProductReportData", form, {params}).pipe(map(result => result))
   }
 
-  GetFinancialReportingData(form: Criteria){
-    let body = JSON.stringify(form)
-    return this.http.post("https://localhost:44380/api/Reports/GetFinancialReportData", form).pipe(map(result => result))
+  GetFinancialReportingData(form: Criteria, SessionID){
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post("https://localhost:44380/api/Reports/GetFinancialReportData", form, {params}).pipe(map(result => result))
   }
 
-  GetSuppReportingData(form: Criteria){
-    let body = JSON.stringify(form)
-    return this.http.post("https://localhost:44380/api/Reports/GetSupplierData", form).pipe(map(result => result))
+  GetSuppReportingData(form: Criteria, SessionID){
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post("https://localhost:44380/api/Reports/GetSupplierData", form, {params}).pipe(map(result => result))
   }
 
   GetSaleReportingData(form: Criteria, SessionID){
@@ -32,9 +32,14 @@ export class ReportsService {
     return this.http.post("https://localhost:44380/api/Reports/GetSaleReportData", form, {params}).pipe(map(result => result))
   }
 
-  GetBookingReportingData(form: Criteria){
-    let body = JSON.stringify(form)
-    return this.http.post("https://localhost:44380/api//Reports/GetBookingReportData", form).pipe(map(result => result))
+  GetBookingReportingData(form: Criteria, SessionID){
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post("https://localhost:44380/api//Reports/GetBookingReportData", form, {params}).pipe(map(result => result))
+  }
+
+  GetBookingSummaryData(form: Criteria, SessionID){
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post("https://localhost:44380/api//Reports/GetAllReports", form, {params}).pipe(map(result => result))
   }
  
   

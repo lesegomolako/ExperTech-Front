@@ -70,27 +70,24 @@
           <b>SALE CHART</b>
           <p *ngIf="products==null" class="content">******TABLE DATA******</p>
           <div *ngIf="products">
-            <div class="productsTable">
-              <div *ngFor="let x of products; let i = index">
-                <caption style="width:200px"><strong>Product Category: </strong>{{x.Name}}</caption>
-                  <table class="table table-bordered" id="testing{{i}}">
+            <div class="productsTable">          
+                  <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th>Product Name</th>
-                      <th>Total Products Sold</th>
-                      <th>Total Price (R)</th>
+                      <th>Supplier Name</th>
+                      <th>Number Of Orders</th>
+                      <th>Total Expenditure (R)</th>
                     </tr>
                   </thead> 
                   <tbody>
-                    <tr *ngFor="let y of x.StockCount" >
+                    <tr *ngFor="let y of products" >
                       <td>{{y.Name}}</td>
-                      <td>{{y.Total}}</td>
-                      <td>{{y.Price}}</td>
+                      <td>{{y.NumOrders}}</td>
+                      <td>R {{y.Price}}</td>
                     </tr>
                   </tbody>  
                   </table>
                   <br>
-              </div>
             </div>
       
           <strong>CONCLUSION</strong>

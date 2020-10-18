@@ -69,7 +69,7 @@ import {SpackageComponent} from './User/spackage/spackage.component';
 import { SalesReportComponent } from './Reporting/sales-report/sales-report.component';
 import { ReportsService } from './API Services/for Reports/reports.service';
 import { FinancialReportComponent } from './Reporting/financial-report/financial-report.component';
-import { ProductReportComponent } from './Reporting/product-report/product-report.component';
+
 import { SupplierReportComponent } from './Reporting/supplier-report/supplier-report.component';
 import { BookingReportComponent } from './Reporting/booking-report/booking-report.component';
 import { ValidateComponent } from './components/TextBoxValidator/validate/validate.component';
@@ -131,6 +131,11 @@ import { StaffComponent } from './Staff/staff/staff.component';
 import { CompanySettingsComponent } from './User/company-settings/company-settings.component';
 import { SalePaymentComponent } from './User/sale-payment/sale-payment.component';
 import { ChangePasswordComponent } from './User/change-password/change-password.component';
+import { AllBookingsComponent } from './Reporting/all-bookings/all-bookings.component';
+import { AdminAuditComponent } from './AuditTrails/admin-audit/admin-audit.component';
+import { ClientAuditComponent } from './AuditTrails/client-audit/client-audit.component';
+import { EmployeeAuditComponent } from './AuditTrails/employee-audit/employee-audit.component';
+import { AuditTrailComponent } from './AuditTrails/audit-trail/audit-trail.component';
 
 
 
@@ -144,7 +149,7 @@ import { ChangePasswordComponent } from './User/change-password/change-password.
     AdminRegisterComponent,SetupComponent,ResetPasswordComponent,ClickSpinDirective,PickupComponent,PaymentComponent,
     EmployeeSTComponent,EmployeeComponent,ClientComponent,CbookingDialog,
     AvailableComponent,AdminComponent,SpackageComponent,SalesReportComponent,
-    FinancialReportComponent,ProductReportComponent,SupplierReportComponent, EmployeeRegisterComponent,
+    FinancialReportComponent,SupplierReportComponent, EmployeeRegisterComponent,
     BookingReportComponent,ValidateComponent,EditComponent,BellComponent,ClientprofileComponent,
     MakebookingComponent,ViewbookingComponent,ServicepComponent,BasketComponent, BookingDialog,OrderDialog,
     RequestbComponent,BrowseComponent,BookingConfirmComponent, OptionsFilterPipe, AddClientDialog, SearchClientDialog,
@@ -152,7 +157,7 @@ import { ChangePasswordComponent } from './User/change-password/change-password.
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
     ViewdetailComponent,SaleinvoiceComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent,
     ReportsComponent, ErrorPageComponent, ReceiveDialog,
-    EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, CompanySettingsComponent, SalePaymentComponent, ChangePasswordComponent
+    EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, CompanySettingsComponent, SalePaymentComponent, ChangePasswordComponent, AllBookingsComponent, AdminAuditComponent, ClientAuditComponent, EmployeeAuditComponent, AuditTrailComponent
 
   ],
   imports: [

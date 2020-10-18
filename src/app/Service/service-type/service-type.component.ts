@@ -1,28 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ServicesService } from '../../API Services/for Service/services.service';
 import { Router } from '@angular/router';
 import {Observable} from 'rxjs';
 import {ServiceTypeData} from '../../API Services/for Service/services'
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-service-type',
   templateUrl: './service-type.component.html',
   styleUrls: ['./service-type.component.css']
 })
-export class ServiceTypeComponent implements OnInit {
+export class ServiceTypeComponent implements OnInit, AfterViewInit{
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable) table: MatTable<ServiceTypeData>;
 
+  displayedColumns = ['ID', 'Name', 'Edit', 'Delete'];
+  dataSource;
   constructor(public service: ServicesService, private router: Router) { }
 
   ngOnInit(): void {
+    this.dataSource = new MatTableDataSource(this.myServiceTypesList)
     this.loadList();
   }
 
-  myServiceTypesList : Observable<ServiceTypeData[]>;
+  myServiceTypesList : ServiceTypeData[];
 
   loadList()
   {
-    this.myServiceTypesList = this.service.getServiceTypes();
+    this.service.getServiceTypes().subscribe(res => 
+      {
+        this.myServiceTypesList = res;
+        this.dataSource.data = this.myServiceTypesList;
+      }
+    );
   }
+
+  ngAfterViewInit()
+  {
+    this.table.dataSource = this.dataSource;
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator= this.paginator;
+    
+  }
+
 
   // myFunction(event: any) {
   //   //declare variables

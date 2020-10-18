@@ -7,35 +7,51 @@ import {mergeMap, groupBy, map, reduce} from 'rxjs/operators';
 import { of} from 'rxjs';
 import { stringify } from 'querystring';
 import {jsPDF} from 'jspdf';
+import html2canvas from 'html2canvas';
 import {autoTable} from 'jspdf-autotable';
+import { Router } from '@angular/router';
+import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 
 @Component({
-  selector: 'app-product-report',
-  templateUrl: './product-report.component.html',
-  styleUrls: ['./product-report.component.css']
+  selector: 'app-all-bookings',
+  templateUrl: './all-bookings.component.html',
+  styleUrls: ['./all-bookings.component.css']
 })
-export class ProductReportComponent implements OnInit {
+export class AllBookingsComponent implements OnInit {
 
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl()
   });
 
-  //maxDate = new Date();
-
-  today = new Date();
+  ReportForm: FormGroup;
   maxDate = new Date(new Date().setDate(new Date().getDate()));
   displayed = true;
   generated = true;
+
   ngOnInit(): void {
+
+    if(this.api.RoleID == "2")
+    {     
+      this.ReportForm = new FormGroup({
+        start: new FormControl('', Validators.required),
+        end: new FormControl('',Validators.required),
+        criteria: new FormControl('', Validators.required)
+      })
+    }
+    else
+    {
+      this.router.navigate(["403Forbidden"])
+    }
   }
 
   title = 'hw4-frontend';
 
   chart=[];
-  products: Object;
+  bookings: Object;
 
-  constructor(private service: ReportsService){}
+  constructor(private service: ReportsService, private router: Router,
+    private api: ExperTexhService ){}
 
   DownloadPDF()
   {
@@ -78,6 +94,25 @@ export class ProductReportComponent implements OnInit {
  
   Criteria: Criteria;
   
+convetToPDF()
+{
+  var data = document.getElementById('sale');
+  html2canvas(data).then(canvas => {
+  // Few necessary setting options
+  var imgWidth = 208;
+  var pageHeight = 295;
+  var imgHeight = canvas.height * imgWidth / canvas.width;
+  var heightLeft = imgHeight;
+   
+  var today = this.maxDate.toLocaleDateString()
+  var name = "Sales Report-" + today;
+  const contentDataURL = canvas.toDataURL('image/png')
+  let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+  var position = 0;
+  pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+  pdf.save(name); // Generated PDF
+  });
+}
 
   random_rgba(){
     var o = Math.round, r = Math.random, s = 255;
@@ -85,57 +120,36 @@ export class ProductReportComponent implements OnInit {
   }
 
 
+  statuses;
+  services;
+  packages;
   SubmitRequest(){
     var tTitle = "Product Sales per category";
+
+    if(this.ReportForm.invalid)
+    {
+      this.ReportForm.markAllAsTouched();
+      return;
+    }
   
     this.Criteria = ({
-      StartDate: this.range.value.start,
-      EndDate: this.range.value.end
+      StartDate: this.ReportForm.value.start,
+      EndDate: this.ReportForm.value.end
     })
 
-    //console.log(this.Criteria)
+    console.log(this.Criteria)
 
-    this.service.GetProdReportingData(this.Criteria).subscribe(response => {
+    this.service.GetBookingSummaryData(this.Criteria, this.api.SessionID).subscribe(response => {
 
-      let keys = response['Category'].map(d=> d.Name);
-      let values = response['Category'].map(d=> d.Total);
-
-      this.products = response['Product'];
       
+      this.statuses = response['Statuses'];
+      this.services = response['ServicesBooked'];
+      this.packages = response['ServicePackages'];
      
-
-      this.chart = new Chart('canvas',{
-        type:'pie',
-        data:{
-          labels: keys,
-          datasets: [
-            {
-              data: values,
-              fill: false,
-              backgroundColor: [
-                "#39ff14",
-                "#04d9ff",
-                "#ff5721",
-                "#fe019a",
-                "#bc13f3",
-                "#ff073a",
-                "#cfff04",
-                "#ff0055",
-                "#48929B",
-                "#003171",
-                "#FFDDCA",
-                "#D9B611",
-                "#ff5555",
-
-              ]
-            }
-          ]
-        },
-        options: {   
-          
-          title: {display: true, text:tTitle},
-        }
-      })
+      if(!this.statuses && !this.services && !this.packages)
+      {
+        alert("There is no report data for this selected range")
+      }
     })
   }
 

@@ -17,7 +17,7 @@
     </div> 
 </ng-template>
 
-    <div class="contents">
+    <!-- <div class="contents">
         <ul>
             <div *ngIf="ServicesList | async">
             <li *ngFor = "let x of ServicesList | async;">
@@ -43,7 +43,7 @@
                 <p>No services added</p>
             </li>
         </ul>
-    </div>
+    </div> -->
     
     <div id="myModal" class="modal">
         <span class="close" (click)="closeModal()">&times;</span>
@@ -52,4 +52,88 @@
     </div>
       
      
+    <div class="mat-elevation-z8 app-supplier" >
+        <mat-form-field  >
+          <mat-label>Search</mat-label>
+          <input matInput #input>
+        </mat-form-field>
+      <table mat-table class="dataSource?"  matSort aria-label="Elements">
     
+        <!-- Id Column -->
+        <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let row; let i = index">{{i+1}}</td>
+        </ng-container>
+    
+        <!-- Name Column -->
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let row">{{row.Name}}<span title="view product photo" (click)="ViewImage(row)" style="cursor: pointer;"
+            class="material-icons" *ngIf="row.Image">camera_alt</span></td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="Type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Service Type</th>
+            <td mat-cell *matCellDef="let row">{{row.ServiceType}}</td>
+          </ng-container>
+    
+        <!-- Contact Number Column -->
+        <ng-container matColumnDef="Description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+          <td mat-cell *matCellDef="let row">{{row.Description}}</td>
+        </ng-container>
+    
+        <!-- Email Number Column -->
+        <ng-container matColumnDef="Price">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Price (R)</th>
+          <td mat-cell *matCellDef="let row"><div *ngFor = "let y of row.ServicePrices">R {{y.Price || "N/A"}}</div></td>
+        </ng-container>
+
+         <!-- Email Number Column -->
+         <ng-container matColumnDef="Options">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Options</th>
+            <td mat-cell *matCellDef="let row"><div *ngFor = "let y of row.ServiceTypeOptions">{{y.Option}}: R<span *ngFor ="let z of y.ServicePrices">{{z.Price}}</span></div></td>
+          </ng-container>
+    
+        <!-- Address Column -->
+        <ng-container matColumnDef="Edit">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let row"><a class="btn btn-success" (click)="EditService(row)" ><mat-icon inline=true>edit</mat-icon></a></td>
+        </ng-container>
+    
+        
+        <ng-container matColumnDef="Delete">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let row">
+              <a class="btn btn-danger" (click)="DeleteService(row)" ><mat-icon inline=true>delete</mat-icon></a>
+          </td >
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+      </table>
+      <mat-card *ngIf="dataSource?.data.length == 0" class="text-center">no services added</mat-card>
+      <mat-paginator #paginator
+      *ngIf="dataSource?.data.length>10"
+      [length]="dataSource?.data.length"
+      [pageIndex]=""
+      [pageSize]="10"
+      [pageSizeOptions]="[10, 25, 50]"
+      showFirstLastButtons>
+    </mat-paginator>
+  </div> 
+
+    <!-- <mat-card class="w-30"> 
+      <div class="name text-center">No Products have been added</div>
+      <br>
+      <div class="text-center"><button mat-raised-button style="background-color:forestgreen; color: white" (click)="addProduct()">Add Products</button></div>
+    </mat-card> -->
+    
+
+    <div id="myModal" class="modal">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <img class="modal-content" id="img01">
+      <div id="caption"></div>
+    </div>

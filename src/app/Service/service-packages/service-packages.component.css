@@ -89,3 +89,26 @@ li
     
 }
 
+table {
+    width: 100%;
+}
+
+.mat-column-Name
+  {
+      max-width: 100px;
+  }
+
+  .mat-column-ID
+  {
+      max-width: 50px;
+  }
+
+  .mat-column-Edit
+  {
+      max-width: 50px;
+  }
+
+  .mat-column-Delete
+  {
+      max-width: 50px;
+  }
