@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-group">
                       <label>Contact number</label>
-                      <input name="Contact" placeholder="Phone number format: 0713245678"
+                      <input name="Contact" placeholder="Example: 0713245678"
                        id="ContactNo" formControlName="ContactNo"   mdInput name="name"  class="form-control" [ngClass]="{ 'is-invalid': validateForm.get('ContactNo').errors && (validateForm.get('ContactNo').touched || validateForm.get('ContactNo').dirty)}"  />
                       <div *ngIf="validateForm.get('ContactNo').errors" class="invalid-feedback">
                           <div *ngIf="validateForm.get('ContactNo').errors.required">Contact Number is required</div>

@@ -83,6 +83,7 @@
         }">
           <label>Contact Number</label>
           <input
+            placeholder="Example: 0713245678"
             maxlength="10"
             minlength="10"
             id="number"
@@ -104,8 +105,7 @@
         <span *ngIf="empForm.get('contact').errors.required">
           Contact Number is required
         </span>
-        <span *ngIf="empForm.get('contact').errors.minlength || empForm.get('contact').errors.maxLength">
-          Contact Number exactly 10 digits
+        <span *ngIf="empForm.get('contact').errors.pattern">Enter a valid phone number
         </span>
       </span>
         </div>

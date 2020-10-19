@@ -120,9 +120,9 @@ export class ReportingService {
       );
     }
   }
-  deleteEmployee(EmployeeID, SessionID) {
+  deleteEmployee(EmployeeID, SessionID, Sure: boolean) {
     
-    const params = new HttpParams().set("EmployeeID", EmployeeID).set("SessionID", SessionID)
+    const params = new HttpParams().set("EmployeeID", EmployeeID).set("SessionID", SessionID).set("Sure", Sure.toString())
     return this.http.delete(this.url + 'Employees/deleteEmployee',
         {params}
       );

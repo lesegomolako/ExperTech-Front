@@ -35,6 +35,7 @@ export class AdminAuditComponent implements OnInit {
     if (this.api.RoleID == "2") {
       this.dataSource = new MatTableDataSource(this.AuditList)
       this.api.getAdminAudit().subscribe(res => {
+        console.log(res)
         this.AuditList = res;
         this.dataSource.data = this.AuditList;
       })

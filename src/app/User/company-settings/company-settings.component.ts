@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators ,FormArray, Form} from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { ReportingService } from 'src/app/API Services/for User/reporting.service';
@@ -35,7 +36,7 @@ export interface SocialMedia
 export class CompanySettingsComponent implements OnInit {
 
   constructor(private api: ExperTexhService, private service: ReportingService, 
-    private router: Router, private fb: FormBuilder) { }
+    private router: Router, private fb: FormBuilder, private snack: MatSnackBar) { }
 
   editCompany = false;
   editTime = false;
@@ -117,7 +118,7 @@ export class CompanySettingsComponent implements OnInit {
         {
           if(res == "success")
           {
-            alert("Social media link successfully deleted")
+            this.snack.open("Social media link successfully deleted", "OK", {duration: 4000})
             this.loadList();
           }
           else if(res.Error == "session")
@@ -143,11 +144,12 @@ export class CompanySettingsComponent implements OnInit {
   {
     if(this.editSocials.invalid)
     {
-      
       this.editSocials.markAllAsTouched();
       return;
     }
+
     let id = this.editSocials.value.socialid;
+    console.log(id)
 
     if(id == null)
     {
@@ -155,7 +157,7 @@ export class CompanySettingsComponent implements OnInit {
         {
           if(res == "success")
           {
-            alert("Successfully added social media link")
+            this.snack.open("Successfully added social media link", "OK", {duration: 4000})
             this.loadList();
             this.editSocial = false;
           }
@@ -175,7 +177,7 @@ export class CompanySettingsComponent implements OnInit {
         {
           if(res == "success")
           {
-            alert("Successfully updated social media link")
+            this.snack.open("Successfully updated social media link", "OK", {duration: 4000})
             this.loadList();
             this.editSocial = false;
           }
@@ -230,7 +232,7 @@ export class CompanySettingsComponent implements OnInit {
       {
         if(res == "success")
         {
-          alert("Company Info successfully updated");
+          this.snack.open("Company Info successfully updated","OK", {duration:4000});
           this.editCompany = false;
           this.loadList();
         }
@@ -279,7 +281,7 @@ export class CompanySettingsComponent implements OnInit {
       {
         if(res =="success")
         {
-          alert("Times successfully updated");
+          this.snack.open("Times successfully updated", "OK" ,{duration:4000});
           this.loadList();
           this.editTime = false;
         }

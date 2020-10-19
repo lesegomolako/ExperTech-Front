@@ -20,7 +20,7 @@ export class ClientAuditComponent implements OnInit {
   value = 'Clear me';
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['auditid', 'client', 'olddata', 'newdata', 'tablesaffected', 'transactiontype', 'date', 'authorizedby'];
+  displayedColumns = ['auditid', 'client', 'olddata', 'newdata', 'tablesaffected', 'transactiontype', 'date'];
   
   searchKey: string;
   SaleData: any;

@@ -40,6 +40,8 @@ export class AdminRegisterComponent implements OnInit {
     private api: ExperTexhService
   ) {}
 
+  mobNumberPattern = "^(\\+27|0)?[0-9]{10}$";  
+
   ngOnInit() {
     if(this.api.RoleID == "2")
     {
@@ -47,7 +49,7 @@ export class AdminRegisterComponent implements OnInit {
         firstName: ['', [Validators.required, Validators.maxLength(50)]],
         lastName: ['', [Validators.required, Validators.maxLength(50)]],
         email: ['', [Validators.required, Validators.email]],
-        contact: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+        contact: ['', [Validators.required, Validators.pattern(this.mobNumberPattern)]],
       });
     }
     else

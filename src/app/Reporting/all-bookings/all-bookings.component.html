@@ -1,8 +1,15 @@
-<div>
-  <h1 style="text-align: center">Booking Report <button mat-raised-button style="float: right;" routerLink="/reports"
+<div class=row>
+  <div class="col-7">
+  <h1 style="text-align: right">Booking Report <button mat-raised-button style="float: right;" routerLink="/reports"
       style="background-color:forestgreen">
       <mat-icon style="color:white">keyboard_return</mat-icon> Back
     </button></h1>
+  </div>
+  <div class="col-5">
+    <span style="float:right"routerLink="/#" class="material-icons help">
+      help_outline
+    </span>
+  </div>
 </div>
 
 <div class="row">
@@ -21,7 +28,7 @@
           <mat-error *ngIf="ReportForm.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
           <mat-error *ngIf="ReportForm.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
           <mat-error *ngIf="(ReportForm.controls.start.errors?.required && 
-            (ReportForm.controls.start.touched || ReportForm.controls.start.dirty))"></mat-error>
+            (ReportForm.controls.start.touched || ReportForm.controls.start.dirty))">Date range is required</mat-error>
         </mat-form-field>
         <div>
           <button mat-raised-button color="primary" (click)="SubmitRequest()">Generate Report</button>
@@ -73,7 +80,7 @@
           <b>TABLE SUMMARY</b>
           <p *ngIf="chart==null" class="content">******CHART DATA******</p>
           <br>
-          <div *ngIf="statuses.length>0">
+          <div *ngIf="statuses?.length>0">
             <br>
             <div class="productsTable">
               <div>
@@ -104,7 +111,7 @@
 
           <b>SALE CHART</b>
           <br>
-          <div *ngIf="services.length>0">
+          <div *ngIf="services?.length>0">
             <div class="productsTable">
               <div>
                 <table class="table table-bordered">
@@ -131,7 +138,7 @@
             </div>
           </div>
 
-          <div *ngIf="packages.length>0">
+          <div *ngIf="packages?.length>0">
             <div class="productsTable">
               <div>
                 <table class="table table-bordered">

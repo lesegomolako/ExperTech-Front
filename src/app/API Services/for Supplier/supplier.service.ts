@@ -75,6 +75,6 @@ export class SupplierService {
   RegenerateOrder(formData: SupplierOrderData, SessionID)
   {
     const params = new HttpParams().set("SessionID", SessionID);
-    return this.http.post(this.url + "Suppplier/RegenerateOrder", formData, {params})
+    return this.http.post(this.url + "Supplier/RegenerateOrder", formData, {params})
   }
 }

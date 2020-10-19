@@ -66,6 +66,8 @@ export class EmployeeRegisterComponent implements OnInit {
     private api: ExperTexhService
   ) {}
 
+  mobNumberPattern = "^(\\+27|0)?[0-9]{10}$"; 
+
   ngOnInit() {
 
     if(this.api.RoleID == "2")
@@ -74,7 +76,7 @@ export class EmployeeRegisterComponent implements OnInit {
         firstName: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
         lastName: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
         email: ['', [Validators.required, Validators.email]],
-        contact: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+        contact: ['', [Validators.required,  Validators.pattern(this.mobNumberPattern)]],
         types: this.formBuilder.array([], this.minSelectedCheckboxes(1))
       });
 

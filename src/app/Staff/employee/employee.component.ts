@@ -9,7 +9,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { ReportingService } from '../../API Services/for User/reporting.service';
-import {Process} from '../../API Services/for User/process';
+import { Process } from '../../API Services/for User/process';
 import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -38,20 +38,18 @@ export class EmployeeComponent implements OnInit {
     public service: ReportingService,
     private router: Router,
     private api: ExperTexhService
-  ) {}
+  ) { }
   List: Observable<Employee[]>;
 
   isOwner = false;
 
   ngOnInit(): void {
-    if(this.api.RoleID == "2")
-    {
+    if (this.api.RoleID == "2") {
       this.loadList();
       this.resetForm();
       this.api.getProfile().subscribe((res: any) => { this.isOwner = res.Admins[0].Owner })
     }
-    else
-    {
+    else {
       this.router.navigate(["403Forbidden"])
     }
   }
@@ -60,8 +58,7 @@ export class EmployeeComponent implements OnInit {
     this.List = this.service.readEmployee(this.api.SessionID);
   }
 
-  registerEmp()
-  { 
+  registerEmp() {
     this.router.navigateByUrl("/employeeregister")
   }
 
@@ -161,7 +158,7 @@ export class EmployeeComponent implements OnInit {
 
     if (confirm("Are you sure you want to delete this Employee?")) {
       if (this.isOwner == true) {
-        this.service.deleteEmployee(EmployeeID, this.api.SessionID)
+        this.service.deleteEmployee(EmployeeID, this.api.SessionID, false)
           .subscribe((ref: any) => {
             if (ref == "success") {
               this.snack.open("Employee successfully deleted", "OK", { duration: 3000 })
@@ -170,8 +167,26 @@ export class EmployeeComponent implements OnInit {
             else if (ref.Error == "session") {
               alert(ref.Message);
             }
+            else if (ref.Error == "dependencies") {
+              if (confirm(ref.Message)) {
+                this.service.deleteEmployee(EmployeeID, this.api.SessionID, true)
+                  .subscribe((ref: any) => {
+                    if (ref == "success") {
+                      this.snack.open("Employee successfully deleted", "OK", { duration: 3000 })
+                      this.loadList();
+                    }
+                    else if (ref.Error == "session") {
+                      alert(ref.Message);
+                    }
+                    else {
+                      console.log(ref)
+                    }
+                  })
+              }
+            }
             else {
               console.log(ref)
+              this.snack.open("Something went wrong. Please try again later", "OK", { duration: 3000 })
             }
           }, error => { console.log(error), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
       }
@@ -187,21 +202,38 @@ export class EmployeeComponent implements OnInit {
         const dialogRef = this.dialog.open(CbookingDialog, dialogConfig);
 
         dialogRef.afterClosed().subscribe((res: any) => {
-          if (res == true) 
-          {
-            this.service.deleteAdmin(EmployeeID, this.api.SessionID)
-            .subscribe((ref: any) => {
-              if (ref == "success") {
-                this.snack.open("Employee successfully deleted", "OK", { duration: 3000 })
-                this.loadList();
-              }
-              else if (ref.Error == "session") {
-                alert(ref.Message);
-              }
-              else {
-                console.log(ref)
-              }
-            }, error => { console.log(error), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
+          if (res == true) {
+            this.service.deleteEmployee(EmployeeID, this.api.SessionID, false)
+              .subscribe((ref: any) => {
+                if (ref == "success") {
+                  this.snack.open("Employee successfully deleted", "OK", { duration: 3000 })
+                  this.loadList();
+                }
+                else if (ref.Error == "session") {
+                  alert(ref.Message);
+                }
+                else if (ref.Error == "dependencies") {
+                  if (confirm(ref.Message)) {
+                    this.service.deleteEmployee(EmployeeID, this.api.SessionID, true)
+                      .subscribe((ref: any) => {
+                        if (ref == "success") {
+                          this.snack.open("Employee successfully deleted", "OK", { duration: 3000 })
+                          this.loadList();
+                        }
+                        else if (ref.Error == "session") {
+                          alert(ref.Message);
+                        }
+                        else {
+                          console.log(ref)
+                        }
+                      })
+                  }
+                }
+                else {
+                  console.log(ref)
+                  this.snack.open("Something went wrong. Please try again later", "OK", { duration: 3000 })
+                }
+              }, error => { console.log(error), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
           }
         })
       }

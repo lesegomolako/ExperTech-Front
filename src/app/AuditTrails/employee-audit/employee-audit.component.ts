@@ -20,7 +20,7 @@ export class EmployeeAuditComponent implements OnInit {
   value = 'Clear me';
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['auditid', 'employee', 'olddata', 'newdata', 'tablesaffected', 'transactiontype', 'date', 'authorizedby'];
+  displayedColumns = ['auditid', 'employee', 'olddata', 'newdata', 'tablesaffected', 'transactiontype', 'date'];
   
   searchKey: string;
   SaleData: any;

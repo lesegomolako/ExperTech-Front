@@ -3,15 +3,11 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { Chart } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
 import { ReportsService, Criteria } from '../../API Services/for Reports/reports.service';
-import { mergeMap, groupBy, map, reduce } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { stringify } from 'querystring';
-//import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import { autoTable } from 'jspdf-autotable';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sales-report',
@@ -52,7 +48,8 @@ export class SalesReportComponent implements OnInit {
   chart = [];
   products: Object;
 
-  constructor(private service: ReportsService, private router: Router, private api: ExperTexhService, private fb: FormBuilder) { }
+  constructor(private service: ReportsService, private snack:MatSnackBar,
+     private router: Router, private api: ExperTexhService, private fb: FormBuilder) { }
 
   public convetToPDF() {
     var data = document.getElementById('sale');
@@ -73,52 +70,9 @@ export class SalesReportComponent implements OnInit {
     });
   }
 
-  DownloadPDF() {
-    this.Criteria = ({
-      StartDate: this.trange.value.start,
-      EndDate: this.trange.value.end
-    })
-
-    // this.service.GetSaleReportingData(this.Criteria).subscribe(res => {
-    //   var doc = new jsPDF();
-
-    //   var pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
-    //   var pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
-
-    //   let length = res['Category'].length;
-    //   let titles = res['Category'].map(z => z.Name);
-    //   let totals = res['Category'].map(z => z.Total);
-
-    //   let finalY = 120;
-    //   var newCanvas = <HTMLCanvasElement>document.querySelector('#canvas');
-
-    //   var newCanvasImg = newCanvas.toDataURL("image/png", 1.0 );
-
-    //   doc.setFontSize(35)
-
-    //   doc.text("Sale Report", (pageWidth/2) - 30, 15)
-    //   doc.addImage(newCanvasImg, 'PNG', 25,25,160,100);
-    //   doc.setFontSize(14)
-    //   for (let i=0; i<length; i++)
-    //   {
-    //     doc.text("Product Category: "+titles[i], (pageWidth/2)*15, finalY + 23)
-    //     doc.autoTable({startY: finalY + 25, html: '#testing' + i, useCss:true, head: [
-    //       ['Product Name', "Total Products Sold", "Total Price (R)"]]})
-    //       finalY = doc.autoTable.previous.finalY
-    //   }
-
-    //   doc.save('table.pdf');
-    // });
-  }
+ 
 
   Criteria: Criteria;
-
-
-  random_rgba() {
-    var o = Math.round, r = Math.random, s = 255;
-    return 'rgba(' + o(r() * s) + ',' + + o(r() * s) + ',' + o(r() * s) + ', 0.7)';
-  }
-
 
 
   AllIncome = false;
@@ -129,11 +83,12 @@ export class SalesReportComponent implements OnInit {
 
 
     if (this.ReportForm.invalid) {
+      alert("Please select all the requied fields")
       this.ReportForm.markAllAsTouched();
       return;
     }
     this.displayed = false;
-    this.generated = false;
+    
     
 
     this.Criteria = ({
@@ -154,6 +109,13 @@ export class SalesReportComponent implements OnInit {
         this.BookingPayment = false;
         this.ActivatePackage = false;
 
+        if(response['Category'].length == 0)
+        {
+          this.snack.open("There is no report data for this selected range", "OK", {duration:3000})
+          return;
+        }
+
+        this.generated = false;
         let keys = response['Category'].map(d => d.Name);
         let values = response['Category'].map(d => d.Total);
 
@@ -200,6 +162,7 @@ export class SalesReportComponent implements OnInit {
         this.ProductSales = true;
         this.BookingPayment = false;
         this.ActivatePackage = false;
+
         
         let keys = response['Category'].map(d => d.Name);
         let values = response['Category'].map(d => d.Total);
@@ -207,6 +170,12 @@ export class SalesReportComponent implements OnInit {
         var tTitle = "Product sales per category";
 
         this.products = response['Product'];
+
+        if(!this.products && response['Category'].length == 0)
+        {
+          this.snack.open("There is no report data for this selected range", "OK", {duration:3000})
+          return;
+        }
 
         this.chart = new Chart('canvas', {
           type: 'pie',
@@ -255,6 +224,12 @@ export class SalesReportComponent implements OnInit {
 
         this.products = response['Category'];
 
+        if(response['Category'].length == 0 )
+        {
+          this.snack.open("There is no report data for this selected range", "OK", {duration:3000})
+          return;
+        }
+
         this.chart = new Chart('canvas', {
           type: 'pie',
           data: {
@@ -301,6 +276,12 @@ export class SalesReportComponent implements OnInit {
         var tTitle = "Activated Service Packages";
 
         this.products = response['Category'];
+
+        if(!this.products)
+        {
+          this.snack.open("There is no report data for this selected range", "OK", {duration:3000})
+          return;
+        }
 
         this.chart = new Chart('canvas', {
           type: 'pie',

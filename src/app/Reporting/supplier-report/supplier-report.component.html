@@ -1,8 +1,18 @@
-<div>
-  <h1 style="text-align: center">Supplier Report <button mat-raised-button style="float: right;" routerLink="/reports" style="background-color:forestgreen" >
-    <mat-icon style="color:white">keyboard_return</mat-icon> Back
-</button></h1>
+
+<div class=row>
+  <div class="col-7">
+  <h1 style="text-align: right">Supplier Report <button mat-raised-button style="float: right;" routerLink="/reports"
+      style="background-color:forestgreen">
+      <mat-icon style="color:white">keyboard_return</mat-icon> Back
+    </button></h1>
+  </div>
+  <div class="col-5">
+    <span style="float:right"routerLink="/#" class="material-icons help">
+      help_outline
+    </span>
+  </div>
 </div>
+
 
 <div class="row">
   <div class="col-4">
@@ -18,10 +28,12 @@
       
         <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
         <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+        <mat-error *ngIf="range.controls.start.errors.required">Date range is required</mat-error>
+        <mat-error *ngIf="range.controls.end.errors.required">Date range is required</mat-error>
       </mat-form-field>
       <div>
-        <button mat-raised-button color="primary" [disabled]="!range.valid" (click)="SubmitRequest()">Generate Report</button>
-        <button mat-raised-button (click)="DownloadPDF()">Download PDF</button>
+        <button mat-raised-button color="primary" (click)="SubmitRequest()">Generate Report</button>
+        <button mat-raised-button (click)="convetToPDF()" [hidden]="generated">Download PDF</button>
       </div>
     </div>
   </div>

@@ -1,0 +1,50 @@
+.heading
+{
+    display: flex;
+    border-bottom: 1px solid black;
+
+}
+
+table{
+    width: 100%;
+}
+
+.mat-column-auditid
+{
+    max-width: 50px;
+}
+
+.mat-column-admin
+{
+    max-width: 120px;
+}
+
+.mat-column-olddata
+{
+    max-width: 200px;
+}
+
+.mat-column-newdata
+{
+    max-width: 200px;
+}
+
+.mat-column-tablesaffected
+{
+    max-width: 150px;
+}
+
+.mat-column-transactiontype
+{
+    max-width: 50px;
+}
+
+.mat-column-date
+{
+    max-width: 50px;
+}
+
+.mat-column-authorizedby
+{
+    max-width: 80px;
+}

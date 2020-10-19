@@ -71,8 +71,13 @@ export class PlaceorderComponent implements AfterViewInit, OnInit {
           this.snack.open("Supplier order successfully regenerated", "OK", { duration: 3000 })
           window.location.reload();
         }
+        else
+        {
+          this.snack.open("Something went wrong. Please try again later", "OK", {duration: 4000})
+          console.log(res)
+        }
 
-      })
+      }, error => {console.log(error), this.snack.open("Something went wrong. Please try again later", "OK", {duration: 4000})})
     }
   }
 

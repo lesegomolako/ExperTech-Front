@@ -38,10 +38,12 @@ export class EditProductComponent implements OnInit {
       this.imageURL = event.target.result;
     }
     reader.readAsDataURL(this.UploadFile);
+    this.imgChanged = true;
   }
 
   removeImage() {
     this.imageURL = null;
+    this.imgChanged = false;
     this.UploadFile = null;
   }
 
@@ -188,6 +190,7 @@ export class EditProductComponent implements OnInit {
     }
   }
 
+  imgChanged = false;
   setProduct() {
     this.ProductForm.patchValue({
       name: this.ProdFormData.Name,
@@ -198,6 +201,11 @@ export class EditProductComponent implements OnInit {
       categoryid: this.ProdFormData.CategoryID,
       productid: this.ProdFormData.ProductID,
     })
+
+    this.ProductForm.setControl('photos', this.fb.array([this.fb.group(
+      {
+        photo: this.ProdFormData.Image
+      })] ))
 
     
     this.imageURL = this.ProdFormData.Image;
@@ -251,23 +259,27 @@ export class EditProductComponent implements OnInit {
   }
 
   EditProduct() {
+
+    // console.log(this.UploadFile)
+    // console.log(this.imageURL)
+    // console.log(this.ProdFormData)
+
     if (this.ProductForm.invalid) {
+      alert("form is invalid")
       this.validateAllFormFields(this.ProductForm)
       return;
     }
 
-    console.log(this.UploadFile)
-    console.log(this.imageURL)
-    console.log(this.ProdFormData)
-    // this.service.UpdateProduct(this.ProdFormData).subscribe(res =>
-    //   {
-    //     if(res == "success")
-    //     {
-    //       alert("Successfully updated");
-    //       this.router.navigateByUrl("AdminProduct")
-    //       localStorage.removeItem('prodEdit')
-    //     }
-    // })
+    this.mapValues();
+    this.service.UpdateProduct(this.ProdFormData, this.UploadFile, this.api.SessionID, this.imgChanged).subscribe(res =>
+      {
+        if(res == "success")
+        {
+          alert("Successfully updated");
+          this.router.navigateByUrl("AdminProduct")
+          localStorage.removeItem('prodEdit')
+        }
+    })
   }
 
 
