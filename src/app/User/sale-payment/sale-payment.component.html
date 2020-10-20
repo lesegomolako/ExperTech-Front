@@ -7,9 +7,9 @@
     </button>
   </h1>
 
-  <span style="float: right;" routerLink="/#" class="material-icons help">
+  <a href="https://mishqah.github.io/user-manual-admin-help/pages/sale-payment.html"><span style="float: right;" class="material-icons help">
     help_outline
-  </span>
+  </span></a>
   
     </div>
   </div>
@@ -171,8 +171,8 @@
     </div>
     <br>
     <div style="text-align: center;">
-      <button mat-raised-button class="btn btn-success" (click)="onSubmit()">Make Payment</button>
-      <button mat-raised-button="btn btn-success" (click)="reset(stepper)">Reset</button>
+      <button mat-raised-button class="btn btn-success" (click)="onSubmit()" title="confirm client sale payment">Make Payment</button>
+      <button mat-raised-button="btn btn-success" (click)="reset(stepper)" title="cancel client sale payment">Reset</button>
     </div>
 </mat-step>
 </mat-horizontal-stepper>

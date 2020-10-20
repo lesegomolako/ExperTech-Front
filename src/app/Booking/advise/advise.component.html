@@ -49,6 +49,7 @@
                       {{items.Name}}
                     </mat-option>
                   </mat-select>
+                  <mat-error *ngIf="g.employeeid.errors?.required">Select an Employee</mat-error>
                 </mat-form-field>
               </label>
               <br>
@@ -74,6 +75,7 @@
                     {{items.StartTime}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="g.timesid.errors?.required">Select a time</mat-error>
               </mat-form-field>
             </div>
 
@@ -81,10 +83,10 @@
 
             <div style="align-content: center; " class="c-card__footer">
               <br>
-              <button mat-raised-button style="background-color: gray;" type="submit">
+              <button title="Send advise booking to client" mat-raised-button style="background-color: gray;" type="submit">
                 Send
               </button>
-              <button mat-raised-button style="background-color: gray;" (click)="cancel()" type="button">
+              <button title="Abort advise booking for client" mat-raised-button style="background-color: gray;" (click)="cancel()" type="button">
                 Cancel
               </button>
             </div>

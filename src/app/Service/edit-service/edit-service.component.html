@@ -82,7 +82,7 @@
 <div class="contents">
     <div >
         <h2>Add Service Options
-            <button class="btn btn-success btn-sm" type="button" title="Add Service Option" (click)="AddForm()">
+            <button title="Add service option" class="btn btn-success btn-sm" type="button" title="Add Service Option" (click)="AddForm()">
                 +
             </button>
         </h2>
@@ -124,8 +124,8 @@
 </div>
 
 <div class="buttons">
-    <button class="btn btn-light" type="button" (click)="Cancel()">Cancel</button>
-    <button class="btn btn-success" type="submit" [disabled]="!serviceForm.valid">Save</button>
+    <button class="btn btn-light" type="button" (click)="Cancel()" title="cancel process">Cancel</button>
+    <button class="btn btn-success" type="submit" [disabled]="!serviceForm.valid" title="save changes">Save</button>
 </div>
   
 </form>

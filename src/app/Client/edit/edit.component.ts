@@ -33,6 +33,8 @@ export class EditComponent implements OnInit {
   dataSaved = false;  
   customerForm: any;   
   massage = null;  
+
+  RoleID;
   
   public EditFormGroup: FormGroup;
   constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private route: ActivatedRoute ,private api: ExperTexhService, private router: Router,) { }
@@ -50,7 +52,7 @@ export class EditComponent implements OnInit {
 
     if(this.api.RoleID != null)
     {
-
+      this.RoleID = this.api.RoleID;
       this.editForm = this.formBuilder.group({
         firstName: ['', [ Validators.required,Validators.minLength(2),Validators.maxLength(50)]],
         lastName: ['', [Validators.required,Validators.minLength(2),Validators.maxLength(100)]],

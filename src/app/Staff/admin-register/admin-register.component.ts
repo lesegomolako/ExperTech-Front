@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { User } from 'src/app/API Services/for Booking/client';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoadingDialog } from 'src/app/app.component';
 //import { sha256, sha224 } from 'js-sha256';
 
 
@@ -139,13 +140,15 @@ export class AdminRegisterComponent implements OnInit {
     if(this.registerForm.valid)
     {
     this.mapValues();
+    const dialogRef = this.dialog.open(LoadingDialog, { disableClose: true })
     this.service.RegisterAdmin(this.user).subscribe((res: any) =>{
       if(res == "success")
       {
+        dialogRef.close();
         this.snack.open("Admin successfully registered", "OK", {duration: 3000})
         this.router.navigate(["admin"]);
       }
-    }, error => {console.log(error), this.snack.open("Something went wrong", "OK", {duration: 3000})})
+    }, error => {console.log(error),dialogRef.close(), this.snack.open("Something went wrong", "OK", {duration: 3000})})
     
   }
   else

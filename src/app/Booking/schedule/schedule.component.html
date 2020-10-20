@@ -4,13 +4,16 @@
   </div>
   <div class="col-md-3" >
      <div  class="example-button-container" style="float: right;">
-      <span routerLink="/#" class="material-icons help">
+      <a *ngIf="RoleID == '2'" href=" https://mishqah.github.io/user-manual-admin-help/pages/booking.html"><span  class="material-icons help">
         help_outline
-      </span>
-      <button mat-raised-button style="float: right;" routerLink="/employeehome" style="background-color:forestgreen" >
+      </span></a>
+      <a *ngIf="RoleID == '3'" href="https://mishqah.github.io/employee-manual-/pages/view-booking.html"><span  class="material-icons help">
+        help_outline
+      </span></a>
+      <button title="navigate to homescreen" mat-raised-button style="float: right;" routerLink="/employeehome" style="background-color:forestgreen" >
         <mat-icon style="color:white">home</mat-icon> Home
       </button>
-       <a routerLink='/Booking'><button mat-raised-button style="background-color: green;" >       
+       <a routerLink='/Booking'><button mat-raised-button style="background-color: green;" title="Make booking for client" >       
          Add booking
      </button></a>
  </div>

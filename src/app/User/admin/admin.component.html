@@ -4,7 +4,7 @@
       <div class="col-7">
 
         <h1 style="text-align: right;">
-          Admins<button (click)="registerAdmin()" mat-raised-button color="green">
+          Admins<button title="Register a new admin" (click)="registerAdmin()" mat-raised-button color="green">
             <mat-icon>add</mat-icon>
           </button>
         </h1>
@@ -38,7 +38,7 @@
             <td>{{ item.ContactNo }}</td>
             <td>{{ item.Email }}</td>
             <td>
-              <button (click)="DeleteAdmin(item.AdminID)" class="btn btn-danger">
+              <button title="delete admin" (click)="DeleteAdmin(item.AdminID)" class="btn btn-danger">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>

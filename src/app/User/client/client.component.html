@@ -7,9 +7,9 @@
           </h1>
         </div>
       <div class="col-5">
-        <span style="float: right;" routerLink="/#" class="material-icons help">
+        <a href="https://mishqah.github.io/Admin-help/pages/search-admin.html"><span style="float: right;"  class="material-icons help">
           help_outline
-        </span>
+        </span></a>
       </div>
     </div>  
   
@@ -45,7 +45,7 @@
                 <button class="btn btn-warning" (click)="fillUP(item)">Selct Client</button>
               </td> -->
               <td>
-                <button class="btn btn-danger" (click)="DeleteClient(item.ClientID)">
+                <button title="Delete client" class="btn btn-danger" (click)="DeleteClient(item.ClientID)">
                   <mat-icon>delete</mat-icon>
                 </button> 
               </td>

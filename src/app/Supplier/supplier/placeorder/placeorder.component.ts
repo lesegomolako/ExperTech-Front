@@ -184,7 +184,7 @@ export class ReceiveDialog implements OnInit {
   ReceiveForm: FormGroup;
 
   constructor(
-    public dialogRef: MatDialogRef<ReceiveDialog>, private fb: FormBuilder, private service: SupplierService,
+    public dialogRef: MatDialogRef<ReceiveDialog>, private fb: FormBuilder, private service: SupplierService, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: SupplierOrderData, private api: ExperTexhService, private snack: MatSnackBar) {
 
   }
@@ -214,8 +214,7 @@ export class ReceiveDialog implements OnInit {
           Received: false,
         })
       )
-      console.log(s)
-      console.log(this.ReceiveForm.value)
+      
     }
     )
 
@@ -242,7 +241,7 @@ export class ReceiveDialog implements OnInit {
       if (res == "success") {
         this.snack.open("Stock successfully received", "OK", { duration: 3000 })
         this.dialogRef.close();
-        window.location.reload();
+        this.router.navigate(["stock"])
       }
       else if (res == "invalid") {
         this.snack.open("Save details invalid", "OK", { duration: 3000 })

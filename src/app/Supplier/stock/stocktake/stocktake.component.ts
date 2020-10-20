@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -21,7 +22,7 @@ import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.se
 export class StocktakeComponent implements OnInit {
 
   constructor(
-    public service: StockService,
+    public service: StockService, private snack: MatSnackBar, 
     private formBuilder: FormBuilder,
     private api: ExperTexhService,
     private takeService: StockService,
@@ -95,10 +96,16 @@ AddStockTake()
   this.takeService.CreateTake(this.Take, this.api.SessionID).subscribe(ref => {
     if(ref == "success")
     {
-      alert("Successfully saved")
-      this.route.navigate(["stocktake"])
+      this.snack.open("Stock take successfully saved")
+      this.route.navigate(["stock"])
     }
-  });
+    else
+    {
+      console.log(ref)
+      this.snack.open("Something went wrong", "OK", {duration:3000})
+    }
+    
+  },error => {console.log(error),  this.snack.open("Something went wrong", "OK", {duration:3000})});
 }
 
 mapValues()

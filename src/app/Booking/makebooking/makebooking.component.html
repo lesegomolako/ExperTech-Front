@@ -136,7 +136,7 @@
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
 
-          <mat-form-field appearance="fill">
+          <!-- <mat-form-field appearance="fill">
             <mat-label style="color: black;">Appointment time </mat-label>
             <mat-select required name="StartTime" formControlName="TimeControl">
               <mat-option disabled>--</mat-option>
@@ -145,6 +145,18 @@
                   {{x.Time}}
                 </mat-option>
               </mat-optgroup>
+            </mat-select> -->
+            <!-- <mat-error *ngIf="TimeControl.hasError('required')">Please choose Appointment time</mat-error>
+ <mat-hint>{{TimeControl.value?.sound}}</mat-hint> -->
+          <!-- </mat-form-field> -->
+
+          <mat-form-field appearance="fill">
+            <mat-label style="color: black;">Appointment time </mat-label>
+            <mat-select required name="StartTime" formControlName="TimeControl">
+              <mat-option disabled>--</mat-option>
+                <mat-option *ngFor="let x of Times" value={{x.TimeID}}>
+                  {{x.StartTime}}
+                </mat-option>
             </mat-select>
             <!-- <mat-error *ngIf="TimeControl.hasError('required')">Please choose Appointment time</mat-error>
  <mat-hint>{{TimeControl.value?.sound}}</mat-hint> -->
@@ -180,11 +192,11 @@
     </div>
     <div class="buttons">
       <div style="float: right;">
-        <button routerLink='/schedule' mat-raised-button style="background-color: gray; align-items: center;">
+        <button title="abort make payment" routerLink='/schedule' mat-raised-button style="background-color: gray; align-items: center;">
           <mat-icon> keyboard_return</mat-icon>
           Back
         </button>
-        <button mat-raised-button type="submit" [disabled]="!BookingForm.valid"
+        <button title="Submit make booking" mat-raised-button type="submit" [disabled]="!BookingForm.valid"
           style="background-color: gray; align-items: center;">
           Submit
         </button>

@@ -36,9 +36,9 @@
   </button>
 </h1>
 
-<span style="float: right;" routerLink="/#" class="material-icons help">
+<a href="https://mishqah.github.io/Admin-help/pages/activate-service-package.html"><span style="float: right;" routerLink="/#" class="material-icons help">
   help_outline
-</span>
+</span></a>
   </div>
 </div>
 
@@ -195,8 +195,8 @@
     </div>
     <br>
     <div style="text-align: center;">
-      <button mat-button class="btn btn-success" (click)="Activate(stepper)">Activate</button>
-      <button mat-button="btn btn-success" (click)="reset(stepper)">Reset</button>
+      <button mat-button class="btn btn-success" (click)="Activate(stepper)" title="confirm client service package activation">Activate</button>
+      <button mat-button="btn btn-success" (click)="reset(stepper)" tite="abort client serice package activation">Reset</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

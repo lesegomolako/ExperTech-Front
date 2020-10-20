@@ -14,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReportingService } from 'src/app/API Services/for User/reporting.service';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoadingDialog } from 'src/app/app.component';
 //import {Service } from '../services.service';
 
 
@@ -99,15 +100,18 @@ export class LoginComponent implements OnInit {
     }
 
     this.user = this.loginForm.value;
+    const dialogRef = this.dialog.open(LoadingDialog, { disableClose: true })
     this.service.Login(this.user).subscribe((res : any) =>
     {
       
-      if(res.Error) {   //lol
+      if(res.Error) { 
+        dialogRef.close();  //lol
         this.errorMessage = res.Error;
         this.showError = true;
         //alert("Username or Password are invalid")
       }
       else{
+        dialogRef.close();
         sessionStorage.setItem("accessToken", res.SessionID);
         sessionStorage.setItem("RoleID", res.RoleID)
         this.api.RoleID = sessionStorage.getItem("RoleID")
@@ -121,7 +125,7 @@ export class LoginComponent implements OnInit {
         
         //     this.router.navigate(['homepage'])
         // }
-
+          dialogRef.close();
           this.router.navigate(["home"])
           .then(() => {
             window.location.reload();
@@ -137,7 +141,7 @@ export class LoginComponent implements OnInit {
         
         //     this.router.navigate(['homepage'])
         // }
-
+          dialogRef.close();
           this.router.navigate(["employeehome"])
           .then(() => {
             window.location.reload();
@@ -146,7 +150,7 @@ export class LoginComponent implements OnInit {
         
         this.showError = false;
       }
-    }, error => {console.log(error), this.snack.open("Something went wrong", "OK", {duration:3000})})
+    }, error => {console.log(error),dialogRef.close(); this.snack.open("Something went wrong", "OK", {duration:3000})})
   }
 
   matcher = new ErrorStateMatcher();

@@ -9,6 +9,7 @@ import { AddstockComponent } from './addstock/addstock.component';
 import { Router } from '@angular/router';
 import { FormArray } from '@angular/forms';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-stock',
@@ -28,7 +29,7 @@ export class StockComponent implements AfterViewInit, OnInit {
   searchKey: string;
   StockData: any;
 
-  constructor(public service: StockService, private api: ExperTexhService,
+  constructor(public service: StockService, private api: ExperTexhService, private snack: MatSnackBar,
     private router: Router){}
 
   StockList: StockData[];
@@ -84,14 +85,25 @@ export class StockComponent implements AfterViewInit, OnInit {
   {
     if(confirm("Are you sure you want to delete this item"))
     {
-      this.service.DeleteStockItem(ItemID, this.api.SessionID).subscribe(res =>
+      console.log(ItemID)
+      this.service.DeleteStockItem(ItemID, this.api.SessionID).subscribe((res:any) =>
         {
           if(res =="success")
           {
             alert("Successfully deleted")
             window.location.reload();
           }
-        })
+          else if(res.Error == "dependencies")
+          {
+              alert(res.Message);
+              window.location.reload();
+          }
+          else
+          {
+            console.log(res)
+            this.snack.open("Something went wrong. Please try again later", "OK", {duration: 3000})
+          }
+        }, error => { console.log(error), this.snack.open("Something went wrong. Please try aganin later", "OK", {duration:3000})})
     }
   }
 

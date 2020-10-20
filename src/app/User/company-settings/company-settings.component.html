@@ -3,9 +3,9 @@
     <h1 class="md-display-3">Company Settings</h1>
     </div>
     <div class="col-1.5 ">
-      <span  routerLink="/#" class="material-icons help">
+      <a href="https://mishqah.github.io/user-manual-admin-help/pages/company-information--display-company-information.html"><span  class="material-icons help">
         help_outline
-      </span>
+      </span></a>
       <button mat-raised-button style="float: right;" routerLink="/employeehome" style="background-color:forestgreen" >
         <mat-icon style="color:white">home</mat-icon> Home
     </button>  
@@ -239,14 +239,14 @@
           </label>
         </div>
         <div class="col-3 form-group buttons">       
-          <a  class="btn btn-success" (click)="EditSocialMedia(x)"><mat-icon inline=true>edit</mat-icon></a>
-          <a  class="btn btn-danger" (click)="DeleteSocialMedia(x.SocialID)"><mat-icon inline=true>delete</mat-icon></a>    
+          <a  title="Edit social media" class="btn btn-success" (click)="EditSocialMedia(x)"><mat-icon inline=true>edit</mat-icon></a>
+          <a title="Delete social media"  class="btn btn-danger" (click)="DeleteSocialMedia(x.SocialID)"><mat-icon inline=true>delete</mat-icon></a>    
         </div>
       </div>
     </mat-card-content>
     <mat-card-actions>
       <div class="button-flex-container">
-        <button mat-raised-button style="background-color:forestgreen; color:white" (click)="AddSocialMedia()">Add Link</button>
+        <button title="Upload new social media link" mat-raised-button style="background-color:forestgreen; color:white" (click)="AddSocialMedia()">Add Link</button>
       </div>
     </mat-card-actions>
   </mat-card>

@@ -1,12 +1,11 @@
+<a href="https://mishqah.github.io/user-manual-admin-help/pages/access.html"><span style="float: right;" class="material-icons help">
+  help_outline
+</span></a>
 <div class="jumbotron" style="background-color: whitesmoke;">
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <h3 style="text-align: center;">Forgot Password</h3>
-        
-        <span style="float: right;" routerLink="/#" class="material-icons help">
-          help_outline
-        </span>
 
           <p><small>Reset password by entering your username. A reset link will be sent to your email address</small></p>
           <br>
@@ -22,6 +21,7 @@
           <div style="text-align: center;">
             <div class="form-group">
               <button
+                title="Proceed forgot password process"
                 (click)="onSubmit(username.value)"
                 class="btn btn-primary"
                 style="color: white; background-color: green;">
@@ -30,6 +30,7 @@
               <a routerLink="/login">
                 <button
                   type="button"
+                  title="Cance forgo password process"
                   class="btn btn-primary"
                   style="color: white; background-color: green;">
                   Cancel

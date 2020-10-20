@@ -1,6 +1,9 @@
 <div style="width: 90%; margin: auto">
 <div class="heading">
     <h1>{{title}}</h1>
+    <a href="https://mishqah.github.io/user-manual-admin-help/pages/product.html"><span style="float: right;" class="material-icons help">
+        help_outline
+      </span></a>
 </div>
     
 <form [formGroup]="ProductForm" (ngSubmit)="onSubmit()">
@@ -91,8 +94,8 @@
 </div>
 
 <div class="buttons">
-    <button class="btn btn-light" type="button" (click)="Cancel()">Cancel</button>
-    <button class="btn btn-success" type="submit">Save</button>
+    <button class="btn btn-light" type="button" (click)="Cancel()" title="Cancel product update process">Cancel</button>
+    <button class="btn btn-success" type="submit" title="confirm product uodate process">Save</button>
 </div>
 
 </form>

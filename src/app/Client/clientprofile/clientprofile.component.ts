@@ -22,6 +22,7 @@ export class ClientprofileComponent implements OnInit {
 
   name: string;
   User;
+  RoleID;
   
   constructor(private api: ExperTexhService, private router: Router,private route: ActivatedRoute) { }
 
@@ -29,7 +30,8 @@ export class ClientprofileComponent implements OnInit {
 
     
     if(this.api.RoleID != null)
-    {      
+    {   
+      this.RoleID = this.api.RoleID;   
       this.api.getProfile().subscribe(data => {
         //console.log("User Details",data.ContactNo)
         //this.User = data;

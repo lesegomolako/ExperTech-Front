@@ -55,15 +55,9 @@ AddType(form: NgForm)
       }
       else if(res == "duplicate")
       {
-        if (confirm("Service Type already exists. Would you like to update instead?"))
-        {
-          this.service.TypeData = form.value;
-          window.location.reload();
-        }
-        else
-        {
+          alert("Service Type already exists")
+          this.service.TypeData = form.value;    
           this.router.navigateByUrl("services/ServiceTypes")
-        }
       }
       else
       {

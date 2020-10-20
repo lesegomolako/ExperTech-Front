@@ -69,7 +69,7 @@ const colors: any = {
 })
 export class ScheduleComponent implements OnInit {
 
-
+  RoleID;
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -106,10 +106,13 @@ export class ScheduleComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
   ngOnInit(): void {
+
     if (this.api.RoleID == "2") {
       this.fetchEvents();
+      this.RoleID = this.api.RoleID;
     }
     else if (this.api.RoleID == "3") {
+      this.RoleID = this.api.RoleID;
       this.fetchEmpEvents();
     }
     else {

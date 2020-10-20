@@ -2,7 +2,7 @@ import { Component, OnInit, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/co
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/API Services/for Product/product.service';
-import { NgForm, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { ProductData } from 'src/app/API Services/for Product/product';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { AppComponent } from 'src/app/app.component';
@@ -202,11 +202,11 @@ export class EditProductComponent implements OnInit {
       productid: this.ProdFormData.ProductID,
     })
 
-    this.ProductForm.setControl('photos', this.fb.array([this.fb.group(
-      {
-        photo: this.ProdFormData.Image
-      })] ))
+   
 
+    const g = (<FormArray>this.ProductForm.controls['photos']).at(0) as FormGroup
+
+    g.controls['photo'].setValidators(null)
     
     this.imageURL = this.ProdFormData.Image;
 

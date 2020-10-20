@@ -12,7 +12,7 @@
     <div class="mat-elevation-z8 app-supplier" >
         <mat-form-field  >
           <mat-label>Search</mat-label>
-          <input matInput #input>
+          <input (keyup)="applyFilter($event)" matInput #input>
         </mat-form-field>
       <table mat-table class="dataSource?"  matSort aria-label="Elements">
     

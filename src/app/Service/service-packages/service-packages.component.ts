@@ -21,7 +21,12 @@ export class ServicePackagesComponent implements OnInit, AfterViewInit {
   dataSource;
   constructor(private router: Router, public service: ServicesService) { }
 
-  
+
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.myServicePackageList)
@@ -61,6 +66,7 @@ export class ServicePackagesComponent implements OnInit, AfterViewInit {
           if(res == "success")
           {
             alert("Successfully deleted")
+            window.location.reload();
           }
         }
       )

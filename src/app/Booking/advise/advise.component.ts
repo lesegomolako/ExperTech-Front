@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef, Inject } from '@angular/core';
 import { ReportingService } from 'src/app/API Services/for User/reporting.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServicesService } from 'src/app/API Services/for Service/services.service';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { Schedules } from '../schedule/schedule.component';
@@ -82,8 +82,8 @@ export class AdviseComponent implements OnInit {
       console.log(this.Booking)
 
       this.AdviseForm = this.fb.group({
-        employeeid: [''],
-        timesid: ['']
+        employeeid: ['', Validators.required],
+        timesid: ['', Validators.required]
       })
 
       this.fetchEvents(0);
@@ -94,7 +94,18 @@ export class AdviseComponent implements OnInit {
   }
 
 
+  get g()
+  {
+    return this.AdviseForm.controls;
+  }
   AdviseBooking(form) {
+
+    if(this.AdviseForm.invalid)
+    {
+      this.AdviseForm.markAllAsTouched();
+      return;
+    }
+
     const BookingData =
     {
       SessionID: this.api.SessionID,
