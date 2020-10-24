@@ -23,7 +23,7 @@ import { CompanyInfo, SocialMedia, Timeslots } from 'src/app/User/company-settin
 export class ReportingService {
   formData: Process;
   List: Process[];
-  url = 'https://localhost:44380/api/';
+  url = 'https://expertechapi.azurewebsites.net/api/';
   user: any;
 
   constructor(private http: HttpClient) { }

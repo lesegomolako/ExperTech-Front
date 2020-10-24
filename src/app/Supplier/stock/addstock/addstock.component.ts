@@ -35,6 +35,7 @@ export class AddstockComponent implements OnInit {
         description: ['', Validators.maxLength(150)],
         price: ['', [Validators.required, Validators.min(0)]],
         quantity: [0],
+        categoryid: ['', Validators.required],
         size :['', [Validators.required, Validators.min(0)]],
         color: [null, Validators.maxLength(50)]
       })

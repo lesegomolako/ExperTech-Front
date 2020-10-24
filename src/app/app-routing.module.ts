@@ -79,7 +79,7 @@ import { ClientAuditComponent } from './AuditTrails/client-audit/client-audit.co
 import { EmployeeAuditComponent } from './AuditTrails/employee-audit/employee-audit.component';
 import { AuditTrailComponent } from './AuditTrails/audit-trail/audit-trail.component';
 
-
+import { StockCategoryComponent } from './Supplier/stock-category/stock-category.component';
 //import {MatDialogModule} from '@angular/material/dialog';
 
 const routes: Routes = [
@@ -170,7 +170,7 @@ const routes: Routes = [
   {path: 'changepassword', component: ChangePasswordComponent},
   {path: 'salepayment', component: SalePaymentComponent},
   {path: 'settings', component: CompanySettingsComponent},
- 
+  {path: 'stockcategory', component: StockCategoryComponent},
   
   {path: '**', redirectTo: '/404Page'},
   {path: '404Page', component: ErrorPageComponent},

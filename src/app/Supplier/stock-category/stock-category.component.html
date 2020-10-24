@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col-11">
+    <h1 class="md-display-3">Stock Category</h1>
+    </div>
+    <div class="col-1 nopadding">
+     <button mat-raised-button style="float: right;" routerLink="/employeehome" style="background-color:forestgreen" >
+        <mat-icon style="color:white">home</mat-icon> Home
+    </button>
+    </div>
+    </div>
+  
+  <div class="mat-elevation-z8 app-supplier">
+    
+      <button mat-raised-button (click)="EditCategory()" style="background-color:forestgreen" ><mat-icon style="color:white">add</mat-icon> Add  
+      </button>
+      <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field>
+    <table mat-table class="dataSource?" matSort aria-label="Elements">
+  
+      <!-- Select Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef ><mat-checkbox></mat-checkbox>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox></mat-checkbox>{{row.select}}</td>
+      </ng-container>
+  
+      <!-- Id Column -->
+      <!-- <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let row; index">{{row.CategoryID}}</td>
+      </ng-container> -->
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let row">{{row.Name}}</td>
+      </ng-container>
+  
+      
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Edit</th>
+        <td mat-cell *matCellDef="let row">
+        <button style="background-color:forestgreen" (click)="EditCategory(row)"><mat-icon style="color:white">edit</mat-icon></button>
+        </td >
+      </ng-container>
+  
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Delete</th>
+        <td mat-cell *matCellDef="let row">
+          <button style="background-color:red" (click)="onDelete(row.CategoryID)"><mat-icon style="color:white">delete</mat-icon></button>
+        </td >
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-card *ngIf="dataSource?.data.length == 0" class="text-center">no stock categories added</mat-card>
+    
+  
+    <mat-paginator #paginator
+        [length]="dataSource?.data.length"
+        [pageIndex]=""
+        [pageSize]=""
+        [pageSizeOptions]="[]">
+    </mat-paginator>
+  
+  
+      <a [routerLink] = "['/stock']">
+        <button mat-raised-button style="background-color:red" >
+          <mat-icon style="color:white">keyboard_return</mat-icon> Return to stock 
+        </button></a>
+       
+  
+  
+  </div>
+  

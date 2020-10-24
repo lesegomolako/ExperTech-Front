@@ -136,7 +136,7 @@ import { AdminAuditComponent } from './AuditTrails/admin-audit/admin-audit.compo
 import { ClientAuditComponent } from './AuditTrails/client-audit/client-audit.component';
 import { EmployeeAuditComponent } from './AuditTrails/employee-audit/employee-audit.component';
 import { AuditTrailComponent } from './AuditTrails/audit-trail/audit-trail.component';
-
+import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-category/stock-category.component';
 
 
 
@@ -147,8 +147,8 @@ import { AuditTrailComponent } from './AuditTrails/audit-trail/audit-trail.compo
     EditSOComponent, EditSPComponent, EditProductComponent, ProductComponent, DeleteProductComponent,
     DeleteServiceComponent,DeleteServiceTypeComponent,DeleteSOComponent,LoginComponent,ForgotComponent,
     AdminRegisterComponent,SetupComponent,ResetPasswordComponent,ClickSpinDirective,PickupComponent,PaymentComponent,
-    EmployeeSTComponent,EmployeeComponent,ClientComponent,CbookingDialog,
-    AvailableComponent,AdminComponent,SpackageComponent,SalesReportComponent,
+    EmployeeSTComponent,EmployeeComponent,ClientComponent,CbookingDialog,StockCategoryComponent,
+    AvailableComponent,AdminComponent,SpackageComponent,SalesReportComponent,StockCategoryDialog,
     FinancialReportComponent,SupplierReportComponent, EmployeeRegisterComponent,
     BookingReportComponent,ValidateComponent,EditComponent,BellComponent,ClientprofileComponent,
     MakebookingComponent,ViewbookingComponent,ServicepComponent,BasketComponent, BookingDialog,OrderDialog,
@@ -180,7 +180,7 @@ import { AuditTrailComponent } from './AuditTrails/audit-trail/audit-trail.compo
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   entryComponents: [
-    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog, OrderDialog, ReceiveDialog, LoadingDialog
+    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog, OrderDialog, ReceiveDialog, LoadingDialog, StockCategoryDialog
   ],
 })
 export class AppModule { }

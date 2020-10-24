@@ -24,7 +24,7 @@ export class StockComponent implements AfterViewInit, OnInit {
   value = 'Clear me';
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'description', 'price' , 'quantityinstock', 'edit', 'delete'];
+  displayedColumns = ['id', 'name', 'description', 'category', 'price' , 'quantityinstock', 'edit', 'delete'];
   dialog: any;
   searchKey: string;
   StockData: any;

@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h4 mat-dialog-title><strong>{{title}}</strong></h4>
+  <button type="button" mat-dialog-close class="close" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<form [formGroup]="categoryForm" (submit)="onSubmit(categoryForm.value)">
+  <div class="modal-body" mat-dialog-content>
+    <br>
+    <input hidden formControlName="categoryid">
+    <mat-form-field appearance="fill">
+      <mat-label>Category Name</mat-label>
+      <input placeholder="Enter category name" formControlName="name" matInput>
+      <mat-error *ngIf="f.name.errors?.required">Name is required</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="modal-footer" mat-dialog-actions>
+    <button mat-button type="button" class="btn btn-secondary" mat-dialog-close>Cancel</button>
+    <button mat-button type="submit" class="btn btn-success">Save</button>
+  </div>
+</form>

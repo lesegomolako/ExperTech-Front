@@ -36,8 +36,7 @@ export class BookingReportComponent implements OnInit {
     {     
       this.ReportForm = new FormGroup({
         start: new FormControl('', Validators.required),
-        end: new FormControl('',Validators.required),
-        criteria: new FormControl('', Validators.required)
+        end: new FormControl('',Validators.required)
       })
     }
     else
