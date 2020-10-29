@@ -90,7 +90,7 @@ export class StockComponent implements AfterViewInit, OnInit {
         {
           if(res =="success")
           {
-            alert("Successfully deleted")
+            this.snack.open("Stock Item successfully deleted", "OK", {duration: 3000})
             window.location.reload();
           }
           else if(res.Error == "dependencies")

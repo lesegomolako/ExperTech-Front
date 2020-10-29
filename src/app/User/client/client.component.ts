@@ -157,7 +157,7 @@ export class ClientComponent implements OnInit {
 
     if (confirm("Are you sure you want to delete this client?")) {
       if (this.isOwner == true) {
-        this.service.deleteClient(ClientID, this.api.SessionID)
+        this.service.deleteClient(ClientID, this.api.SessionID, false)
           .subscribe((ref: any) => {
             if (ref == "success") {
               this.snack.open("Client successfully deleted", "OK", { duration: 3000 })
@@ -165,6 +165,21 @@ export class ClientComponent implements OnInit {
             }
             else if (ref.Error == "session") {
               alert(ref.Message);
+            }
+            else if(ref.Error == "dependencies")
+            {
+              if(confirm(ref.Message))
+              {
+                this.service.deleteClient(ClientID, this.api.SessionID, true)
+                .subscribe((ref: any) => {
+                  if (ref == "success") {
+                    this.snack.open("Client successfully deleted", "OK", { duration: 3000 })
+                    this.loadList();
+                  }
+                  else if (ref.Error == "session") {
+                    alert(ref.Message);
+                  }}, error => {console.log(error), this.snack.open("Something went wrong. Please try again later", "OK", {duration: 3000})})
+              }
             }
             else {
               console.log(ref)
@@ -184,15 +199,30 @@ export class ClientComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((res: any) => {
           if (res == true) {
-            this.service.deleteClient(ClientID, this.api.SessionID)
-              .subscribe((ref: any) => {
-                if (ref == "success") {
-                  this.snack.open("Client successfully deleted", "OK", { duration: 3000 })
-                  this.loadList();
+            this.service.deleteClient(ClientID, this.api.SessionID, false, res.OwnerID)
+            .subscribe((ref: any) => {
+              if (ref == "success") {
+                this.snack.open("Client successfully deleted", "OK", { duration: 3000 })
+                this.loadList();
+              }
+              else if (ref.Error == "session") {
+                alert(ref.Message);
+              }
+              else if(ref.Error == "dependencies")
+              {
+                if(confirm(ref.Message))
+                {
+                  this.service.deleteClient(ClientID, this.api.SessionID, true, res.OwnerID)
+                  .subscribe((ref: any) => {
+                    if (ref == "success") {
+                      this.snack.open("Client successfully deleted", "OK", { duration: 3000 })
+                      this.loadList();
+                    }
+                    else if (ref.Error == "session") {
+                      alert(ref.Message);
+                    }}, error => {console.log(error), this.snack.open("Something went wrong. Please try again later", "OK", {duration: 3000})})
                 }
-                else if (ref.Error == "session") {
-                  alert(ref.Message);
-                }
+              }
                 else {
                   console.log(ref)
                 }

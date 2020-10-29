@@ -177,7 +177,7 @@ export class AdminComponent implements OnInit {
         dialogRef.afterClosed().subscribe((res: any) => {
           if (res == true) 
           {
-            this.service.deleteAdmin(AdminID, this.api.SessionID)
+            this.service.deleteAdmin(AdminID, this.api.SessionID, res.OwnerID)
             .subscribe((ref: any) => {
               if (ref == "success") {
                 this.snack.open("Admin successfully deleted", "OK", { duration: 3000 })

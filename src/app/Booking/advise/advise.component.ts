@@ -75,7 +75,7 @@ export class AdviseComponent implements OnInit {
       }, error => {console.log("Error",error), this.snack.open("Something went wrong", "OK", {duration: 3000})});
 
       this.http.get<[]>(this.api.url + "Booking/getTimes")
-        .subscribe(res => { this.Times = res }, error => {console.log("Error",error), this.snack.open("Something went wrong")});
+        .subscribe(res => { this.Times = res }, error => {console.log("Error",error), this.snack.open("Something went wrong", "OK", {duration: 3000})});
 
       this.Booking = JSON.parse(localStorage.getItem("BookingDetails"))
 
@@ -118,10 +118,10 @@ export class AdviseComponent implements OnInit {
 
     this.api.AdviseBooking(BookingData).subscribe(res => {
       if (res = "success") {
-        alert("Booking advise successfully sent to client")
-        this.router.navigateByUrl("/schedule")
+        this.snack.open("Booking advise successfully sent to client", "OK", {duration: 3000});
+        this.router.navigateByUrl("/schedule");
       }
-    }, error => {console.log("Error",error), this.snack.open("Something went wrong")})
+    }, error => {console.log("Error",error), this.snack.open("Something went wrong", "OK", {duration: 3000})})
 
   }
 

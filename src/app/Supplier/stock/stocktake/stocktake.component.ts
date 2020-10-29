@@ -96,7 +96,7 @@ AddStockTake()
   this.takeService.CreateTake(this.Take, this.api.SessionID).subscribe(ref => {
     if(ref == "success")
     {
-      this.snack.open("Stock take successfully saved")
+      this.snack.open("Stock take successfully saved", "OK", {duration:3000})
       this.route.navigate(["stock"])
     }
     else

@@ -1,135 +1,179 @@
-
 <mat-drawer-container class="example-container w-100" fullscreen autosize hasBackdrop="true">
   <mat-drawer #drawer mode="over">
     <div id="sidebar">
       <li style="background-color: #333131; padding:2px 0; width:100%; height:64px">
-        <button mat-icon-button class="example-icon"(click)="drawer.toggle()">
+        <button mat-icon-button class="example-icon" (click)="drawer.toggle()">
           <mat-icon style="color:white">menu</mat-icon>
         </button>
-        <img src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;"/></li>
+        <img src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;" /></li>
       <ul>
         <!-- admin sidnav stuff -->
-        <a routerLink="/home" *ngIf="RoleID == null || RoleID == '1' " (click)="drawer.close()" ><li> Home</li></a>
-        <a routerLink="/employeehome" *ngIf="RoleID == '2' || RoleID == '3'" (click)="drawer.close()" ><li> Home</li></a>
-        <a routerLink="/ViewServices" *ngIf="RoleID == null || RoleID == '1' " (click)="drawer.close()" ><li> View Services</li></a>
-        <a routerLink="/browse" *ngIf="RoleID == null || RoleID == '1' " (click)="drawer.close()" ><li>View Products</li></a>
-        <a routerLink="/ViewBooking" *ngIf="RoleID == '1'" (click)="drawer.close()" ><li>Bookings</li></a>
-        <a routerLink="/request" *ngIf="RoleID == '1'" (click)="drawer.close()" ><li> Request Booking</li></a>
-        <a routerLink="/ServicePackage" *ngIf="RoleID == '1'" (click)="drawer.close()"><li>View Service Package</li></a>
+        <a routerLink="/home" *ngIf="RoleID == null || RoleID == '1' " (click)="drawer.close()">
+          <li> Home</li>
+        </a>
+        <a routerLink="/employeehome" *ngIf="RoleID == '2' || RoleID == '3'" (click)="drawer.close()">
+          <li> Home</li>
+        </a>
+        <a routerLink="/ViewServices" *ngIf="RoleID == null || RoleID == '1' " (click)="drawer.close()">
+          <li> View Services</li>
+        </a>
+        <a routerLink="/browse" *ngIf="RoleID == null || RoleID == '1' " (click)="drawer.close()">
+          <li>View Products</li>
+        </a>
+        <a routerLink="/ViewBooking" *ngIf="RoleID == '1'" (click)="drawer.close()">
+          <li>Bookings</li>
+        </a>
+        <a routerLink="/request" *ngIf="RoleID == '1'" (click)="drawer.close()">
+          <li> Request Booking</li>
+        </a>
+        <a routerLink="/ServicePackage" *ngIf="RoleID == '1'" (click)="drawer.close()">
+          <li>View Service Package</li>
+        </a>
 
         <!-- client sidnav stuff -->
-        <a routerLink="/schedule" *ngIf="RoleID == '2'" (click)="drawer.close()" ><li> View Schedule</li></a>
-        <a routerLink="/services" *ngIf="RoleID == '2'" (click)="drawer.close()"><li>Services</li></a>
-        <a routerLink="/client" *ngIf="RoleID == '2'" (click)="drawer.close()"><li>Client</li></a>
-        <a routerLink="/reports" *ngIf="RoleID == '2'" (click)="drawer.close()" ><li> Reports</li></a>
-        <a routerLink="/settings" *ngIf="RoleID == '2'" (click)="drawer.close()" ><li> Settings</li></a>
+        <a routerLink="/schedule" *ngIf="RoleID == '2'" (click)="drawer.close()">
+          <li> View Schedule</li>
+        </a>
+        <a routerLink="/services" *ngIf="RoleID == '2'" (click)="drawer.close()">
+          <li>Services</li>
+        </a>
+        <a routerLink="/client" *ngIf="RoleID == '2'" (click)="drawer.close()">
+          <li>Client</li>
+        </a>
+        <a routerLink="/reports" *ngIf="RoleID == '2'" (click)="drawer.close()">
+          <li> Reports</li>
+        </a>
+        <a routerLink="/settings" *ngIf="RoleID == '2'" (click)="drawer.close()">
+          <li> Settings</li>
+        </a>
 
         <!-- employee homepage stuff -->
-    
+
         <li (click)="logout(); drawer.close()" *ngIf="RoleID != null">Logout</li>
         <li *ngIf="RoleID == null" (click)="login(); drawer.close()">Login</li>
-        
+
 
       </ul>
     </div>
   </mat-drawer>
-  
-    <nav style="background-color: #333131">
-      <div class="row w-100">
 
-        <div class="col-11">
-          <div style="margin: 10px; left:0">
-            <button mat-icon-button class="example-icon"(click)="drawer.toggle()">
-              <mat-icon style="color:white">menu</mat-icon>
-            </button>
-            <img  (click)="goHome()"  id="img" src="assets/images/logo.png" alt="logo.png" style="width: 50px; height:50px;"/>
-            <a *ngIf="RoleID == '1' || RoleID == null" href="https://mishqah.github.io/user-manual-client/"><span class="material-icons help">
-              help_outline
-            </span></a>
-            <a *ngIf="RoleID == '2'" href="https://mishqah.github.io/user-manual-client/"><span class="material-icons help">
-              help_outline
-            </span></a>
-            <a *ngIf="RoleID == '3'" href="https://mishqah.github.io/user-manual-client/"><span class="material-icons help">
-              help_outline
-            </span></a>
-          </div>         
-        </div>
-    
-        <div class="col-1.5 col-offset-1">
-          <div style="margin: 10px; justify-content: center;">                  
-              <!-- <a routerLink='/ViewBooking'><button style="color: white;" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-                <mat-icon>notifications_none</mat-icon>
-              </button></a> -->
-              
+  <nav style="background-color: #333131">
+    <div class="row w-100">
 
-              <button routerLink="/login" mat-icon-button *ngIf="RoleID== null"><mat-icon style="color: white; font-size: 30px;">account_circle</mat-icon></button>
-              <span ngbDropdown *ngIf="RoleID != null">
-                <a routerLink='/basket' *ngIf="RoleID == '1'"><button style="color: white;" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"  >
-                  <mat-icon *ngIf="showBadges" [matBadge]="api.badgeCount" [matBadgeHidden]="api.badgeCount == 0">shopping_cart</mat-icon>               
-                </button></a>
-                <button ngbDropdownToggle style="color: white;"  mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"  >
-                  <mat-icon  style="font-size: 30px;" >account_circle</mat-icon>             
-                </button>
-                <ul ngbDropdownMenu >
-                  <li>
-                      <div class="navbar-login">
-                          <div class="row">
-                              <div class="col-lg-4">
-                                  <p class="text-center">
-                                      <span class="glyphicon glyphicon-user icon-size"></span>
-                                  </p>
-                              </div>
-                              <div class="col-lg-8">
-                                  <p class="text-left"><strong>{{(User |async)?.Name}} {{(User | async)?.Surname}}</strong></p>
-                                  <p class="text-left small">{{(User|async)?.Email}}</p>
-                                  <p class="text-left">
-                                      <a (click)="logout()" style="text-decoration: none; text-decoration-color: white;" class="btn btn-primary btn-block btn-sm">Logout</a>
-                                  </p>
-                              </div>
-                          </div>
-                      </div>
-                  </li>
-                  <li class="divider"></li>
-                  <li>
-                      <div class="navbar-login navbar-login-session">
-                          <div class="row">
-                              <div class="col-lg-12">
-                                  <p>
-                                    <a routerLink="/Profile" ngbDropdownToggle class="btn btn-primary btn-block">My Profile</a>
-                                    <a routerLink="/changepassword" class="btn btn-danger btn-block">Change Password</a>
-                                  </p>
-                              </div>
-                          </div>
-                      </div>
-                  </li>
-              </ul>
-              </span>
-            
-          </div> 
+      <div class="col-10">
+        <div style="margin: 10px; left:0">
+          <button mat-icon-button class="example-icon" (click)="drawer.toggle()">
+            <mat-icon style="color:white">menu</mat-icon>
+          </button>
+          <img (click)="goHome()" id="img" src="assets/images/logo.png" alt="logo.png"
+            style="width: 50px; height:50px;" />
+          <a *ngIf="RoleID == '1' || RoleID == null" href="https://mishqah.github.io/user-manual-client/"><span
+              class="material-icons help">
+              help_outline
+            </span></a>
+          <a *ngIf="RoleID == '2'" href="https://mishqah.github.io/user-manual-client/"><span
+              class="material-icons help">
+              help_outline
+            </span></a>
+          <a *ngIf="RoleID == '3'" href="https://mishqah.github.io/user-manual-client/"><span
+              class="material-icons help">
+              help_outline
+            </span></a>
         </div>
       </div>
-    </nav>
-    <router-outlet>
-      <div class="my-overlay" *ngIf="showOverlay">
-        <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
-      </div>      
-    </router-outlet>
+
+      <div class="col-2 col-offset-1">
+        <div style="margin: 10px;">
+
+          <span ngbDropdowns *ngIf="RoleID != null">
+            <button *ngIf="RoleID == '2'" ngbDropdownToggle style="color: white;" mat-icon-button class="example-icon"
+              aria-label="Example icon-button with share icon">
+              <mat-icon [matBadge]="api.bookingList?.length" [matBadgeHidden]="api.bookingList?.length == 0">notifications_none</mat-icon>
+            </button>
+            <ul ngbDropdownMenu>
+              <li *ngFor="let x of api.bookingList">
+                <div class="navbar-login">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <p class="text-left"><strong>{{x.Client}}</strong></p>
+                      <p class="text-left small">{{(User|async)?.Email}}</p>
+                      <p class="text-left">
+                        <a (click)="logout()" style="text-decoration: none; text-decoration-color: white;"
+                          class="btn btn-primary btn-block btn-sm">Go to calendar event</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <mat-divider></mat-divider>
+              </li>
+            </ul>
+          </span>
+
+          <a *ngIf="RoleID == '1'" routerLink='/ViewBooking'><button style="color: white;" mat-icon-button class="example-icon favorite-icon"
+              aria-label="Example icon-button with heart icon">
+              <mat-icon>notifications_none</mat-icon>
+            </button></a>
+
+
+          <button routerLink="/login" mat-icon-button *ngIf="RoleID== null">
+            <mat-icon style="color: white; font-size: 30px;">account_circle</mat-icon>
+          </button>
+
+          <span ngbDropdown  *ngIf="RoleID != null">
+            <a routerLink='/basket' *ngIf="RoleID == '1'"><button style="color: white;" mat-icon-button
+                class="example-icon" aria-label="Example icon-button with share icon">
+                <mat-icon *ngIf="showBadges" [matBadge]="api.badgeCount" [matBadgeHidden]="api.badgeCount == 0">
+                  shopping_cart</mat-icon>
+              </button></a>
+            <button ngbDropdownToggle  style="color: white;" mat-icon-button class="example-icon"
+              aria-label="Example icon-button with share icon">
+              <mat-icon style="font-size: 30px;">account_circle</mat-icon>
+            </button>
+            <ul ngbDropdownMenu>
+              <li>
+                <div class="navbar-login">
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <p class="text-center">
+                        <span class="glyphicon glyphicon-user icon-size"></span>
+                      </p>
+                    </div>
+                    <div class="col-lg-8">
+                      <p class="text-left"><strong>{{(User |async)?.Name}} {{(User | async)?.Surname}}</strong></p>
+                      <p class="text-left small">{{(User|async)?.Email}}</p>
+                      <p class="text-left">
+                        <a (click)="logout()" style="text-decoration: none; text-decoration-color: white;"
+                          class="btn btn-primary btn-block btn-sm">Logout</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <div class="navbar-login navbar-login-session">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <p>
+                        <a routerLink="/Profile" ngbDropdownToggle class="btn btn-primary btn-block">My Profile</a>
+                        <a routerLink="/changepassword" class="btn btn-danger btn-block">Change Password</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </span>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+  <router-outlet>
+    <div class="my-overlay" *ngIf="showOverlay">
+      <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+    </div>
+  </router-outlet>
 </mat-drawer-container>
-
-
-
-<!--
-  **this is the sidebar for client-side 
-
-  <div id="sidebar" *ngIf="role==client">
-    <ul>
-      <li>Main Menu</li>
-      <li>Bookings</li>
-      <li>Reports</li>
-      <li>Services</li>
-    </ul>
-  </div>
-  
--->
 
 

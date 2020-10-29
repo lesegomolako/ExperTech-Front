@@ -132,7 +132,6 @@ export class AvailableComponent implements OnInit {
   
   loadList() {
     this.List = this.service.getTime();
-    this.List = this.service.getTime()
   }
 
   Schedge: AvailData;

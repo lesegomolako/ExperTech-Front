@@ -35,6 +35,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import { ToastrModule } from 'ngx-toastr';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDividerModule} from '@angular/material/divider';
 
 //******************************* Components *************************************/
 import { TServicesComponent } from './Service/tservices/tservices.component';
@@ -95,7 +96,7 @@ import {StockComponent} from './Supplier/stock/stock.component';
 import {AddsupplierComponent} from './Supplier/supplier/addsupplier/addsupplier.component';
 import {EditsupplierComponent} from './Supplier/supplier/editsupplier/editsupplier.component';
 import {PlaceorderComponent,OrderDialog,ReceiveDialog} from './Supplier/supplier/placeorder/placeorder.component';
-import {orderform} from './Supplier/supplier/placeorder/orderform/orderform.component';
+import {orderform, ConfirmOrderDialog} from './Supplier/supplier/placeorder/orderform/orderform.component';
 import {SupplierComponent} from './Supplier/supplier/supplier.component';
 import { ViewServicesComponent } from './Service/view-services/view-services.component';
 import { SaleinvoiceComponent } from './Supplier/sale/saleinvoice/saleinvoice.component';
@@ -149,7 +150,7 @@ import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-ca
     AdminRegisterComponent,SetupComponent,ResetPasswordComponent,ClickSpinDirective,PickupComponent,PaymentComponent,
     EmployeeSTComponent,EmployeeComponent,ClientComponent,CbookingDialog,StockCategoryComponent,
     AvailableComponent,AdminComponent,SpackageComponent,SalesReportComponent,StockCategoryDialog,
-    FinancialReportComponent,SupplierReportComponent, EmployeeRegisterComponent,
+    FinancialReportComponent,SupplierReportComponent, EmployeeRegisterComponent,ConfirmOrderDialog,
     BookingReportComponent,ValidateComponent,EditComponent,BellComponent,ClientprofileComponent,
     MakebookingComponent,ViewbookingComponent,ServicepComponent,BasketComponent, BookingDialog,OrderDialog,
     RequestbComponent,BrowseComponent,BookingConfirmComponent, OptionsFilterPipe, AddClientDialog, SearchClientDialog,
@@ -161,7 +162,7 @@ import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-ca
 
   ],
   imports: [
-    BrowserModule, MatTableModule, MatSelectModule,
+    BrowserModule, MatTableModule, MatSelectModule,MatDividerModule,
     AppRoutingModule, MatButtonModule, MatAutocompleteModule, MatStepperModule,
     BrowserAnimationsModule, MatInputModule,MatExpansionModule, MatCheckboxModule,
     MatIconModule, FormsModule, ReactiveFormsModule, MatGridListModule,
@@ -180,7 +181,7 @@ import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-ca
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   entryComponents: [
-    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog, OrderDialog, ReceiveDialog, LoadingDialog, StockCategoryDialog
+    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog, OrderDialog,ConfirmOrderDialog, ReceiveDialog, LoadingDialog, StockCategoryDialog
   ],
 })
 export class AppModule { }

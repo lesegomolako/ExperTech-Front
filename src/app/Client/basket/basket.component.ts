@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { BasketLine } from '../../API Services/for Booking/client';
 import { ExperTexhService } from '../../API Services/for Booking/exper-texh.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoadingDialog } from 'src/app/app.component';
 
 @Component({
   selector: 'app-basket',
@@ -26,13 +27,15 @@ export class BasketComponent implements OnInit {
     private router: Router, private route: ActivatedRoute) { }
 
   SubmitBasket() {
-    if (confirm("Click ok to to submit basket and place order")) {
+    const dialogRef = this.dialog.open(LoadingDialog, { disableClose: true })
+    if (confirm("Click ok to submit basket and place order")) {
       this.api.SubmitBasket().subscribe(res => {
         if (res == "success") {
-          alert("Basket successfully submitted")
+          dialogRef.close();
+          this.snack.open("Basket successfully successfully submitted. Check your email/sms for more details", "OK", {duration:3000})
           window.location.reload();
         }
-      })
+      }, error => {console.log(error), dialogRef.close(), this.snack.open("Something went wrong. Please try again later", "OK", {duration:3000})})
     }
   }
 

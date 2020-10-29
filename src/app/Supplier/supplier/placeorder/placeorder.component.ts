@@ -158,7 +158,7 @@ export class PlaceorderComponent implements AfterViewInit, OnInit {
       </p>
       <strong>Stock Items: </strong>
         <ul *ngFor="let x of data.StockItemLines">
-          <li>{{ x.Items}} (Quantity: {{x.Quantity}})</li>
+          <li>{{ x.Items}} (Quantity: {{x.Quantity}}) Price: {{x.Price}}</li>
         </ul>
     </div> 
   </div>

@@ -17,7 +17,7 @@
       <!-- AuditID Column -->
       <ng-container matColumnDef="auditid" >
         <th mat-header-cell *matHeaderCellDef mat-sort-header>AuditID</th>
-        <td mat-cell *matCellDef="let row; let i = index">{{i}}</td>
+        <td mat-cell *matCellDef="let row; let i = index">{{i + 1}}</td>
       </ng-container>
   
       <!-- AdminName Column -->
@@ -29,13 +29,13 @@
       <!-- OldData Column -->
       <ng-container matColumnDef="olddata">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Old Data</th>
-        <td mat-cell *matCellDef="let row">{{row.OldData}}</td>
+        <td mat-cell *matCellDef="let row">{{row.OldData || "N/A"}}</td>
       </ng-container>
   
       <!-- NewData Column -->
       <ng-container matColumnDef="newdata">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>New Data</th>
-        <td mat-cell *matCellDef="let row">{{row.NewData}}</td>
+        <td mat-cell *matCellDef="let row">{{row.NewData || "N/A"}}</td>
       </ng-container>
   
       <!-- TablesAffected Column -->
@@ -61,7 +61,7 @@
       <!-- AuthorizedBy Column -->
       <ng-container matColumnDef="authorizedby">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>AuthorizedBy</th>
-        <td mat-cell *matCellDef="let row">{{row.AuthorizedBy}}</td>
+        <td mat-cell *matCellDef="let row"><span *ngIf="row.AuthorizedBy == 0"></span>{{row.AuthorizedBy}}</td>
       </ng-container>
       
       

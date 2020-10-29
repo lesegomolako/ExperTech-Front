@@ -11,6 +11,7 @@ import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms'
 import { PaymentType } from 'src/app/API Services/for User/process';
 import { Observable } from 'rxjs';
 import { ReportingService } from 'src/app/API Services/for User/reporting.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sale-payment',
@@ -37,7 +38,7 @@ export class SalePaymentComponent implements OnInit {
   displayedColumns = ['saleid', 'client', 'saletype', 'items', 'date', 'select'];
 
   constructor(private api: ExperTexhService, private service: SaleService, private rservice: ReportingService,
-    private router: Router) { }
+    private router: Router, private snack: MatSnackBar) { }
 
   ngOnInit(): void {
     if (this.api.RoleID == "2") 
@@ -46,6 +47,7 @@ export class SalePaymentComponent implements OnInit {
       
       this.dataSource = new MatTableDataSource(this.SaleList)
       this.service.getProdSaleList().subscribe(res => {
+        console.log("Sale:", res)
         this.SaleList = res;
         this.dataSource.data = this.SaleList;
       })
@@ -80,7 +82,7 @@ export class SalePaymentComponent implements OnInit {
       {
         if(res == "success")
         {
-          alert("Products successfully paid")
+          this.snack.open("Sale successfully paid", "OK", {duration: 3000})
           this.router.navigate(["payment"])
         }
         else if(res.Error == "session")

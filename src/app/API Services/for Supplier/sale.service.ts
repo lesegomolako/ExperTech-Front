@@ -16,6 +16,7 @@ export class SaleService {
   constructor(private http: HttpClient) { }
 
   url = "https://localhost:44380/api/"
+  //url = 'https://expertechapi.azurewebsites.net/api/';
 
   getSaleList(): Observable<SaleData[]>
   {

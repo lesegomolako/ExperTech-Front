@@ -37,7 +37,7 @@
           <strong>Products: </strong>
           <!-- <label name="Products">{{clientObject.SaleType}}</label> -->
           <ul>
-            <li *ngFor="let x of clientObject.Products" >{{x.Name}}</li>
+            <li *ngFor="let x of clientObject.Products" >{{x.Name + " (Quantity: "+ x.Quantity + ")"}} Price: {{x.Price | currency:'ZAR':'symbol-narrow'}}</li>
           </ul>
         </div>
 

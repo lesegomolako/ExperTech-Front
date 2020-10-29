@@ -6,6 +6,7 @@ import { NgForm, FormGroup, FormBuilder, FormControl, Validators, FormArray } fr
 import { ProductData } from 'src/app/API Services/for Product/product';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { AppComponent } from 'src/app/app.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-product',
@@ -18,7 +19,7 @@ export class EditProductComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router,
     public service: ProductService, private api: ExperTexhService,
-    private fb: FormBuilder
+    private fb: FormBuilder, private snack: MatSnackBar
   ) { }
 
   ProductForm: FormGroup;
@@ -168,7 +169,7 @@ export class EditProductComponent implements OnInit {
       supplierid: ['', Validators.required],
       categoryid: ['', Validators.required],
       productid: [null],
-      photos: this.fb.array([this.fb.group({ photo: ['', Validators.required] })])
+      photos: this.fb.array([this.fb.group({ photo: [null] })])
     })
   }
 
@@ -234,11 +235,17 @@ export class EditProductComponent implements OnInit {
       this.validateAllFormFields(this.ProductForm)
       return;
     }
+
+    if(this.ProductForm.value.photos[0].photo == null)
+    {
+      alert("An image is required to be uploaded")
+      return;
+    }
     this.mapValues();
     this.service.AddProduct(this.ProdFormData, this.UploadFile, this.api.SessionID)
       .subscribe((res: any) => {
         if (res == "success") {
-          alert("Successfully saved")
+          this.snack.open("Product successfully saved", "OK", {duration: 3000})
           this.router.navigateByUrl("AdminProduct")
 
         }
@@ -255,7 +262,7 @@ export class EditProductComponent implements OnInit {
           alert(res.Message)
 
         }
-      })
+      }, error => {console.log(error), this.snack.open("Something went wrong. Please try again later.", "OK", {duration: 3000})})
   }
 
   EditProduct() {
@@ -275,11 +282,11 @@ export class EditProductComponent implements OnInit {
       {
         if(res == "success")
         {
-          alert("Successfully updated");
+          this.snack.open("Product successfully updated", "OK", {duration: 3000})
           this.router.navigateByUrl("AdminProduct")
           localStorage.removeItem('prodEdit')
         }
-    })
+    }, error => {console.log(error), this.snack.open("Something went wrong. Please try again later.", "OK", {duration: 3000})})
   }
 
 
@@ -287,7 +294,7 @@ export class EditProductComponent implements OnInit {
   Cancel() {
     if(this.ProductForm.touched && this.ProductForm.dirty)
     {
-      if(confirm("You've made unsaved changes. Are you sure you want to leave this page?"))
+      if(confirm("You have unsaved changes. Are you sure you want to leave this page?"))
       window.history.back();
     }
     else

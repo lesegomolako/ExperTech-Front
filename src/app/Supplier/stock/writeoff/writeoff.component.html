@@ -27,14 +27,15 @@
                   <mat-form-field class="example-full-width">
                   <mat-label>Select Stock Item</mat-label>
                   <mat-select formControlName="itemid">
-                    <mat-option *ngFor="let x of StockList"  value="{{x.ItemID}}">{{x.Name}}</mat-option>
+                    <mat-option *ngFor="let x of StockList" (click)="setValidator(j, x)"  value="{{x.ItemID}}">{{x.Name}}</mat-option>
                   </mat-select>
                   </mat-form-field>
                 </td>
                 <td>
                   <mat-form-field class="example-full-width">
                   <mat-label>Quantity</mat-label>
-                  <input matInput type="number" matInput formControlName="quantity">
+                  <input (keypress)="omit_special_num_char($event)" matInput min=0 type="number" matInput formControlName="quantity">
+                  <mat-error>Write off quantity may not exceed current quantity in stock</mat-error>
                   </mat-form-field></td>
                   <button type="button" *ngIf="writeOffForm.get('writeofflines')['controls'].length>1" class="btn btn-danger" (click)="DeleteForm(j)"><span class="glyphicon glyphicon-trash"></span></button>
                 </tr>

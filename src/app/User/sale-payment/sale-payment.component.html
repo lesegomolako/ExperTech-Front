@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-12">
   
-    <h1 class="text-center">Product Payment
+    <h1 class="text-center">Sale Payment
     <button mat-raised-button style="float: right;" routerLink="/payment" style="background-color:forestgreen" >
       <mat-icon style="color:white">keyboard_return</mat-icon> Back
     </button>
@@ -118,7 +118,7 @@
               <strong>Products: </strong>
               <!-- <label name="Products">{{clientObject.SaleType}}</label> -->
               <ul>
-                <li *ngFor="let x of selectedSale.Products" >{{x.Name}}</li>
+                <li *ngFor="let x of selectedSale.Products" >{{x.Name + " (Quantity: "+ x.Quantity + ")"}} Price: {{x.Price | currency:'ZAR':'symbol-narrow'}}</li>
               </ul>
             </div>
     
@@ -165,6 +165,12 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="TypeControl.errors?.required && (TypeControl.touched ||TypeControl.dirty)">Select Payment Type</mat-error>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <mat-label>Enter Amount Paid:</mat-label>
+            <input matInput>
+            <mat-error *ngIf=""></mat-error>
           </mat-form-field>
         </div>
       </div>

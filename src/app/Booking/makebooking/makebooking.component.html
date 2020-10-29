@@ -118,8 +118,8 @@
             <mat-label style="color: black;">Employee Name</mat-label>
             <mat-select formControlName="employeeControl" required>
               <mat-option>--</mat-option>
-              <mat-option (click)="EnableDateForm(x.EmployeeID)" *ngFor="let x of Employee " value={{x.EmployeeID}}>
-                {{x.Name}}
+              <mat-option (click)="EnableDateForm(x.EmployeeID)" *ngFor="let x of Schedule " value={{x.EmployeeID}}>
+                {{x.Employee}}
               </mat-option>
             </mat-select>
             <!-- <mat-error *ngIf="employeeControl.hasError('required')">Please choose an employee</mat-error>

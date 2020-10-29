@@ -5,6 +5,7 @@ import{Client, User, BasketLine,ClientPackage, Product, Booking, AuditTrail} fro
 import { HttpHeaders, HttpParams } from '@angular/common/http';  
 import { HttpClient } from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import { BookingData } from 'src/app/Staff/get-bookings/get-bookings.component';
 
 
 
@@ -14,6 +15,7 @@ import {map} from 'rxjs/operators';
 export class ExperTexhService {
 
   url = 'https://localhost:44380/api/'; 
+  //url = 'https://expertechapi.azurewebsites.net/api/';
 
   RoleID = sessionStorage.getItem("RoleID"); 
   SessionID = sessionStorage.getItem("accessToken");
@@ -21,6 +23,7 @@ export class ExperTexhService {
   UserData: User;
   clientData: Client;
   badgeCount;
+  bookingList: Booking[]
 
   constructor(private http:HttpClient) { }
 
@@ -56,6 +59,13 @@ export class ExperTexhService {
     const params = new HttpParams().set("SessionID", this.SessionID)
     return this.http.get<number>(this.url+"Clients/getBadge", {params})
     .subscribe(res => {this.badgeCount = res})
+  }
+
+  getNotifications()
+  {
+    const params = new HttpParams().set("SessionID", this.SessionID)
+    return this.http.get<Booking[]>(this.url+"User/getNotifications", {params}).subscribe(res => {this.bookingList = res; console.log("Bookings:", res)});
+    
   }
 
 

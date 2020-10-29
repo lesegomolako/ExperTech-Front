@@ -103,8 +103,12 @@ export class LoginComponent implements OnInit {
     const dialogRef = this.dialog.open(LoadingDialog, { disableClose: true })
     this.service.Login(this.user).subscribe((res : any) =>
     {
-      
-      if(res.Error) { 
+      if(res.Error == "invalid")
+      {
+        alert(res.Message)
+        return;
+      }
+      else if(res.Error) { 
         dialogRef.close();  //lol
         this.errorMessage = res.Error;
         this.showError = true;

@@ -46,7 +46,7 @@
                   <td>
                     <mat-form-field class="example-full-width">
                     <mat-label> Select Stock Item</mat-label>
-                    <mat-select formControlName="itemid">
+                    <mat-select formControlName="ItemID">
                       <mat-option *ngFor="let x of StockList" (click)="setPrice(x.Price)" value="{{x.ItemID}}">{{x.Name}}</mat-option>
                     </mat-select>
                     </mat-form-field>
@@ -54,7 +54,7 @@
                   <td>
                     <mat-form-field class="example-full-width">
                     <mat-label>Quantity</mat-label>
-                    <input matInput min=0 type="number" (keypress)="countTotal(j)" formControlName="quantity">
+                    <input matInput min=0 type="number" formControlName="Quantity">
                     </mat-form-field></td>
                     <button type="button" *ngIf="orderForm.get('stockitemlines')['controls'].length>1" class="btn btn-danger" (click)="DeleteForm(j)"><span class="glyphicon glyphicon-trash"></span></button>
                 </tr>
@@ -70,15 +70,8 @@
            </button></a>
             
             <button type="submit" mat-raised-button style="background-color:forestgreen;">
-              <mat-icon style="color:white">done</mat-icon> Save
+              <mat-icon style="color:white">done</mat-icon> Place Order
             </button>
-
-            <div style="float:right">
-              <mat-form-field class="example-full-width">
-                <mat-label>Total Price (R):</mat-label>
-                <input matInput readonly type="number" [value]="Total">
-              </mat-form-field>
-            </div>
           </div>
     </form>      
   </div>

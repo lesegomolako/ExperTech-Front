@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/API Services/for Product/product.service';
 import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-delete-product',
@@ -11,7 +12,7 @@ import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.se
 export class DeleteProductComponent implements OnInit {
 
   constructor(public service: ProductService, private router: Router,
-    private api: ExperTexhService
+    private api: ExperTexhService, private snack: MatSnackBar
     ) { }
 
   formData;
@@ -41,7 +42,7 @@ export class DeleteProductComponent implements OnInit {
         {
           if(res == "success")
           {
-            alert("Successfully deleted");
+            this.snack.open("Product successfully deleted", "OK", {duration: 3000})
             this.router.navigateByUrl("AdminProduct");
             localStorage.removeItem("prodDelete")
           }
@@ -51,7 +52,7 @@ export class DeleteProductComponent implements OnInit {
             this.router.navigateByUrl("AdminProduct");
             localStorage.removeItem("prodDelete")
           }
-        })
+        }, error => {console.log(error), this.snack.open("Something went wrong. Please try again later", "OK", {duration: 3000})})
       
     }
     

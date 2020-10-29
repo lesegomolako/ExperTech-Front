@@ -23,7 +23,8 @@ import { CompanyInfo, SocialMedia, Timeslots } from 'src/app/User/company-settin
 export class ReportingService {
   formData: Process;
   List: Process[];
-  url = 'https://expertechapi.azurewebsites.net/api/';
+  url = 'https://localhost:44380/api/';
+  //url = 'https://expertechapi.azurewebsites.net/api/';
   user: any;
 
   constructor(private http: HttpClient) { }
@@ -46,8 +47,8 @@ export class ReportingService {
       return this.http.post<Process>(this.url + 'Admin/updateAdmin', formData);
     }
   }
-  deleteAdmin(AdminID, SessionID) {
-    const params = new HttpParams().set("SessionID", SessionID).set("AdminID", AdminID)
+  deleteAdmin(AdminID, SessionID, OwnerID?) {
+    const params = new HttpParams().set("SessionID", SessionID).set("AdminID", AdminID).set("OwnerID", OwnerID)
     return this.http.delete(this.url + 'Admin/deleteAdmin',{params}
     );
 
@@ -74,10 +75,10 @@ export class ReportingService {
     }
   }
 
-  deleteClient(ClientID, SessionID) {
+  deleteClient(ClientID, SessionID, Confirm, Owner?) {
     
-    const params = new HttpParams().set("ClientID",ClientID).set("SessionID", SessionID)
-    return this.http.delete<Process>(
+    const params = new HttpParams().set("ClientID",ClientID).set("SessionID", SessionID).set("confirmation", Confirm).set("OwnerID", Owner)
+    return this.http.delete(
         this.url + 'Clients/deleteClient',
         {params}
       );

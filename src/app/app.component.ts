@@ -9,7 +9,7 @@ import {
 } from '@angular/router'
 
 import { Observable } from 'rxjs';
-import { Employee, User } from './API Services/for Booking/client';
+import { Employee, User, Booking} from './API Services/for Booking/client';
 import {map} from 'rxjs/operators';
 import { ExperTexhService } from './API Services/for Booking/exper-texh.service';
 import { ReportingService } from './API Services/for User/reporting.service';
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
     })}
 
   
-   
+   bookingList: Booking[];
   ngOnInit()
   {
     
@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
     }
 
     this.api.getBadgeCount();
+    this.api.getNotifications();
     
     //this.api.getProfile().subscribe(res => {console.log(res)});
     this.User = this.api.getProfile()

@@ -22,6 +22,7 @@ export class SupplierService {
   constructor(private http: HttpClient) { }
 
   url = "https://localhost:44380/api/"
+  //url = 'https://expertechapi.azurewebsites.net/api/';
 
   getSupplierList(): Observable<SupplierData[]>
   {

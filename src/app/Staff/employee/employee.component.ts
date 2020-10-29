@@ -15,6 +15,7 @@ import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.se
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CbookingDialog } from '../get-bookings/get-bookings.component';
 import { Employee } from 'src/app/API Services/for Booking/client';
+import { LoadingDialog } from 'src/app/app.component';
 
 @Component({
   selector: 'app-employee',
@@ -156,15 +157,19 @@ export class EmployeeComponent implements OnInit {
 
   DeleteEmployee(EmployeeID) {
 
+
     if (confirm("Are you sure you want to delete this Employee?")) {
       if (this.isOwner == true) {
+        const dialogRef = this.dialog.open(LoadingDialog, { disableClose: true })
         this.service.deleteEmployee(EmployeeID, this.api.SessionID, false)
           .subscribe((ref: any) => {
             if (ref == "success") {
               this.snack.open("Employee successfully deleted", "OK", { duration: 3000 })
+              dialogRef.close();
               this.loadList();
             }
             else if (ref.Error == "session") {
+              dialogRef.close();
               alert(ref.Message);
             }
             else if (ref.Error == "dependencies") {
@@ -173,12 +178,15 @@ export class EmployeeComponent implements OnInit {
                   .subscribe((ref: any) => {
                     if (ref == "success") {
                       this.snack.open("Employee successfully deleted", "OK", { duration: 3000 })
+                      dialogRef.close();
                       this.loadList();
                     }
                     else if (ref.Error == "session") {
+                      dialogRef.close();
                       alert(ref.Message);
                     }
                     else {
+                      dialogRef.close();
                       console.log(ref)
                     }
                   })
@@ -186,9 +194,10 @@ export class EmployeeComponent implements OnInit {
             }
             else {
               console.log(ref)
+              dialogRef.close();
               this.snack.open("Something went wrong. Please try again later", "OK", { duration: 3000 })
             }
-          }, error => { console.log(error), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
+          }, error => { console.log(error),dialogRef.close(), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
       }
       else {
         const dialogConfig = new MatDialogConfig();
@@ -203,13 +212,16 @@ export class EmployeeComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((res: any) => {
           if (res == true) {
+            const dialogRef = this.dialog.open(LoadingDialog, { disableClose: true })
             this.service.deleteEmployee(EmployeeID, this.api.SessionID, false)
               .subscribe((ref: any) => {
                 if (ref == "success") {
                   this.snack.open("Employee successfully deleted", "OK", { duration: 3000 })
+                  dialogRef.close();
                   this.loadList();
                 }
                 else if (ref.Error == "session") {
+                  dialogRef.close();
                   alert(ref.Message);
                 }
                 else if (ref.Error == "dependencies") {
@@ -218,22 +230,26 @@ export class EmployeeComponent implements OnInit {
                       .subscribe((ref: any) => {
                         if (ref == "success") {
                           this.snack.open("Employee successfully deleted", "OK", { duration: 3000 })
+                          dialogRef.close();
                           this.loadList();
                         }
                         else if (ref.Error == "session") {
+                          dialogRef.close();
                           alert(ref.Message);
                         }
                         else {
+                          dialogRef.close();
                           console.log(ref)
                         }
                       })
                   }
                 }
                 else {
+                  dialogRef.close();
                   console.log(ref)
                   this.snack.open("Something went wrong. Please try again later", "OK", { duration: 3000 })
                 }
-              }, error => { console.log(error), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
+              }, error => { console.log(error),dialogRef.close(), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
           }
         })
       }

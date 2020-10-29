@@ -29,7 +29,7 @@ export class StockData
   ItemID: any;
   Name: string;
   Description: string;
-  Price: string;
+  Price: any;
   QuantityInStock: any;
   Color?: string;
   CategoryID: any;
@@ -84,23 +84,24 @@ export class SupplierData
 
 export class SupplierOrderData
 {
-  OrderID: any;
+  OrderID?: any;
   SupplierID: any;
-  Supplier: string;
-  Description: string;
-  Price: string;
-  Date: string;
-  Received: boolean;
-  StockItemLines:
-  [
-    {
-      LineID: any;
-      Items: string;
-      Quantity: any;
-      ItemID: any;
-      Size: any;
-      Received: boolean;
-      QuantityReceived: any;
-    }
-  ]
+  Supplier?: string;
+  Description?: string;
+  Price?: any;
+  Date?: string;
+  Received?: boolean;
+  StockItemLines: StockItemLines[]
+}
+
+export interface StockItemLines
+{
+  LineID?: any;
+  Items?: string;
+  Quantity: any;
+  Price?: any;
+  ItemID: any;
+  Size?: any;
+  Received?: boolean;
+  QuantityReceived?: any;
 }

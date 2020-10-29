@@ -30,6 +30,9 @@ export class AddstockComponent implements OnInit {
   ngOnInit(): void {
     if(this.api.RoleID == "2")
     {
+      this.service.getStockCategory(this.api.SessionID).subscribe(res => {
+        this.Categories = res;
+      })
       this.StockForm = this.formBuilder.group({
         name: ['', [Validators.required, Validators.maxLength(50)]],
         description: ['', Validators.maxLength(150)],

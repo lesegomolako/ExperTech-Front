@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router, RouterStateSnapshot } from '@angular/router';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { ReportingService } from '../../API Services/for User/reporting.service';
@@ -110,7 +110,8 @@ export class GetBookingsComponent implements OnInit {
 
   loadlist() {
     var today = new Date();
-    this.http.get<BookingData[]>(this.api.url + "Admin/GetBookings").subscribe((res: BookingData[]) => {
+    const params = new HttpParams().set("SessionID", this.api.SessionID)
+    this.http.get<BookingData[]>(this.api.url + "Admin/GetBookings", {params}).subscribe((res: BookingData[]) => {
       this.BookingsList = res.filter(zz => new Date(zz.DateTime) < today)
         .sort((a, b) => 0 - (a['DateTime'] > b['DateTime'] ? 1 : -1))
     });

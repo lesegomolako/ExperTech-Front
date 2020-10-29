@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CbookingDialog } from 'src/app/Staff/get-bookings/get-bookings.component';
 import { MatStepper } from '@angular/material/stepper';
+import { User } from 'src/app/API Services/for Booking/client';
 //import { ReportingService } from '../../API Services/for User/reporting.service';
 //import {Process} from '../../API Services/for User/process';
 
@@ -53,6 +54,8 @@ export class SaleComponent implements AfterViewInit, OnInit {
         this.SaleList = res;
         this.dataSource.data = this.SaleList;
       })
+
+      this.api.getProfile().subscribe((res: User) => { this.isOwner = res.Admins[0].Owner })
     }
     else {
       this.router.navigate(["403Forbidden"])

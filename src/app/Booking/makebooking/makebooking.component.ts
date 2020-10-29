@@ -118,6 +118,7 @@ export class MakebookingComponent implements OnInit{
 
   EnableForm(Type: ServiceTypeData)
   {
+
     this.Service = this.Service.filter(res => res.TypeID == Type.TypeID)
     this.Schedule = this.Schedule.filter(res => res.TypeID == Type.TypeID)
     this.BookingForm.get("ServiceControl").enable();
@@ -138,12 +139,31 @@ export class MakebookingComponent implements OnInit{
   {
     this.Schedule = this.Schedule.filter(res => res.EmployeeID == EmployeeID);
     this.BookingForm.get("DateControl").enable();
+    this.myTimes = this.Schedule[0].EmployeeSchedule;
     console.log(this.Schedule)
   }
 
+  myTimes;
   EnableTimeForm(event)
   {
     var sDate: Date = event;
+    console.log("MyDate:",this.myTimes[0].Date)
+    
+    sDate.setDate(sDate.getDate());
+    console.log("Before:", sDate)
+   
+    var dDate = sDate.toDateString();
+    console.log("Process:", dDate)
+    
+    var finalDate = new Date(dDate)
+    console.log("After: ",finalDate)
+
+    
+    this.myTimes = this.myTimes.filter(res => res.Date == dDate)
+    
+
+    console.log(this.myTimes)
+    return;
     //alert(sDate.toLocaleDateString())
     //this.Schedule = this.Schedule.fore
    this.BookingForm.get("TimeControl").enable();
@@ -307,18 +327,21 @@ LoadList()
     }
 
     this.Schedule = res
-   
+    console.log(res)
   }
     , error => {console.log(error), this.snack.open("Something went wrong. Try again later", "OK", {duration: 3000})})
-
-  this.http.get<[]>(this.api.url + "Booking/getALLemployees")
-  .subscribe(res => {this.Employee = res})
+  
+  // this.http.get<[]>(this.api.url + "Booking/getALLemployees")
+  // .subscribe(res => {this.Employee = res})
   this.service.getServices()
   .subscribe(res => {this.Service = res; })
+
   this.http.get<[]>(this.api.url + "Services/GetServiceOption")
   .subscribe(res => {this.ServiceOptions = res})
+
   this.service.getServiceTypes()
   .subscribe(res => {this.ServiceType = res})
+
   this.http.get<[]>(this.api.url + "Booking/getTimes")
   .subscribe(res => {this.Times = res})
   // // this.Schedge = this.http.get<Schedule[]>(this.api.url + "Booking/getSchedge")

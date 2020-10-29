@@ -26,7 +26,7 @@ export class StockCategoryComponent implements OnInit {
   value = 'Clear me';
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = [ 'name', 'edit', 'delete'];
+  displayedColumns = ['id', 'name', 'edit', 'delete'];
   
   searchKey: string;
   StockData: any;
@@ -48,7 +48,7 @@ export class StockCategoryComponent implements OnInit {
   }
 
   loadList() {
-    this.service.getStockCategory().subscribe(res => {
+    this.service.getStockCategory(this.api.SessionID).subscribe(res => {
       this.CategoryList = res;
       this.dataSource.data = this.CategoryList;
     })
@@ -182,7 +182,7 @@ export class StockCategoryDialog implements OnInit {
         {
           if(res =="success")
           {
-            this.snack.open("Category successfully added", "OK", {duration:3000})
+            this.snack.open("Category successfully updated", "OK", {duration:3000})
             this.dialogRef.close();
             window.location.reload();
           }

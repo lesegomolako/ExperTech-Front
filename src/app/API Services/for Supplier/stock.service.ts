@@ -16,6 +16,7 @@ export class StockService {
   constructor(private http: HttpClient) { }
 
   url = "https://localhost:44380/api/"
+  //url = 'https://expertechapi.azurewebsites.net/api/';
 
   getStockList(): Observable<StockData[]>
   {
@@ -47,18 +48,19 @@ export class StockService {
     return this.http.post(this.url + 'StockTake/AddStockTake',formData, {params})
   }
 
-  CreateWrite(formData: WriteOffData, SessionID)
+  CreateWrite(formData: WriteOffData, SessionID, OwnerID?)
   {
-    const params = new HttpParams().set("SessionID", SessionID)
+    const params = new HttpParams().set("SessionID", SessionID).set("AuthorizedID", OwnerID)
     return this.http.post(
       this.url + 'StockTake/AddStockWriteOff',
       formData, {params}
     )
   }
 
-  getStockCategory()
+  getStockCategory(SessionID)
   {
-    return this.http.get<StockCategory[]>(this.url + "StockItem/GetCategories")
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.get<StockCategory[]>(this.url + "StockItem/GetCategories" , {params})
   }
 
   AddStockCategory(Category, SessionID)
