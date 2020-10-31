@@ -24,14 +24,19 @@ export class SalePaymentComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<SaleData>;
   @ViewChild(MatStepper) steps: MatStepper;
-  
+
   dataSource;
   SaleList: SaleData[];
 
   selectedSale: SaleData;
-  TypeControl = new FormControl('', Validators.required)
+
   PaymentType: Observable<PaymentType[]>;
+
+  TypeControl = new FormControl('', Validators.required)
+  AmountControl = new FormControl(null, Validators.required)
   Total = 0;
+  Change = 0;
+  notCash = true;
 
   PickSale = null;
 
@@ -41,13 +46,11 @@ export class SalePaymentComponent implements OnInit {
     private router: Router, private snack: MatSnackBar) { }
 
   ngOnInit(): void {
-    if (this.api.RoleID == "2") 
-    {
+    if (this.api.RoleID == "2") {
       this.selectedSale = JSON.parse(localStorage.getItem("PickSale"));
-      
+
       this.dataSource = new MatTableDataSource(this.SaleList)
       this.service.getProdSaleList().subscribe(res => {
-        console.log("Sale:", res)
         this.SaleList = res;
         this.dataSource.data = this.SaleList;
       })
@@ -58,8 +61,20 @@ export class SalePaymentComponent implements OnInit {
     }
   }
 
-  
 
+  calcChange(value: number) {
+    this.Change = value - this.Total;
+  }
+
+  checkCash(id) {
+
+    if (id == 2) {
+      this.notCash = false;
+    }
+    else {
+      this.notCash = true
+    }
+  }
 
   CalcTotal(Sale: SaleData, stepper: MatStepper) {
     Sale.Products.forEach(s => {
@@ -70,36 +85,69 @@ export class SalePaymentComponent implements OnInit {
   }
 
   onSubmit() {
-    const payDetails =
-    {
-      SaleID: this.selectedSale.SaleID,
-      PaymentTypeID: this.TypeControl.value,
-      Price: this.Total,
-      SessionID: this.api.SessionID 
+
+    if (this.TypeControl.invalid) {
+      alert("fill in all required forms")
+      this.TypeControl.markAllAsTouched();
+      return;
+
     }
 
-    this.service.SalePayment(payDetails).subscribe((res:any) =>
+    let payDetails = null;
+
+    if (this.notCash == true) {
+      payDetails =
       {
-        if(res == "success")
-        {
-          this.snack.open("Sale successfully paid", "OK", {duration: 3000})
-          this.router.navigate(["payment"])
-        }
-        else if(res.Error == "session")
-        {
-          alert("res.Message")
-        }
-        else
-        {
-          alert("Session is no longer valid. User needs to login")
-          //this.router.navigate(["login"],{queryParams:{'redirectURL':this.state.url}})
-        }
+        SaleID: this.selectedSale.SaleID,
+        PaymentTypeID: this.TypeControl.value,
+        Price: this.Total,
+        SessionID: this.api.SessionID
       }
-    );
-    
+    }
+    else if (this.notCash == false) {
+      if (this.AmountControl.invalid) {
+        this.AmountControl.markAsTouched();
+        return;
+      }
+
+      if (this.Change < 0) {
+        alert("Full payment amount is required")
+        return;
+      }
+
+      payDetails =
+      {
+        SaleID: this.selectedSale.SaleID,
+        PaymentTypeID: this.TypeControl.value,
+        Price: this.AmountControl.value,
+        SessionID: this.api.SessionID,
+        Change: this.Change
+      }
+
+    }
+
+    this.service.SalePayment(payDetails).subscribe((res: any) => 
+    {
+      if (res == "success") {
+        this.snack.open("Sale successfully paid", "OK", { duration: 3000 })
+        this.router.navigate(["payment"])
+      }
+      else if (res.Error == "session") {
+        alert("res.Message")
+      }
+      else {
+        alert("Session is no longer valid. User needs to login")
+        //this.router.navigate(["login"],{queryParams:{'redirectURL':this.state.url}})
+      }
+    });
+
   }
 
   reset(stepper: MatStepper) {
+    this.AmountControl.reset();
+    this.TypeControl.reset();
+    this.Change = 0;
+    this.notCash = true;
     this.selectedSale = null;
     stepper.reset();
     //window.history.back();

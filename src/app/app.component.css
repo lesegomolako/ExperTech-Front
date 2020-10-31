@@ -81,6 +81,12 @@ a :hover
     cursor: pointer
 }
 
+p.small 
+{
+    line-height: 1;
+}
+  
+
 /*@charset "utf-8";**/
 body {
   font-family: 'Open Sans', 'sans-serif';
@@ -109,6 +115,14 @@ body {
     padding: 10px;
     padding-bottom: 0px;
 }
+
+.nabar-login
+{
+    width: 350px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
 
 .navbar-login-session
 {

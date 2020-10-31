@@ -33,28 +33,35 @@
           </div>
           <div class="col-8">
             <h2 class="c-card__title">
-              Category {{line.Product.Category}}
+              {{line.Product.Name}}
               <label style="float:right">
                 Price: {{line.Product.Price | currency:'ZAR':'symbol-narrow'}}
               </label>
             </h2>
-            <h2 class="c-card__title">
-              Name: {{line.Product.Name}}
-            </h2>
+            <label>
+              <strong>Category:</strong> {{line.Product.Category}}
+            </label>
+           
+           
             
             <p></p>
+            
             <label *ngIf="line.Product.QuantityOnHand>10"><strong>In Stock</strong></label>
             <label style="color: red;"
               *ngIf="line.Product.QuantityOnHand<=10 && line.Product.QuantityOnHand >0">{{line.Product.QuantityOnHand}}
               item's left in Stock</label>
             <label style="color: red;" *ngIf="line.Product.QuantityOnHand <= 0">Out of stock</label>
             <br>
-            <label>Description:</label>
-            <label class="c-card__subtitle">{{line.Product.Description}}</label>
+            <label>Description:
+              <br>
+              <label style="max-width: 50%;" class="c-card__subtitle">{{line.Product.Description}}</label>
+            </label>
             <br>
+            
+            
             <br>
             <div style="position:absolute;bottom:0; right: 0">
-              <p style="color: gray;">Item Subtotal: {{line.Quantity * line.Product.Price | currency:'ZAR':'symbol-narrow'}}</p>
+              <p>Item Subtotal: {{line.Quantity * line.Product.Price | currency:'ZAR':'symbol-narrow'}}</p>
             </div>
           </div>
         </div>
@@ -85,7 +92,7 @@
           Total:({{pro}} item)
         </p>
         <p class="c-card__intro">
-          R: {{total}}
+          {{total | currency:'ZAR':'symbol-narrow'}}
         </p>
       </div>
 

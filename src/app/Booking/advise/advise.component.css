@@ -117,3 +117,16 @@ svg
     }
     
 }
+
+.c-card__footer
+{
+    display: inline-table;
+    margin-right: 10px;
+    margin-top: 10px;
+    width: 25%;
+}
+
+nomargin
+{
+  margin: none;
+}

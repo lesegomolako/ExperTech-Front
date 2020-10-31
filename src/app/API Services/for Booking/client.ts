@@ -155,17 +155,18 @@ export class EmployeeSchedule {
     Name: string;
   }]
 
-  EmployeeSchedule:
-    [
-      {
-        EmployeeID: any,
-        TimeID: any,
-        DateID: any,
-        Date: Date,
-        Time: any
-      }
-    ]
+  EmployeeSchedule: empSchedge[]
 }
+
+export interface empSchedge
+{
+  EmployeeID: any,
+  TimeID: any,
+  DateID: any,
+  Date: Date,
+  Time: any
+}
+
 export class AuditTrail {
   AuditID?: any;
   Name: any

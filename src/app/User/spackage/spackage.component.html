@@ -185,13 +185,27 @@
         <mat-label>Payment Type</mat-label>
         <mat-select [formControl]="TypeControl" required>
           <mat-option
-            *ngFor="let option of PaymentType | async"
+            *ngFor="let option of PaymentType | async" (click)="checkCash(option.PaymentTypeID
+            )"
             value="{{option.PaymentTypeID}}">
             {{option.Type}}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="TypeControl.errors?.required && (TypeControl.touched ||TypeControl.dirty)">Select Payment Type</mat-error>
       </mat-form-field>
+      <br>
+      <div>
+        <mat-form-field [hidden]="notCash">
+          <mat-label>Enter Amount Paid (R):</mat-label>
+          <input matInput (change)="calcChange(amount.value)" type="number" [formControl]="AmountControl" #amount>
+          <mat-error *ngIf="AmountControl.errors?.required && (AmountControl.touched ||AmountControl.dirty)">Enter in the amount</mat-error>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button style="text-align: left;" [hidden]="notCash" (click)="calcChange(amount.value)">Calculate Change</button>
+      </div>
+      <br>
+      <label [hidden]="notCash" style="text-align: left;">Change Due:
+        <span [ngClass]="{'change': Change<0}">{{Change | currency:'ZAR':'symbol-narrow'}}<span *ngIf="Change<0"> due</span></span></label>
     </div>
     <br>
     <div style="text-align: center;">

@@ -85,20 +85,21 @@
       <div class="col-2 col-offset-1">
         <div style="margin: 10px;">
 
-          <span ngbDropdowns *ngIf="RoleID != null">
+          <span ngbDropdown *ngIf="RoleID == '2'">
             <button *ngIf="RoleID == '2'" ngbDropdownToggle style="color: white;" mat-icon-button class="example-icon"
               aria-label="Example icon-button with share icon">
               <mat-icon [matBadge]="api.bookingList?.length" [matBadgeHidden]="api.bookingList?.length == 0">notifications_none</mat-icon>
             </button>
-            <ul ngbDropdownMenu>
-              <li *ngFor="let x of api.bookingList">
-                <div class="navbar-login">
+            <ul ngbDropdownMenu style="overflow-y: scroll; height:400px;">
+              <li *ngFor="let x of api.bookingList" class="nabar-login">
+                <div>
                   <div class="row">
                     <div class="col-lg-12">
-                      <p class="text-left"><strong>{{x.Client}}</strong></p>
-                      <p class="text-left small">{{(User|async)?.Email}}</p>
+                      <p class="text-left"><strong>{{x.Client + "'s'"}} Requested Booking</strong></p>
+                      <p class="text-left small">Service Requested: {{x.BookingLines[0].Service}} <span *ngIf="x.BookingLines[0].Option != null">{{x.BookingLines[0].Option}}</span></p>
+                      <p class="text-left small">Date: {{x.DateRequesteds[0].Date | date:'dd/MMM/yy'}}, Time: {{x.DateRequesteds[0].StartTime}}</p>
                       <p class="text-left">
-                        <a (click)="logout()" style="text-decoration: none; text-decoration-color: white;"
+                        <a ngbDropdownToggle routerLink="schedule" style="text-decoration: none; color: white;"
                           class="btn btn-primary btn-block btn-sm">Go to calendar event</a>
                       </p>
                     </div>

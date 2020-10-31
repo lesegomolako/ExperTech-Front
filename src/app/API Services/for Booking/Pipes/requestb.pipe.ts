@@ -10,6 +10,6 @@ export class customFilter implements PipeTransform
 {
     transform(type: ServiceData[], typeid: any)
     {
-        return  type.filter(type => type.TypeID == typeid )
+        return  type?.filter(type => type.TypeID == typeid )
     }
 }

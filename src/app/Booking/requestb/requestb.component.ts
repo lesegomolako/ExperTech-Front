@@ -9,6 +9,7 @@ import{ BasketLine, Schedule, Booking} from '../../API Services/for Booking/clie
 import { ExperTexhService } from '../../API Services/for Booking/exper-texh.service';
 import { HttpClient } from '@angular/common/http';
 import { ServiceData } from 'src/app/API Services/for Service/services';
+import { DatePipe } from '@angular/common';
 
 export class ServiceOption
 {
@@ -20,7 +21,8 @@ export class ServiceOption
 @Component({
   selector: 'app-requestb',
   templateUrl: './requestb.component.html',
-  styleUrls: ['./requestb.component.css']
+  styleUrls: ['./requestb.component.css'],
+  providers:[DatePipe]
 })
 export class RequestbComponent implements OnInit {
   BookingForm: FormGroup;
@@ -40,7 +42,7 @@ export class RequestbComponent implements OnInit {
     this.step--;
   }
 
-  constructor(private http: HttpClient,private api: ExperTexhService, private fb: FormBuilder,
+  constructor(private http: HttpClient,private api: ExperTexhService, private fb: FormBuilder,private datepipe: DatePipe,
      private router: Router,private route: ActivatedRoute) { }
 
   Employee = [];
@@ -58,6 +60,9 @@ export class RequestbComponent implements OnInit {
   BookingData: Booking;
 
   MinDate = new Date();
+  toDate = this.datepipe.transform(this.MinDate, 'dd/MM/yy');
+  toTime = this.datepipe.transform(this.MinDate, 'HH:mm')
+  selectedDate;
 
   EnableForm()
   {
@@ -73,6 +78,14 @@ export class RequestbComponent implements OnInit {
     this.BookingForm.get("DateControl").enable();
     this.ServicesID = this.BookingForm.value.ServiceControl
 
+  }
+
+  EnableTimeForm(event)
+  {
+    var selectedDate: Date = event;
+  
+    this.selectedDate = this.datepipe.transform(selectedDate, 'dd/MM/yy');
+  // this.BookingForm.get("TimeControl").enable();
   }
 
 

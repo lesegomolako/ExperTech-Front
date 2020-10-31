@@ -1,15 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { EmployeeInfo } from 'src/app/Booking/makebooking/makebooking.component';
+import{EmployeeSchedule} from '../client';
 
 @Pipe({
-  name: 'employee'
+  name: 'employeeFilter'
 })
 export class EmployeePipe implements PipeTransform {
 
-  transform(type: EmployeeInfo[], typeid: any)
+  transform(type: EmployeeSchedule[], typeid: any)
     {
        
-        return  type.filter(type => type.TypeID == typeid )
+        return  type?.filter(type => type.TypeID == typeid )
     }
 
 }

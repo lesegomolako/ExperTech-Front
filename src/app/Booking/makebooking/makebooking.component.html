@@ -82,7 +82,8 @@
               <mat-label style="color: black;">service for booking</mat-label>
               <mat-select name="ServiceID" formControlName="ServiceControl" required>
                 <mat-option disabled>--</mat-option>
-                <mat-option (click)="EnableOptForm(x)" *ngFor="let x of Service" value={{x.ServiceID}}>
+                <mat-option (click)="EnableOptForm(x)" *ngFor="let x of Service | customFilter:TypesID"
+                  value={{x.ServiceID}}>
                   {{x.Name}}
                 </mat-option>
               </mat-select>
@@ -103,7 +104,7 @@
             <mat-label style="color: black;">Long, short, Medium</mat-label>
             <mat-select formControlName="OptionControl" name="OptionID">
               <mat-option disabled>--</mat-option>
-              <mat-option  *ngFor="let x of ServiceOptions" value={{x.OptionID}}>
+              <mat-option *ngFor="let x of ServiceOptions" value={{x.OptionID}}>
                 {{x.Name}}
               </mat-option>
             </mat-select>
@@ -113,25 +114,31 @@
           </mat-form-field>
 
 
-          <h4>Select Employee for service type</h4>
-          <mat-form-field appearance="fill">
-            <mat-label style="color: black;">Employee Name</mat-label>
-            <mat-select formControlName="employeeControl" required>
-              <mat-option>--</mat-option>
-              <mat-option (click)="EnableDateForm(x.EmployeeID)" *ngFor="let x of Schedule " value={{x.EmployeeID}}>
-                {{x.Employee}}
-              </mat-option>
-            </mat-select>
-            <!-- <mat-error *ngIf="employeeControl.hasError('required')">Please choose an employee</mat-error>
+          <div>
+            <h4>Select Employee for service type</h4>
+            <mat-form-field appearance="fill">
+              <mat-label style="color: black;">Employee Name</mat-label>
+              <mat-select formControlName="employeeControl" required>
+                <mat-option>--</mat-option>
+                <mat-option (click)="EnableDateForm(x.EmployeeID)" #employee
+                  *ngFor="let x of Schedule | employeeFilter:TypesID" value={{x.EmployeeID}}>
+                  {{x.Employee}}
+                </mat-option>
+              </mat-select>
+              <!-- <mat-error *ngIf="employeeControl.hasError('required')">Please choose an employee</mat-error>
 <mat-hint>{{employeeControl.value?.sound}}</mat-hint> -->
-          </mat-form-field>
-          <br>
+            </mat-form-field>
+            <span title="view employee's schedule" (click)="ViewSchedule()" style="cursor: pointer;"
+                class="material-icons" *ngIf="EmpCalendar">calendar_today</span>
+            <br>
+          </div>
 
 
           <h4>Pick date and time for Appointment</h4>
           <mat-form-field color="accent">
             <mat-label style="color: black;">Appointment date</mat-label>
-            <input matInput [min]="today"  [matDatepicker]="picker1" (dateInput)="EnableTimeForm($event.value)"  name="Date" formControlName="DateControl">
+            <input matInput [min]="today" [matDatepicker]="picker1" (dateInput)="EnableTimeForm($event.value)"
+              name="Date" formControlName="DateControl">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
@@ -146,7 +153,7 @@
                 </mat-option>
               </mat-optgroup>
             </mat-select> -->
-            <!-- <mat-error *ngIf="TimeControl.hasError('required')">Please choose Appointment time</mat-error>
+          <!-- <mat-error *ngIf="TimeControl.hasError('required')">Please choose Appointment time</mat-error>
  <mat-hint>{{TimeControl.value?.sound}}</mat-hint> -->
           <!-- </mat-form-field> -->
 
@@ -154,9 +161,9 @@
             <mat-label style="color: black;">Appointment time </mat-label>
             <mat-select required name="StartTime" formControlName="TimeControl">
               <mat-option disabled>--</mat-option>
-                <mat-option *ngFor="let x of Times" value={{x.TimeID}}>
-                  {{x.StartTime}}
-                </mat-option>
+              <mat-option *ngFor="let x of Times | timeFilter:selectedDate:toDate:toTime" value={{x.TimeID}}>
+                {{x.StartTime}}
+              </mat-option>
             </mat-select>
             <!-- <mat-error *ngIf="TimeControl.hasError('required')">Please choose Appointment time</mat-error>
  <mat-hint>{{TimeControl.value?.sound}}</mat-hint> -->
@@ -192,7 +199,8 @@
     </div>
     <div class="buttons">
       <div style="float: right;">
-        <button title="abort make payment" routerLink='/schedule' mat-raised-button style="background-color: gray; align-items: center;">
+        <button title="abort make payment" routerLink='/schedule' mat-raised-button
+          style="background-color: gray; align-items: center;">
           <mat-icon> keyboard_return</mat-icon>
           Back
         </button>

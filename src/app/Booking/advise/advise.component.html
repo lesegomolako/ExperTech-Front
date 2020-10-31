@@ -1,14 +1,14 @@
 <div class="row">
   <div class="col-12">
 
-  <h1 class="text-center">Advise Booking
-  <button mat-raised-button style="float: right;" routerLink="/schedule" style="background-color:forestgreen" >
-    <mat-icon style="color:white">keyboard_return</mat-icon> Back
-  </button>
-  <span routerLink="/#" class="material-icons help">
-    help_outline
-  </span>
-</h1>
+    <h1 class="text-center">Advise Booking
+      <button mat-raised-button style="float: right;" routerLink="/schedule" style="background-color:forestgreen">
+        <mat-icon style="color:white">keyboard_return</mat-icon> Back
+      </button>
+      <span routerLink="/#" class="material-icons help">
+        help_outline
+      </span>
+    </h1>
   </div>
 </div>
 
@@ -45,7 +45,8 @@
                 <mat-form-field appearance="fill">
                   <mat-label>Employee</mat-label>
                   <mat-select formControlName="employeeid" name="food">
-                    <mat-option *ngFor="let items of EmployeeList" (click)="fetchEvents(items.EmployeeID)" value={{items.EmployeeID}}>
+                    <mat-option *ngFor="let items of EmployeeList" (click)="fetchEvents(items.EmployeeID)"
+                      value={{items.EmployeeID}}>
                       {{items.Name}}
                     </mat-option>
                   </mat-select>
@@ -83,12 +84,16 @@
 
             <div style="align-content: center; " class="c-card__footer">
               <br>
-              <button title="Send advise booking to client" mat-raised-button style="background-color: gray;" type="submit">
-                Send
-              </button>
-              <button title="Abort advise booking for client" mat-raised-button style="background-color: gray;" (click)="cancel()" type="button">
-                Cancel
-              </button>
+              <div class="buttons w-100">
+                <button title="Send advise booking to client nomargin" mat-raised-button style="background-color: gray;"
+                  type="submit">
+                  Send
+                </button>
+                <button title="Abort advise booking for client" mat-raised-button style="background-color: gray;"
+                  (click)="cancel()" type="button">
+                  Cancel
+                </button>
+              </div>
             </div>
 
           </div>

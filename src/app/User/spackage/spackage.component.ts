@@ -18,6 +18,7 @@ import { Client } from 'src/app/API Services/for Booking/client';
 import { MatStepper } from '@angular/material/stepper';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
 
 
 
@@ -55,7 +56,11 @@ export class SpackageComponent implements OnInit {
 
   PaymentType: Observable<PaymentType[]>;
 
-  TypeControl: FormControl;
+  TypeControl = new FormControl('', Validators.required) 
+  AmountControl = new FormControl(null, Validators.required)
+  Total = 0;
+  Change = 0;
+  notCash = true;
 
   SelectPackage(Package: PackageData,  stepper: MatStepper)
   {
@@ -90,6 +95,24 @@ export class SpackageComponent implements OnInit {
     }
   }
 
+  calcChange(value: number)
+  {
+    this.Change = value - this.SelectedPackage.Price;
+  }
+
+  checkCash(id)
+  {
+   
+    if(id==2)
+    {
+      this.notCash = false;
+    }
+    else
+    {
+      this.notCash = true
+    }
+  }
+
   Activate(stepper:MatStepper)
   {
     if(this.TypeControl.invalid)
@@ -98,38 +121,72 @@ export class SpackageComponent implements OnInit {
       return;
     }
 
-    const ActivatePackage = 
-    { 
-      PaymentTypeID: this.TypeControl.value,
-      Payment: this.SelectedPackage.Price,
-      ClientID: this.SelectedClient.ClientID,
-      ClientPackages:
-      [
-        {
-          PackageID: this.SelectedPackage.PackageID,
-          Duration: this.SelectedPackage.Duration
-        }
-      ]
+    let ActivatePackage = null;
+    if(this.notCash == true)
+    {
+      ActivatePackage = 
+      { 
+        PaymentTypeID: this.TypeControl.value,
+        Payment: this.SelectedPackage.Price,
+        ClientID: this.SelectedClient.ClientID,
+        ClientPackages:
+        [
+          {
+            PackageID: this.SelectedPackage.PackageID,
+            Duration: this.SelectedPackage.Duration
+          }
+        ]
 
+      }
+    }
+    else if(this.notCash == false)
+    {
+      if(this.AmountControl.invalid)
+      {
+        this.AmountControl.markAsTouched();
+        return;
+      }
+
+      if(this.Change<0)
+      {
+        alert("Full payment amount is required")
+        return;
+      }
+
+      ActivatePackage = 
+      { 
+        PaymentTypeID: this.TypeControl.value,
+        Payment: this.AmountControl.value,
+        ClientID: this.SelectedClient.ClientID,
+        ClientPackages:
+        [
+          {
+            PackageID: this.SelectedPackage.PackageID,
+            Duration: this.SelectedPackage.Duration
+          }
+        ],
+        Change: this.Change
+      }   
     }
 
-    this.service.activateSerPackage(ActivatePackage, this.clientService.SessionID).subscribe((res:any) =>
-      {
-        if(res == "success")
+      this.service.activateSerPackage(ActivatePackage, this.clientService.SessionID).subscribe((res:any) =>
         {
-          this.snack.open("Service Package successfully activated", "OK", {duration: 2000})
-          this.router.navigate(["employeehome"])
-        }
-        else if(res == "duplicate")
-        {
-          alert("Client already has an active service package for the selected package")
-          stepper.reset();
-        }
-        else
-        {
-          console.log(res)
-        }
-      }, error => {console.log("Error",error), this.snack.open("Something went wrong", "OK", {duration: 2000})});
+          if(res == "success")
+          {
+            this.snack.open("Service Package successfully activated", "OK", {duration: 2000})
+            this.router.navigate(["employeehome"])
+          }
+          else if(res == "duplicate")
+          {
+            alert("Client already has an active service package for the selected package")
+            stepper.reset();
+          }
+          else
+          {
+            console.log(res)
+          }
+        }, error => {console.log("Error",error), this.snack.open("Something went wrong", "OK", {duration: 2000})});
+    
   }
 
   myFunction(event: any) {
@@ -166,6 +223,10 @@ export class SpackageComponent implements OnInit {
   hide = true;
 
   reset(stepper: MatStepper) {
+    this.AmountControl.reset();
+    this.TypeControl.reset();
+    this.Change = 0;
+    this.notCash = true;
     this.SelectedClient = null;
     this.SelectedPackage = null;
     stepper.reset();

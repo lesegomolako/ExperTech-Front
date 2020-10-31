@@ -55,6 +55,12 @@ export class GetBookingsComponent implements OnInit {
   foundPackage = false;
   ServicePackage: PackageData;
 
+
+  AmountControl = new FormControl(null, Validators.required)
+  Total = 0;
+  Change = 0;
+  notCash = true;
+
   value = 'Clear me';
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -73,7 +79,19 @@ export class GetBookingsComponent implements OnInit {
   dataSource;
   isOwner = false;
 
+  calcChange(value: number) {
+    this.Change = value - this.SelectedBooking.Price
+  }
 
+  checkCash(id) {
+
+    if (id == 2) {
+      this.notCash = false;
+    }
+    else {
+      this.notCash = true
+    }
+  }
 
 
 
@@ -83,6 +101,9 @@ export class GetBookingsComponent implements OnInit {
       this.TypeControl.enable()
     }
     else if (g == "2") {
+      this.AmountControl.reset();
+      this.Change = 0;
+      this.notCash = true;
       this.TypeControl.reset();
       this.TypeControl.disable();
     }
@@ -111,7 +132,7 @@ export class GetBookingsComponent implements OnInit {
   loadlist() {
     var today = new Date();
     const params = new HttpParams().set("SessionID", this.api.SessionID)
-    this.http.get<BookingData[]>(this.api.url + "Admin/GetBookings", {params}).subscribe((res: BookingData[]) => {
+    this.http.get<BookingData[]>(this.api.url + "Admin/GetBookings", { params }).subscribe((res: BookingData[]) => {
       this.BookingsList = res.filter(zz => new Date(zz.DateTime) < today)
         .sort((a, b) => 0 - (a['DateTime'] > b['DateTime'] ? 1 : -1))
     });
@@ -149,6 +170,10 @@ export class GetBookingsComponent implements OnInit {
   }
 
   reset(stepper: MatStepper) {
+    this.AmountControl.reset();
+    this.TypeControl.reset();
+    this.Change = 0;
+    this.notCash = true;
     this.SelectedBooking = null;
     stepper.reset();
     //window.history.back();
@@ -164,13 +189,35 @@ export class GetBookingsComponent implements OnInit {
 
 
     if (this.RadioControl.value == "1") {
-      this.payDetails =
-      {
-        BookingID: this.SelectedBooking.BookingID,
-        PaymentTypeID: this.TypeControl.value,
-        Price: this.SelectedBooking.Price,
-        SessionID: this.api.SessionID,
+      if (this.notCash == true) {
+        this.payDetails =
+        {
+          BookingID: this.SelectedBooking.BookingID,
+          PaymentTypeID: this.TypeControl.value,
+          Price: this.SelectedBooking.Price,
+          SessionID: this.api.SessionID,
 
+        }
+      }
+      else if (this.notCash == false) {
+        if (this.AmountControl.invalid) {
+          this.AmountControl.markAsTouched();
+          return;
+        }
+
+        if (this.Change < 0) {
+          alert("Full payment amount is required")
+          return;
+        }
+
+        this.payDetails =
+        {
+          BookingID: this.SelectedBooking.BookingID,
+          PaymentTypeID: this.TypeControl.value,
+          Price: this.AmountControl.value,
+          SessionID: this.api.SessionID,
+          Change: this.Change
+        }
       }
     }
     else if (this.RadioControl.value == "2") {
@@ -240,7 +287,7 @@ export class GetBookingsComponent implements OnInit {
       dialogConfig.height = '300px';
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      
+
 
       const dialogRef = this.dialog.open(CbookingDialog, dialogConfig);
 
@@ -280,7 +327,7 @@ export class CbookingDialog implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<CbookingDialog>,
-    private router: Router,  private snack: MatSnackBar,
+    private router: Router, private snack: MatSnackBar,
     public service: ReportingService,
     private fb: FormBuilder,
     private http: HttpClient,
@@ -311,8 +358,7 @@ export class CbookingDialog implements OnInit {
 
 
 
-  onSubmit(form) 
-  {
+  onSubmit(form) {
 
     this.Invalid = false;
     if (this.authorizeForm.invalid) {
@@ -321,10 +367,9 @@ export class CbookingDialog implements OnInit {
     }
 
     this.service.Authorize(form.value, this.api.SessionID).subscribe((res: any) => {
-      if (res.Message == "success") 
-      {
-        this.snack.open("Authorization granted", "OK", {duration: 3000})
-        let result = {Status: true, OwnerID: res.AdminID}
+      if (res.Message == "success") {
+        this.snack.open("Authorization granted", "OK", { duration: 3000 })
+        let result = { Status: true, OwnerID: res.AdminID }
         this.dialogRef.close(result);
       }
       else if (res == "denied") {

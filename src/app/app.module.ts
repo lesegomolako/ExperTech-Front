@@ -77,7 +77,7 @@ import { ValidateComponent } from './components/TextBoxValidator/validate/valida
 import { EditComponent } from './Client/edit/edit.component';
 import { BellComponent } from './Client/bell/bell.component';
 import { ClientprofileComponent } from './Client/clientprofile/clientprofile.component';
-import { AddClientDialog,SearchClientDialog, MakebookingComponent } from './Booking/makebooking/makebooking.component';
+import { AddClientDialog,SearchClientDialog, MakebookingComponent, CalendarDialog } from './Booking/makebooking/makebooking.component';
 import { ViewbookingComponent } from './Client/viewbooking/viewbooking.component';
 import { ServicepComponent } from './Client/servicep/servicep.component';
 import { BookingConfirmComponent } from './Booking/confirm/confirm.component';
@@ -116,6 +116,7 @@ import { from } from 'rxjs';
 
 import {ExperTexhService} from "./API Services/for Booking/exper-texh.service";
 import {OptionsFilterPipe} from "./API Services/for Booking/Pipes/options-filter.pipe";
+import {TimePipe} from "./API Services/for Booking/Pipes/times.pipe";
 import { customFilter } from './API Services/for Booking/Pipes/requestb.pipe';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -148,7 +149,7 @@ import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-ca
     EditSOComponent, EditSPComponent, EditProductComponent, ProductComponent, DeleteProductComponent,
     DeleteServiceComponent,DeleteServiceTypeComponent,DeleteSOComponent,LoginComponent,ForgotComponent,
     AdminRegisterComponent,SetupComponent,ResetPasswordComponent,ClickSpinDirective,PickupComponent,PaymentComponent,
-    EmployeeSTComponent,EmployeeComponent,ClientComponent,CbookingDialog,StockCategoryComponent,
+    EmployeeSTComponent,EmployeeComponent,ClientComponent,CbookingDialog,StockCategoryComponent,CalendarDialog,
     AvailableComponent,AdminComponent,SpackageComponent,SalesReportComponent,StockCategoryDialog,
     FinancialReportComponent,SupplierReportComponent, EmployeeRegisterComponent,ConfirmOrderDialog,
     BookingReportComponent,ValidateComponent,EditComponent,BellComponent,ClientprofileComponent,
@@ -157,7 +158,7 @@ import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-ca
     customFilter,SupplierComponent,orderform,PlaceorderComponent,EditsupplierComponent,AddsupplierComponent,
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
     ViewdetailComponent,SaleinvoiceComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent,
-    ReportsComponent, ErrorPageComponent, ReceiveDialog,
+    ReportsComponent, ErrorPageComponent, ReceiveDialog,TimePipe,
     EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, CompanySettingsComponent, SalePaymentComponent, ChangePasswordComponent, AllBookingsComponent, AdminAuditComponent, ClientAuditComponent, EmployeeAuditComponent, AuditTrailComponent
 
   ],
@@ -181,7 +182,7 @@ import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-ca
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   entryComponents: [
-    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog, OrderDialog,ConfirmOrderDialog, ReceiveDialog, LoadingDialog, StockCategoryDialog
+    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog, OrderDialog,ConfirmOrderDialog, ReceiveDialog, LoadingDialog, StockCategoryDialog, CalendarDialog
   ],
 })
 export class AppModule { }

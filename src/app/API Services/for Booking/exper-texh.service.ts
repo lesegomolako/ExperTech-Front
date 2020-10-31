@@ -65,7 +65,6 @@ export class ExperTexhService {
   {
     const params = new HttpParams().set("SessionID", this.SessionID)
     return this.http.get<Booking[]>(this.url+"User/getNotifications", {params}).subscribe(res => {this.bookingList = res; console.log("Bookings:", res)});
-    
   }
 
 
@@ -133,9 +132,9 @@ export class ExperTexhService {
 
  
 
-  ViewServicePackage(): Observable<ClientPackage[]> {  
-    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
-    return this.http.get<ClientPackage[]>(this.url + 'Clients/getClientPackage/');  
+  ViewServicePackage(SessionID): Observable<ClientPackage[]> {  
+    const params = new HttpParams().set("SessionID", SessionID) 
+    return this.http.get<ClientPackage[]>(this.url + 'Clients/getClientPackage', {params});  
   }
 
   Requestbookingdetails(form: Booking) 

@@ -8,7 +8,7 @@ export class OptionsFilterPipe implements PipeTransform {
 
   transform(type: ServiceOption[], serviceid: any)
     {      
-        return  type.filter(type => type.ServiceID == serviceid )
+        return  type?.filter(type => type.ServiceID == serviceid )
     }
 
 }

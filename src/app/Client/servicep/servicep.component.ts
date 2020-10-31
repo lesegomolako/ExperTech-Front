@@ -44,7 +44,7 @@ export class ServicepComponent implements OnInit {
 }
 
 loadservicepackage() {  
-  this.allservicepackage = this.service.ViewServicePackage();
+  this.allservicepackage = this.service.ViewServicePackage(this.service.SessionID);
 }
 
 }

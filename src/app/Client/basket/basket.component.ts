@@ -32,7 +32,7 @@ export class BasketComponent implements OnInit {
       this.api.SubmitBasket().subscribe(res => {
         if (res == "success") {
           dialogRef.close();
-          this.snack.open("Basket successfully successfully submitted. Check your email/sms for more details", "OK", {duration:3000})
+          alert("Basket successfully successfully submitted. Check your email/sms for more details")
           window.location.reload();
         }
       }, error => {console.log(error), dialogRef.close(), this.snack.open("Something went wrong. Please try again later", "OK", {duration:3000})})

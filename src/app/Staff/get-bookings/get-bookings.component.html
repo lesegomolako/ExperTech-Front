@@ -115,6 +115,7 @@
                   </td>
                   </tr>       
               </table>
+              <div style="border-bottom: 1px groove #ddd; margin:10px " class="text-center w-100" *ngIf="(BookingsList)?.length == 0"><div style="margin: 5px;">No bookings to display</div></div>
               <br />
             </body>
             
@@ -144,7 +145,11 @@
             <div>
               <strong>Status:</strong
               ><label name="Email">{{ SelectedBooking.Status }}</label>
-            </div>           
+            </div>
+            <div>
+              <strong>Booking Total: </strong
+              ><label name="Email">{{ SelectedBooking.Price | currency:'ZAR':'symbol-narrow' }}</label>
+            </div>          
         </div>
       
         <br>
@@ -156,14 +161,29 @@
                 <mat-label>Payment Type</mat-label>
                 <mat-select [formControl]="TypeControl">
                   <mat-option
-                    *ngFor="let option of PaymentType | async"
+                    *ngFor="let option of PaymentType | async" (click)="checkCash(option.PaymentTypeID
+                    )"
                     value="{{option.PaymentTypeID}}">
                     {{option.Type}}
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="TypeControl.errors?.required && (TypeControl.touched ||TypeControl.dirty)">Select Payment Type</mat-error>
               </mat-form-field>
+              <br >
+              <div style="text-align: left;">
+                <mat-form-field [hidden]="notCash">
+                  <mat-label>Enter Amount Paid (R):</mat-label>
+                  <input matInput (change)="calcChange(amount.value)" type="number" [formControl]="AmountControl" #amount>
+                  <mat-error *ngIf="AmountControl.errors?.required && (AmountControl.touched ||AmountControl.dirty)">Enter in the amount</mat-error>
+                </mat-form-field>
+                <br [hidden]="notCash">
+                <button mat-raised-button style="text-align: left;" [hidden]="notCash" (click)="calcChange(amount.value)">Calculate Change</button>
+              </div>
+              <br [hidden]="notCash">
+              <label [hidden]="notCash" style="text-align: left;">Change Due:
+                <span [ngClass]="{'change': Change<0}">{{Change | currency:'ZAR':'symbol-narrow'}}<span *ngIf="Change<0"> due</span></span></label>
             </div>
+            <mat-divider></mat-divider>
             <div class="example-radio-group">
               <mat-radio-button value="2" [ngClass]="{'disabled':!SelectedBooking?.HasPackage }" [disabled]="!SelectedBooking?.HasPackage">Use Service Package: {{SelectedBooking?.PackageDetails?.Name || "No Service Packages Available"}}</mat-radio-button>
             </div>
