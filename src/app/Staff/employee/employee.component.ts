@@ -191,6 +191,10 @@ export class EmployeeComponent implements OnInit {
                     }
                   })
               }
+              else
+              {
+                dialogRef.close();
+              }
             }
             else {
               console.log(ref)
@@ -242,6 +246,10 @@ export class EmployeeComponent implements OnInit {
                           console.log(ref)
                         }
                       })
+                  }
+                  else
+                  {
+                    dialogRef.close();
                   }
                 }
                 else {

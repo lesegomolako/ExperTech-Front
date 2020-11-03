@@ -35,13 +35,17 @@ export class SaleinvoiceComponent {
 
     SaleList: Observable<SaleData[]>
     
-    
+    total = 0;
     
   
   ngOnInit() {
     if(this.api.RoleID == "2")
     {
       this.clientObject = JSON.parse(localStorage.getItem('sale'))
+      this.clientObject.Products.forEach(res =>
+      {
+        this.total += res.Quantity * res.Price
+      })
       console.log(this.clientObject)
     }
     else

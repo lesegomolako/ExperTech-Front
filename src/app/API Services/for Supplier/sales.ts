@@ -12,6 +12,7 @@ export class SaleData
   Date: string;
   SaleType: string;
   PaymentType: string;
+  Change: any;
 
   Products:
   [

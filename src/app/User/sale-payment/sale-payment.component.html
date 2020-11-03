@@ -88,28 +88,28 @@
         <div class="col-12">
           <div class="form-group">
             <strong>SaleID: </strong>
-            <label name="SaleID">{{selectedSale.SaleID}}</label>
+            <span name="SaleID">{{selectedSale.SaleID}}</span>
           </div>
           <div class="form-group">
             <strong>Name: </strong>
-            <label name="Name">{{selectedSale.ClientName}}</label>
+            <span name="Name">{{selectedSale.ClientName}}</span>
           </div>
           <div class="form-group">
             <strong>Email: </strong>
-            <label name="Email">{{selectedSale.ClientEmail}}</label>
+            <span name="Email">{{selectedSale.ClientEmail}}</span>
           </div>
           <div class="form-group">
             <strong>Contact: </strong>
-            <label name="Address">{{selectedSale.ClientContact}}</label>
+            <span name="Address">{{selectedSale.ClientContact}}</span>
           </div>
 
           <div class="form-group">
             <strong>SaleStatus: </strong>
-            <label name="Status">{{selectedSale.Status}}</label>
+            <span name="Status">{{selectedSale.Status}}</span>
           </div>
           <div class="form-group">
             <strong>SaleType: </strong>
-            <label name="SaleType">{{selectedSale.SaleType}}</label>
+            <span name="SaleType">{{selectedSale.SaleType}}</span>
           </div>
           <div class="form-group">
             <strong>Products: </strong>
@@ -138,19 +138,19 @@
       <div class="col-6">
         <div>
           <strong>Sale: </strong>
-          <label name="SaleID">{{selectedSale.SaleType}}</label>
+          <span name="SaleID">{{selectedSale.SaleType}}</span>
         </div>
         <div>
           <strong>For: </strong>
-          <label name="Name">{{selectedSale.ClientName}} {{selectedSale.ClientSurname}}</label>
+          <span name="Name">{{selectedSale.ClientName}} {{selectedSale.ClientSurname}}</span>
         </div>
         <div>
           <strong>No. Of Items: </strong>
-          <label name="Name">{{selectedSale.Products.length}} items(s)</label>
+          <span name="Name">{{selectedSale.Products.length}} items(s)</span>
         </div>
         <div>
           <strong>Total: </strong>
-          <label name="Name">{{Total | currency:'ZAR':'symbol-narrow'}}</label>
+          <span name="Name">{{Total | currency:'ZAR':'symbol-narrow'}}</span>
         </div>
 
         <div style="text-align: center;">

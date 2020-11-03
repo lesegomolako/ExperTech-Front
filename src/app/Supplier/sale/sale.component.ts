@@ -23,7 +23,7 @@ import { User } from 'src/app/API Services/for Booking/client';
 
 
 
-export class SaleComponent implements AfterViewInit, OnInit {
+export class SaleComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<SaleData>;
@@ -128,7 +128,6 @@ export class SaleComponent implements AfterViewInit, OnInit {
     this.table.dataSource = this.dataSource;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-
   }
 
   onCreate() {

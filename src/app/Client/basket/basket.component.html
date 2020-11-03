@@ -89,10 +89,10 @@
         </p> -->
 
         <p class="c-card__intro">
-          Total:({{pro}} item)
+          Total: ({{pro}} <span *ngIf="pro==1">item</span><span *ngIf="pro>1">items</span>)
         </p>
         <p class="c-card__intro">
-          {{total | currency:'ZAR':'symbol-narrow'}}
+          {{total | currency:'ZAR':'symbol-narrow'}} <small>(incl. VAT)</small>
         </p>
       </div>
 

@@ -116,10 +116,17 @@ export class AdviseComponent implements OnInit {
       TimeID: form.value.timesid
     }
 
-    this.api.AdviseBooking(BookingData).subscribe(res => {
+    this.api.AdviseBooking(BookingData).subscribe((res: any) => {
       if (res = "success") {
         this.snack.open("Booking advise successfully sent to client", "OK", {duration: 3000});
         this.router.navigateByUrl("/schedule");
+      }
+      else if(res.Error == "timeslot"){
+        alert(res.Message)
+        return;
+      }
+      else{
+        console.log(res)
       }
     }, error => {console.log("Error",error), this.snack.open("Something went wrong", "OK", {duration: 3000})})
 

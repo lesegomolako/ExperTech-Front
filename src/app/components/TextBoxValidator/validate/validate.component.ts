@@ -121,7 +121,7 @@ omit_special_char(event)
           if(res.Message == "success")
           {
             dialogRef.close();
-            alert("Successfully registered")
+            this.snack.open("Profile successfully registered. Logging in...", "OK", {duration: 2000})
             sessionStorage.setItem("accessToken", res.SessionID);
             sessionStorage.setItem("RoleID", res.RoleID)
             this.router.navigateByUrl('/home')

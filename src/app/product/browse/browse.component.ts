@@ -23,6 +23,7 @@ export class BrowseComponent implements OnInit {
   basketID="1"; // PLEASE IMPLEMENT THE SESSION SO THAT THE USER GETS THEIR BASKET ID FROM THE API
   id: any;
   product :  ProductData[];
+  displayList: ProductData[];
   basket: BasketLine[];
   name: string;
   submitted = false;
@@ -49,6 +50,7 @@ export class BrowseComponent implements OnInit {
     
     this.service.getProducts().subscribe((data: any) => {
       this.product = data;
+      this.displayList = data;
       //console.log(this.myImages)
       // this.product.forEach(p=>{
       //   p.SelectedQuantity=0;
@@ -59,6 +61,22 @@ export class BrowseComponent implements OnInit {
 }
 list(){
   this.router.navigate(['browse']);
+}
+
+filter(number)
+{
+  if(number == 0)
+  {
+    this.product = this.displayList;
+  }
+  else if(number == 1)
+  {
+    this.product = this.displayList.filter(zz => zz.CategoryID == 1)
+  }
+  else if(number == 2)
+  {
+    this.product = this.displayList.filter(zz => zz.CategoryID == 2)
+  }
 }
 
 setQuantity(newValue,item:Product)

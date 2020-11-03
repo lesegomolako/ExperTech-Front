@@ -256,6 +256,11 @@ export class EditServiceComponent implements OnInit {
 
   onSubmit(): void
   {
+    if(this.serviceForm.untouched)
+    {
+      alert("No changes were made. Click the cancel button to return")
+      return;
+    }
     //this.serviceForm.getError('name').value
     if(this.serviceForm.value.serviceid == null)
     {
@@ -338,33 +343,5 @@ export class EditServiceComponent implements OnInit {
     }
   }
   
-
-  // resetForm(form?: NgForm)
-  // {
-  //   if (form != null)
-  //   form.reset();
-
-    
-  //   this.serviceObject = 
-  //   {
-  //     ServiceID: null,
-  //     Name: "",
-  //     ServiceType: "",
-  //     TypeID: null,
-  //     Description: "",
-  //     Duration: null,
-
-  //     ServiceImage:
-  //     {
-  //       Photo: null,
-  //     },
-
-  //     ServicePrices:  null,
-      
-    
-  //     ServiceTypeOptions: null
-  //   }
-  // }
-
 
 }

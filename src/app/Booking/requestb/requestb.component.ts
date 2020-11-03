@@ -10,6 +10,8 @@ import { ExperTexhService } from '../../API Services/for Booking/exper-texh.serv
 import { HttpClient } from '@angular/common/http';
 import { ServiceData } from 'src/app/API Services/for Service/services';
 import { DatePipe } from '@angular/common';
+import { ServicesService } from 'src/app/API Services/for Service/services.service';
+import { OptionsFilterPipe } from 'src/app/API Services/for Booking/Pipes/options-filter.pipe';
 
 export class ServiceOption
 {
@@ -22,7 +24,7 @@ export class ServiceOption
   selector: 'app-requestb',
   templateUrl: './requestb.component.html',
   styleUrls: ['./requestb.component.css'],
-  providers:[DatePipe]
+  providers:[DatePipe, OptionsFilterPipe]
 })
 export class RequestbComponent implements OnInit {
   BookingForm: FormGroup;
@@ -43,7 +45,7 @@ export class RequestbComponent implements OnInit {
   }
 
   constructor(private http: HttpClient,private api: ExperTexhService, private fb: FormBuilder,private datepipe: DatePipe,
-     private router: Router,private route: ActivatedRoute) { }
+     private router: Router, private optPipe:OptionsFilterPipe, private route: ActivatedRoute, private service: ServicesService) { }
 
   Employee = [];
   Service : ServiceData[];
@@ -64,6 +66,29 @@ export class RequestbComponent implements OnInit {
   toTime = this.datepipe.transform(this.MinDate, 'HH:mm')
   selectedDate;
 
+  get f()
+  {
+    return this.BookingForm.controls;
+  }
+
+  checkOptions()
+  {
+    var list = this.optPipe.transform(this.ServiceOptions, this.ServicesID);
+    var count = list.length
+    if(count == 0)
+    {
+      this.BookingForm.get("OptionControl").clearValidators();
+      this.BookingForm.get("OptionControl").updateValueAndValidity();
+      console.log("clear validator")
+    }
+    else
+    {
+      console.log("set validator")
+      this.BookingForm.get("OptionControl").setValidators(Validators.required);
+      this.BookingForm.get("OptionControl").updateValueAndValidity();
+    }
+  }
+
   EnableForm()
   {
     this.BookingForm.get("ServiceControl").enable();  
@@ -71,8 +96,9 @@ export class RequestbComponent implements OnInit {
     console.log(this.Service)
   }
 
-  EnableOptForm()
+  EnableOptForm(Service:ServiceData)
   {
+    this.imageURL = Service.Image;
     this.BookingForm.get("OptionControl").enable();
     this.BookingForm.get("TimeControl").enable();
     this.BookingForm.get("DateControl").enable();
@@ -88,6 +114,30 @@ export class RequestbComponent implements OnInit {
   // this.BookingForm.get("TimeControl").enable();
   }
 
+  imageURL;
+  ViewImage() {
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var modalImg = <HTMLImageElement>document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+
+    modal.style.display = "block";
+    modalImg.src = this.imageURL;
+    captionText.innerHTML = "Service Photo"
+  }
+
+  closeModal() {
+    var modal = document.getElementById("myModal");
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    modal.style.display = "none";
+  }
+
+
 
   ngOnInit(): void 
   {
@@ -99,7 +149,7 @@ export class RequestbComponent implements OnInit {
         TimeControl : new FormControl({value: '', disabled: true}, Validators.required),
         OptionControl : new FormControl({value: '', disabled: true}),
         NotesControl : new FormControl(null),
-        TypeControl: new FormControl()
+        TypeControl: new FormControl(null, Validators.required)
       })
       this.LoadList();
       this.resetForm();
@@ -192,8 +242,8 @@ LoadList()
 {
   this.http.get<[]>(this.api.url + "Booking/getALLemployees")
   .subscribe(res => {this.Employee = res})
-  this.http.get<[]>(this.api.url + "Booking/getALLservices")
-  .subscribe(res => {this.Service = res})
+  this.service.getServices()
+  .subscribe(res => { this.Service = res; })
   this.http.get<[]>(this.api.url + "Booking/getALLservicesoption")
   .subscribe(res => {this.ServiceOptions = res})
   this.http.get<[]>(this.api.url + "Booking/getALLservicestype")

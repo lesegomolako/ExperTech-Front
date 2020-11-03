@@ -27,7 +27,7 @@
 <div *ngFor="let client of booking;"  style="text-align: center; color: black;" class="card-hover">
   <article  class="c-card c-card--center">
     
-    <button [hidden]="((client.EmployeeSchedule && !client.EmployeeSchedule[0].canCancel) || !client.DateRequesteds )" 
+    <button [hidden]="!client.DateRequesteds" 
       mat-raised-button style="background-color: gray; align-items: center; color: black; float: right;" 
       (click)="cancel(client.BookingID)">
       Cancel
@@ -47,7 +47,7 @@
           Service: {{x.Service}}
         </h2></label>
         <br>
-        <label><h2 class="c-card__title">
+        <label *ngIf="x.Option"><h2 class="c-card__title">
           Service option: {{x.Option}}
         </h2></label>
       </div>
@@ -97,5 +97,22 @@
 
     </div>
   </article>
+</div>
+
+<div class="row justify-content-center">
+  <div class="c-card c-card--wide justify-content-center" *ngIf="!booking">
+    <div class="c-card-flip__flipper ">
+      <header class="c-card__header">
+        <h3> </h3>
+      </header>
+
+      <div>
+        <div>
+          <P class="text-center"><strong>You have no bookings available</strong></P>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
 

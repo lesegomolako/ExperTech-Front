@@ -1,59 +1,67 @@
-
-<div style="background: green;">
+<div style="background: green; height: 100%">
   <div class="row">
-      <div class="col-11">
-        <h1 class="md-display-3">Browse Products</h1>
-      </div>
-      <div class="col-1 nopadding">
-        <a href="https://mishqah.github.io/final-client-help/pages/browse-product.html"><span style="float: right;" class="material-icons help">
+    <div class="col-11">
+      <h1 class="md-display-3">Browse Products</h1>
+    </div>
+    <div class="col-1 nopadding">
+      <a href="https://mishqah.github.io/final-client-help/pages/browse-product.html"><span style="float: right;"
+          class="material-icons help">
           help_outline
         </span></a>
-        <button mat-raised-button style="float: right;" routerLink="/home" style="background-color:gray" >
-            <mat-icon style="color:white">keyboard_return</mat-icon> Back
-        </button>
-      </div>
+      <button mat-raised-button style="float: right;" routerLink="/home" style="background-color:gray">
+        <mat-icon style="color:white">keyboard_return</mat-icon> Back
+      </button>
+    </div>
   </div>
-  
 
-  
-  
-    <div>
-      <br>
-      <div class="card_hover" style="align-items: center;" >
-        <mat-grid-list cols='4'  rowHeight='1:1' style="width: 99%; height: 90%; margin:10px">
-          <mat-grid-tile  *ngFor="let basketproduct of product;">
-            <div class="c-card-flip ">
-              <div class="c-card-flip__flipper">   
-                <div class="c-card-flip__front">
-                  <img class="image img"
-                    src="{{basketproduct.Image}}"
-                    class="c-card-flip__image" alt="Product Image" />
+  <div class="row">
+    <div class="col-2">
+      <mat-card class="this" mat-card>
+        <span style="border-bottom: 1px solid black;"><strong>Group by Category</strong></span>
+        <span (click)="filter(0)">All Categories</span>       
+        <span (click)="filter(1)">Hair</span>       
+        <span (click)="filter(2)">Nails</span>
+      </mat-card>
+    </div>
+
+    <div class="card_hover col-9" style="align-items: center; height: 600px; margin: auto">
+      <mat-grid-list cols='4' rowHeight='1:1' style="width: 99%; height: 90%; margin:10px">
+        <mat-grid-tile *ngFor="let basketproduct of product;">
+          <div class="c-card-flip ">
+            <div class="c-card-flip__flipper">
+              <div class="c-card-flip__front">
+                <img class="image img" src="{{basketproduct.Image}}" class="c-card-flip__image" alt="Product Image" />
+              </div>
+
+              <div class="c-card-flip__back">
+                <h5>Category: {{basketproduct.Category}} <br> Name:{{basketproduct.Name}}</h5>
+                <h5>Quantity on Hand:{{basketproduct.QuantityOnHand}} </h5>
+                <h5>Price:R{{basketproduct.Price}} </h5>
+                <h5>Description: {{basketproduct.Description}} </h5>
+                <div class="button" *ngIf="RoleID" role="group" aria-label="Third group">
+                  <button mat-raised-button style="background-color: gray;" title="Include in basket"
+                    (click)="addproduct(basketproduct)">
+                    <mat-icon> add</mat-icon>
+                    Add to Basket
+                  </button>
+
+                  <mat-form-field style="background-color: gray;">
+                    <mat-label style="color: black;">Enter Quantity</mat-label>
+                    <input style="color: black;" min="1" max="{{basketproduct.QuantityOnHand}}" type="number"
+                      (change)='setQuantity($event,basketproduct)' value="{{basketproduct.SelectedQuantity}}" matInput>
+                  </mat-form-field>
                 </div>
-      
-                <div class="c-card-flip__back">
-                  <h5>Category: {{basketproduct.Category}} <br> Name:{{basketproduct.Name}}</h5>
-                  <h5>Quantity on Hand:{{basketproduct.QuantityOnHand}} </h5>
-                  <h5>Price:R{{basketproduct.Price}} </h5>
-                  <h5>Description: {{basketproduct.Description}} </h5>
-                    <div class="button" *ngIf="RoleID" role="group" aria-label="Third group">
-                      <button mat-raised-button style="background-color: gray;" title="Include in basket" (click)="addproduct(basketproduct)">
-                        <mat-icon> add</mat-icon>
-                        Add to Basket
-                      </button>
-      
-                      <mat-form-field style="background-color: gray;">
-                        <mat-label style="color: black;"  >Enter Quantity</mat-label>
-                        <input style="color: black;" min="1" max="{{basketproduct.QuantityOnHand}}" type="number" (change)='setQuantity($event,basketproduct)' value="{{basketproduct.SelectedQuantity}}" matInput>
-                      </mat-form-field>
-                    </div>
-                    <div *ngIf="!RoleID">
-                      <p><strong>Log in to add product to basket</strong></p>
-                    </div>
-                </div>  
+                <div *ngIf="!RoleID">
+                  <p><strong>Log in to add product to basket</strong></p>
+                </div>
               </div>
             </div>
-          </mat-grid-tile>      
-        </mat-grid-list>
-      </div> 
-    </div> 
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+    <div class="col-1">
+
+    </div>
+  </div>
 </div>

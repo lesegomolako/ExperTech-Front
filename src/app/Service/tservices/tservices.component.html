@@ -109,7 +109,7 @@
     <ng-container matColumnDef="Price">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Price (R)</th>
       <td mat-cell *matCellDef="let row">
-        <div *ngFor="let y of row.ServicePrices">R {{y.Price || "N/A"}}</div>
+        <div *ngIf="row.ServicePrices">R {{row.ServicePrices[0]?.Price || "N/A"}}</div>
       </td>
     </ng-container>
 
@@ -118,7 +118,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Options</th>
       <td mat-cell *matCellDef="let row">
         <div *ngFor="let y of row.ServiceTypeOptions">{{y.Option}}: R<span
-            *ngFor="let z of y.ServicePrices">{{z.Price}}</span></div>
+            >{{y.ServicePrices[0]?.Price}}</span></div>
       </td>
     </ng-container>
 

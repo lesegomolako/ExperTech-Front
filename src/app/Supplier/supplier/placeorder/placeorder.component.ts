@@ -198,12 +198,17 @@ export class ReceiveDialog implements OnInit {
     })
 
     this.ReceiveForm.setControl('stockitemlines', this.setOrder(this.data));
+    this.ReceiveForm.updateValueAndValidity();
   }
+
+  get f(): FormArray {
+    return this.ReceiveForm.get('stockitemlines') as FormArray;
+  } 
 
   setOrder(res: SupplierOrderData): FormArray {
     const formArray = new FormArray([]);
 
-    res.StockItemLines.forEach(s => {
+    res.StockItemLines.forEach((s, i )=> {
       formArray.push(
         this.fb.group({
           LineID: s.LineID,
@@ -211,17 +216,44 @@ export class ReceiveDialog implements OnInit {
           Size: s.Size,
           Items: s.Items,
           QuantityReceived: null,
-          Received: false,
         })
       )
       
+      //var group = this.ReceiveForm.get('stockitemlines') as FormArray
+
+      formArray.at(i).get('QuantityReceived').setValidators([Validators.required, Validators.max(s.Quantity), Validators.min(s.Quantity)])
     }
     )
 
     return formArray;
   }
 
+  omit_special_num_char(event) {
+    var theEvent = event || window.event;
 
+    // Handle paste
+    if (theEvent.type === 'paste') {
+      key = event.clipboardData.getData('text/plain');
+    } else {
+      // Handle key press
+      var key = theEvent.keyCode || theEvent.which;
+      key = String.fromCharCode(key);
+    }
+    var regex = /[0-9]|\./;
+    if (!regex.test(key)) {
+      theEvent.returnValue = false;
+      if (theEvent.preventDefault) theEvent.preventDefault();
+    }
+    var k;
+    k = event.charCode;
+    return (
+      (k > 64 && k < 91) ||
+      (k > 96 && k < 123) ||
+      k == 8 ||
+      k == 32 ||
+      (k >= 48 && k <= 57)
+    );
+  }
 
   ReceiveStock() {
     if (this.ReceiveForm.invalid) {

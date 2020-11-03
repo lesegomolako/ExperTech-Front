@@ -203,7 +203,10 @@ export class EditProductComponent implements OnInit {
       productid: this.ProdFormData.ProductID,
     })
 
-   
+    
+    const f = this.ProductForm.controls['quantity'];
+    if(this.ProdFormData.Bought)
+      f.disable()
 
     const g = (<FormArray>this.ProductForm.controls['photos']).at(0) as FormGroup
 
@@ -286,6 +289,10 @@ export class EditProductComponent implements OnInit {
           this.router.navigateByUrl("AdminProduct")
           localStorage.removeItem('prodEdit')
         }
+        else
+        {
+          console.log(res)
+        }
     }, error => {console.log(error), this.snack.open("Something went wrong. Please try again later.", "OK", {duration: 3000})})
   }
 
@@ -322,6 +329,7 @@ export class EditProductComponent implements OnInit {
       Supplier: null,
       SelectedQuantity: null,
       Image: null,
+      Bought:false,
       Photos:
         [
           {

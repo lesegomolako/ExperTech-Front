@@ -11,6 +11,7 @@ export class ProductData {
     Supplier: string;
     SelectedQuantity:number;
     Image: any;
+    Bought: boolean;
 
     Photos:
     [

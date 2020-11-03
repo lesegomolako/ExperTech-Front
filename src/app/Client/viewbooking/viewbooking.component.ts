@@ -60,15 +60,15 @@ export class ViewbookingComponent implements OnInit {
   }
 
   cancel(BookingID){
-    alert("Unable to cancel")
-    // this.api.CancelBooking(BookingID).subscribe(res=> 
-    //   {
-    //     if(res == "success")
-    //     {
-    //       alert("Booking successfully cancel,Booking will be deleted.") ;
-    //       window.location.reload();
-    //     }  
-    //  });
+    
+    this.api.CancelBooking(BookingID).subscribe(res=> 
+      {
+        if(res == "success")
+        {
+          alert("Booking successfully cancel,Booking will be deleted.") ;
+          window.location.reload();
+        }  
+     });
     
   }
 

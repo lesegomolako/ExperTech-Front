@@ -33,7 +33,6 @@
                     <th>Size (ml)</th>
                     <th>Quantity Ordered</th>
                     <th>Quantity Received</th>
-                    <th>Mark As Received</th>
                 </tr>
             </thead>
             <tbody style="border-bottom-style: 1px solid grey;">
@@ -41,23 +40,40 @@
                     <tr [formGroupName]="j">
                         <input hidden formControlName="LineID">
                         <td style="width: 200px;">
-                            <input class="form-control" readonly type="text" formControlName="Items">
+                            <div class="form-group">
+                                <input class="form-control" readonly type="text" formControlName="Items">
+                            </div>
                         </td>
                         <td style="width: 80px;">
-                            <input Class="form-control" readonly formControlName="Size">
+                            <div class="form-group">
+                                <input Class="form-control" readonly formControlName="Size">
+                            </div>
                         </td>
                         <td style="width: 120px;">
-                            <input Class="form-control" readonly formControlName="Quantity">
+                            <div class="form-group">
+                                <input Class="form-control" readonly formControlName="Quantity">
+                            </div>
                         </td>
                         <td style="width: 150px;">
-                            <input class="form-control" placeholder="Enter Quantity Received"
-                                formControlName="QuantityReceived">
-                        </td>
-                        <td style="width: 150px;">
-                            <section class="example-section">
-                                <mat-checkbox class="example-margin" formControlName="Received">Received
-                                </mat-checkbox>
-                            </section>
+                            <div class="form-group" [ngClass]="{'has-error': f.controls[j].get('QuantityReceived')?.errors && ( f.controls[j].get('QuantityReceived')?.touched ||  f.controls[j].get('QuantityReceived')?.dirty)}">
+                                <input type="number" min=0 (keypress)="omit_special_num_char($event)"
+                                    class="form-control" placeholder="Enter Quantity Received"
+                                    formControlName="QuantityReceived">
+                                <span *ngIf="f.controls[j]?.get('QuantityReceived')?.errors  && ( f.controls[j].get('QuantityReceived')?.touched ||  f.controls[j].get('QuantityReceived')?.dirty)">
+                                    <span class="help-block"
+                                        *ngIf="f.controls[j]?.get('QuantityReceived')?.errors.required">
+                                        Please enter the quantity received
+                                    </span>
+                                    <span class="help-block"
+                                        *ngIf="f?.controls[j]?.get('QuantityReceived')?.errors.max">
+                                        The quantity recevied may not exceed the quantity ordered
+                                    </span>
+                                    <span class="help-block"
+                                        *ngIf="f?.controls[j]?.get('QuantityReceived')?.errors.min">
+                                            Minimum quantity may not be below 0
+                                    </span>
+                                </span>
+                            </div>
                         </td>
                     </tr>
                 </ng-container>

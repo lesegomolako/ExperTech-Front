@@ -144,38 +144,38 @@
         <h4>Client Details</h4>
           <div>
             <strong>Name:</strong
-            ><label name="Name">{{ SelectedClient.Name }}</label>
+            ><span name="Name">{{ SelectedClient.Name }}</span>
           </div>
           <div>
             <strong>Surname:</strong
-            ><label name="Surname">{{ SelectedClient.Surname }}</label>
+            ><span name="Surname">{{ SelectedClient.Surname }}</span>
           </div>
           <div>
             <strong>Contact Number:</strong
-            ><label name="ContactNo">{{ SelectedClient.ContactNo }}</label>
+            ><span name="ContactNo">{{ SelectedClient.ContactNo }}</span>
           </div>
           <div>
             <strong>Email Address:</strong
-            ><label name="Email">{{ SelectedClient.Email }}</label>
+            ><span name="Email">{{ SelectedClient.Email }}</span>
           </div>           
       </div>
       <div class="col-3" *ngIf="SelectedPackage">
           <h4>Package Details</h4>
             <div>
               <strong>Name:</strong
-              ><label name="Name">{{ SelectedPackage.Name }}</label>
+              ><span name="Name">{{ SelectedPackage.Name }}</span>
             </div>
             <div>
               <strong>Duration:</strong
-              ><label name="Surname">{{ SelectedPackage.Duration }}</label>
+              ><span name="Surname">{{ SelectedPackage.Duration }}</span>
             </div>
             <div>
               <strong>Quantity:</strong
-              ><label name="ContactNo">{{ SelectedPackage.Quantity }}</label>
+              ><span name="ContactNo">{{ SelectedPackage.Quantity }}</span>
             </div>
             <div>
               <strong>Price (R):</strong
-              ><label name="Email">R {{ SelectedPackage.Price }}</label>
+              ><span name="Email">R {{ SelectedPackage.Price }}</span>
             </div>
       </div>
     </div>

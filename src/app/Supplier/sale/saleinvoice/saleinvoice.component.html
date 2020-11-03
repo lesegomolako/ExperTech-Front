@@ -1,6 +1,7 @@
-<a href="https://mishqah.github.io/user-manual-admin-help/pages/sale.html"><span style="float: right;" class="material-icons help">
-    help_outline
-  </span></a>
+<a href="https://mishqah.github.io/user-manual-admin-help/pages/sale.html"><span style="float: right;"
+        class="material-icons help">
+        help_outline
+    </span></a>
 <div class="container-fluid pt-2">
     <div class="row">
         <div class="col-md-8">
@@ -11,22 +12,22 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <strong>SaleID: </strong>
-                                <label name="SaleID">{{clientObject.SaleID}}</label>
+                                <span name="SaleID">{{clientObject.SaleID}}</span>
                             </div>
                             <div class="form-group">
                                 <strong>Name: </strong>
-                                <label name="ClientName">{{clientObject.ClientName}}
-                                    {{clientObject.ClientSurname}}</label>
+                                <span name="ClientName">{{clientObject.ClientName}}
+                                    {{clientObject.ClientSurname}}</span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <strong>Email: </strong>
-                                <label name="ClientEmail">{{clientObject.ClientEmail}}</label>
+                                <span name="ClientEmail">{{clientObject.ClientEmail}}</span>
                             </div>
                             <div class="form-group">
                                 <strong>Contact: </strong>
-                                <label name="ClientContact">{{clientObject.ClientContact}}</label>
+                                <span name="ClientContact">{{clientObject.ClientContact}}</span>
                             </div>
                         </div>
                     </div>
@@ -36,6 +37,10 @@
                 <div class="card-body">
                     <h4 class="card-title d-flex justify-content-between">Sale Details</h4>
                     <div class="row">
+                        <div class="form-group" style="padding-left: 10px;">
+                            <strong>Payment Type: </strong>
+                            <span name="SaleID">{{clientObject.PaymentType}}</span>
+                        </div>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -48,18 +53,29 @@
                                 <tr *ngFor="let item of clientObject.Products">
                                     <td scope="row">
                                         {{item.Name}}</td>
-                                    <td>R{{item.Price}}</td>
+                                    <td>{{item.Price | currency:'ZAR':'symbol-narrow'}}</td>
                                     <td>{{item.Quantity}}</td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td><strong>Total</strong></td>
-                                    <td style="border-bottom-style: double;">100</td>
+                                    <td style="border-bottom-style: double;">{{total | currency:'ZAR':'symbol-narrow'}}
+                                    </td>
+                                </tr>
+                                <tr *ngIf="clientObject.Change">
+                                    <td></td>
+                                    <td><strong>Change</strong></td>
+                                    <td style="border-bottom-style: double;">{{clientObject.Change | currency:'ZAR':'symbol-narrow'}}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+                <div class="form-group" *ngIf="clientObject.Payment" style="padding-left: 10px;">
+                    <strong>Staus: </strong>
+                    <span name="SaleID">Paid</span>
+                </div>                
             </div>
 
         </div>
