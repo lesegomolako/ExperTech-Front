@@ -15,7 +15,7 @@ import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.se
 export class ClientAuditComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<AuditTrail>;
+  //@ViewChild(MatTable) table: MatTable<AuditTrail>;
 
   value = 'Clear me';
 
@@ -35,8 +35,10 @@ export class ClientAuditComponent implements OnInit, AfterViewInit {
     if (this.api.RoleID == "2") {
       this.dataSource = new MatTableDataSource(this.AuditList)
       this.api.getClientAudit().subscribe(res => {
+        console.log(res)
         this.AuditList = res;
         this.dataSource.data = this.AuditList;
+        
       })
     }
     else {
@@ -48,7 +50,7 @@ export class ClientAuditComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.table.dataSource = this.dataSource;
+    //this.table.dataSource = this.dataSource;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
 

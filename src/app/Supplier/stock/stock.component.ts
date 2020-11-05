@@ -96,7 +96,7 @@ export class StockComponent implements AfterViewInit, OnInit {
           else if(res.Error == "dependencies")
           {
               alert(res.Message);
-              window.location.reload();
+              //window.location.reload();
           }
           else
           {

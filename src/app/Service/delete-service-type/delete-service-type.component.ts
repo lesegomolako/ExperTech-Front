@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '../../API Services/for Service/services.service';
 import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.se
 })
 export class DeleteServiceTypeComponent implements OnInit {
 
-  constructor(private service: ServicesService, private router: Router, private api:ExperTexhService) { }
+  constructor(private service: ServicesService, private router: Router, private api:ExperTexhService, private snack: MatSnackBar) { }
 
   ngOnInit(): void 
   {
@@ -50,7 +51,7 @@ export class DeleteServiceTypeComponent implements OnInit {
           if (res == "success")
           {
             localStorage.removeItem("stDelete")
-            alert("Successfully deleted");
+            this.snack.open("Service type successfully deleted", "OK", {duration:3000});
             this.router.navigateByUrl("services/ServiceTypes");
           }
           else if(res.Error == "dependencies")

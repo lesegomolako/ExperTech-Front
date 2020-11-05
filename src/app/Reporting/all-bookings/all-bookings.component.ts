@@ -104,13 +104,12 @@ convetToPDF()
 
 
     this.service.GetBookingSummaryData(this.Criteria, this.api.SessionID).subscribe(response => {
-
       
       this.statuses = response['Statuses'];
       this.services = response['ServicesBooked'];
       this.packages = response['ServicePackages'];
      
-      if(!this.statuses && !this.services && !this.packages)
+      if(response['Statuses'].length == 0 && response['ServicesBooked'].length == 0 && response['ServicePackages'].length == 0)
       {
         this.snack.open("There is no report data for this selected range", "OK", {duration:3000})
         return;

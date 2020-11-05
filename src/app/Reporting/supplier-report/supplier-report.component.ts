@@ -91,7 +91,7 @@ export class SupplierReportComponent implements OnInit {
 
       this.products = response['Totals'];
       
-      if(response['Category'].length == 0 && !this.products)
+      if(response['Stock'].length == 0 && response['Totals'].length == 0)
       {
         this.snack.open("There is no report data for this selected range", "OK", {duration:3000})
         return;

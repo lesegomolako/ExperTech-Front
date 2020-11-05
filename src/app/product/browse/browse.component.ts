@@ -122,9 +122,6 @@ addproduct(BasketProduct:Product){
       {
         BasketProduct.SelectedQuantity = 1;
       }
-
-      if(BasketProduct.SelectedQuantity <= 0)
-      return;
       
       _basketLine.Quantity=BasketProduct.SelectedQuantity;
 

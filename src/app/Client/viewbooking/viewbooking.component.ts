@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import{ Booking} from '../../API Services/for Booking/client';
 import { ExperTexhService } from '../../API Services/for Booking/exper-texh.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-viewbooking',
@@ -19,7 +20,7 @@ export class ViewbookingComponent implements OnInit {
   booking :  Booking[];
   name: string;
 
-  constructor(private api: ExperTexhService, private router: Router,private route: ActivatedRoute) { }
+  constructor(private api: ExperTexhService, private router: Router,private route: ActivatedRoute, private snack: MatSnackBar) { }
   openDialog() {
     confirm("Successfully cancelled")
   }
@@ -47,7 +48,7 @@ export class ViewbookingComponent implements OnInit {
       {
         if(res == "success")
         {
-          alert("Booking successfully rejected,Booking will be deleted. Please make another booking with a different time")
+          this.snack.open("Booking successfully rejected.", "OK", {duration:3000})
           window.location.reload();
         }
         else
@@ -61,15 +62,17 @@ export class ViewbookingComponent implements OnInit {
 
   cancel(BookingID){
     
-    this.api.CancelBooking(BookingID).subscribe(res=> 
-      {
-        if(res == "success")
+    if(confirm("Are you sure you want cancel this booking?"))
+    {
+      this.api.CancelBooking(BookingID).subscribe(res=> 
         {
-          alert("Booking successfully cancel,Booking will be deleted.") ;
-          window.location.reload();
-        }  
-     });
-    
+          if(res == "success")
+          {
+            this.snack.open("Booking successfully cancelled.", "OK", {duration:3000}) ;
+            window.location.reload();
+          }  
+      });
+    }
   }
 
   
@@ -78,10 +81,9 @@ export class ViewbookingComponent implements OnInit {
     this.api.AcceptBooking(BookingID).subscribe((res:any)=>{
       if(res == "success")
       {
-        alert("Booking successfully accepted")
+        this.snack.open("Booking successfully accepted", "OK", {duration: 3000})
         window.location.reload();
-      }
-      
+      }      
      });
     
   }

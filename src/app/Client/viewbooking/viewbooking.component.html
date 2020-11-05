@@ -27,7 +27,7 @@
 <div *ngFor="let client of booking;"  style="text-align: center; color: black;" class="card-hover">
   <article  class="c-card c-card--center">
     
-    <button [hidden]="!client.DateRequesteds" 
+    <button [hidden]="(client.EmployeeSchedule && client.EmployeeSchedule[0]?.canCancel == false)" 
       mat-raised-button style="background-color: gray; align-items: center; color: black; float: right;" 
       (click)="cancel(client.BookingID)">
       Cancel

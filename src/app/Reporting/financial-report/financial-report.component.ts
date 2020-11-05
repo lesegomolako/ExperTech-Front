@@ -97,7 +97,7 @@ export class FinancialReportComponent implements OnInit {
       this.incomes = response['Income'];
       this.expenses = response['Expense'];
 
-      if(this.incomes.length==0 && this.expenses.length==0)
+      if(response['Income'].length==0 && response['Expense'].length==0)
       {
         this.snack.open("There is no report data for the selected range.", "OK", {duration: 4000})
         return;

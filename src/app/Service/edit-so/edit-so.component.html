@@ -16,7 +16,7 @@
             </span>
         </div>
         <div class="form-group"  [ngClass]="{'has-error': duration.errors && (duration.touched || duration.dirty)}">
-            <label for="duration">Duration</label>    
+            <label for="duration">Duration (minutes)</label>    
             <input type="number" (keypress)="omit_special_char($event)" min=0 required #duration="ngModel" max=120 class="form-control" name="Duration" [(ngModel)] ="service.OptionData.Duration" placeholder="Example: +5min">
             <span *ngIf="duration.errors">
                 <mat-error class="help-block" *ngIf="duration.errors.required && (duration.touched || duration.dirty)">Duration is required</mat-error>

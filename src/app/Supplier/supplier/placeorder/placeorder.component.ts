@@ -221,7 +221,7 @@ export class ReceiveDialog implements OnInit {
       
       //var group = this.ReceiveForm.get('stockitemlines') as FormArray
 
-      formArray.at(i).get('QuantityReceived').setValidators([Validators.required, Validators.max(s.Quantity), Validators.min(s.Quantity)])
+      formArray.at(i).get('QuantityReceived').setValidators([Validators.required, Validators.max(s.Quantity), Validators.min(0)])
     }
     )
 

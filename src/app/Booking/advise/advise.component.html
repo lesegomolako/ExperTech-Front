@@ -12,97 +12,108 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-6">
-    <form [formGroup]="AdviseForm" (submit)="AdviseBooking(AdviseForm)">
-      <div style="text-align: center; color: black;" class="card-hover w-100">
-        <article class="c-card c-card--center">
+<!-- <div class="row"> -->
+<form [formGroup]="AdviseForm" (submit)="AdviseBooking(AdviseForm)">
+  <div style="text-align: center; color: black;" class="card-hover w-100">
+    <article class="c-card">
 
-          <div class="c-card__body">
-            <label for="">
-              <h1> Current Booking request details</h1>
-            </label>
-            <br>
+      <div class="c-card__body">
+        <label for="">
+          <h1> Current booking request details</h1>
+        </label>
+        <br>
 
-            <div>
-              <label>
-                <h2 class="c-card__title">
-                  Service: {{Booking.BookingLines[0].Service}}
-                </h2>
-              </label>
-              <br>
-              <label>
-                <h2 *ngIf="Booking.BookingLines[0].Option" class="c-card__title">
-                  Service option: {{Booking.BookingLines[0].Option}}
-                </h2>
-              </label>
-            </div>
+        <div>
+          <label>
+            <h2 class="c-card__title">
+              Service: {{Booking.BookingLines[0].Service}}
+            </h2>
+          </label>
+          <br>
+          <label>
+            <h2 *ngIf="Booking.BookingLines[0].Option" class="c-card__title">
+              Service option: {{Booking.BookingLines[0].Option}}
+            </h2>
+          </label>
+        </div>
 
-            <div>
-              <br>
-              <label for="">
-                <h2 class="c-card__title">Employee for Service:</h2>
-                <mat-form-field appearance="fill">
-                  <mat-label>Employee</mat-label>
-                  <mat-select formControlName="employeeid" name="food">
-                    <mat-option *ngFor="let items of EmployeeList" (click)="fetchEvents(items.EmployeeID)"
-                      value={{items.EmployeeID}}>
-                      {{items.Name}}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="g.employeeid.errors?.required">Select an Employee</mat-error>
-                </mat-form-field>
-              </label>
-              <br>
-              <label for="">
-                <h2 class="c-card__title">Appointment Date: {{chosenDate | date :"dd/MM/yy"}}</h2>
-              </label>
-              <label for="">
-                <h2 class="c-card__title">
-                  Requested Time: {{Booking.BookingRequest.Time}}
-                </h2>
-              </label>
-              <br>
-              <label for="">
-                <h2 class="c-card__title">
-                  Start Time:
-                </h2>
-              </label>
-              <br>
-              <mat-form-field appearance="fill">
-                <mat-label>Select Time</mat-label>
-                <mat-select formControlName="timesid">
-                  <mat-option *ngFor="let items of Times" value={{items.TimeID}}>
-                    {{items.StartTime}}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="g.timesid.errors?.required">Select a time</mat-error>
-              </mat-form-field>
-            </div>
-
-
-
-            <div style="align-content: center; " class="c-card__footer">
-              <br>
-              <div class="buttons w-100">
-                <button title="Send advise booking to client nomargin" mat-raised-button style="background-color: gray;"
-                  type="submit">
-                  Send
-                </button>
-                <button title="Abort advise booking for client" mat-raised-button style="background-color: gray;"
-                  (click)="cancel()" type="button">
-                  Cancel
-                </button>
-              </div>
-            </div>
-
+        <div>
+          <br>
+          <div>
+            <h2 class="c-card__title">Employee for Service:</h2>
+            <mat-form-field appearance="fill">
+              <mat-label>Employee</mat-label>
+              <mat-select formControlName="employeeid" name="food">
+                <mat-option *ngFor="let items of EmployeeList" (click)="fetchEvents(items.EmployeeID)"
+                  value={{items.EmployeeID}}>
+                  {{items.Name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="g.employeeid.errors?.required">Select an Employee</mat-error>
+            </mat-form-field>
+            <span title="view employee's schedule" (click)="ViewSchedule()" style="cursor: pointer;"
+              class="material-icons" *ngIf="showIcon">calendar_today</span>
           </div>
-        </article>
-      </div>
-    </form>
-  </div>
+          <br>
+          <label for="">
+            <h2 class="c-card__title">Appointment Date: {{chosenDate | date :"dd/MM/yy"}}</h2>
+          </label>
+          <label for="">
+            <h2 class="c-card__title">
+              Requested Time: {{Booking.BookingRequest.Time}}
+            </h2>
+          </label>
+          <br>
+          <label for="">
+            <h2 class="c-card__title">
+              Start Time:
+            </h2>
+          </label>
+          <br>
+          <h4>Pick date and time for Appointment</h4>
+          <mat-form-field color="accent">
+            <mat-label style="color: black;">Appointment date</mat-label>
+            <input matInput [min]="today" [matDatepicker]="picker1" 
+              name="Date" formControlName="datesid">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+            <mat-error *ngIf="g.datesid.errors?.required">Select a date</mat-error>
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="fill">
+            <mat-label>Select Time</mat-label>
+            <mat-select formControlName="timesid">
+              <mat-option *ngFor="let items of Times" value={{items.TimeID}}>
+                {{items.StartTime}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="g.timesid.errors?.required">Select a time</mat-error>
+          </mat-form-field>
+        </div>
 
-  <div class="col-6">
+
+
+        <div style="align-content: center; " class="c-card__footer">
+          <br>
+          <div class="buttons w-100">
+            <button title="Send advise booking to client nomargin" mat-raised-button style="background-color: gray;"
+              type="submit">
+              Send
+            </button>
+            <button title="Abort advise booking for client" mat-raised-button style="background-color: gray;"
+              (click)="cancel()" type="button">
+              Cancel
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </article>
+  </div>
+  </form>
+
+
+  <!-- <div class="col-6">
     <div style="width:90%; margin: auto;">
 
       <div class="row">
@@ -199,4 +210,4 @@
     <br />
     Loading events...
   </div>
-</ng-template>
+</ng-template> -->

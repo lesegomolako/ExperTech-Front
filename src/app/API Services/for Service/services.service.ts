@@ -28,15 +28,16 @@ ViewServices(): Observable<ServiceTypeData[]>
     return this.http.get<ServiceTypeData[]>(this.url+"Services/GetServiceType")
   }
 
-  UpdateServiceType(form: ServiceData)
+  UpdateServiceType(form: ServiceData, SessionID)
   {
-    
-    return this.http.post(this.url + "Services/UpdateServiceType" , form)
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post(this.url + "Services/UpdateServiceType" , form,{params})
   }
 
-  AddServiceType(form: ServiceTypeData)
+  AddServiceType(form: ServiceTypeData, SessionID)
   {
-    return this.http.post(this.url + 'Services/AddServiceType' , form)
+    const params = new HttpParams().set("SessionID", SessionID)
+    return this.http.post(this.url + 'Services/AddServiceType' , form, {params})
   }
 
   DeleteServiceType(TypeID: any, SessionID)
@@ -107,16 +108,16 @@ ViewServices(): Observable<ServiceTypeData[]>
     return this.http.get<ServiceOptionData[]>(this.url+"Services/GetServiceOption")
   }
 
-  UpdateServiceOption(form: ServiceOptionData)
+  UpdateServiceOption(form: ServiceOptionData, SessionID)
   {
-    
-    return this.http.put(this.url + "Services/UpdateServiceOption" , form)
+    const params = new HttpParams().set('SessionID', SessionID );
+    return this.http.put(this.url + "Services/UpdateServiceOption" , form, {params})
   }
 
-  AddServiceOption(form: ServiceOptionData)
+  AddServiceOption(form: ServiceOptionData, SessionID)
   {
- 
-    return this.http.post(this.url + 'Services/AddServiceOption' , form)
+    const params = new HttpParams().set('SessionID', SessionID );
+    return this.http.post(this.url + 'Services/AddServiceOption' , form, {params})
   }
 
   DeleteServiceOption(OptionID: any, SessionID)
@@ -136,15 +137,15 @@ ViewServices(): Observable<ServiceTypeData[]>
     return this.http.get<PackageData[]>(this.url+"Services/RetrieveServicePackage")
   }
 
-  AddServicePackage(form: PackageData)
+  AddServicePackage(form: PackageData, SessionID)
   {
- 
-    return this.http.post(this.url + 'Services/CreateServicePackage' , form)
+    const params = new HttpParams().set('SessionID', SessionID );
+    return this.http.post(this.url + 'Services/CreateServicePackage' , form, {params})
   }
 
-  DeleteServicePackage(PackageID: any)
+  DeleteServicePackage(PackageID: any, SessionID)
   {    
-    const params = new HttpParams().set('PackageID', PackageID );
+    const params = new HttpParams().set('PackageID', PackageID ).set("SessionID", SessionID);
     return this.http.delete(this.url + 'Services/RemoveServicePackage', {
       headers: {'Content-Type': 'application/json'},
       params: params})

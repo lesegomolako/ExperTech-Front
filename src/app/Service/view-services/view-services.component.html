@@ -19,10 +19,10 @@
                     <div class="typeinfo">
                         <div class="name">{{x.Name}}</div>
                         <div class="sub-text">
-                            <div *ngFor = "let y of x.ServicePrices">Price: R{{y.Price}}</div>
+                            <div *ngIf = "x.ServicePrices">Price: R{{x.ServicePrices[0]?.Price}}</div>
                         </div>
                         <div class="sub-text">
-                            <div *ngFor = "let y of x.ServiceTypeOptions">{{y.Option}}: R<span *ngFor ="let z of y.ServicePrices">{{z.Price}}</span></div>
+                            <div *ngFor = "let y of x.ServiceTypeOptions">{{y.Option}}: R<span >{{y.ServicePrices[0]?.Price}}</span></div>
                         </div>
                     </div>
                 </div>

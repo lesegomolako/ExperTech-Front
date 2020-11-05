@@ -79,7 +79,7 @@
     <ng-container matColumnDef="pickup">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Pick-Up Sale</th>
       <td mat-cell *matCellDef="let row">
-      <button mat-raised-button *ngIf="row.SaleType == 'Product Purchase'" style="background-color:forestgreen" title="Make sale payment" (click)="PickUp(row)"><mat-icon style="color:white;margin:5px">content_paste</mat-icon></button>
+      <button mat-raised-button *ngIf="row.SaleType == 'Product Purchase' && row.Status == 'placed'" style="background-color:forestgreen" title="Make sale payment" (click)="PickUp(row)"><mat-icon style="color:white;margin:5px">content_paste</mat-icon></button>
       </td >
     </ng-container>
 
@@ -87,7 +87,7 @@
     <ng-container matColumnDef="cancel">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Cancel Sale</th>
       <td mat-cell *matCellDef="let row">
-      <button mat-raised-button *ngIf="row.SaleType == 'Product Purchase'" style="background-color:red" title="Cancel Sale" (click)="CancelSale(row.SaleID)"><mat-icon style="color:white; margin:5px">cancel</mat-icon></button>
+      <button mat-raised-button *ngIf="row.SaleType == 'Product Purchase' && row.Status == 'placed'" style="background-color:red" title="Cancel Sale" (click)="CancelSale(row.SaleID)"><mat-icon style="color:white; margin:5px">cancel</mat-icon></button>
       </td >
     </ng-container>
     

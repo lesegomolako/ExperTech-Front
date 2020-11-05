@@ -12,7 +12,7 @@
         <mat-label>Search</mat-label>
         <input matInput (keyup)="applyFilter($event)" #input>
       </mat-form-field>
-    <table mat-table class="dataSource?" matSort aria-label="Elements">
+    <table mat-table class="dataSource?" [dataSource]="dataSource" matSort aria-label="Elements">
   
       <!-- AuditID Column -->
       <ng-container matColumnDef="auditid" >
@@ -23,19 +23,19 @@
       <!-- AdminName Column -->
       <ng-container matColumnDef="client">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
-        <td mat-cell *matCellDef="let row">{{row.ClientName}}</td>
+        <td mat-cell *matCellDef="let row">{{row.Client}}</td>
       </ng-container>
   
       <!-- OldData Column -->
       <ng-container matColumnDef="olddata">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>OLD Data</th>
-        <td mat-cell *matCellDef="let row">{{row.OldData}}</td>
+        <td mat-cell *matCellDef="let row">{{row.OldData || "N/A"}}</td>
       </ng-container>
   
       <!-- NewData Column -->
       <ng-container matColumnDef="newdata">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>New Data</th>
-        <td mat-cell *matCellDef="let row">{{row.NewData}}</td>
+        <td mat-cell *matCellDef="let row">{{row.NewData || "N/A"}}</td>
       </ng-container>
   
       <!-- TablesAffected Column -->
@@ -69,9 +69,8 @@
     <mat-paginator #paginator
       *ngIf="dataSource?.data.length>10"
       [length]="dataSource?.data.length"
-      [pageIndex]=""
       [pageSize]="10"
-      [pageSizeOptions]="[10, 25, 50]"
+      [pageSizeOptions]="[10, 25, 50, 100]"
       showFirstLastButtons>
     </mat-paginator>  
   </div>

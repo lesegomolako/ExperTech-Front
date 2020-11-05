@@ -7,10 +7,14 @@
 
     <div class="details">
         <div class="inputs">
-            <label ><b>Name:</b> {{formData.Name}}</label>    
-            <label ><b>Description:</b> {{formData.Description}}</label>  
-            <label ><b>Duration:</b> {{formData.Duration}}</label>    
-            <label *ngIf="formData.ServicePrices != null" ><b>Price:</b> {{formData.ServicePrices[0].Price}}</label>  
+            <span ><b>Name:</b> {{formData.Name}}</span>    
+            <br>
+            <span ><b>Description:</b> {{formData.Description}}</span> 
+            <br> 
+            <span ><b>Duration:</b> {{formData.Duration}}</span>   
+            <br> 
+            <span *ngIf="formData.ServicePrices != null" ><b>Price:</b> {{formData.ServicePrices[0].Price}}</span>  
+            <br>
             <div *ngIf="formData.ServiceTypeOptions != null">
             <label>Service Options:</label>    
                 <ul *ngFor="let items of formData.ServiceTypeOptions">

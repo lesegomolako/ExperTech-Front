@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Employee } from 'src/app/API Services/for Booking/client';
+import { CalendarDialog } from '../makebooking/makebooking.component';
 
 export class CalData {
   EmployeeID: any;
@@ -54,13 +55,18 @@ const colors: any = {
 })
 export class AdviseComponent implements OnInit {
 
-  constructor(private service: ReportingService, private router: Router, private snack: MatSnackBar,
+  constructor(private service: ReportingService, private router: Router, private snack: MatSnackBar, private dialog: MatDialog,
     private api: ExperTexhService, private http: HttpClient, private fb: FormBuilder) { }
 
   EmployeeList: Employee[]
   Times: [];
   chosenDate: any;
   Booking: Schedules;
+  EmpCalendar: Observable<CalendarEvent<CalData>[]>;
+  showIcon = false;
+
+  today = new Date();
+
 
   AdviseForm: FormGroup;
 
@@ -83,16 +89,33 @@ export class AdviseComponent implements OnInit {
 
       this.AdviseForm = this.fb.group({
         employeeid: ['', Validators.required],
-        timesid: ['', Validators.required]
+        timesid: ['', Validators.required],
+        datesid: ['', Validators.required]
       })
-
-      this.fetchEvents(0);
     }
     else {
       this.router.navigate(["403Forbidden"])
     }
   }
 
+  ViewSchedule()
+  {
+    
+    if(this.showIcon == false)
+    {
+      alert("Select an Employee first");
+      return;
+    }
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.width = '800px';
+    dialogConfig.height = '500px'
+    dialogConfig.data = this.EmpCalendar;
+
+    this.dialog.open(CalendarDialog, dialogConfig)
+  }
+
+  
 
   get g()
   {
@@ -112,12 +135,12 @@ export class AdviseComponent implements OnInit {
       BookingID: this.Booking.BookingID,
       EmployeeID: form.value.employeeid,
       RequestedID: this.Booking.BookingRequest.RequestedID,
-      Date: new Date(this.chosenDate).toLocaleDateString(),
+      Date: form.value.datesid,
       TimeID: form.value.timesid
     }
 
     this.api.AdviseBooking(BookingData).subscribe((res: any) => {
-      if (res = "success") {
+      if (res == "success") {
         this.snack.open("Booking advise successfully sent to client", "OK", {duration: 3000});
         this.router.navigateByUrl("/schedule");
       }
@@ -183,76 +206,65 @@ export class AdviseComponent implements OnInit {
     }
   }
 
-  fetchEvents(EmpID:any) {
-    const getStart: any = {
-      month: startOfMonth,
-      week: startOfWeek,
-      day: startOfDay,
-    }[this.view];
-
-    const getEnd: any = {
-      month: endOfMonth,
-      week: endOfWeek,
-      day: endOfDay,
-    }[this.view];
-
+  fetchEvents(EmployeeID:any) {
+    this.showIcon = true;
     const params = new HttpParams()
-      .set(
-        'SessionID', this.api.SessionID);
+    .set(
+      'SessionID', this.api.SessionID);
 
-
-
-
-    this.events$ = this.http
-      .get('https://localhost:44380/api/Employees/DisplayEmployeeSchedules', { params })
-      .pipe(
-        map((res: CalData[]) => { console.log(res)
-          return res.filter(s => s.EmployeeID == EmpID).map((Avail: CalData) => {
-            if (Avail.StatusID == 1) {
-              return {
-                title: Avail.StartTime + "-" + Avail.EndTime,
-                start: new Date(
-                  Avail.StartDateTime
-                ),
-                end: new Date(
-                  Avail.EndDateTime
-                ),
-                color: colors.green,
-                allDay: false,
-                draggable: false
-              }
+  this.EmpCalendar = this.http
+    .get('https://localhost:44380/api/Employees/DisplayEmployeeSchedules', { params })
+    .pipe(
+      map((res: CalData[]) => { console.log(res)
+        return res.filter(s => s.EmployeeID == EmployeeID).map((Avail: CalData) => {
+          if (Avail.StatusID == 1) {
+            return {
+              title: Avail.StartTime + "-" + Avail.EndTime,
+              start: new Date(
+                Avail.StartDateTime
+              ),
+              end: new Date(
+                Avail.EndDateTime
+              ),
+              color: colors.green,
+              allDay: false,
+              draggable: false,
+              meta: Avail
             }
-            else if (Avail.StatusID == 2) {
-              return {
-                title: Avail.StartTime + "-" + Avail.EndTime,
-                start: new Date(
-                  Avail.StartDateTime
-                ),
-                end: new Date(
-                  Avail.EndDateTime
-                ),
-                color: colors.yellow,
-                allDay: false,
-                draggable: false
-              }
+          }
+          else if (Avail.StatusID == 2) {
+            return {
+              title: Avail.StartTime + "-" + Avail.EndTime,
+              start: new Date(
+                Avail.StartDateTime
+              ),
+              end: new Date(
+                Avail.EndDateTime
+              ),
+              color: colors.yellow,
+              allDay: false,
+              draggable: false
             }
-            else {
-              return {
-                title: Avail.StartTime + "-" + Avail.EndTime,
-                start: new Date(
-                  Avail.StartDateTime
-                ),
-                end: new Date(
-                  Avail.EndDateTime
-                ),
-                color: colors.red,
-                allDay: false,
-                draggable: false
-              }
+          }
+          else {
+            return {
+              title: Avail.StartTime + "-" + Avail.EndTime,
+              start: new Date(
+                Avail.StartDateTime
+              ),
+              end: new Date(
+                Avail.EndDateTime
+              ),
+              color: colors.red,
+              allDay: false,
+              draggable: false,
+              meta: Avail
             }
-          })
-        }, error => console.log("Error",error))
-      );
+          }
+        })
+      }, error => console.log("Error",error))
+    );
+
   }
 
 

@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import { formatCurrency, FormatWidth } from '@angular/common';
 import { timestamp } from 'rxjs/operators';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class IOption
 {
@@ -28,7 +29,7 @@ export class IPrice
 export class EditServiceComponent implements OnInit {
   
   constructor(public service: ServicesService, private router: Router, 
-    private fb: FormBuilder, private api:ExperTexhService ) { }
+    private fb: FormBuilder, private api:ExperTexhService, private snack: MatSnackBar ) { }
   serviceForm: FormGroup;
   serviceObject: ServiceData;
   //options = this.service.getServiceOptions('options') as FormArray
@@ -271,15 +272,13 @@ export class EditServiceComponent implements OnInit {
 
         if(res.Message == "success")
         {
-          alert("Successfully saved")
+          this.snack.open("Service successfully added", "OK", {duration:3000})
           this.router.navigateByUrl("/services/Services")      
         }
         else if(res == "duplicate")
         {
-          if(confirm("Service already exists. Would you like to update instead?"))
-          {
-            
-          }
+          alert("Cannot save: This service already exists.")
+          return;
         }
         else
         {
@@ -296,13 +295,12 @@ export class EditServiceComponent implements OnInit {
 
         if(res == "success")
         {
-          alert("Successfully saved")
+          this.snack.open("Service successfully updated", "OK", {duration:3000})
           this.router.navigateByUrl("/services/Services")  
         }
        else if(res.Error == "session")
        {
           alert(res.Message)
-
        }
        else
        {

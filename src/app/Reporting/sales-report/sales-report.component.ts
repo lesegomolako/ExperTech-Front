@@ -163,7 +163,11 @@ export class SalesReportComponent implements OnInit {
         this.BookingPayment = false;
         this.ActivatePackage = false;
 
-        
+        if(response['Category'].length == 0 )
+        {
+          this.snack.open("There is no report data for this selected range", "OK", {duration:3000})
+          return;
+        }
         let keys = response['Category'].map(d => d.Name);
         let values = response['Category'].map(d => d.Total);
 
@@ -277,7 +281,7 @@ export class SalesReportComponent implements OnInit {
 
         this.products = response['Category'];
 
-        if(!this.products)
+        if(response['Category'].length == 0 )
         {
           this.snack.open("There is no report data for this selected range", "OK", {duration:3000})
           return;

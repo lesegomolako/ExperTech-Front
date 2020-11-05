@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '../../API Services/for Service/services.service';
 import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-delete-so',
@@ -10,7 +11,7 @@ import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.se
 })
 export class DeleteSOComponent implements OnInit {
 
-  constructor(private service: ServicesService, private router: Router, private api: ExperTexhService) { }
+  constructor(private service: ServicesService, private router: Router, private api: ExperTexhService, private snack: MatSnackBar) { }
 
   ngOnInit(): void {
     if(this.api.RoleID == "2")
@@ -41,13 +42,18 @@ export class DeleteSOComponent implements OnInit {
 
     if(confirm("Are you sure you want to delete this?"))
     {
-      this.service.DeleteServiceOption(OptionID, this.api.SessionID).subscribe(res =>
+      this.service.DeleteServiceOption(OptionID, this.api.SessionID).subscribe((res:any) =>
         {
-          if(res = "success")
+          if(res == "success")
           {
             localStorage.removeItem('soDelete')
-            alert("Sucessfully deleted");
+            this.snack.open("Service option sucessfully deleted", "OK", {duration:3000});
             this.router.navigateByUrl("services/ServiceOptions");
+          }
+          else if(res.Error == "dependencies")
+          { 
+            alert(res.Message)
+            return
           }
 
         })
