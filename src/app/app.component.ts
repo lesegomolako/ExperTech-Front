@@ -17,6 +17,7 @@ import { UserData } from './Staff/setup/setup.component';
 import { HttpClient } from '@angular/common/http';
 import { MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { SocialMedia } from './User/company-settings/company-settings.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface ProfileData<MetaType=any>
 {
@@ -43,7 +44,7 @@ export class AppComponent implements OnInit {
     document.getElementById("sidebar").classList.toggle('active');
   }
 
-  constructor(private router: Router, private http: HttpClient,
+  constructor(private router: Router, private http: HttpClient, private snack: MatSnackBar,
     private rService: ReportingService, public api: ExperTexhService)
     { 
       router.events.subscribe((event: RouterEvent) => {
@@ -113,6 +114,8 @@ export class AppComponent implements OnInit {
         sessionStorage.clear();
 
         this.RoleID = null;
+
+        this.snack.open("Successfully logged out", "OK", {duration: 3000})
     
         this.router.navigateByUrl('/home')
         .then(() => {

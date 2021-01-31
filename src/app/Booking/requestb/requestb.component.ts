@@ -34,6 +34,7 @@ export class RequestbComponent implements OnInit {
 
   setStep(index: number) {
     this.step = index;
+    document.getElementById("notes").focus();
   }
 
   nextStep() {

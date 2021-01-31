@@ -8,6 +8,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { Router } from '@angular/router';
+import { CompanyInfo } from 'src/app/User/company-settings/company-settings.component';
+import { ReportingService } from 'src/app/API Services/for User/reporting.service';
 
 @Component({
   selector: 'app-supplier-report',
@@ -26,6 +28,7 @@ export class SupplierReportComponent implements OnInit {
   
   displayed = true;
   generated = true;
+  CompanyInfo: CompanyInfo;
 
   ngOnInit(): void {
 
@@ -34,6 +37,7 @@ export class SupplierReportComponent implements OnInit {
       this.router.navigate(["403Forbidden"])
       return;
     }
+    this.serv.GetCompanyInfo().subscribe(res => {this.CompanyInfo = res})
   }
 
   title = 'hw4-frontend';
@@ -41,7 +45,7 @@ export class SupplierReportComponent implements OnInit {
   chart=[];
   products: Object;
 
-  constructor(private service: ReportsService, private router: Router, private snack:MatSnackBar ,private api:ExperTexhService){}
+  constructor(private service: ReportsService, private serv: ReportingService, private router: Router, private snack:MatSnackBar ,private api:ExperTexhService){}
 
  
   Criteria: Criteria;

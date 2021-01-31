@@ -29,6 +29,7 @@ export class Schedules {
       {
         Service: string;
         Option: string;
+        TypeID: any;
       }
     ];
   BookingSchedule:

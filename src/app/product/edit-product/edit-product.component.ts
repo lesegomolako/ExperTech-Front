@@ -7,6 +7,7 @@ import { ProductData } from 'src/app/API Services/for Product/product';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { AppComponent } from 'src/app/app.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-edit-product',
@@ -19,7 +20,8 @@ export class EditProductComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router,
     public service: ProductService, private api: ExperTexhService,
-    private fb: FormBuilder, private snack: MatSnackBar
+    private fb: FormBuilder, private snack: MatSnackBar,
+    private imageCompress: NgxImageCompressService
   ) { }
 
   ProductForm: FormGroup;
@@ -32,14 +34,40 @@ export class EditProductComponent implements OnInit {
   imageURL: string = null;
 
   onFileChanged(event) {
-    this.UploadFile = event.target.files[0]
+
+    var fileName: any;
+
+    this.UploadFile = event.target.files[0];
+    fileName = this.UploadFile['name'];
 
     var reader = new FileReader();
     reader.onload = (event: any) => {
       this.imageURL = event.target.result;
+
+      console.warn("this is the file: ",this.UploadFile)
+      if (this.UploadFile.size > 1000000) {
+        this.compressFile(this.imageURL, fileName);
+      }
     }
     reader.readAsDataURL(this.UploadFile);
     this.imgChanged = true;
+  }
+
+  compressFile(image, fileName) {
+    var orientation = -1;
+    var sizeOfOriginalImage;
+    var sizeOFCompressedImage;
+
+    sizeOfOriginalImage = this.imageCompress.byteCount(image) / (1024 * 1024);
+    //console.warn('Size in bytes is now:', sizeOfOriginalImage);
+
+    this.imageCompress.compressFile(image, orientation, 50, 50).then(
+      result => {
+        this.imageURL = result;
+        sizeOFCompressedImage = this.imageCompress.byteCount(result) / (1024 * 1024)
+        const imageName = fileName;
+        console.warn("this is the new file: ",this.UploadFile)
+      });
   }
 
   removeImage() {
@@ -203,17 +231,33 @@ export class EditProductComponent implements OnInit {
       productid: this.ProdFormData.ProductID,
     })
 
-    
+
     const f = this.ProductForm.controls['quantity'];
-    if(this.ProdFormData.Bought)
+    if (this.ProdFormData.Bought)
       f.disable()
 
     const g = (<FormArray>this.ProductForm.controls['photos']).at(0) as FormGroup
 
     g.controls['photo'].setValidators(null)
-    
+
     this.imageURL = this.ProdFormData.Image;
 
+  }
+
+  mapAddValues() {
+    this.ProdFormData =
+    {
+      Name: this.ProductForm.value.name,
+      Description: this.ProductForm.value.description,
+      Price: this.ProductForm.value.price,
+      QuantityOnHand: this.ProductForm.value.quantity,
+      SupplierID: this.ProductForm.value.supplierid,
+      CategoryID: this.ProductForm.value.categoryid,
+      Category: null,
+      Supplier: null,
+      ProductID: this.ProductForm.value.productid,
+      Photos: [{ PhotoID: null, Photo: this.imageURL }]
+    }
   }
 
   mapValues() {
@@ -222,7 +266,7 @@ export class EditProductComponent implements OnInit {
       Name: this.ProductForm.value.name,
       Description: this.ProductForm.value.description,
       Price: this.ProductForm.value.price,
-      QuantityOnHand: this.ProductForm.value.quantity,
+      QuantityOnHand: this.ProdFormData.QuantityOnHand,
       SupplierID: this.ProductForm.value.supplierid,
       CategoryID: this.ProductForm.value.categoryid,
       Category: null,
@@ -239,16 +283,15 @@ export class EditProductComponent implements OnInit {
       return;
     }
 
-    if(this.ProductForm.value.photos[0].photo == null)
-    {
+    if (this.ProductForm.value.photos[0].photo == null) {
       alert("An image is required to be uploaded")
       return;
     }
-    this.mapValues();
+    this.mapAddValues();
     this.service.AddProduct(this.ProdFormData, this.UploadFile, this.api.SessionID)
       .subscribe((res: any) => {
         if (res == "success") {
-          this.snack.open("Product successfully saved", "OK", {duration: 3000})
+          this.snack.open("Product successfully saved", "OK", { duration: 3000 })
           this.router.navigateByUrl("AdminProduct")
 
         }
@@ -265,7 +308,7 @@ export class EditProductComponent implements OnInit {
           alert(res.Message)
 
         }
-      }, error => {console.log(error), this.snack.open("Something went wrong. Please try again later.", "OK", {duration: 3000})})
+      }, error => { console.log(error), this.snack.open("Something went wrong. Please try again later.", "OK", { duration: 3000 }) })
   }
 
   EditProduct() {
@@ -281,34 +324,29 @@ export class EditProductComponent implements OnInit {
     }
 
     this.mapValues();
-    this.service.UpdateProduct(this.ProdFormData, this.UploadFile, this.api.SessionID, this.imgChanged).subscribe(res =>
-      {
-        if(res == "success")
-        {
-          this.snack.open("Product successfully updated", "OK", {duration: 3000})
-          this.router.navigateByUrl("AdminProduct")
-          localStorage.removeItem('prodEdit')
-        }
-        else
-        {
-          console.log(res)
-        }
-    }, error => {console.log(error), this.snack.open("Something went wrong. Please try again later.", "OK", {duration: 3000})})
+    this.service.UpdateProduct(this.ProdFormData, this.UploadFile, this.api.SessionID, this.imgChanged).subscribe(res => {
+      if (res == "success") {
+        this.snack.open("Product successfully updated", "OK", { duration: 3000 })
+        this.router.navigateByUrl("AdminProduct")
+        localStorage.removeItem('prodEdit')
+      }
+      else {
+        console.log(res)
+      }
+    }, error => { console.log(error), this.snack.open("Something went wrong. Please try again later.", "OK", { duration: 3000 }) })
   }
 
 
 
   Cancel() {
-    if(this.ProductForm.touched && this.ProductForm.dirty)
-    {
-      if(confirm("You have unsaved changes. Are you sure you want to leave this page?"))
+    if (this.ProductForm.touched && this.ProductForm.dirty) {
+      if (confirm("You have unsaved changes. Are you sure you want to leave this page?"))
+        window.history.back();
+    }
+    else {
       window.history.back();
     }
-    else
-    {
-      window.history.back();
-    }
-    
+
   }
 
   resetForm(form?: NgForm) {
@@ -329,7 +367,7 @@ export class EditProductComponent implements OnInit {
       Supplier: null,
       SelectedQuantity: null,
       Image: null,
-      Bought:false,
+      Bought: false,
       Photos:
         [
           {

@@ -12,6 +12,8 @@ import {autoTable} from 'jspdf-autotable';
 import { Router } from '@angular/router';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CompanyInfo } from 'src/app/User/company-settings/company-settings.component';
+import { ReportingService } from 'src/app/API Services/for User/reporting.service';
 
 @Component({
   selector: 'app-all-bookings',
@@ -30,10 +32,13 @@ export class AllBookingsComponent implements OnInit {
   displayed = true;
   generated = true;
 
+  CompanyInfo: CompanyInfo;
+
   ngOnInit(): void {
 
     if(this.api.RoleID == "2")
     {     
+      this.serv.GetCompanyInfo().subscribe(res => {this.CompanyInfo = res})
       this.ReportForm = new FormGroup({
         start: new FormControl('', Validators.required),
         end: new FormControl('',Validators.required)
@@ -50,7 +55,7 @@ export class AllBookingsComponent implements OnInit {
   chart=[];
   bookings: Object;
 
-  constructor(private service: ReportsService, private router: Router,
+  constructor(private service: ReportsService, private serv: ReportingService, private router: Router,
     private api: ExperTexhService, private snack: MatSnackBar){}
 
 

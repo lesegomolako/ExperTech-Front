@@ -2,27 +2,17 @@
 
   <div style="float: right;">
     <div class="example-button-container">
-      <button routerLink='/schedule' mat-raised-button style="background-color: gray; align-items: center; width:80% ">
+      <button routerLink='/schedule' mat-raised-button>
         <mat-icon> keyboard_return</mat-icon>
         Back
       </button>
-      <br>
-      <br>
-      <button mat-raised-button type="submit" [disabled]="!BookingForm.valid"
-        style="background-color: gray; align-items: center; width:80% ">
+      <button mat-raised-button type="submit" [disabled]="!BookingForm.valid">
         Submit
-      </button>
-      <button mat-raised-button type="button" (click)="openAddDialog()"
-        style="background-color: gray; align-items: center; width:80% ">
-        Add Client
-      </button>
-      <button mat-raised-button type="button" (click)="openSearchDialog()"
-        style="background-color: gray; align-items: center; width:80% ">
-        Search Client
       </button>
     </div>
   </div>
-
+  <br>
+  <br>
   <div class="jumbotron" style="background-color: white;">
     <div class="row">
       <div class="col-md-6 offset-md-4">
@@ -48,6 +38,14 @@
           <button type="button" (click)="clear()" class="btn btn-primary">clear</button>
         </div>
       </div>
+      <div class="col-md-6 offset-md-4">
+        <button mat-raised-button type="button" (click)="openAddDialog()">
+          Add Client
+        </button>
+        <button mat-raised-button type="button" (click)="openSearchDialog()">
+          Search Client
+        </button>
+      </div>
     </div>
   </div>
 
@@ -61,7 +59,7 @@
           <mat-form-field appearance="fill">
             <mat-label style="color: black;">Hair, Nails,Massage</mat-label>
             <mat-select #typeid required>
-              <mat-option disabled>--</mat-option>
+              <mat-option value="" disabled>--</mat-option>
               <mat-option (click)="EnableForm(x)" *ngFor="let x of ServiceType" value={{x.TypeID}}>
                 {{x.Name}}
               </mat-option>
@@ -88,9 +86,7 @@
                 </mat-option>
               </mat-select>
 
-              <!-- | customFilter:typeid.value -->
-              <!-- <mat-error *ngIf="ServiceControl.hasError('required')">Please choose service</mat-error>
-<mat-hint>{{ServiceControl.value?.sound}}</mat-hint> -->
+              <mat-error *ngIf="f.ServiceControl.errors?.required && f.ServiceControl.touched">Select a service</mat-error>
             </mat-form-field>
             <span title="view service photo" (click)="ViewImage()" style="cursor: pointer;" class="material-icons"
               *ngIf="imageURL">camera_alt</span>
@@ -102,15 +98,14 @@
           <h4>Select Service option</h4>
           <mat-form-field appearance="fill">
             <mat-label style="color: black;">Long, short, Medium</mat-label>
-            <mat-select formControlName="OptionControl" name="OptionID">
+            <mat-select (click)="checkOptions()" formControlName="OptionControl" name="OptionID">
               <mat-option disabled>--</mat-option>
-              <mat-option *ngFor="let x of ServiceOptions" value={{x.OptionID}}>
+              <mat-option *ngFor="let x of ServiceOptions | optionsFilter:ServicesID" value={{x.OptionID}}>
                 {{x.Name}}
               </mat-option>
+              <mat-option *ngIf="(ServiceOptions | optionsFilter:ServicesID)?.length == 0">No Service Options Available</mat-option>
             </mat-select>
-            <!-- | optionsFilter:ServicesID -->
-            <!-- <mat-error *ngIf="OptionControl.hasError('required')">Please choose the length of your hair</mat-error>
-          <mat-hint>{{OptionControl.value?.sound}}</mat-hint> -->
+            <mat-error *ngIf="f.OptionControl.errors?.required">Select a service option</mat-error>
           </mat-form-field>
 
 
@@ -125,8 +120,7 @@
                   {{x.Employee}}
                 </mat-option>
               </mat-select>
-              <!-- <mat-error *ngIf="employeeControl.hasError('required')">Please choose an employee</mat-error>
-<mat-hint>{{employeeControl.value?.sound}}</mat-hint> -->
+              <mat-error *ngIf="f.employeeControl.errors?.required && f.employeeControl.touched">Select a service</mat-error>
             </mat-form-field>
             <span title="view employee's schedule" (click)="ViewSchedule()" style="cursor: pointer;"
                 class="material-icons" *ngIf="EmpCalendar">calendar_today</span>
@@ -141,6 +135,7 @@
               name="Date" formControlName="DateControl">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
+            <mat-error *ngIf="f.DateControl.errors?.required">An appointment date is required</mat-error> 
           </mat-form-field>
 
           <!-- <mat-form-field appearance="fill">
@@ -165,34 +160,33 @@
                 {{x.StartTime}}
               </mat-option>
             </mat-select>
-            <!-- <mat-error *ngIf="TimeControl.hasError('required')">Please choose Appointment time</mat-error>
- <mat-hint>{{TimeControl.value?.sound}}</mat-hint> -->
+            <mat-error *ngIf="f.TimeControl.errors?.required">An appointment time is required</mat-error>
           </mat-form-field>
 
 
-          <mat-accordion class="example-headers-align" style="background-color: white;">
+          <mat-accordion class="text-center" style="background-color: white; margin: auto">
+
             <mat-expansion-panel style="background-color: whitesmoke;" [expanded]="step === 1" (opened)="setStep(1)"
               hideToggle>
               <mat-expansion-panel-header>
                 <mat-panel-title style="color: black;">
-                  Notes
+                  Click to enter booking notes<span class="material-icons">
+                    description
+                    </span>
                 </mat-panel-title>
                 <mat-panel-description style="color: black;">
-                  Type notes that the empoyee needs to know
-                  <mat-icon>map</mat-icon>
+                  
                 </mat-panel-description>
               </mat-expansion-panel-header>
-
+  
               <mat-form-field class="example-full-width">
-                <mat-label style="color: black;">Importent things the employee should to know</mat-label>
-                <textarea formControlName="NotesControl" matInput placeholder="Ex. It makes me feel..."
-                  name="Notes"></textarea>
+                <mat-label style="color: black;">Notes:</mat-label>
+                <textarea id="notes" formControlName="NotesControl" matInput placeholder="Ex. It makes me feel..." name="Notes"
+                  ></textarea>
               </mat-form-field>
-
-              <mat-action-row>
-                <button mat-button color="warn" (click)="prevStep()">Previous</button>
-              </mat-action-row>
+  
             </mat-expansion-panel>
+  
           </mat-accordion>
         </div>
       </div>

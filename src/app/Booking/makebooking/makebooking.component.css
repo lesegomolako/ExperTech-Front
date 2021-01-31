@@ -1,11 +1,49 @@
 @import url(https://fonts.googleapis.com/css?family=Amaranth:400,400italic,700italic,700);
 
+
+/* 
+
+@media only screen and (max-width: 700px)
+{
+
+  .example-button-container
+  {
+    width:40%;
+    float:right;
+  }
+
+  .example-button-container button
+{
+  background-color: gray; 
+  align-items: center; 
+  width:100%
+}
+}
+
+@media only screen and (min-width: 700px)
+{
+  
+} */
+
+
+.example-button-container
+{
+  width: 200px;
+  float:right;
+}
+
+.example-button-container button
+  {
+    background-color: gray; 
+    align-items: center; 
+  }
+
 .buttons
 {
     display: inline-table;
     margin-right: 10px;
     margin-top: 10px;
-    width: 25%;
+    width: 200px;
     float: right;
 }
 

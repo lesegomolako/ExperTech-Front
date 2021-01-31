@@ -10,6 +10,7 @@ import { Admin } from 'src/app/API Services/for Booking/client';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CbookingDialog } from 'src/app/Staff/get-bookings/get-bookings.component';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -36,13 +37,14 @@ export class AdminComponent implements OnInit {
 
   List: Observable<Admin[]>;
   isOwner = false;
+  AdminID;
 
   ngOnInit(): void {
 
     if (this.api.RoleID == "2") {
       this.loadList();
       this.resetForm();
-      this.api.getProfile().subscribe((res: any) => { this.isOwner = res.Admins[0]?.Owner })
+      this.api.getProfile().subscribe((res: any) => { this.isOwner = res.Admins[0]?.Owner; this.AdminID = res.Admins[0]?.AdminID })
     }
     else {
       this.router.navigate(["403Forbidden"])
@@ -71,6 +73,40 @@ export class AdminComponent implements OnInit {
 
   toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('active');
+  }
+
+  MakeOwner(AdminID)
+  {
+    this.service.MakeOwner(AdminID, this.api.SessionID).subscribe(
+      res => {
+        if(res == "success")
+        {
+          this.snack.open("Owner privileges assigned", "OK", {duration: 3000})
+          window.location.reload();
+        }
+        else
+        {
+          this.snack.open("Something went wrong, please try again", "OK", {duration: 3000})
+          console.log(res)
+        }
+      }, error => { console.log(error), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
+  }
+
+  RevokeOwner(AdminID)
+  {
+    this.service.RevokeOwner(AdminID, this.api.SessionID).subscribe(
+      res => {
+        if(res == "success")
+        {
+          this.snack.open("Owner privileges revoked", "OK", {duration: 3000})
+          window.location.reload();
+        }
+        else
+        {
+          this.snack.open("Something went wrong, please try again", "OK", {duration: 3000})
+          console.log(res)
+        }
+      }, error => { console.log(error), this.snack.open("Something went wrong", "OK", { duration: 3000 }) });
   }
 
   myFunction(event: any) {

@@ -31,12 +31,21 @@
             <th style="width: 60;">Contact Number</th>
             <th style="width: 60;">Email Address</th>
             <th style="width: 60;"></th>
+            <th style="width: 60;"></th>
           </tr>
           <tr *ngFor="let item of List | async">
             <td>{{ item.Name }}</td>
             <td>{{ item.Surname }}</td>
             <td>{{ item.ContactNo }}</td>
             <td>{{ item.Email }}</td>
+            <td>
+              <button [hidden]="!(AdminID == 1) && (item.Owner == true)" title="give admin user owner privileges" (click)="MakeOwner(item.AdminID)" class="btn btn-success">
+                Make Owner
+              </button>
+              <button [hidden]="!(AdminID == 1) && (item.Owner == false)" title="revoke admin users owner privileges" (click)="RevokeOwner(item.AdminID)" class="btn btn-danger">
+                Revoke Owner
+              </button>
+            </td>
             <td>
               <button title="delete admin" (click)="DeleteAdmin(item.AdminID)" class="btn btn-danger">
                 <mat-icon>delete</mat-icon>

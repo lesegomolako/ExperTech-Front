@@ -26,6 +26,23 @@
     
 }
 
+@media only screen and (max-width: 700px)
+ {
+     .detail
+     {
+         flex-direction: column;
+     }
+
+     .detail > .data1
+     {
+         order: 1;
+     }
+
+     .detail > .data2
+     {
+         order: 2;
+     }
+ }
 
 
 .inputs textarea

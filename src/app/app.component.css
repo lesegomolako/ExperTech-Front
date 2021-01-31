@@ -165,3 +165,43 @@ body {
 .my-overlay i.fa.fa-spinner.fa-spin, .spinner-big {
     font-size: 100px !important;
 }
+
+@media (max-width: 690px) {
+
+    .right-nav
+    {
+        width:60%;
+    }
+
+    .left-nav
+    {
+        width: 40%;
+        float: right;
+    }
+}
+
+@media (min-width: 690px) and (max-width: 1000px)
+{
+    .right-nav
+    {
+        width:80%;
+    }
+
+    .left-nav
+    {
+        width: 20%;
+    }
+}
+
+@media (min-width: 1001px)
+{
+    .right-nav
+    {
+        width:85%;
+    }
+
+    .left-nav
+    {
+        width: 15%;
+    }
+}

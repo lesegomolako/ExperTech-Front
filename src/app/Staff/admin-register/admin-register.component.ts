@@ -31,6 +31,7 @@ export class AdminRegisterComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
   RoleID = 2;
+  isOwner = false;
 
   public RegisterFormGroup: FormGroup;
   constructor(
@@ -46,11 +47,14 @@ export class AdminRegisterComponent implements OnInit {
   ngOnInit() {
     if(this.api.RoleID == "2")
     {
+      this.api.getProfile().subscribe((res: User) => { this.isOwner = res.Admins[0].Owner })
+
       this.registerForm = this.formBuilder.group({
         firstName: ['', [Validators.required, Validators.maxLength(50)]],
         lastName: ['', [Validators.required, Validators.maxLength(50)]],
         email: ['', [Validators.required, Validators.email]],
         contact: ['', [Validators.required, Validators.pattern(this.mobNumberPattern)]],
+        makeowner: ['']
       });
     }
     else
@@ -148,6 +152,12 @@ export class AdminRegisterComponent implements OnInit {
         this.snack.open("Admin successfully registered", "OK", {duration: 3000})
         this.router.navigate(["admin"]);
       }
+      else
+      {
+        dialogRef.close();
+        this.snack.open("Email not sent error!", "OK", {duration: 3000})
+        this.router.navigate(["admin"]);
+      }
     }, error => {console.log(error),dialogRef.close(), this.snack.open("Something went wrong", "OK", {duration: 3000})})
     
   }
@@ -176,7 +186,8 @@ mapValues()
         Name: this.registerForm.value.firstName,
         Surname: this.registerForm.value.lastName,
         Email: this.registerForm.value.email,
-        ContactNo: this.registerForm.value.contact
+        ContactNo: this.registerForm.value.contact, 
+        Owner: this.registerForm.value.makeowner
       }], 
     }
   

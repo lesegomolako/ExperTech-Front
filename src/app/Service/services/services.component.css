@@ -1,25 +1,4 @@
-.this{
-    position: absolute;
-    left: 0;
-    width: 170px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    margin-top: 20px;
-    
-    
-}
 
-div a{
-    display: inline-block;
-    text-decoration: none;
-    color: black;
-    padding: 5px 15px;
-    text-align: left;
-    border-bottom: 1px solid  rgb(185, 185, 185);
-
-}
 
 div a:hover{
     color: white;
@@ -31,9 +10,67 @@ div a:hover{
     border-left: 4px solid purple;
 }
 
+@media only screen and (max-width: 700px)
+{
+    .serv
+    {
+        flex-direction: column;
+    }
 
-.that{
-    margin-left: 200px;
-    margin-right: 100px;
-    padding: 10px;    
+    .serv > .this
+    {
+        order: 1;
+        width: 80%;
+        border-bottom: none;
+        padding-bottom: 20px;
+    }
+
+    .serv > .that
+    {
+        order: 2;
+        width: 90%;
+        margin: auto;
+    }
+
+    div a{
+        display: inline-block;
+        text-decoration: none;
+        color: black;
+        padding: 5px 15px;
+        text-align: left;
+        border-bottom: 1px solid  rgb(185, 185, 185);
+        width: 50%;
+    
+    }
 }
+
+@media only screen and (min-width: 700px)
+{
+    div a{
+        display: inline-block;
+        text-decoration: none;
+        color: black;
+        padding: 5px 15px;
+        text-align: left;
+        border-bottom: 1px solid  rgb(185, 185, 185);
+    
+    }
+
+    .this{
+        position: absolute;
+        left: 0;
+        width: 170px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        margin-top: 20px;   
+    }
+
+    .that{
+        margin-left: 200px;
+        margin-right: 100px;
+        padding: 10px;    
+    }
+}  
+

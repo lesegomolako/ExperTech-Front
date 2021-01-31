@@ -19,8 +19,8 @@
     
 <div class="contents">
     <h2>Enter Service details</h2>
-    <div class="row">
-        <div class="col-7">
+    <div class="detail row">
+        <div class="data1 col-7">
         <div class="details">
             <input formControlName="serviceid" hidden>
             <div class="form-group" [ngClass]="{'has-error': formErrors.name}">
@@ -59,7 +59,7 @@
         </ng-container>
         </div>
         </div>
-        <div class="col-3 border">
+        <div class=" data2 col-3 border">
             <div formArrayName="photos">
                 <div  class="form-group"  *ngFor="let x of serviceForm.get('photos')['controls']; let j = index">
                     <div [formGroupName]="j">

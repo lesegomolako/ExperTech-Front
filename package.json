@@ -34,6 +34,7 @@
     "js-sha256": "^0.9.0",
     "jspdf": "^2.1.1",
     "jspdf-autotable": "^3.5.13",
+    "ngx-image-compress": "^11.0.3",
     "ngx-toastr": "^13.1.0",
     "pdfmake": "^0.1.68",
     "rxjs": "~6.5.5",

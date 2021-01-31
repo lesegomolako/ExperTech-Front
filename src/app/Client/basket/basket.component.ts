@@ -27,8 +27,9 @@ export class BasketComponent implements OnInit {
     private router: Router, private route: ActivatedRoute) { }
 
   SubmitBasket() {
-    const dialogRef = this.dialog.open(LoadingDialog, { disableClose: true })
+   
     if (confirm("Click ok to submit basket and place order")) {
+      const dialogRef = this.dialog.open(LoadingDialog, { disableClose: true })
       this.api.SubmitBasket().subscribe(res => {
         if (res == "success") {
           dialogRef.close();
@@ -37,6 +38,7 @@ export class BasketComponent implements OnInit {
         }
       }, error => {console.log(error), dialogRef.close(), this.snack.open("Something went wrong. Please try again later", "OK", {duration:3000})})
     }
+    
   }
 
   ngOnInit() {

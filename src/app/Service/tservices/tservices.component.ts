@@ -13,7 +13,9 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./tservices.component.css']
 })
 export class TServicesComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false})
+  set paginator(value: MatPaginator) {
+    this.dataSource.paginator = value;}
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<ServiceData>;
 

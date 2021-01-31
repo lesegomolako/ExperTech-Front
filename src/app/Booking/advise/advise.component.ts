@@ -17,6 +17,8 @@ import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Employee } from 'src/app/API Services/for Booking/client';
 import { CalendarDialog } from '../makebooking/makebooking.component';
+import { DatePipe } from '@angular/common';
+import { LoadingDialog } from 'src/app/app.component';
 
 export class CalData {
   EmployeeID: any;
@@ -51,12 +53,13 @@ const colors: any = {
 @Component({
   selector: 'app-advise',
   templateUrl: './advise.component.html',
-  styleUrls: ['./advise.component.css']
+  styleUrls: ['./advise.component.css'],
+  providers:[DatePipe]
 })
 export class AdviseComponent implements OnInit {
 
   constructor(private service: ReportingService, private router: Router, private snack: MatSnackBar, private dialog: MatDialog,
-    private api: ExperTexhService, private http: HttpClient, private fb: FormBuilder) { }
+    private api: ExperTexhService, private http: HttpClient, private fb: FormBuilder, private datepipe: DatePipe,) { }
 
   EmployeeList: Employee[]
   Times: [];
@@ -66,6 +69,9 @@ export class AdviseComponent implements OnInit {
   showIcon = false;
 
   today = new Date();
+  toDate = this.datepipe.transform(this.today, 'dd/MM/yy');
+  toTime = this.datepipe.transform(this.today, 'HH:mm')
+  selectedDate;
 
 
   AdviseForm: FormGroup;
@@ -112,9 +118,26 @@ export class AdviseComponent implements OnInit {
     dialogConfig.height = '500px'
     dialogConfig.data = this.EmpCalendar;
 
-    this.dialog.open(CalendarDialog, dialogConfig)
+    const dialogRef = this.dialog.open(CalendarDialog, dialogConfig)
+
+    dialogRef.afterClosed().subscribe((res:any) => 
+    {
+      console.log("result:", res)
+      this.selectedDate = res.Dates
+      this.AdviseForm.patchValue({
+        datesid: res.Dates,
+        timesid: <string>res.TimeID
+      })
+      // this.AdviseForm.value.datesid= res.Dates;
+      // this.AdviseForm.value.timesid = res.TimeID;
+    })
   }
 
+  EnableTimeForm(event)
+  {
+    var selectedDate: Date = event;
+    this.selectedDate = this.datepipe.transform(selectedDate, 'dd/MM/yy');
+  }
   
 
   get g()
@@ -139,19 +162,23 @@ export class AdviseComponent implements OnInit {
       TimeID: form.value.timesid
     }
 
+    const dialogRef = this.dialog.open(LoadingDialog, { disableClose: true })
     this.api.AdviseBooking(BookingData).subscribe((res: any) => {
       if (res == "success") {
+        dialogRef.close();
         this.snack.open("Booking advise successfully sent to client", "OK", {duration: 3000});
         this.router.navigateByUrl("/schedule");
       }
       else if(res.Error == "timeslot"){
         alert(res.Message)
+        dialogRef.close();
         return;
       }
       else{
-        console.log(res)
+        console.log(res);
+        dialogRef.close();
       }
-    }, error => {console.log("Error",error), this.snack.open("Something went wrong", "OK", {duration: 3000})})
+    }, error => {console.log("Error",error),dialogRef.close(), this.snack.open("Something went wrong", "OK", {duration: 3000})})
 
   }
 

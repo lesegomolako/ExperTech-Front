@@ -18,14 +18,14 @@
 
 
       <mat-form-field>
-        <input matInput [matDatepicker]="picker" [min]="minDate" placeholder="Start Date" formControlName="StartDate" />
+        <input matInput [matDatepicker]="picker" (dateInput)="setMinDate()" [min]="minDate" placeholder="Start Date" formControlName="StartDate" />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker (click)="setMinDate()">Start Date</mat-datepicker>
+        <mat-datepicker #picker >Start Date</mat-datepicker>
         <mat-error *ngIf="f.StartDate.errors?.required">Start date is required</mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput [matDatepicker]="picker1" placeholder="End Date" [min]="maxDate" formControlName="EndDate" />
+        <input matInput [matDatepicker]="picker1" placeholder="End Date" [min]="minEndDate" formControlName="EndDate" />
         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
         <mat-datepicker #picker1>End Date</mat-datepicker>
         <mat-error *ngIf="f.EndDate.errors?.required">End date is required</mat-error>

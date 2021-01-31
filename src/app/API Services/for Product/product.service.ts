@@ -26,7 +26,6 @@ export class ProductService {
   // }
 
   AddProduct(form: ProductData, UploadFile: File, SessionID) {
-    // alert(form.Name)
     const formData: FormData = new FormData();
     formData.append('Name', form.Name)
     formData.append('CategoryID', form.CategoryID)

@@ -19,7 +19,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class StockCategoryComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false})
+  set paginator(value: MatPaginator) {
+    this.dataSource.paginator = value;}
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<StockData>;
 

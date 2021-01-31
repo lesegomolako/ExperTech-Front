@@ -17,7 +17,7 @@ import { DatePipe } from '@angular/common';
 import { CalData } from '../advise/advise.component';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { endOfDay, endOfMonth, endOfWeek, isSameDay, isSameMonth, startOfDay, startOfMonth, startOfWeek } from 'date-fns';
-
+import { OptionsFilterPipe } from 'src/app/API Services/for Booking/Pipes/options-filter.pipe';
 
 
 
@@ -49,7 +49,7 @@ export class EmployeeInfo {
   selector: 'app-makebooking',
   templateUrl: './makebooking.component.html',
   styleUrls: ['./makebooking.component.css'],
-  providers: [DatePipe]
+  providers: [DatePipe, OptionsFilterPipe]
 })
 export class MakebookingComponent implements OnInit {
   BookingForm: FormGroup;
@@ -70,6 +70,23 @@ export class MakebookingComponent implements OnInit {
 
   imageURL = null;
 
+  checkOptions()
+  {
+    var list = this.optPipe.transform(this.ServiceOptions, this.ServicesID);
+    var count = list.length
+    if(count == 0)
+    {
+      this.BookingForm.get("OptionControl").clearValidators();
+      this.BookingForm.get("OptionControl").updateValueAndValidity();
+      console.log("clear validator")
+    }
+    else
+    {
+      console.log("set validator")
+      this.BookingForm.get("OptionControl").setValidators(Validators.required);
+      this.BookingForm.get("OptionControl").updateValueAndValidity();
+    }
+  }
 
   clear() {
     this.BookingForm.patchValue(
@@ -83,6 +100,7 @@ export class MakebookingComponent implements OnInit {
     )
   }
 
+  
 
 
 
@@ -100,7 +118,7 @@ export class MakebookingComponent implements OnInit {
   public MakeFormGroup: FormGroup;
   constructor(public dialog: MatDialog, private http: HttpClient, private api: ExperTexhService, private fb: FormBuilder,
     private snack: MatSnackBar, private datepipe: DatePipe,
-    private router: Router, private route: ActivatedRoute, private service: ServicesService) { }
+    private router: Router,private optPipe:OptionsFilterPipe, private route: ActivatedRoute, private service: ServicesService) { }
 
   Employee = [];
   Service: ServiceData[];
@@ -133,6 +151,7 @@ export class MakebookingComponent implements OnInit {
 
   EnableOptForm(Service: ServiceData) {
     this.imageURL = Service.Image;
+    this.ServicesID = Service.ServiceID;
     this.BookingForm.get("OptionControl").enable();
     //this.ServicesID = this.BookingForm.value.ServiceControl
 
@@ -162,7 +181,8 @@ export class MakebookingComponent implements OnInit {
                 ),
                 color: colors.green,
                 allDay: false,
-                draggable: false
+                draggable: false,
+                meta: Avail
               }
             }
             else if (Avail.StatusID == 2) {
@@ -176,7 +196,8 @@ export class MakebookingComponent implements OnInit {
                 ),
                 color: colors.yellow,
                 allDay: false,
-                draggable: false
+                draggable: false,
+                meta: Avail
               }
             }
             else {
@@ -190,7 +211,8 @@ export class MakebookingComponent implements OnInit {
                 ),
                 color: colors.red,
                 allDay: false,
-                draggable: false
+                draggable: false,
+                meta: Avail
               }
             }
           })
@@ -358,7 +380,18 @@ export class MakebookingComponent implements OnInit {
     dialogConfig.height = '500px'
     dialogConfig.data = this.EmpCalendar;
 
-    this.dialog.open(CalendarDialog, dialogConfig)
+    const dialogRef = this.dialog.open(CalendarDialog, dialogConfig)
+
+    dialogRef.afterClosed().subscribe((res:any) => 
+    {
+      this.selectedDate = res.Dates;
+      this.BookingForm.get("TimeControl").enable();
+      this.BookingForm.get("DateControl").enable();
+      this.BookingForm.patchValue({
+        DateControl: res.Dates,
+        TimeControl: <string>res.TimeID
+      })
+    })
   }
 
 
@@ -577,6 +610,21 @@ export class CalendarDialog implements OnInit
   ngOnInit()
   {
     this.fetchEvents()
+  }
+
+
+  eventClicked(event: CalendarEvent<CalData>)
+  {
+    // console.log("Event:",event.meta)
+    // return;
+    if(event.meta?.StatusID != 1)
+    {
+      alert("The selected time is not available. Please select another time");
+      return;
+    }
+
+    this.dialogRef.close(event.meta)
+    //
   }
 
   view: CalendarView = CalendarView.Month;

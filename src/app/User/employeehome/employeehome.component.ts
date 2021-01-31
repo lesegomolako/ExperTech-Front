@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from 'src/app/API Services/for Booking/client';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
+import { ReportingService } from 'src/app/API Services/for User/reporting.service';
 import { ProfileData } from 'src/app/app.component';
+import { CompanyInfo } from '../company-settings/company-settings.component';
 
 @Component({
   selector: 'app-employeehome',
@@ -13,19 +15,21 @@ import { ProfileData } from 'src/app/app.component';
 })
 export class EmployeehomeComponent implements OnInit {
 
-  constructor(private api: ExperTexhService, private router: Router) 
+  constructor(private api: ExperTexhService, private service: ReportingService, private router: Router) 
   { 
     this.RoleID = this.api.RoleID;
   }
 
   RoleID;
-  User: Observable<ProfileData<User>>
+  User: Observable<ProfileData<User>>;
+  CompanyInfo: CompanyInfo;
 
   ngOnInit(): void {
     
     if(this.RoleID == "2" || this.RoleID == "3")
     {
       this.RoleID = this.api.RoleID;
+      this.service.GetCompanyInfo().subscribe(res => {this.CompanyInfo = res})
       this.User = this.api.getProfile()
      .pipe(map((res: User) => {
       switch (res.RoleID) {  

@@ -1,61 +1,60 @@
-<div>
-  <h1 class="col-10 " style="margin: 10px">Service Packages</h1>
-  <div class="example-button-container col-1.5" style="float: right;">
-    <a routerLink='/home'><button mat-raised-button style="background-color: green; width: 166px; ">
+<div class="row">
+  <h1 class="col-7" style="margin-top: 10px">Service Packages</h1>
+  <div class="col-5">
+    <div style="float: right;">
+      <button routerLink='/home' mat-raised-button style="background-color: green;">
         <mat-icon> keyboard_return</mat-icon>
         Back
-      </button></a>
-    <a href="https://mishqah.github.io/final-client-help/pages/view-service-package.html"><span style="float: right;"
-        class="material-icons help">
-        help_outline
-      </span></a>
-    <br>
-    <br>
-    <a routerLink='/request'><button mat-raised-button style="background-color: green;"
+      </button>
+      <button routerLink='/request' mat-raised-button style="background-color: green;"
         title="Request booking for service">
         <mat-icon> question_answer</mat-icon>
-        Request Booking
-      </button></a>
+        Make Booking
+      </button>
+      <a href="https://mishqah.github.io/final-client-help/pages/view-service-package.html"><span
+          class="material-icons help">
+          help_outline
+        </span></a>
+    </div>
+  </div>
 </div>
 
 
-  <div class="row justify-content-center">
-    <div class="c-card c-card--wide justify-content-center" *ngFor="let y of allservicepackage | async">
-      <div class="c-card-flip__flipper ">
-        <header class="c-card__header">
-          <h3>Service: {{y.ServicePackage.Name}}</h3>
-        </header>
+<div class="row justify-content-center">
+  <div class="c-card c-card--wide justify-content-center" *ngFor="let y of allservicepackage | async">
+    <div class="c-card-flip__flipper ">
+      <header class="c-card__header">
+        <h3>Service: {{y.ServicePackage.Name}}</h3>
+      </header>
 
+      <div>
         <div>
-          <div>
-            <p>Date Activated: {{y.Date | date: 'dd/MM/yy'}}</p>
-            <p>Expires: {{y.ExpiryDate | date:'dd/MM/yy'}}</p>
-            <P><strong>Number of Service Packages left:</strong> {{y.TotalAvailable}}</P>
-          </div>
-          <div>
-            <p *ngFor="let x of y.PackageInsatance">{{x.Date}}</p>
-          </div>
+          <p>Date Activated: {{y.Date | date: 'dd/MM/yy'}}</p>
+          <p>Expires: {{y.ExpiryDate | date:'dd/MM/yy'}}</p>
+          <P><strong>Number of Service Packages left:</strong> {{y.TotalAvailable}}</P>
         </div>
-
+        <div>
+          <p *ngFor="let x of y.PackageInsatance">{{x.Date}}</p>
+        </div>
       </div>
+
     </div>
   </div>
+</div>
 
-  <div class="row justify-content-center">
-    <div class="c-card c-card--wide justify-content-center" *ngIf="(allservicepackage | async).length == 0">
-      <div class="c-card-flip__flipper ">
-        <header class="c-card__header">
-          <h3> </h3>
-        </header>
+<div class="row justify-content-center">
+  <div class="c-card c-card--wide justify-content-center" *ngIf="(allservicepackage | async).length == 0">
+    <div class="c-card-flip__flipper ">
+      <header class="c-card__header">
+        <h3> </h3>
+      </header>
 
+      <div>
         <div>
-          <div>
-            <P class="text-center"><strong>You have no activated service packages</strong></P>
-          </div>
+          <P class="text-center"><strong>You have no activated service packages</strong></P>
         </div>
-
       </div>
+
     </div>
   </div>
-
 </div>

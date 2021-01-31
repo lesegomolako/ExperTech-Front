@@ -178,4 +178,29 @@ example-headers-align .mat-form-field + .mat-form-field {
   .modal-content {
     width: 100%;
   }
+
+  .card_hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3);
+    margin-top: 40px;
+    width: 90%;
+    height: 94%;
+    background: white;
+  }
 }
+
+@media only screen and (min-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+
+  .card_hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3);
+    margin: auto;
+    width: 70%;
+    height: 94%;
+    background: white;
+  }
+}
+

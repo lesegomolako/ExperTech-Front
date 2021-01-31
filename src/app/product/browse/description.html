@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h3 mat-dialog-title><strong>{{data.Name}}</strong></h3>
+    <button mat-dialog-close type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" mat-dialog-content>
+    <div>
+        <h5>Category: {{data.Category}}</h5>
+        <h5>Quantity on Hand:{{data.QuantityOnHand}} </h5>
+        <h5>Price:R{{data.Price}} </h5>
+        <h5>Description: {{data.Description}} </h5>
+        <div class="button" *ngIf="RoleID" role="group" aria-label="Third group">
+            <!-- <mat-form-field style="background-color: whitesmoke;">
+                <mat-label style="color: black;">Enter Quantity</mat-label>
+                <input style="color: black;" min="1" max="{{data.QuantityOnHand}}" type="number"
+                    (change)='setQuantity($event,data)' value="{{data.SelectedQuantity}}" matInput>
+            </mat-form-field> -->
+            <button mat-raised-button style="background-color: whitesmoke;" title="Include in basket"
+            (click)="addproduct(data)">
+            <mat-icon> add</mat-icon>
+            Add to Basket
+        </button>
+        <br>
+        </div>
+        <div *ngIf="!RoleID">
+            <p><strong>Log in to add product to basket</strong></p>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer" mat-dialog-actions>
+    <button type="button" class="btn btn-outline-secondary" mat-dialog-close>
+        Close
+    </button>
+</div>

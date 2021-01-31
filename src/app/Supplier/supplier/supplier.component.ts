@@ -14,7 +14,9 @@ import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.se
   styleUrls: ['./supplier.component.css']
 })
 export class SupplierComponent implements AfterViewInit, OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false})
+  set paginator(value: MatPaginator) {
+    this.dataSource.paginator = value;}
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<SupplierData>;
 

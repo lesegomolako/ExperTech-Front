@@ -22,7 +22,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./placeorder.component.css']
 })
 export class PlaceorderComponent implements AfterViewInit, OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false})
+  set paginator(value: MatPaginator) {
+    this.dataSource.paginator = value;}
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<SupplierOrderData>;
 
@@ -269,8 +271,12 @@ export class ReceiveDialog implements OnInit {
     }
 
 
-    this.service.ReceiveStock(Receive, this.api.SessionID).subscribe(res => {
-      if (res == "success") {
+    this.service.ReceiveStock(Receive, this.api.SessionID).subscribe((res:any) => {
+      if (res.Success == "success") {
+        if(res.BackOrder)
+        {
+          alert(res.BackOrder)
+        }
         this.snack.open("Stock successfully received", "OK", { duration: 3000 })
         this.dialogRef.close();
         this.router.navigate(["stock"])

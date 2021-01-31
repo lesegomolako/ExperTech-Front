@@ -42,13 +42,13 @@
      <div class="sale" id="sale" >
       <div class="row" >   
         <div class="col-8">     
-          Company: Exhilaration hair & beauty salon
+          Company: {{CompanyInfo.Name}}
           <br>
-          Contact Details:0785109494
+          Contact Details: {{CompanyInfo.ContactNo}}
           <br>
-          Address:Clifton Avenue Lyttleton Centurion
+          Address: {{CompanyInfo.Address}}
           <br>
-          Date:2020/07/14
+          Date: {{(range.value.start | date:'dd/MM/yyyy') + " - " + (range.value.end | date:'dd/MM/yyyy') }}
           <br>
           Prepared for: Manager
           <br>

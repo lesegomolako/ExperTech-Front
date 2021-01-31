@@ -13,7 +13,9 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./service-type.component.css']
 })
 export class ServiceTypeComponent implements OnInit, AfterViewInit{
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false})
+  set paginator(value: MatPaginator) {
+    this.dataSource.paginator = value;}
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<ServiceTypeData>;
 

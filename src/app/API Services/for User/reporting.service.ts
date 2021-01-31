@@ -33,7 +33,7 @@ export class ReportingService {
   ///********************************************************Admin CRUD*********************************************************************
   readAdmin(SessionID): Observable<Admin[]> {
     const params = new HttpParams().set("SessionID", SessionID)
-    return this.http.get<Admin[]>(this.url + 'Admin/getAdmin', {params});
+    return this.http.get<Admin[]>(this.url + 'Admin/getAdmin', { params });
   }
   createAdmin(formData: Process) {
     let body = JSON.stringify(formData);
@@ -49,15 +49,27 @@ export class ReportingService {
   }
   deleteAdmin(AdminID, SessionID, OwnerID?) {
     const params = new HttpParams().set("SessionID", SessionID).set("AdminID", AdminID).set("OwnerID", OwnerID)
-    return this.http.delete(this.url + 'Admin/deleteAdmin',{params}
+    return this.http.delete(this.url + 'Admin/deleteAdmin', { params }
     );
 
+  }
+
+  MakeOwner(AdminID, SessionID)
+  {
+    const params = new HttpParams().set("SessionID", SessionID).set("AdminID", AdminID);
+    return this.http.post(this.url + 'User/MakeOwner', "", {params});
+  }
+
+  RevokeOwner(AdminID, SessionID)
+  {
+    const params = new HttpParams().set("SessionID", SessionID).set("AdminID", AdminID);
+    return this.http.post(this.url + 'User/RevokeOwner', "",{params});
   }
   ///********************************************************Client CRUD*********************************************************************
   readClient(): Observable<Client[]> {
     return this.http.get<Client[]>(this.url + 'Clients/getClient');
   }
-  
+
   walkinClient(formData: Process) {
     let body = JSON.stringify(formData);
     if (confirm(body)) {
@@ -76,18 +88,18 @@ export class ReportingService {
   }
 
   deleteClient(ClientID, SessionID, Confirm, Owner?) {
-    
-    const params = new HttpParams().set("ClientID",ClientID).set("SessionID", SessionID).set("confirmation", Confirm).set("OwnerID", Owner)
+
+    const params = new HttpParams().set("ClientID", ClientID).set("SessionID", SessionID).set("confirmation", Confirm).set("OwnerID", Owner)
     return this.http.delete(
-        this.url + 'Clients/deleteClient',
-        {params}
-      );
-  
+      this.url + 'Clients/deleteClient',
+      { params }
+    );
+
   }
   ///*********************************************************Employee CRUD*****************************************************************
   readEmployee(SessionID): Observable<Employee[]> {
     const params = new HttpParams().set("SessionID", SessionID)
-    return this.http.get<Employee[]>(this.url + 'Employees/getEmployee', {params});
+    return this.http.get<Employee[]>(this.url + 'Employees/getEmployee', { params });
   }
   createEmployee(formData: Process) {
     let body = JSON.stringify(formData);
@@ -122,12 +134,12 @@ export class ReportingService {
     }
   }
   deleteEmployee(EmployeeID, SessionID, Sure: boolean) {
-    
+
     const params = new HttpParams().set("EmployeeID", EmployeeID).set("SessionID", SessionID).set("Sure", Sure.toString())
     return this.http.delete(this.url + 'Employees/deleteEmployee',
-        {params}
-      );
-    
+      { params }
+    );
+
   }
   ///***********************************************User**************************************************
   forgotPassword(username) {
@@ -137,11 +149,10 @@ export class ReportingService {
     return this.http.get(this.url + 'User/ForgotPassword', { params });
 
   }
- 
-  ChangePassword(Passwords, SessionID)
-  {
+
+  ChangePassword(Passwords, SessionID) {
     const params = new HttpParams().set("SessionID", SessionID);
-    return this.http.post(this.url + 'User/ChangePassword', Passwords, {params})
+    return this.http.post(this.url + 'User/ChangePassword', Passwords, { params })
   }
 
 

@@ -84,7 +84,7 @@ import { BookingConfirmComponent } from './Booking/confirm/confirm.component';
 import { BasketComponent } from './Client/basket/basket.component';
 import { RequestbComponent } from './Booking/requestb/requestb.component';
 import {EmployeehomeComponent} from './User/employeehome/employeehome.component';
-import { BrowseComponent } from './product/browse/browse.component';
+import { BrowseComponent, ProductDialog } from './product/browse/browse.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {ViewdetailComponent} from './Supplier/sale/viewdetail/viewdetail.component';
 import {SaleComponent} from './Supplier/sale/sale.component';
@@ -139,7 +139,7 @@ import { ClientAuditComponent } from './AuditTrails/client-audit/client-audit.co
 import { EmployeeAuditComponent } from './AuditTrails/employee-audit/employee-audit.component';
 import { AuditTrailComponent } from './AuditTrails/audit-trail/audit-trail.component';
 import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-category/stock-category.component';
-
+import {NgxImageCompressService} from 'ngx-image-compress';
 
 
 @NgModule({
@@ -158,7 +158,7 @@ import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-ca
     customFilter,SupplierComponent,orderform,PlaceorderComponent,EditsupplierComponent,AddsupplierComponent,
     StockComponent,WriteoffComponent,StocktakeComponent,EditstockComponent,AddstockComponent,SaleComponent,
     ViewdetailComponent,SaleinvoiceComponent,ViewServicesComponent, ScheduleComponent, AdviseComponent, EmployeehomeComponent,
-    ReportsComponent, ErrorPageComponent, ReceiveDialog,TimePipe,
+    ReportsComponent, ErrorPageComponent, ReceiveDialog,TimePipe, ProductDialog,
     EmployeePipe, ForbiddenPageComponent, GetBookingsComponent, StaffComponent, CompanySettingsComponent, SalePaymentComponent, ChangePasswordComponent, AllBookingsComponent, AdminAuditComponent, ClientAuditComponent, EmployeeAuditComponent, AuditTrailComponent
 
   ],
@@ -175,14 +175,15 @@ import { StockCategoryComponent, StockCategoryDialog } from './Supplier/stock-ca
   providers: [ServicesService,SaleService,StockService,SupplierService,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
     ExperTexhService, ProductService, ReportsService,
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},
+    NgxImageCompressService
   ],
     
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   entryComponents: [
-    AddClientDialog, SearchClientDialog, CbookingDialog, BookingDialog, OrderDialog,ConfirmOrderDialog, ReceiveDialog, LoadingDialog, StockCategoryDialog, CalendarDialog
+    AddClientDialog, ProductDialog, SearchClientDialog, CbookingDialog, BookingDialog, OrderDialog,ConfirmOrderDialog, ReceiveDialog, LoadingDialog, StockCategoryDialog, CalendarDialog
   ],
 })
 export class AppModule { }

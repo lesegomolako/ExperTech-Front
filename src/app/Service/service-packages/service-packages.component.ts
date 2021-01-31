@@ -15,7 +15,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./service-packages.component.css']
 })
 export class ServicePackagesComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false})
+  set paginator(value: MatPaginator) {
+    this.dataSource.paginator = value;}
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<PackageData>;
 

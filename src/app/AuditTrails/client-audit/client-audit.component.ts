@@ -13,7 +13,9 @@ import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.se
   styleUrls: ['./client-audit.component.css']
 })
 export class ClientAuditComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false})
+  set paginator(value: MatPaginator) {
+    this.dataSource.paginator = value;}
   @ViewChild(MatSort) sort: MatSort;
   //@ViewChild(MatTable) table: MatTable<AuditTrail>;
 

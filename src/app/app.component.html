@@ -58,34 +58,33 @@
   </mat-drawer>
 
   <nav style="background-color: #333131">
-    <div class="row w-100">
+    <div class="row">
 
-      <div class="col-10">
+      <div class="right-nav">
         <div style="margin: 10px; left:0">
           <button mat-icon-button class="example-icon" (click)="drawer.toggle()">
             <mat-icon style="color:white">menu</mat-icon>
           </button>
           <img (click)="goHome()" id="img" src="assets/images/logo.png" alt="logo.png"
             style="width: 50px; height:50px;" />
-          <a *ngIf="RoleID == '1' || RoleID == null" href="https://mishqah.github.io/user-manual-client/"><span
+          <a *ngIf="RoleID == '1' || RoleID == null" href="https://mishqah.github.io/final-client-help/index.html"><span
               class="material-icons help">
               help_outline
             </span></a>
-          <a *ngIf="RoleID == '2'" href="https://mishqah.github.io/user-manual-client/"><span
+          <a *ngIf="RoleID == '2'" href="https://mishqah.github.io/user-manual-admin-help/index.html"><span
               class="material-icons help">
               help_outline
             </span></a>
-          <a *ngIf="RoleID == '3'" href="https://mishqah.github.io/user-manual-client/"><span
+          <a *ngIf="RoleID == '3'" href="https://mishqah.github.io/employee-manual-/index.html"><span
               class="material-icons help">
               help_outline
             </span></a>
         </div>
       </div>
 
-      <div class="col-2 col-offset-1">
+      <div class="left-nav" >
         <div style="margin: 10px;">
-
-          <span ngbDropdown *ngIf="RoleID == '2'">
+          <span ngbDropdown class="d-inline-flex" *ngIf="RoleID == '2'">
             <button *ngIf="RoleID == '2'" ngbDropdownToggle style="color: white;" mat-icon-button class="example-icon"
               aria-label="Example icon-button with share icon">
               <mat-icon [matBadge]="api.bookingList?.length" [matBadgeHidden]="api.bookingList?.length == 0">notifications_none</mat-icon>
@@ -120,7 +119,7 @@
             <mat-icon style="color: white; font-size: 30px;">account_circle</mat-icon>
           </button>
 
-          <span ngbDropdown  *ngIf="RoleID != null">
+          <span ngbDropdown class="d-inline-flex"  *ngIf="RoleID != null">
             <a routerLink='/basket' *ngIf="RoleID == '1'"><button style="color: white;" mat-icon-button
                 class="example-icon" aria-label="Example icon-button with share icon">
                 <mat-icon *ngIf="showBadges" [matBadge]="api.badgeCount" [matBadgeHidden]="api.badgeCount == 0">

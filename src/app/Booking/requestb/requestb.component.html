@@ -4,15 +4,11 @@
       <a href="https://mishqah.github.io/final-client-help/pages/request-booking.html"><span style="float: right;"
           class="material-icons help">
           help_outline
-        </span></a>
-      <a routerLink='/ViewBooking'>
-        <button mat-raised-button style="background-color: gray; ">
+        </span></a>     
+        <button type="button" routerLink='/ViewBooking' mat-raised-button style="background-color: gray; ">
           <mat-icon> keyboard_return</mat-icon>Back
         </button>
-      </a>
-      <br>
-      <br>
-      <button mat-raised-button type="submit" style="background-color: gray; align-items: center; width:99% ">
+      <button mat-raised-button type="submit" style="background-color: gray;">
         Submit
       </button>
     </div>
@@ -21,7 +17,7 @@
   <div>
     <div class="card_hover">
 
-      <h1 style="text-align: center;">Please fill in all the booking details</h1>
+      <h1 style="text-align: center;">Please select all the booking details</h1>
       <div style="text-align: center; color: black; " class="card-hover">
         <h4>Select Service type</h4>
 
@@ -99,17 +95,18 @@
             hideToggle>
             <mat-expansion-panel-header>
               <mat-panel-title style="color: black;">
-                Notes
+                Click to enter booking notes<span class="material-icons">
+                  description
+                  </span>
               </mat-panel-title>
               <mat-panel-description style="color: black;">
-                Type notes that the empoyee needs to know
-                <mat-icon>map</mat-icon>
+                
               </mat-panel-description>
             </mat-expansion-panel-header>
 
             <mat-form-field class="example-full-width">
-              <mat-label style="color: black;">Importent things the employee should to know</mat-label>
-              <textarea formControlName="NotesControl" matInput placeholder="Ex. It makes me feel..." name="Notes"
+              <mat-label style="color: black;">Notes:</mat-label>
+              <textarea id="notes" formControlName="NotesControl" matInput placeholder="Ex. It makes me feel..." name="Notes"
                 ></textarea>
             </mat-form-field>
 

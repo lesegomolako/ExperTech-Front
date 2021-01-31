@@ -7,6 +7,8 @@ import {jsPDF} from 'jspdf';
 import html2canvas from 'html2canvas';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CompanyInfo } from 'src/app/User/company-settings/company-settings.component';
+import { ReportingService } from 'src/app/API Services/for User/reporting.service';
 
 
 @Component({
@@ -25,8 +27,12 @@ export class FinancialReportComponent implements OnInit {
   maxDate = new Date(new Date().setDate(new Date().getDate()));
   displayed = true;
   generated = true;
+
+  CompanyInfo: CompanyInfo;
   
   ngOnInit(): void {
+
+    this.serv.GetCompanyInfo().subscribe(res => {this.CompanyInfo = res})
   }
 
   public convetToPDF() {
@@ -55,7 +61,7 @@ export class FinancialReportComponent implements OnInit {
   incomes: tabledata[];
   expenses:tabledata[];
 
-  constructor(private service: ReportsService, private api: ExperTexhService, private snack: MatSnackBar){}
+  constructor(private service: ReportsService, private serv: ReportingService, private api: ExperTexhService, private snack: MatSnackBar){}
 
 
  

@@ -6,6 +6,24 @@
     padding-left: 10px;
 }
 
+@media only screen and (max-width: 700px)
+ {
+     .details
+     {
+         flex-direction: column;
+     }
+
+     .details > .data1
+     {
+         order: 1;
+     }
+
+     .details > .data2
+     {
+         order: 2;
+     }
+ }
+
 .contents
 {
     padding:10px;

@@ -5,9 +5,9 @@
       <button mat-raised-button style="float: right;" routerLink="/schedule" style="background-color:forestgreen">
         <mat-icon style="color:white">keyboard_return</mat-icon> Back
       </button>
-      <span routerLink="/#" class="material-icons help">
+      <!-- <span routerLink="/#" class="material-icons help">
         help_outline
-      </span>
+      </span> -->
     </h1>
   </div>
 </div>
@@ -73,7 +73,7 @@
           <h4>Pick date and time for Appointment</h4>
           <mat-form-field color="accent">
             <mat-label style="color: black;">Appointment date</mat-label>
-            <input matInput [min]="today" [matDatepicker]="picker1" 
+            <input matInput [min]="today" (dateInput)="EnableTimeForm($event.value)" [matDatepicker]="picker1" 
               name="Date" formControlName="datesid">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
@@ -83,7 +83,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Select Time</mat-label>
             <mat-select formControlName="timesid">
-              <mat-option *ngFor="let items of Times" value={{items.TimeID}}>
+              <mat-option *ngFor="let items of Times | timeFilter:selectedDate:toDate:toTime" value={{items.TimeID}}>
                 {{items.StartTime}}
               </mat-option>
             </mat-select>

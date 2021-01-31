@@ -1,9 +1,9 @@
 <mat-card style="background-color: #F0F0F0;">
     <mat-card-header class="text-center w-100">
-        <h1 class="col-10">Services</h1>
+        <h1 class="col-lg-10 col-md-5 col-sm-4">Services</h1>
         <div class="example-button-container" style="float: right;">
-            <button [hidden]="RoleID != '1'" routerLink="/request" mat-raised-button style="background-color: green;">Make Booking</button>
-            <button routerLink="/home" mat-raised-button style="background-color: green;">
+            <button class="w-100" [hidden]="RoleID != '1'" routerLink="/request" mat-raised-button style="background-color: green;">Make Booking</button>
+            <button class="w-100" routerLink="/home" mat-raised-button style="background-color: green;">
                 <mat-icon> keyboard_return</mat-icon>
                 Back
             </button>

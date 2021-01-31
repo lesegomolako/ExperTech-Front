@@ -8,6 +8,8 @@ import { jsPDF } from 'jspdf';
 import { ExperTexhService } from 'src/app/API Services/for Booking/exper-texh.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CompanyInfo } from 'src/app/User/company-settings/company-settings.component';
+import { ReportingService } from 'src/app/API Services/for User/reporting.service';
 
 @Component({
   selector: 'app-sales-report',
@@ -28,9 +30,12 @@ export class SalesReportComponent implements OnInit {
   displayed = true;
   generated = true;
 
+  CompanyInfo: CompanyInfo;
+
   ngOnInit(): void {
 
     if (this.api.RoleID == "2") {
+      this.serv.GetCompanyInfo().subscribe(res => {this.CompanyInfo = res})
       this.ReportForm = new FormGroup({
         start: new FormControl('', Validators.required),
         end: new FormControl('', Validators.required),
@@ -48,7 +53,7 @@ export class SalesReportComponent implements OnInit {
   chart = [];
   products: Object;
 
-  constructor(private service: ReportsService, private snack:MatSnackBar,
+  constructor(private service: ReportsService, private snack:MatSnackBar, private serv: ReportingService,
      private router: Router, private api: ExperTexhService, private fb: FormBuilder) { }
 
   public convetToPDF() {
