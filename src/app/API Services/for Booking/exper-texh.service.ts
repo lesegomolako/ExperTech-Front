@@ -14,8 +14,8 @@ import { BookingData } from 'src/app/Staff/get-bookings/get-bookings.component';
 })
 export class ExperTexhService {
 
-  url = 'https://localhost:44380/api/'; 
-  //url = 'https://expertechapi.azurewebsites.net/api/';
+ // url = 'https://localhost:44380/api/'; 
+  url = 'https://expertechs.azurewebsites.net/api/';
 
   RoleID = sessionStorage.getItem("RoleID"); 
   SessionID = sessionStorage.getItem("accessToken");

@@ -10,8 +10,8 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  url = "https://localhost:44380/api/"
-  //url = 'https://expertechapi.azurewebsites.net/api/';
+  //url = "https://localhost:44380/api/"
+  url = 'https://expertechs.azurewebsites.net/api/';
 
   ProductForm: ProductData;
 

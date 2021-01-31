@@ -1,0 +1,73 @@
+[debug] [2021-01-31T16:13:03.134Z] ----------------------------------------------------------------------
+[debug] [2021-01-31T16:13:03.138Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Default User.DESKTOP-RU7SJN2\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2021-01-31T16:13:03.138Z] CLI Version:   8.13.1
+[debug] [2021-01-31T16:13:03.139Z] Platform:      win32
+[debug] [2021-01-31T16:13:03.139Z] Node Version:  v14.13.0
+[debug] [2021-01-31T16:13:03.143Z] Time:          Sun Jan 31 2021 18:13:03 GMT+0200 (South Africa Standard Time)
+[debug] [2021-01-31T16:13:03.144Z] ----------------------------------------------------------------------
+[debug] [2021-01-31T16:13:03.144Z] 
+[debug] [2021-01-31T16:13:03.161Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-01-31T16:13:03.162Z] > authorizing via signed-in user
+[debug] [2021-01-31T16:13:03.163Z] [iam] checking project expertechfront for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2021-01-31T16:13:03.169Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-01-31T16:13:03.169Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-01-31T16:13:11.157Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","date":"Sun, 31 Jan 2021 16:13:11 GMT","pragma":"no-cache","cache-control":"no-cache, no-store, max-age=0, must-revalidate","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-01-31T16:13:11.187Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/expertechfront:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2021-01-31T16:13:13.160Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sun, 31 Jan 2021 16:13:13 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1486","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-01-31T16:13:13.162Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/expertechfront  
+ 
+[debug] [2021-01-31T16:13:14.092Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sun, 31 Jan 2021 16:13:13 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Deploying to 'expertechfront'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2021-01-31T16:13:14.112Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/expertechfront/versions  
+ {"config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2021-01-31T16:13:16.458Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sun, 31 Jan 2021 16:13:16 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  hosting[expertechfront]: beginning deploy... 
+[info] i  hosting[expertechfront]: found 18 files in dist/Screens 
+[debug] [2021-01-31T16:13:18.295Z] [hosting] hash cache [ZGlzdFxTY3JlZW5z] stored for 18 files
+[debug] [2021-01-31T16:13:18.295Z] [hosting][hash queue][FINAL] {"max":1801,"min":1,"avg":298.8888888888889,"active":0,"complete":18,"success":18,"errored":0,"retried":0,"total":18,"elapsed":1817}
+[debug] [2021-01-31T16:13:18.296Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/expertechfront/versions/d5d388432c6c1e0f:populateFiles  
+ <request body omitted>
+[debug] [2021-01-31T16:13:21.322Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sun, 31 Jan 2021 16:13:20 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-01-31T16:13:21.324Z] [hosting][populate queue][FINAL] {"max":3030,"min":3030,"avg":3030,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":3032}
+[debug] [2021-01-31T16:13:21.324Z] [hosting] uploads queued: 2
+[debug] [2021-01-31T16:13:27.815Z] [hosting][upload queue][FINAL] {"max":6493,"min":5950,"avg":6221.5,"active":0,"complete":2,"success":2,"errored":0,"retried":0,"total":2,"elapsed":6493}
+[info] +  hosting[expertechfront]: file upload complete 
+[debug] [2021-01-31T16:13:27.817Z] [hosting] deploy completed after 11357ms
+[debug] [2021-01-31T16:13:28.267Z] [
+  {
+    "config": {
+      "public": "dist/Screens",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "expertechfront"
+    },
+    "site": "expertechfront",
+    "version": "sites/expertechfront/versions/d5d388432c6c1e0f"
+  }
+]
+[info] i  hosting[expertechfront]: finalizing version... 
+[debug] [2021-01-31T16:13:28.270Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/expertechfront/versions/d5d388432c6c1e0f?updateMask=status  
+ {"status":"FINALIZED"}
+[debug] [2021-01-31T16:13:44.286Z] Error: socket hang up
+    at connResetException (internal/errors.js:612:14)
+    at TLSSocket.socketOnEnd (_http_client.js:493:23)
+    at TLSSocket.emit (events.js:326:22)
+    at TLSSocket.EventEmitter.emit (domain.js:486:12)
+    at endReadableNT (_stream_readable.js:1252:12)
+    at processTicksAndRejections (internal/process/task_queues.js:80:21)
+[error] 
+[error] Error: Server Error. socket hang up

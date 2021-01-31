@@ -10,8 +10,9 @@ export class ServicesService {
 
   constructor(private http: HttpClient) { }
 
-  url = "https://localhost:44380/api/"
-  //url = 'https://expertechapi.azurewebsites.net/api/';
+  //url = "https://localhost:44380/api/"
+  url = 'https://expertechs.azurewebsites.net/api/';
+
 
 //***********************View Services **********************************
 ViewServices(): Observable<ServiceTypeData[]>
