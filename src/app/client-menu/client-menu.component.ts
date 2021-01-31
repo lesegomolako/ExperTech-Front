@@ -15,12 +15,12 @@ export class ClientMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.links = this.service.GetSocials();
-    this.companyinfo = this.service.GetCompanyInfo();
+   this.service.GetCompanyInfo().subscribe(res => {this.CompanyInfo = res})
 
     console.log(this.links)
   }
 
   links: Observable<SocialMedia[]>;
-  companyinfo: Observable<CompanyInfo>;
+  CompanyInfo: CompanyInfo;
 
 }
